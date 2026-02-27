@@ -201,9 +201,26 @@ export const ChakraSanctuary = ({ user, t }: ChakraSanctuaryProps) => {
             {/* Meditating Figure and Chakras Container */}
             <div className="relative z-10 w-full h-[70vh] max-w-lg flex items-center justify-center mt-[-10vh]">
 
+                {/* Ethereal Meditating Shiva Background */}
+                <div className="absolute inset-0 flex items-center justify-center pointer-events-none z-0 opacity-80 mix-blend-screen mix-blend-plus-lighter" style={{ filter: `drop-shadow(0 0 30px ${activeChakraColor !== 'white' ? activeChakraColor : 'rgba(255,255,255,0.2)'})` }}>
+                    <img
+                        src="/assets/shiva-meditating.png"
+                        alt="Lord Shiva Meditating"
+                        className="w-[85%] h-auto object-contain transition-all duration-1000 ease-in-out"
+                        style={{
+                            filter: activeChakraId ? 'brightness(1.5) contrast(1.2)' : 'brightness(1) opacity(0.8)',
+                            transform: activeChakraId ? 'scale(1.05)' : 'scale(1)'
+                        }}
+                        onError={(e) => {
+                            // Fallback if local asset isn't present
+                            (e.target as HTMLImageElement).src = 'https://i.ibb.co/L5Q5bXj/shiva-silhouette.png';
+                        }}
+                    />
+                </div>
+
                 {/* Ethereal Central Energy Pillar */}
                 <div
-                    className="absolute top-[10%] bottom-[10%] left-1/2 -translate-x-1/2 w-[3px] rounded-full blur-[1px] shadow-[0_0_30px_rgba(255,255,255,0.8)] transition-all duration-1000 ease-in-out"
+                    className="absolute top-[10%] bottom-[10%] left-1/2 -translate-x-1/2 w-[3px] rounded-full blur-[1px] shadow-[0_0_30px_rgba(255,255,255,0.8)] transition-all duration-1000 ease-in-out z-10"
                     style={{
                         background: `linear-gradient(to bottom, transparent, ${activeChakraColor !== 'white' ? activeChakraColor : 'rgba(255,255,255,0.5)'}, transparent)`,
                         boxShadow: `0 0 20px ${activeChakraColor !== 'white' ? activeChakraColor : 'white'}, 0 0 60px ${activeChakraColor !== 'white' ? activeChakraColor : 'white'}`
