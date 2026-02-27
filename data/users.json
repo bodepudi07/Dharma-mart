@@ -1,25 +1,32 @@
-
 [
-    { 
-        "id": 1, 
-        "email": "admin@darshan.com", 
-        "name": "Admin", 
-        "role": "admin", 
-        "passwordHash": "hashed_password123",
-        "avatarUrl": "",
-        "bio": "Guiding this digital spiritual journey. || Hari Om ||",
-        "followers": [2],
-        "following": [2]
-    },
-    { 
-        "id": 2, 
-        "email": "devotee@darshan.com", 
-        "name": "Devotee", 
-        "role": "devotee", 
-        "passwordHash": "hashed_password123",
-        "avatarUrl": "",
-        "bio": "A seeker on the path of Dharma. Exploring ancient wisdom through this beautiful app.",
-        "followers": [1],
-        "following": [1]
-    }
+  {
+    "id": 1,
+    "email": "admin@darshan.com",
+    "name": "Admin",
+    "role": "admin",
+    "avatarUrl": "",
+    "bio": "Guiding this digital spiritual journey. || Hari Om ||",
+    "followers": [
+      2
+    ],
+    "following": [
+      2
+    ],
+    "password": "$2b$10$ok.BVV26W59FboYkyYX.n.hkAsOTV0nRr64yE4E7tfZ6isfZmi7H2"
+  },
+  {
+    "id": 2,
+    "email": "devotee@darshan.com",
+    "name": "Devotee",
+    "role": "devotee",
+    "avatarUrl": "",
+    "bio": "A seeker on the path of Dharma. Exploring ancient wisdom through this beautiful app.",
+    "followers": [
+      1
+    ],
+    "following": [
+      1
+    ],
+    "password": "$2b$10$CMyehumkiVZHg0H.k10Q8euNhUhTQaosD8njpBV0Vmv.O/YoFoLWK"
+  }
 ]

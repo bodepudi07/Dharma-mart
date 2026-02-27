@@ -201,18 +201,17 @@ export const ChakraSanctuary = ({ user, t }: ChakraSanctuaryProps) => {
             {/* Meditating Figure and Chakras Container */}
             <div className="relative z-10 w-full h-[70vh] max-w-lg flex items-center justify-center mt-[-10vh]">
 
-                {/* Ethereal Meditating Shiva Background */}
-                <div className="absolute inset-0 flex items-center justify-center pointer-events-none z-0 opacity-80 mix-blend-screen mix-blend-plus-lighter" style={{ filter: `drop-shadow(0 0 30px ${activeChakraColor !== 'white' ? activeChakraColor : 'rgba(255,255,255,0.2)'})` }}>
+                {/* Ethereal Meditating Shiva Background (Shadow Silhouette) */}
+                <div className="absolute inset-0 flex items-center justify-center pointer-events-none z-0 overflow-hidden">
                     <img
                         src="/assets/shiva-meditating.png"
-                        alt="Lord Shiva Meditating"
-                        className="w-[85%] h-auto object-contain transition-all duration-1000 ease-in-out"
+                        alt="Lord Shiva Meditating Shadow"
+                        className="w-full h-[120%] object-contain transition-all duration-1000 ease-out opacity-40 mix-blend-overlay"
                         style={{
-                            filter: activeChakraId ? 'brightness(1.5) contrast(1.2)' : 'brightness(1) opacity(0.8)',
-                            transform: activeChakraId ? 'scale(1.05)' : 'scale(1)'
+                            filter: `brightness(0) drop-shadow(0 0 40px ${activeChakraColor !== 'white' ? activeChakraColor : 'rgba(255,255,255,0.5)'}) drop-shadow(0 0 80px ${activeChakraColor !== 'white' ? activeChakraColor : 'rgba(255,255,255,0.2)'})`,
+                            transform: activeChakraId ? 'scale(1.1) translateY(-5%)' : 'scale(1.05) translateY(-5%)'
                         }}
                         onError={(e) => {
-                            // Fallback if local asset isn't present
                             (e.target as HTMLImageElement).src = 'https://i.ibb.co/L5Q5bXj/shiva-silhouette.png';
                         }}
                     />
