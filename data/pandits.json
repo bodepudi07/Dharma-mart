@@ -1,0 +1,223 @@
+[
+  {
+    "id": 101,
+    "name": "Pandit Veda Sharma",
+    "location": "Ujjain, Madhya Pradesh",
+    "specialization": "Vedic Rituals & Shanti Poojas",
+    "specialties": [
+      "Rudra Abhishek",
+      "Maha Mrityunjaya Jaap",
+      "Navagraha Shanti Pooja"
+    ],
+    "services": [
+      "Offline",
+      "Online"
+    ],
+    "experience": 25,
+    "rating": 4.9,
+    "cost": 7500,
+    "imageUrl": "",
+    "status": "verified",
+    "availability": {
+      "days": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6
+      ],
+      "hours": [
+        {
+          "start": "07:00",
+          "end": "19:00"
+        }
+      ],
+      "offDates": [
+        "2024-11-01"
+      ]
+    }
+  },
+  {
+    "id": 102,
+    "name": "Acharya Gyaneshwar Mishra",
+    "location": "Varanasi, Uttar Pradesh",
+    "specialization": "Jyotish & Katha",
+    "specialties": [
+      "Satyanarayan Pooja",
+      "Durga Saptashati Path"
+    ],
+    "services": [
+      "Online"
+    ],
+    "experience": 30,
+    "rating": 4.8,
+    "cost": 5100,
+    "imageUrl": "",
+    "status": "verified",
+    "availability": {
+      "days": [
+        0,
+        1,
+        6
+      ],
+      "hours": [
+        {
+          "start": "10:00",
+          "end": "19:00"
+        }
+      ],
+      "offDates": []
+    }
+  },
+  {
+    "id": 103,
+    "name": "Shastri Narayan Patil",
+    "location": "Pune, Maharashtra",
+    "specialization": "Griha Pravesh & Vastu Shastra",
+    "specialties": [
+      "Griha Pravesh Pooja",
+      "Ganesha Homa"
+    ],
+    "services": [
+      "Offline"
+    ],
+    "experience": 20,
+    "rating": 4.7,
+    "cost": 6000,
+    "imageUrl": "",
+    "status": "verified",
+    "availability": {
+      "days": [
+        0,
+        1,
+        2,
+        4,
+        5,
+        6
+      ],
+      "hours": [
+        {
+          "start": "08:00",
+          "end": "12:00"
+        },
+        {
+          "start": "16:00",
+          "end": "20:00"
+        }
+      ],
+      "offDates": []
+    }
+  },
+  {
+    "id": 202,
+    "name": "Upadhyaya Gopal Panda",
+    "location": "Bengaluru, Karnataka",
+    "specialization": "Corporate & Online Poojas",
+    "specialties": [
+      "Lakshmi Kubera Pooja",
+      "Saraswati Vandana",
+      "Ganesha Homa"
+    ],
+    "services": [
+      "Online"
+    ],
+    "experience": 15,
+    "rating": 4.8,
+    "cost": 7100,
+    "imageUrl": "",
+    "status": "verified",
+    "availability": {
+      "days": [
+        2,
+        3,
+        4,
+        5,
+        6
+      ],
+      "hours": [
+        {
+          "start": "09:00",
+          "end": "18:00"
+        }
+      ],
+      "offDates": [
+        "2024-12-25"
+      ]
+    }
+  },
+  {
+    "id": 104,
+    "name": "Pandit Ratnesh Jha",
+    "location": "Delhi",
+    "specialization": "Night-time Rituals & Homas",
+    "specialties": [
+      "Maha Mrityunjaya Jaap",
+      "Ganesha Homa"
+    ],
+    "services": [
+      "Offline",
+      "Online"
+    ],
+    "experience": 18,
+    "rating": 4.9,
+    "cost": 8500,
+    "imageUrl": "",
+    "status": "verified",
+    "availability": {
+      "days": [
+        1,
+        2,
+        3,
+        4,
+        5
+      ],
+      "hours": [
+        {
+          "start": "22:00",
+          "end": "04:00"
+        }
+      ],
+      "offDates": []
+    }
+  },
+  {
+    "id": 999,
+    "name": "Acharya Dev Sharma (Prototype)",
+    "location": "Ayodhya, Uttar Pradesh",
+    "specialization": "Vedic Research & Advanced Homas",
+    "specialties": [
+      "Ati Rudra Maha Yajna",
+      "Sahasra Chandi Path",
+      "Vastu Shanti"
+    ],
+    "services": [
+      "Online",
+      "Offline"
+    ],
+    "experience": 40,
+    "rating": 5.0,
+    "cost": 11000,
+    "imageUrl": "",
+    "status": "verified",
+    "availability": {
+      "days": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6
+      ],
+      "hours": [
+        {
+          "start": "06:00",
+          "end": "22:00"
+        }
+      ],
+      "offDates": []
+    }
+  }
+]

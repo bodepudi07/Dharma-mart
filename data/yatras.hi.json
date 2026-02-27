@@ -1,0 +1,284 @@
+[
+  {
+    "id": 1,
+    "name": "चार धाम यात्रा",
+    "description": "मोक्ष की ओर ले जाने वाली पवित्र चार धाम यात्रा।",
+    "itinerary": [
+      "Haridwar",
+      "Yamunotri",
+      "Gangotri",
+      "Kedarnath",
+      "Badrinath"
+    ],
+    "imageUrl": "https://upload.wikimedia.org/wikipedia/commons/5/5a/Kedarnath_Temple_-_Garhwal_Himalaya.jpg",
+    "tiers": [
+      {
+        "name": "Standard",
+        "cost": 28000,
+        "description": "Comfortable group travel with standard hotel stays and meals."
+      },
+      {
+        "name": "Comfort",
+        "cost": 65000,
+        "description": "Upgraded hotels, smaller vehicle, and priority darshan arrangements."
+      },
+      {
+        "name": "Luxury",
+        "cost": 120000,
+        "description": "Premium accommodation, private vehicle, and personalized assistance."
+      }
+    ],
+    "durationDays": 12,
+    "groupSize": 20,
+    "highlights": [
+      "केदारनाथ",
+      "बद्रीनाथ",
+      "गंगोत्री",
+      "यमुनोत्री"
+    ]
+  },
+  {
+    "id": 2,
+    "name": "काशी-अयोध्या तीर्थ",
+    "description": "प्राचीन शहरों की एक आध्यात्मिक यात्रा।",
+    "itinerary": [
+      "Somnath",
+      "Mallikarjuna",
+      "Mahakaleshwar",
+      "Omkareshwar",
+      "Vaidyanath",
+      "Bhimashankar",
+      "Rameswaram",
+      "Nageshwar",
+      "Vishwanath",
+      "Trimbakeshwar",
+      "Kedarnath",
+      "Grishneshwar"
+    ],
+    "imageUrl": "https://upload.wikimedia.org/wikipedia/commons/c/c5/Somnath_Temple_Gujarat.jpg",
+    "tiers": [
+      {
+        "name": "Standard",
+        "cost": 68000,
+        "description": "Cover all 12 Jyotirlingas with standard accommodation and group travel by train/bus."
+      },
+      {
+        "name": "Comfort",
+        "cost": 150000,
+        "description": "Upgraded hotels and travel by AC vehicles for a more comfortable journey."
+      },
+      {
+        "name": "Premium",
+        "cost": 250000,
+        "description": "Luxury stays, flights between major cities, and special pooja arrangements."
+      }
+    ],
+    "durationDays": 21,
+    "groupSize": 15,
+    "highlights": [
+      "काशी विश्वनाथ",
+      "राम जन्मभूमि",
+      "गंगा आरती"
+    ]
+  },
+  {
+    "id": 3,
+    "name": "दक्षिण भारत दर्शन",
+    "description": "दक्षिण भारत के महान मंदिरों की यात्रा।",
+    "itinerary": [
+      "Jammu",
+      "Katra",
+      "Vaishno Devi Bhawan"
+    ],
+    "imageUrl": "https://upload.wikimedia.org/wikipedia/commons/d/df/Ganges_at_Rishikesh.jpg",
+    "tiers": [
+      {
+        "name": "Standard",
+        "cost": 6500,
+        "description": "Includes travel from Jammu, standard stay in Katra, and yatra registration."
+      },
+      {
+        "name": "Comfort",
+        "cost": 12500,
+        "description": "Upgraded hotel in Katra and battery car service for a portion of the trek."
+      },
+      {
+        "name": "VIP",
+        "cost": 25000,
+        "description": "Includes helicopter service from Katra to Sanjichhat and priority darshan."
+      }
+    ],
+    "durationDays": 4,
+    "groupSize": 30,
+    "highlights": [
+      "मीनाक्षी मंदिर",
+      "रामेश्वरम",
+      "तिरुपति"
+    ]
+  },
+  {
+    "id": 4,
+    "name": "ज्योतिर्लिंग दर्शण",
+    "description": "भगवान शिव के 12 पवित्र ज्योतिर्लिंगों की यात्रा।",
+    "itinerary": [
+      "Madurai",
+      "Rameswaram",
+      "Kanyakumari",
+      "Thanjavur",
+      "Trivandrum"
+    ],
+    "imageUrl": "https://upload.wikimedia.org/wikipedia/commons/d/df/Ganges_at_Rishikesh.jpg",
+    "tiers": [
+      {
+        "name": "Classic",
+        "cost": 18500,
+        "description": "A comprehensive tour with comfortable hotels and group bus travel."
+      },
+      {
+        "name": "Heritage",
+        "cost": 40000,
+        "description": "Stay in heritage properties, smaller group size, and included cultural performances."
+      },
+      {
+        "name": "Royal",
+        "cost": 75000,
+        "description": "Luxury accommodation, private car, and expert guide throughout the tour."
+      }
+    ],
+    "durationDays": 8,
+    "groupSize": 25,
+    "highlights": [
+      "सोमनाथ",
+      "महाकालेश्वर",
+      "त्र्यंबकेश्वर"
+    ]
+  },
+  {
+    "id": 5,
+    "name": "वैष्णो देवी यात्रा",
+    "description": "त्रिकुटा पर्वत पर माता वैष्णो देवी का दर्शन।",
+    "itinerary": [
+      "Kamakhya Temple, Guwahati",
+      "Kalighat, Kolkata",
+      "Vindhyachal, Mirzapur",
+      "Jwala Ji, Himachal",
+      "Harsiddhi, Ujjain"
+    ],
+    "imageUrl": "https://upload.wikimedia.org/wikipedia/commons/d/df/Ganges_at_Rishikesh.jpg",
+    "tiers": [
+      {
+        "name": "Devotional",
+        "cost": 38000,
+        "description": "Group pilgrimage covering key Shakti Peethas with standard stays."
+      },
+      {
+        "name": "Comfort",
+        "cost": 85000,
+        "description": "Includes flights between major cities, better hotels, and guided tours."
+      },
+      {
+        "name": "Spiritual Seeker",
+        "cost": 130000,
+        "description": "Private customized tour with focus on deep spiritual experiences and rituals."
+      }
+    ],
+    "durationDays": 14,
+    "groupSize": 18,
+    "highlights": [
+      "कटरा",
+      "भवन",
+      "भैरवनाथ मंदिर"
+    ]
+  },
+  {
+    "id": 6,
+    "name": "South India Divya Desam Tour (हिंदी)",
+    "description": "A divine journey to the 108 sacred abodes of Lord Vishnu, known as Divya Desams, as glorified in the works of the Alvars. This tour covers the key temples in Tamil Nadu, the heartland of Vaishnavite tradition, offering a deep dive into devotion and architectural splendor.",
+    "itinerary": [
+      "Srirangam Ranganathaswamy",
+      "Kanchipuram Varadaraja Perumal",
+      "Tirumala Venkateswara",
+      "Thiruvallikeni Parthasarathy",
+      "Alagar Kovil, Madurai"
+    ],
+    "imageUrl": "https://upload.wikimedia.org/wikipedia/commons/d/df/Ganges_at_Rishikesh.jpg",
+    "tiers": [
+      {
+        "name": "Standard",
+        "cost": 26000,
+        "description": "Covers major Divya Desams with comfortable accommodation."
+      },
+      {
+        "name": "Comfort",
+        "cost": 52000,
+        "description": "AC vehicle, upgraded hotels, and special darshan where available."
+      },
+      {
+        "name": "Vaishnava Scholar",
+        "cost": 90000,
+        "description": "Private tour accompanied by a scholar explaining the history and significance of each site."
+      }
+    ],
+    "durationDays": 10,
+    "groupSize": 22
+  },
+  {
+    "id": 7,
+    "name": "Pancha Bhoota Sthalam Yatra (हिंदी)",
+    "description": "Experience the five primordial elements through this pilgrimage to the Pancha Bhoota Sthalams, the five sacred Shiva temples embodying Earth, Water, Fire, Air, and Ether. A profound journey to understand the cosmic nature of Lord Shiva.",
+    "itinerary": [
+      "Ekambareswarar (Earth)",
+      "Jambukeshwarar (Water)",
+      "Arunachaleswarar (Fire)",
+      "Srikalahasti (Air)",
+      "Chidambaram Nataraja (Ether)"
+    ],
+    "imageUrl": "https://upload.wikimedia.org/wikipedia/commons/d/df/Ganges_at_Rishikesh.jpg",
+    "tiers": [
+      {
+        "name": "Standard",
+        "cost": 22500,
+        "description": "Group tour visiting all five temples with standard hotel stays."
+      },
+      {
+        "name": "Comfort",
+        "cost": 48000,
+        "description": "Private car travel, 3-star hotels, and flexible timings."
+      },
+      {
+        "name": "Meditative",
+        "cost": 70000,
+        "description": "Includes guided meditation sessions at each site to connect with the elemental energies."
+      }
+    ],
+    "durationDays": 7,
+    "groupSize": 20
+  },
+  {
+    "id": 8,
+    "name": "Krishna Circuit Pilgrimage (हिंदी)",
+    "description": "Follow the footsteps of Lord Krishna on this divine journey through his birthplace and playgrounds. Experience the vibrant culture and deep devotion of Mathura, Vrindavan, Gokul, and the majestic city of Dwarka.",
+    "itinerary": [
+      "Mathura (Birthplace)",
+      "Vrindavan (Rasa Lila)",
+      "Gokul",
+      "Barsana & Nandgaon",
+      "Dwarka (Kingdom)"
+    ],
+    "imageUrl": "https://upload.wikimedia.org/wikipedia/commons/d/df/Ganges_at_Rishikesh.jpg",
+    "tiers": [
+      {
+        "name": "Standard",
+        "cost": 22000,
+        "description": "Group travel by AC coach with standard hotel stays."
+      },
+      {
+        "name": "Comfort",
+        "cost": 45000,
+        "description": "Private vehicle, upgraded hotels, and guided tours."
+      }
+    ],
+    "durationDays": 7,
+    "groupSize": 25
+  }
+]

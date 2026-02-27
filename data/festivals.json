@@ -1,0 +1,37 @@
+[
+    {
+        "id": 1,
+        "name": "Diwali",
+        "date": "Varies (Oct - Nov)",
+        "description": "The festival of lights, symbolizing the victory of light over darkness and good over evil.",
+        "imageUrl": "https://upload.wikimedia.org/wikipedia/commons/3/3d/Diwali_Diyas.jpg"
+    },
+    {
+        "id": 2,
+        "name": "Holi",
+        "date": "Varies (March)",
+        "description": "The festival of colors, celebrating the arrival of spring and the triumph of good over evil.",
+        "imageUrl": "https://upload.wikimedia.org/wikipedia/commons/7/7d/Holi_Festival_of_Colors.jpg"
+    },
+    {
+        "id": 3,
+        "name": "Navaratri",
+        "date": "Varies (Sep - Oct)",
+        "description": "A nine-night festival dedicated to the worship of the Goddess Durga in her various forms.",
+        "imageUrl": "https://upload.wikimedia.org/wikipedia/commons/7/74/Durga_Puja_Kolkata.jpg"
+    },
+    {
+        "id": 4,
+        "name": "Maha Shivaratri",
+        "date": "Varies (Feb - Mar)",
+        "description": "The great night of Shiva, a solemn festival marking the remembrance of overcoming darkness and ignorance.",
+        "imageUrl": "https://upload.wikimedia.org/wikipedia/commons/3/3f/Maha_Shivaratri_celebration.jpg"
+    },
+    {
+        "id": 5,
+        "name": "Ganesh Chaturthi",
+        "date": "Varies (Aug - Sep)",
+        "description": "A ten-day festival marking the birth of Lord Ganesha, the remover of obstacles.",
+        "imageUrl": "https://upload.wikimedia.org/wikipedia/commons/2/23/Hindu_festival_celebration.jpg"
+    }
+]

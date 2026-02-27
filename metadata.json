@@ -1,0 +1,9 @@
+{
+  "requestFramePermissions": [
+    "microphone",
+    "camera"
+  ],
+  "name": "Dharma Setu",
+  "description": "Bridging the Distance Between You and the Divine. India's First Phygital Spiritual Infrastructure.",
+  "prompt": ""
+}

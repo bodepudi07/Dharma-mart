@@ -1,0 +1,31 @@
+@keyframes pano-pan {
+  0% {
+    transform: translate(0, 0);
+  }
+  25% {
+    transform: translate(-5%, -2%);
+  }
+  50% {
+    transform: translate(-10%, 0);
+  }
+  75% {
+    transform: translate(-5%, 2%);
+  }
+  100% {
+    transform: translate(0, 0);
+  }
+}
+
+.vr-pano-container {
+  overflow: hidden;
+  border-radius: 1rem;
+}
+
+.vr-pano-image {
+  width: 150%;
+  height: 130%; /* Make it taller to allow vertical panning */
+  background-size: cover;
+  background-position: center;
+  animation: pano-pan 40s ease-in-out infinite;
+  /* The transform will be controlled by React state when dragging */
+}
