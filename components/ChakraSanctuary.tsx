@@ -182,61 +182,82 @@ export const ChakraSanctuary = ({ user, t }: ChakraSanctuaryProps) => {
     const activeChakraColor = activeChakraId ? CHAKRA_MEDITATION_DATA.find(c => c.id === activeChakraId)?.color : 'white';
 
     return (
-        <div className="relative h-full w-full bg-[#03050a] cyber-grid-bg flex flex-col items-center justify-center text-white overflow-hidden p-4">
+        <div className="relative h-full w-full bg-slate-950 flex flex-col items-center justify-center text-white overflow-hidden p-4 font-sans selection:bg-fuchsia-500/30">
 
-            {/* Ambient Tech Background */}
+            {/* Deep Ethereal Background */}
             <div className="absolute inset-0 z-0 overflow-hidden pointer-events-none">
-                <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[800px] bg-primary/5 rounded-full blur-[120px] mix-blend-screen animate-cyber-pulse"></div>
+                <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,_var(--tw-gradient-stops))] from-indigo-900/40 via-slate-950 to-black"></div>
+
+                {/* Dynamic Ambient Glow tied to active chakra */}
+                <div
+                    className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[100vw] h-[100vw] sm:w-[800px] sm:h-[800px] rounded-full blur-[120px] mix-blend-screen opacity-50 transition-colors duration-1000 ease-in-out"
+                    style={{ backgroundColor: activeChakraColor || '#4338ca' }}
+                />
+
+                {/* Subtle Starfield / Dust effect */}
+                <div className="absolute inset-0 bg-[url('https://www.transparenttextures.com/patterns/stardust.png')] opacity-30 mix-blend-overlay"></div>
             </div>
 
-            {/* Meditating Figure and Chakras */}
-            <div className="relative z-10 w-full h-[80vh] max-w-lg flex items-center justify-center">
+            {/* Meditating Figure and Chakras Container */}
+            <div className="relative z-10 w-full h-[70vh] max-w-lg flex items-center justify-center mt-[-10vh]">
 
-                {/* Sushumna Nadi - Futuristic Energy Beam */}
-                <div className="absolute top-[20%] bottom-[15%] left-1/2 -translate-x-1/2 w-[2px] bg-gradient-to-b from-transparent via-cyan-400/50 to-transparent shadow-[0_0_15px_rgba(34,211,238,0.8)] animate-tech-scan" />
+                {/* Ethereal Central Energy Pillar */}
+                <div
+                    className="absolute top-[10%] bottom-[10%] left-1/2 -translate-x-1/2 w-[3px] rounded-full blur-[1px] shadow-[0_0_30px_rgba(255,255,255,0.8)] transition-all duration-1000 ease-in-out"
+                    style={{
+                        background: `linear-gradient(to bottom, transparent, ${activeChakraColor !== 'white' ? activeChakraColor : 'rgba(255,255,255,0.5)'}, transparent)`,
+                        boxShadow: `0 0 20px ${activeChakraColor !== 'white' ? activeChakraColor : 'white'}, 0 0 60px ${activeChakraColor !== 'white' ? activeChakraColor : 'white'}`
+                    }}
+                />
 
                 {CHAKRA_MEDITATION_DATA.map(chakra => {
                     const isActive = activeChakraId === chakra.id;
                     const isUnlocked = unlockedChakraId >= chakra.id || !user;
 
                     const buttonStyle: any = {
-                        borderColor: isActive ? chakra.color : (isUnlocked ? chakra.color : 'rgba(255,255,255,0.2)'),
+                        borderColor: isActive ? chakra.color : (isUnlocked ? 'rgba(255,255,255,0.15)' : 'rgba(255,255,255,0.05)'),
                         color: chakra.color,
-                        boxShadow: isActive ? `0 0 20px ${chakra.color}, inset 0 0 10px ${chakra.color}` : 'none'
+                        boxShadow: isActive ? `0 0 40px ${chakra.color}, inset 0 0 20px ${chakra.color}` : 'none',
+                        background: isActive ? `radial-gradient(circle at center, ${chakra.color}40 0%, transparent 70%)` : 'rgba(10, 10, 15, 0.6)'
                     };
 
-                    if (isActive && chakra.color) {
-                        const rgbVal = hexToRgbVal(chakra.color);
-                        if (rgbVal) {
-                            buttonStyle['--active-chakra-color-val'] = rgbVal;
-                        }
-                    }
-
                     return (
-                        <div key={chakra.id} className="absolute left-1/2 -translate-x-1/2 transition-all duration-700" style={{ top: chakra.top }}>
-                            <div className={`relative w-24 h-24 flex items-center justify-center group ${isActive ? chakra.animationClass : ''}`}>
+                        <div key={chakra.id} className="absolute left-1/2 -translate-x-1/2 transition-all duration-1000 ease-out z-20" style={{ top: chakra.top }}>
+                            <div className={`relative w-28 h-28 flex items-center justify-center group ${isActive ? 'scale-125' : 'scale-100 hover:scale-110'} transition-transform duration-500`}>
 
-                                {/* Futuristic Rotating Ring */}
-                                {isUnlocked && (
-                                    <div className="absolute inset-0 rounded-full border border-dashed opacity-50 animate-hologram-spin pointer-events-none" style={{ borderColor: chakra.color }}></div>
-                                )}
-
-                                {/* Intense Glow behind active chakra */}
+                                {/* Expanding Aura Rings */}
                                 {isActive && (
-                                    <div className="absolute inset-0 rounded-full blur-xl mix-blend-screen animate-cyber-pulse pointer-events-none" style={{ backgroundColor: chakra.color }}></div>
+                                    <>
+                                        <div className="absolute inset-0 rounded-full border-[2px] opacity-0 animate-ping shadow-xl pointer-events-none" style={{ borderColor: chakra.color, animationDuration: '3s' }}></div>
+                                        <div className="absolute inset-[-20%] rounded-full border border-dashed opacity-30 animate-spin-slow pointer-events-none" style={{ borderColor: chakra.color }}></div>
+                                    </>
                                 )}
 
                                 <button
                                     onClick={() => handleChakraClick(chakra.id)}
-                                    className={`relative z-10 w-14 h-14 rounded-full border-[1.5px] bg-black/60 backdrop-blur-md flex items-center justify-center transition-all duration-500 hover:scale-110 ${isUnlocked ? 'hover:shadow-[0_0_20px_currentColor]' : 'grayscale opacity-50'} ${isActive ? 'scale-110' : ''}`}
+                                    className={`relative z-10 w-16 h-16 rounded-full border backdrop-blur-xl flex items-center justify-center transition-all duration-500 overflow-hidden ${isUnlocked ? 'cursor-pointer hover:border-white/40' : 'grayscale opacity-30 cursor-not-allowed'}`}
                                     style={buttonStyle}
+                                    disabled={!isUnlocked}
                                 >
-                                    <img src={chakra.symbol} alt={`${chakra.name} symbol`} className={`w-10 h-10 invert transition-all duration-500 ${isActive ? 'drop-shadow-[0_0_8px_white] brightness-200' : 'brightness-150'}`} />
+                                    {/* Glass Reflection */}
+                                    <div className="absolute inset-0 rounded-full bg-gradient-to-tr from-white/5 to-white/20 z-0"></div>
+
+                                    <img
+                                        src={chakra.symbol}
+                                        alt={`${chakra.name} symbol`}
+                                        className={`w-10 h-10 object-contain z-10 invert transition-all duration-500 ${isActive ? 'drop-shadow-[0_0_12px_white] brightness-200' : 'opacity-80'}`}
+                                    />
                                 </button>
 
-                                {/* Tooltip / Node Label (Cyber style) */}
-                                <div className={`absolute left-full ml-4 px-3 py-1 bg-black/80 border border-white/20 rounded text-[10px] font-mono tracking-widest uppercase whitespace-nowrap opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none ${isActive ? 'opacity-100 border-l-2' : ''}`} style={isActive ? { borderLeftColor: chakra.color, textShadow: `0 0 5px ${chakra.color}` } : {}}>
-                                    {chakra.name}
+                                {/* Floating Label */}
+                                <div className={`absolute left-[calc(100%+1.5rem)] px-4 py-2 bg-slate-900/80 backdrop-blur-md border border-white/10 rounded-lg text-xs font-medium tracking-[0.2em] uppercase whitespace-nowrap shadow-2xl transition-all duration-500 pointer-events-none
+                                    ${isActive ? 'opacity-100 translate-x-0' : 'opacity-0 -translate-x-4 group-hover:opacity-100 group-hover:translate-x-0'}
+                                `}>
+                                    <div className="flex items-center gap-2">
+                                        <div className="w-2 h-2 rounded-full shadow-lg" style={{ backgroundColor: chakra.color, boxShadow: `0 0 10px ${chakra.color}` }}></div>
+                                        <span className="bg-gradient-to-r from-white to-white/70 bg-clip-text text-transparent drop-shadow-sm">{chakra.name}</span>
+                                    </div>
+                                    {isActive && <div className="absolute -left-1 top-1/2 -translate-y-1/2 w-2 h-2 rotate-45 border-l border-b border-white/10 bg-slate-900/80"></div>}
                                 </div>
                             </div>
                         </div>
@@ -245,47 +266,62 @@ export const ChakraSanctuary = ({ user, t }: ChakraSanctuaryProps) => {
                 {isLoading && user && <SanctuarySkeleton />}
             </div>
 
-            {/* Futuristic HUD (Heads Up Display) */}
-            <div className="absolute bottom-6 w-full max-w-4xl text-center space-y-6 px-4 z-20">
+            {/* Premium Control Center & HUD */}
+            <div className="absolute bottom-8 w-full max-w-5xl px-6 z-30 flex flex-col items-center">
 
-                {/* Narration Panel */}
-                <div className="h-28 flex flex-col items-center justify-center p-4 glass-hud rounded-2xl relative overflow-hidden transition-all duration-500" style={{ borderBottom: `2px solid ${activeChakraColor || 'rgba(255,255,255,0.1)'}` }}>
-                    {/* Scanline effect */}
-                    <div className="absolute inset-0 bg-gradient-to-b from-transparent via-white/5 to-transparent h-[200%] animate-tech-scan pointer-events-none"></div>
+                {/* Active Narration Display */}
+                <div
+                    className={`w-full max-w-2xl backdrop-blur-2xl bg-slate-900/60 rounded-3xl border transition-all duration-700 overflow-hidden relative shadow-2xl mb-6 flex flex-col items-center justify-center
+                        ${narration ? 'opacity-100 h-32 border-white/20' : 'opacity-70 h-24 border-white/5'}
+                    `}
+                    style={narration ? { boxShadow: `0 10px 40px -10px ${activeChakraColor}60, inset 0 0 30px ${activeChakraColor}20` } : {}}
+                >
+                    <div className="absolute top-0 left-0 w-full h-[1px] bg-gradient-to-r from-transparent via-white/30 to-transparent"></div>
 
                     {narration ? (
-                        <div className="animate-fade-in relative z-10">
-                            <p className="text-5xl font-bold font-serif tracking-widest drop-shadow-[0_0_15px_currentColor]" style={{ color: activeChakraColor }}>{narration.mantra}</p>
-                            <p className="text-xs font-mono tracking-widest text-white/70 mt-3 uppercase">{narration.text}</p>
+                        <div className="text-center px-6 py-4 w-full animate-fade-in-up">
+                            <p className="text-3xl md:text-5xl font-sanskrit text-white drop-shadow-[0_2px_10px_rgba(255,255,255,0.5)] mb-2" style={{ textShadow: `0 0 20px ${activeChakraColor}` }}>
+                                {narration.mantra}
+                            </p>
+                            <p className="text-sm font-medium tracking-wide text-slate-300 font-sans">
+                                {narration.text}
+                            </p>
                         </div>
                     ) : (
-                        <div className="animate-fade-in relative z-10 flex flex-col items-center">
-                            <Icon name="leaf" className="w-6 h-6 text-white/30 mb-2" />
-                            <p className="font-mono text-xs tracking-[0.2em] text-white/50 uppercase">Initialize Bio-Spiritual Interface. Select a Node.</p>
+                        <div className="text-center flex flex-col items-center opacity-60">
+                            <Icon name="meditate" className="w-6 h-6 mb-2 text-slate-400" />
+                            <p className="text-xs tracking-[0.2em] font-medium uppercase text-slate-400">Select a Chakra to begin ascension</p>
                         </div>
                     )}
                 </div>
 
-                {/* Cyber Controls */}
-                <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
+                {/* Control Actions */}
+                <div className="flex flex-wrap items-center justify-center gap-4 w-full">
                     {user && (
-                        <button onClick={() => setIsStatsPanelOpen(!isStatsPanelOpen)} className="w-full sm:w-auto btn-cyber">
-                            <span className="relative z-10 flex items-center gap-2">
-                                <Icon name="clipboard-list" className="w-4 h-4" /> System Stats
-                            </span>
+                        <button
+                            onClick={() => setIsStatsPanelOpen(!isStatsPanelOpen)}
+                            className="px-6 py-3 rounded-xl bg-white/5 hover:bg-white/10 border border-white/10 hover:border-white/30 backdrop-blur-md text-sm font-medium tracking-wide transition-all shadow-lg flex items-center gap-2 group"
+                        >
+                            <Icon name="user-circle" className="w-4 h-4 text-slate-400 group-hover:text-white transition-colors" />
+                            <span>My Journey</span>
                         </button>
                     )}
+
                     {!isGuidedMode ? (
-                        <button onClick={startGuidedMode} className="w-full sm:w-auto btn-cyber border-primary text-primary hover:bg-primary/10 hover:shadow-[0_0_15px_rgba(180,83,9,0.5)]">
-                            <span className="relative z-10 flex items-center gap-2">
-                                <Icon name="play" className="w-4 h-4" /> Auto-Sequence
-                            </span>
+                        <button
+                            onClick={startGuidedMode}
+                            className="px-8 py-3 rounded-xl bg-gradient-to-r from-indigo-600 to-violet-600 hover:from-indigo-500 hover:to-violet-500 text-white border border-indigo-400/30 backdrop-blur-md text-sm font-bold tracking-widest uppercase transition-all shadow-[0_0_20px_rgba(79,70,229,0.4)] hover:shadow-[0_0_30px_rgba(79,70,229,0.6)] flex items-center gap-2 hover:-translate-y-1"
+                        >
+                            <Icon name="play" className="w-4 h-4" />
+                            <span>Guided Ascent</span>
                         </button>
                     ) : (
-                        <button onClick={stopAll} className="w-full sm:w-auto btn-cyber border-red-500 text-red-500 hover:bg-red-500/10 hover:shadow-[0_0_15px_rgba(239,68,68,0.5)]">
-                            <span className="relative z-10 flex items-center gap-2">
-                                <Icon name="stop-circle" className="w-4 h-4" /> Terminate Link
-                            </span>
+                        <button
+                            onClick={stopAll}
+                            className="px-8 py-3 rounded-xl bg-gradient-to-r from-red-900/80 to-rose-900/80 hover:from-red-800 hover:to-rose-800 text-rose-100 border border-red-500/30 backdrop-blur-md text-sm font-bold tracking-widest uppercase transition-all shadow-[0_0_20px_rgba(225,29,72,0.3)] hover:shadow-[0_0_30px_rgba(225,29,72,0.5)] flex items-center gap-2 hover:-translate-y-1"
+                        >
+                            <Icon name="stop-circle" className="w-4 h-4" />
+                            <span>Conclude Session</span>
                         </button>
                     )}
                 </div>

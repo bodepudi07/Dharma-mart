@@ -473,7 +473,7 @@ export type IconName =
     | 'plus' | 'receipt' | 'rupee' | 'search' | 'settings' | 'shield-check' | 'shopping-bag' | 'speaker' | 'star'
     | 'plus' | 'receipt' | 'rupee' | 'search' | 'settings' | 'shield-check' | 'shopping-bag' | 'speaker' | 'star'
     | 'stop-circle' | 'sudarshana-chakra' | 'swasthika' | 'temple' | 'trash' | 'trishul' | 'truck' | 'upload' | 'user-circle'
-    | 'user-edit' | 'users' | 'users-group' | 'volume-off' | 'volume-on' | 'x' | 'zoom-in' | 'cow' | 'check' | 'package' | 'shield' | 'box' | 'zap' | 'globe' | 'sun' | 'moon';
+    | 'user-edit' | 'users' | 'users-group' | 'volume-off' | 'volume-on' | 'x' | 'zoom-in' | 'cow' | 'check' | 'package' | 'shield' | 'box' | 'zap' | 'globe' | 'sun' | 'moon' | 'droplet';
 
 export interface I18nContent {
     navHome: string;

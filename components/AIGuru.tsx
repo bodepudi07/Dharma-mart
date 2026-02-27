@@ -74,7 +74,7 @@ export const AIGuru = ({ t, temple, book, pooja, pillar, onBookPooja, onBuyItem 
         // FIX: Use Language enum instead of hardcoded string.
         api.getPoojas(Language.EN).then(setAllPoojas);
         if (currentUser) {
-            api.getUserBookings(currentUser.id).then(setUserBookings).catch(console.error);
+            api.getUserBookings(currentUser.id, currentUser.token || '').then(setUserBookings).catch(console.error);
         }
     }, [currentUser]);
 
