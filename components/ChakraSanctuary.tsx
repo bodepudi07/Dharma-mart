@@ -52,21 +52,40 @@ export const ChakraSanctuary = ({ user, t }: ChakraSanctuaryProps) => {
     const [guidedIndex, setGuidedIndex] = useState(0);
     const [narration, setNarration] = useState<{ mantra: string; text: string; } | null>(null);
     const [isStatsPanelOpen, setIsStatsPanelOpen] = useState(false);
+    const [timeLeft, setTimeLeft] = useState<number | null>(null); // Added Timer State
 
     const { addToast } = useToast();
     const { setTheme } = useTheme();
 
     const audioRef = useRef<HTMLAudioElement | null>(null);
+    const ambientAudioRef = useRef<HTMLAudioElement | null>(null); // Ambient Audio Ref
     const synthRef = useRef(window.speechSynthesis);
     const guidedModeTimer = useRef<number | null>(null);
+    const countdownTimer = useRef<number | null>(null);
 
     const stopAll = useCallback(() => {
         setIsGuidedMode(false);
         setActiveChakraId(null);
         setGuidedIndex(0);
         setNarration(null);
+        setTimeLeft(null);
         if (audioRef.current) {
             audioRef.current.pause();
+        }
+        if (ambientAudioRef.current) {
+            // Fade out ambient audio gracefully
+            let vol = ambientAudioRef.current.volume;
+            const fade = setInterval(() => {
+                if (ambientAudioRef.current && ambientAudioRef.current.volume > 0.05) {
+                    ambientAudioRef.current.volume -= 0.05;
+                } else {
+                    clearInterval(fade);
+                    if (ambientAudioRef.current) {
+                        ambientAudioRef.current.pause();
+                        ambientAudioRef.current.volume = 0.5; // reset for next time
+                    }
+                }
+            }, 100);
         }
         if (synthRef.current.speaking) {
             synthRef.current.cancel();
@@ -75,10 +94,20 @@ export const ChakraSanctuary = ({ user, t }: ChakraSanctuaryProps) => {
             clearTimeout(guidedModeTimer.current);
             guidedModeTimer.current = null;
         }
+        if (countdownTimer.current) {
+            clearInterval(countdownTimer.current);
+            countdownTimer.current = null;
+        }
     }, []);
 
     useEffect(() => {
         audioRef.current = new Audio();
+
+        // Initialize Ambient Meditation Music (Using a reliable ambient drone URL for prototype)
+        ambientAudioRef.current = new Audio('https://commondatastorage.googleapis.com/codeskulptor-assets/sounddogs/soundtrack.mp3');
+        ambientAudioRef.current.loop = true;
+        ambientAudioRef.current.volume = 0.5;
+
         // Return a cleanup function for component unmount
         return () => {
             stopAll();
@@ -89,11 +118,34 @@ export const ChakraSanctuary = ({ user, t }: ChakraSanctuaryProps) => {
         const chakra = CHAKRA_MEDITATION_DATA.find(c => c.id === chakraId);
         if (!chakra) return;
 
-        stopAll();
-        setTheme(chakra.themeName);
+        // Stop previous sequence but keep ambient playing
+        if (audioRef.current) audioRef.current.pause();
+        if (synthRef.current.speaking) synthRef.current.cancel();
 
+        setTheme(chakra.themeName);
         setActiveChakraId(chakra.id);
         setNarration({ mantra: chakra.mantra, text: `${chakra.name}: ${chakra.voiceover}` });
+        setTimeLeft(30); // 30 seconds per Chakra in guided mode
+
+        // Ensure ambient music is playing during sequence
+        if (ambientAudioRef.current && ambientAudioRef.current.paused) {
+            ambientAudioRef.current.volume = 0;
+            const playPromise = ambientAudioRef.current.play();
+            if (playPromise !== undefined) {
+                playPromise.then(() => {
+                    // Fade in
+                    let vol = 0;
+                    const fade = setInterval(() => {
+                        if (vol < 0.4 && ambientAudioRef.current) {
+                            vol += 0.05;
+                            ambientAudioRef.current.volume = vol;
+                        } else {
+                            clearInterval(fade);
+                        }
+                    }, 200);
+                }).catch(e => console.error("Ambient audio failed:", e));
+            }
+        }
 
         if (audioRef.current) {
             audioRef.current.src = chakra.audioUrl;
@@ -111,9 +163,9 @@ export const ChakraSanctuary = ({ user, t }: ChakraSanctuaryProps) => {
         const utterance = new SpeechSynthesisUtterance(chakra.voiceover);
         const voices = synthRef.current.getVoices();
         utterance.voice = voices.find(v => v.lang.startsWith('en-IN')) || voices.find(v => v.lang.startsWith('en-US')) || null;
-        utterance.rate = 0.9;
+        utterance.rate = 0.85; // slightly slower for better meditation pace
         synthRef.current.speak(utterance);
-    }, [stopAll, setTheme]);
+    }, [setTheme]);
 
 
     const handleChakraClick = (chakraId: number) => {
@@ -130,11 +182,22 @@ export const ChakraSanctuary = ({ user, t }: ChakraSanctuaryProps) => {
     useEffect(() => {
         if (isGuidedMode && guidedIndex > 0 && guidedIndex <= CHAKRA_MEDITATION_DATA.length) {
             playChakraSequence(guidedIndex);
+
+            // Setup Timer Visuals
+            if (countdownTimer.current) clearInterval(countdownTimer.current);
+            countdownTimer.current = window.setInterval(() => {
+                setTimeLeft((prev) => (prev !== null && prev > 0 ? prev - 1 : 0));
+            }, 1000);
+
+            // Setup Transition to Next Chakra
             guidedModeTimer.current = window.setTimeout(() => {
                 setGuidedIndex(prev => prev + 1);
-            }, 7000);
+            }, 30000); // Wait 30 seconds per chakra
 
-            return () => { if (guidedModeTimer.current) clearTimeout(guidedModeTimer.current) };
+            return () => {
+                if (guidedModeTimer.current) clearTimeout(guidedModeTimer.current);
+                if (countdownTimer.current) clearInterval(countdownTimer.current);
+            };
         } else if (isGuidedMode && guidedIndex > CHAKRA_MEDITATION_DATA.length) {
             stopAll();
         }
@@ -195,7 +258,7 @@ export const ChakraSanctuary = ({ user, t }: ChakraSanctuaryProps) => {
                 />
 
                 {/* Subtle Starfield / Dust effect */}
-                <div className="absolute inset-0 bg-[url('https://www.transparenttextures.com/patterns/stardust.png')] opacity-30 mix-blend-overlay"></div>
+                <div className="absolute inset-0 bg-[url('https://www.transparenttextures.com/patterns/stardust.png')] opacity-20 mix-blend-overlay"></div>
             </div>
 
             {/* Meditating Figure and Chakras Container */}
@@ -206,7 +269,7 @@ export const ChakraSanctuary = ({ user, t }: ChakraSanctuaryProps) => {
                     <img
                         src="/assets/shiva-meditating.png"
                         alt="Lord Shiva Meditating Shadow"
-                        className="w-full h-[120%] object-contain transition-all duration-1000 ease-out opacity-40 mix-blend-overlay"
+                        className="w-full h-[120%] object-contain transition-all duration-1000 ease-out opacity-25"
                         style={{
                             filter: `brightness(0) drop-shadow(0 0 40px ${activeChakraColor !== 'white' ? activeChakraColor : 'rgba(255,255,255,0.5)'}) drop-shadow(0 0 80px ${activeChakraColor !== 'white' ? activeChakraColor : 'rgba(255,255,255,0.2)'})`,
                             transform: activeChakraId ? 'scale(1.1) translateY(-5%)' : 'scale(1.05) translateY(-5%)'
@@ -288,15 +351,22 @@ export const ChakraSanctuary = ({ user, t }: ChakraSanctuaryProps) => {
                 {/* Active Narration Display */}
                 <div
                     className={`w-full max-w-2xl backdrop-blur-2xl bg-slate-900/60 rounded-3xl border transition-all duration-700 overflow-hidden relative shadow-2xl mb-6 flex flex-col items-center justify-center
-                        ${narration ? 'opacity-100 h-32 border-white/20' : 'opacity-70 h-24 border-white/5'}
+                        ${narration ? 'opacity-100 h-36 border-white/20' : 'opacity-70 h-24 border-white/5'}
                     `}
                     style={narration ? { boxShadow: `0 10px 40px -10px ${activeChakraColor}60, inset 0 0 30px ${activeChakraColor}20` } : {}}
                 >
                     <div className="absolute top-0 left-0 w-full h-[1px] bg-gradient-to-r from-transparent via-white/30 to-transparent"></div>
 
                     {narration ? (
-                        <div className="text-center px-6 py-4 w-full animate-fade-in-up">
-                            <p className="text-3xl md:text-5xl font-sanskrit text-white drop-shadow-[0_2px_10px_rgba(255,255,255,0.5)] mb-2" style={{ textShadow: `0 0 20px ${activeChakraColor}` }}>
+                        <div className="text-center px-6 py-4 w-full animate-fade-in-up relative">
+                            {/* Inner Timer Glow */}
+                            {timeLeft !== null && (
+                                <div className="absolute top-0 right-6 text-2xl font-mono text-white/50 animate-pulse font-light tracking-widest pointer-events-none" style={{ textShadow: `0 0 10px ${activeChakraColor}` }}>
+                                    00:{timeLeft < 10 ? `0${timeLeft}` : timeLeft}
+                                </div>
+                            )}
+
+                            <p className="text-3xl md:text-5xl font-sanskrit text-white drop-shadow-[0_2px_10px_rgba(255,255,255,0.5)] mb-2 mt-2" style={{ textShadow: `0 0 20px ${activeChakraColor}` }}>
                                 {narration.mantra}
                             </p>
                             <p className="text-sm font-medium tracking-wide text-slate-300 font-sans">
