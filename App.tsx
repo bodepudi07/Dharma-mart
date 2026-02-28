@@ -37,6 +37,7 @@ import { Icon } from './components/Icon';
 import { FloatingDock } from './components/FloatingDock';
 import { AnimatedBackground } from './components/AnimatedBackground';
 import { AmritCollector } from './components/AmritCollector';
+import { ErrorBoundary } from './components/ErrorBoundary';
 
 // Page Components
 import { Home } from './components/Home';
@@ -57,6 +58,7 @@ import { YatraPlannerView } from './components/YatraPlannerView';
 import { AIGuruModal } from './components/AIGuruModal';
 import { YatraQuoteModal } from './components/YatraQuoteModal';
 import { SatsangView } from './components/SatsangView';
+import { SavedInsights } from './components/SavedInsights';
 import { ChatRoom } from './components/ChatRoom';
 import { UserProfileModal } from './components/UserProfileModal';
 import { YatraPlannerModal } from './components/YatraPlannerModal';
@@ -68,6 +70,7 @@ import { CategoryModal } from './components/CategoryModal';
 import { AIShopper } from './components/AIShopper';
 import { SatvikTraceModal } from './components/SatvikTraceModal';
 import { PanchangModal } from './components/PanchangModal';
+import { StateSanctuary } from './components/StateSanctuary';
 
 
 interface PanditBookingDetails {
@@ -267,9 +270,13 @@ export const App = () => {
 
   const t = useMemo(() => I18N_DATA[language], [language]);
 
-  const setView = (newView: View, newId?: string | number) => {
+  const handleSplashFinished = useCallback(() => {
+    setShowSplash(false);
+  }, []);
+
+  const setView = useCallback((newView: View, newId?: string | number) => {
     window.location.hash = newId ? `${newView}/${newId}` : newView;
-  };
+  }, []);
 
   useEffect(() => {
     if (view === 'profile') {
@@ -555,13 +562,17 @@ export const App = () => {
         return currentUser ? <SettingsView user={currentUser} t={t} setLang={setLanguage} currentLang={language} tasks={tasks} deleteTask={handleDeleteTask} categories={categories} addCategory={addCategory} updateCategory={updateCategory} deleteCategory={deleteCategory} notificationPermission={notificationPermission} requestNotificationPermission={requestNotificationPermission} /> : <Home t={t} language={language} onDarshanClick={handleDarshanClick} {...yatraPlanProps} />;
       case 'dashboard':
         return currentUser?.role === 'admin' ? <AdminDashboard t={t} /> : <Home t={t} language={language} onDarshanClick={handleDarshanClick} {...yatraPlanProps} />;
+      case 'savedInsights':
+        return currentUser ? <SavedInsights t={t} /> : <Home t={t} language={language} onDarshanClick={handleDarshanClick} {...yatraPlanProps} />;
+      case 'stateSanctuary':
+        return <StateSanctuary t={t} />;
       default:
         return <Home t={t} language={language} onDarshanClick={handleDarshanClick} {...yatraPlanProps} />;
     }
   };
 
   if (showSplash) {
-    return <SplashScreen onFinished={() => setShowSplash(false)} />;
+    return <SplashScreen onFinished={handleSplashFinished} />;
   }
 
   return (
@@ -603,18 +614,20 @@ export const App = () => {
               <Icon name="lotus" className="h-16 w-16 text-primary animate-spin" />
             </div>
           ) : (
-            <AnimatePresence mode="wait">
-              <motion.div
-                key={view + (id || '')}
-                initial={{ opacity: 0, y: 10 }}
-                animate={{ opacity: 1, y: 0 }}
-                exit={{ opacity: 0, y: -10 }}
-                transition={{ duration: 0.3, ease: "easeOut" }}
-                className="h-full"
-              >
-                {renderView()}
-              </motion.div>
-            </AnimatePresence>
+            <ErrorBoundary>
+              <AnimatePresence mode="wait">
+                <motion.div
+                  key={view + (id || '')}
+                  initial={{ opacity: 0, y: 10 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  exit={{ opacity: 0, y: -10 }}
+                  transition={{ duration: 0.3, ease: "easeOut" }}
+                  className="h-full"
+                >
+                  {renderView()}
+                </motion.div>
+              </AnimatePresence>
+            </ErrorBoundary>
           )}
         </main>
       </div>

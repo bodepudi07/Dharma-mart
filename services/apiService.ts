@@ -942,6 +942,55 @@ export const approvePandit = async (panditId: number, token: string): Promise<{ 
     return response.json();
 };
 
+// --- Chat History & Bookmarks ---
+
+export const getChatHistory = async (userId: number, token: string): Promise<any[]> => {
+    const response = await fetch(`/api/chats/history/${userId}`, {
+        headers: { 'Authorization': `Bearer ${token}` }
+    });
+    if (!response.ok) return [];
+    return response.json();
+};
+
+export const saveChatHistory = async (messages: any[], token: string): Promise<void> => {
+    await fetch('/api/chats/history', {
+        method: 'POST',
+        headers: {
+            'Authorization': `Bearer ${token}`,
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({ messages })
+    });
+};
+
+export const getBookmarks = async (userId: number, token: string): Promise<any[]> => {
+    const response = await fetch(`/api/chats/bookmarks/${userId}`, {
+        headers: { 'Authorization': `Bearer ${token}` }
+    });
+    if (!response.ok) return [];
+    return response.json();
+};
+
+export const saveBookmark = async (text: string, context: string, token: string): Promise<any> => {
+    const response = await fetch('/api/chats/bookmarks', {
+        method: 'POST',
+        headers: {
+            'Authorization': `Bearer ${token}`,
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({ text, context })
+    });
+    if (!response.ok) throw new Error("Failed to save bookmark.");
+    return response.json();
+};
+
+export const deleteBookmark = async (id: number, token: string): Promise<void> => {
+    await fetch(`/api/chats/bookmarks/${id}`, {
+        method: 'DELETE',
+        headers: { 'Authorization': `Bearer ${token}` }
+    });
+};
+
 export const rejectPandit = async (panditId: number, token: string): Promise<{ message: string }> => {
     const response = await fetch(`/api/admin/reject-pandit/${panditId}`, {
         method: 'POST',

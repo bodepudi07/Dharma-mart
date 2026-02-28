@@ -306,7 +306,7 @@ export interface Task {
     categoryId?: number;
 }
 
-export type View = 'home' | 'dashboard' | 'templeDetail' | 'temples' | 'poojas' | 'yatras' | 'knowledge' | 'events' | 'eventDetail' | 'profile' | 'bookReader' | 'search' | 'chantingZone' | 'settings' | 'chakraSanctuary' | 'yatraPlanner' | 'satsang';
+export type View = 'home' | 'dashboard' | 'templeDetail' | 'temples' | 'poojas' | 'yatras' | 'knowledge' | 'events' | 'eventDetail' | 'profile' | 'bookReader' | 'search' | 'chantingZone' | 'settings' | 'chakraSanctuary' | 'yatraPlanner' | 'satsang' | 'savedInsights' | 'stateSanctuary';
 export type ContentType = 'temples' | 'poojas' | 'yatras' | 'events';
 export type ModalType = 'login' | 'uploadTemple' | 'yatraDetail' | 'liveDarshan' | 'vrDarshan' | 'darshanBooking' | 'poojaBooking' | 'panditBooking' | 'donation' | 'crowdAlert' | 'panditAdmin' | 'confirmation' | 'bookAdmin' | 'eventAdmin' | 'festivalAdmin' | 'imageDetail' | 'poojaAdmin' | 'yatraAdmin' | 'userAdmin' | 'manageTemplePoojas' | 'meditation' | 'yatraBooking' | 'bookingConfirmation' | 'aiGuruChat' | 'yatraQuote' | 'userProfile' | 'yatraPlan' | 'postCreation' | 'panditRegistration' | 'task' | 'category' | 'aiShopper' | 'satvikTrace' | 'ecoInnovation' | 'panchang';
 
@@ -473,7 +473,7 @@ export type IconName =
     | 'plus' | 'receipt' | 'rupee' | 'search' | 'settings' | 'shield-check' | 'shopping-bag' | 'speaker' | 'star'
     | 'plus' | 'receipt' | 'rupee' | 'search' | 'settings' | 'shield-check' | 'shopping-bag' | 'speaker' | 'star'
     | 'stop-circle' | 'sudarshana-chakra' | 'swasthika' | 'temple' | 'trash' | 'trishul' | 'truck' | 'upload' | 'user-circle'
-    | 'user-edit' | 'users' | 'users-group' | 'volume-off' | 'volume-on' | 'x' | 'zoom-in' | 'cow' | 'check' | 'package' | 'shield' | 'box' | 'zap' | 'globe' | 'sun' | 'moon' | 'droplet';
+    | 'user-edit' | 'users' | 'users-group' | 'volume-off' | 'volume-on' | 'x' | 'zoom-in' | 'cow' | 'check' | 'package' | 'shield' | 'box' | 'zap' | 'globe' | 'sun' | 'moon' | 'droplet' | 'heart' | 'heart-filled' | 'copy' | 'chat' | 'lock' | 'info-circle';
 
 export interface I18nContent {
     navHome: string;

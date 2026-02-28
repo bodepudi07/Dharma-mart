@@ -121,7 +121,7 @@ router.post('/login', async (req, res) => {
 });
 
 // Verify token
-router.get('/verify', (req, res) => {
+router.get('/verify', async (req, res) => {
     const token = req.headers.authorization?.split(' ')[1];
 
     if (!token) {
@@ -133,7 +133,17 @@ router.get('/verify', (req, res) => {
             throw new Error('JWT_SECRET is not defined in environment variables');
         }
         const decoded = jwt.verify(token, process.env.JWT_SECRET);
-        res.json({ valid: true, user: decoded });
+
+        // Fetch full user data
+        const users = await readDataFile('users.json');
+        const user = users.find(u => u.id === decoded.id);
+
+        if (!user) {
+            return res.status(401).json({ error: 'User not found' });
+        }
+
+        const { password: _, ...userWithoutPassword } = user;
+        res.json({ valid: true, user: { ...userWithoutPassword, token } });
     } catch (error) {
         res.status(401).json({ error: 'Invalid or expired token' });
     }

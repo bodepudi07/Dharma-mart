@@ -142,6 +142,7 @@ export const Sidebar = ({ currentLang, setLang, t, onLoginClick, onSetView, curr
         { view: 'home', label: t.navHome, icon: 'home' },
         { view: 'chakraSanctuary', label: t.navChakraSanctuary, icon: 'chakra' },
         { view: 'temples', label: t.navTemples, icon: 'temple' },
+        { view: 'stateSanctuary', label: 'Local Sanctuary', icon: 'map-pin' },
         { view: 'events', label: t.navEvents, icon: 'users-group' },
         { view: 'poojas', label: t.navPoojaServices, icon: 'bell' },
         { view: 'yatraPlanner', label: t.navYatras, icon: 'compass' },
@@ -196,6 +197,14 @@ export const Sidebar = ({ currentLang, setLang, t, onLoginClick, onSetView, curr
                         isActive={currentView === 'dashboard'}
                         label={t.navDashboard}
                         icon={<Icon name="clipboard-list" className="w-6 h-6" />}
+                    />
+                )}
+                {currentUser && (
+                    <NavLink
+                        onClick={() => handleLinkClick('savedInsights')}
+                        isActive={currentView === 'savedInsights'}
+                        label="Saved Insights"
+                        icon={<Icon name="heart" className="w-6 h-6" />}
                     />
                 )}
             </nav>

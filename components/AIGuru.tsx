@@ -47,36 +47,41 @@ export const AIGuru = ({ t, temple, book, pooja, pillar, onBookPooja, onBuyItem 
         return `🙏 Swagatam! I am Deva-GPT, your digital sevak. Ask me any question about dharma, philosophy, or rituals.`;
     };
 
-    const [messages, setMessages] = useState<Message[]>(() => {
-        try {
-            if (temple || book || pooja || pillar) { // Contextual chats are not persisted
-                return [{ role: 'guru', text: getGreeting() }];
-            }
-            const savedMessages = localStorage.getItem(CHAT_HISTORY_KEY);
-            return savedMessages ? JSON.parse(savedMessages) : [{ role: 'guru', text: getGreeting() }];
-        } catch (error) {
-            console.error("Failed to parse chat history", error);
-            return [{ role: 'guru', text: getGreeting() }];
-        }
-    });
-
+    const [messages, setMessages] = useState<Message[]>([]);
     const [query, setQuery] = useState('');
     const [isLoading, setIsLoading] = useState(false);
     const [error, setError] = useState('');
     const [recommendations, setRecommendations] = useState<ShoppingRecommendation[]>([]);
     const [allPoojas, setAllPoojas] = useState<Pooja[]>([]);
     const [userBookings, setUserBookings] = useState<any[]>([]);
+    const [bookmarks, setBookmarks] = useState<any[]>([]);
 
     const messagesEndRef = useRef<HTMLDivElement>(null);
     const chatContainerRef = useRef<HTMLDivElement>(null);
 
     useEffect(() => {
-        // FIX: Use Language enum instead of hardcoded string.
         api.getPoojas(Language.EN).then(setAllPoojas);
-        if (currentUser) {
-            api.getUserBookings(currentUser.id, currentUser.token || '').then(setUserBookings).catch(console.error);
+        if (currentUser?.token) {
+            api.getUserBookings(currentUser.id, currentUser.token).then(setUserBookings).catch(console.error);
+            api.getBookmarks(currentUser.id, currentUser.token).then(setBookmarks).catch(console.error);
+
+            if (!temple && !book && !pooja && !pillar) {
+                api.getChatHistory(currentUser.id, currentUser.token).then(history => {
+                    if (history && history.length > 0) {
+                        setMessages(history);
+                    } else {
+                        setMessages([{ role: 'guru', text: getGreeting() }]);
+                    }
+                }).catch(() => {
+                    setMessages([{ role: 'guru', text: getGreeting() }]);
+                });
+            } else {
+                setMessages([{ role: 'guru', text: getGreeting() }]);
+            }
+        } else {
+            setMessages([{ role: 'guru', text: getGreeting() }]);
         }
-    }, [currentUser]);
+    }, [currentUser, temple, book, pooja, pillar]);
 
     useEffect(() => {
         const container = chatContainerRef.current;
@@ -86,14 +91,24 @@ export const AIGuru = ({ t, temple, book, pooja, pillar, onBookPooja, onBuyItem 
     }, [messages, isLoading]);
 
     useEffect(() => {
-        if (!temple && !book && !pooja && !pillar) {
-            try {
-                localStorage.setItem(CHAT_HISTORY_KEY, JSON.stringify(messages));
-            } catch (error) {
-                console.error("Failed to save chat history", error);
-            }
+        if (!temple && !book && !pooja && !pillar && currentUser?.token && messages.length > 1) {
+            api.saveChatHistory(messages, currentUser.token).catch(console.error);
         }
-    }, [messages, temple, book, pooja, pillar]);
+    }, [messages, temple, book, pooja, pillar, currentUser]);
+
+    const handleBookmark = async (text: string) => {
+        if (!currentUser?.token) {
+            openModal('login');
+            return;
+        }
+        try {
+            const contextStr = temple ? `Temple: ${temple.name}` : book ? `Scripture: ${book.name}` : pooja ? `Pooja: ${pooja.name}` : 'General Chat';
+            const { bookmark } = await api.saveBookmark(text, contextStr, currentUser.token);
+            setBookmarks(prev => [...prev, bookmark]);
+        } catch (err) {
+            console.error("Failed to save bookmark", err);
+        }
+    };
 
     const handleQuerySubmit = async (queryString: string) => {
         if (!queryString.trim() || isLoading) return;
@@ -201,12 +216,21 @@ export const AIGuru = ({ t, temple, book, pooja, pillar, onBookPooja, onBuyItem 
                 {messages.map((msg, index) => (
                     <div key={index} className={`flex items-start gap-3 my-4 ${msg.role === 'user' ? 'justify-end' : 'justify-start'}`}>
                         {msg.role === 'guru' && <Icon name="cosmic-logo" className="w-8 h-8 text-primary flex-shrink-0 mt-1" />}
-                        <div className={`max-w-md ${msg.role === 'user' ? 'order-2' : ''}`}>
-                            <div className={`p-3 rounded-2xl shadow-sm animate-fade-in ${msg.role === 'user' ? 'ai-guru-chat-bubble-user rounded-br-none' : 'ai-guru-chat-bubble-guru rounded-bl-none'}`}>
+                        <div className={`max-w-md ${msg.role === 'user' ? 'order-2' : ''} group`}>
+                            <div className={`p-3 rounded-2xl shadow-sm animate-fade-in relative ${msg.role === 'user' ? 'ai-guru-chat-bubble-user rounded-br-none' : 'ai-guru-chat-bubble-guru rounded-bl-none'}`}>
                                 <p className="whitespace-pre-wrap text-base">
                                     {msg.text}
                                     {isLoading && msg.role === 'guru' && index === messages.length - 1 && <span className="blinking-cursor">▍</span>}
                                 </p>
+                                {msg.role === 'guru' && !isLoading && (
+                                    <button
+                                        onClick={() => handleBookmark(msg.text)}
+                                        className="absolute -right-2 -bottom-2 p-1.5 bg-white rounded-full shadow-md border border-orange-200 text-orange-500 opacity-0 group-hover:opacity-100 transition-opacity hover:scale-110 active:scale-95"
+                                        title="Save this insight"
+                                    >
+                                        <Icon name={bookmarks.some(b => b.text === msg.text) ? "heart-filled" : "heart"} className="w-4 h-4" />
+                                    </button>
+                                )}
                             </div>
                         </div>
                         {msg.role === 'user' && <Icon name="user-circle" className="w-8 h-8 text-primary flex-shrink-0" />}

@@ -20,6 +20,7 @@ import booksRoute from './routes/books.js';
 import adminRoute from './routes/admin.js';
 import bookingsRoute from './routes/bookings.js';
 import usersRoute from './routes/users.js';
+import chatsRoute from './routes/chats.js';
 
 // Create express app
 const app = express();
@@ -64,6 +65,7 @@ app.use('/api/books', booksRoute);
 app.use('/api/admin', adminRoute);
 app.use('/api/bookings', bookingsRoute);
 app.use('/api/users', usersRoute);
+app.use('/api/chats', chatsRoute);
 
 // Serve frontend build (for production)
 // app.use(express.static(path.join(__dirname, '../dist')));

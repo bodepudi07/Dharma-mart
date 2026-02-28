@@ -13,13 +13,10 @@ export const useHashRouter = (): Route => {
         const handleHashChange = () => {
             setCurrentHash(window.location.hash);
         };
-
         window.addEventListener('hashchange', handleHashChange);
-        return () => {
-            window.removeEventListener('hashchange', handleHashChange);
-        };
+        return () => window.removeEventListener('hashchange', handleHashChange);
     }, []);
-    
+
     const hash = currentHash.replace(/^#\/?|\/$/g, ''); // Clean the hash
     const parts = hash.split('/');
 

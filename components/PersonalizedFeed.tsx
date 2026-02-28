@@ -30,29 +30,29 @@ export const PersonalizedFeed = ({ t, language }: PersonalizedFeedProps) => {
     const { feed, isLoading } = usePersonalizedFeed(language);
     const { openModal } = useModal();
 
-    const title = currentUser 
-        ? t.feedForYou.replace('{name}', currentUser.name.split(' ')[0]) 
+    const title = currentUser?.name
+        ? t.feedForYou.replace('{name}', currentUser.name.split(' ')[0])
         : t.feedDiscover;
 
     if (isLoading) {
         return (
             <Section id="personalized-feed" title={title} icon={<Icon name="star" className="w-8 h-8" />}>
-                 <div className="flex overflow-x-auto space-x-6 carousel-container pb-4 -mx-4 px-4">
+                <div className="flex overflow-x-auto space-x-6 carousel-container pb-4 -mx-4 px-4">
                     {[...Array(5)].map((_, i) => <RecommendationCardSkeleton key={i} />)}
                 </div>
             </Section>
         );
     }
-    
+
     if (!feed || feed.length === 0) {
         return null; // Don't show the section if there's nothing to recommend
     }
-    
+
     return (
         <Section id="personalized-feed" title={title} icon={<Icon name="star" className="w-8 h-8" />}>
             <div className="flex overflow-x-auto space-x-6 carousel-container pb-4 -mx-4 px-4">
                 {feed.map((item, index) => (
-                    <RecommendationCard 
+                    <RecommendationCard
                         key={`${item.type}-${item.item.id}-${index}`}
                         feedItem={item}
                         t={t}

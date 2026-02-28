@@ -74,7 +74,8 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
   const login = async (email: string, pass: string, rememberMe: boolean) => {
     setIsLoading(true);
     try {
-      const { user } = await api.loginUser(email, pass);
+      const response = await api.loginUser(email, pass);
+      const user = { ...response.user, token: (response as any).token };
       setCurrentUser(user);
 
       // Clear both storages before setting to prevent conflicts
@@ -98,7 +99,8 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
   const signup = async (name: string, email: string, pass: string) => {
     setIsLoading(true);
     try {
-      const { user } = await api.registerUser(name, email, pass);
+      const response = await api.registerUser(name, email, pass);
+      const user = { ...response.user, token: (response as any).token };
       setCurrentUser(user);
       // Signup defaults to "remember me" for a better first-time experience
       saveUserToStorage(user, localStorage);

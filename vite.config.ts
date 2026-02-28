@@ -12,6 +12,13 @@ export default defineConfig(({ mode }) => {
       host: '0.0.0.0',
       // Serve /data folder as static files so the app works without starting the backend server
       middlewareMode: false,
+      proxy: {
+        '/api': {
+          target: 'http://localhost:5000',
+          changeOrigin: true,
+          secure: false,
+        },
+      },
     },
     preview: {
       port: 4173,
