@@ -4,11 +4,11 @@
   "version": "0.0.0",
   "type": "module",
   "scripts": {
-    "dev": "vite",
-    "build": "vite build",
-    "lint": "tsc --noEmit",
-    "preview": "vite preview",
-    "server": "node --env-file=.env server/index.js",
+    "dev": "vite frontend",
+    "build": "vite build frontend",
+    "lint": "tsc -p frontend/tsconfig.json --noEmit",
+    "preview": "vite preview frontend",
+    "server": "node --env-file=.env backend/index.js",
     "dev:fullstack": "concurrently \"npm run dev\" \"npm run server\"",
     "preview:fullstack": "concurrently \"npm run preview\" \"npm run server\""
   },

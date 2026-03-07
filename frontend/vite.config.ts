@@ -5,7 +5,7 @@ import tailwindcss from '@tailwindcss/vite';
 import fs from 'fs';
 
 export default defineConfig(({ mode }) => {
-  const env = loadEnv(mode, '.', '');
+  const env = loadEnv(mode, '../', '');
   return {
     server: {
       port: 3000,
@@ -32,7 +32,7 @@ export default defineConfig(({ mode }) => {
         name: 'serve-data-directory',
         configureServer(server) {
           server.middlewares.use('/data', (req, res, next) => {
-            const dataDir = path.resolve(__dirname, 'data');
+            const dataDir = path.resolve(__dirname, '../data');
             const filePath = path.join(dataDir, req.url || '');
 
             // Security: ensure we don't escape the data directory
@@ -68,7 +68,7 @@ export default defineConfig(({ mode }) => {
     },
     resolve: {
       alias: {
-        '@': path.resolve(__dirname, '.'),
+        '@': path.resolve(__dirname, './src'),
       }
     }
   };
