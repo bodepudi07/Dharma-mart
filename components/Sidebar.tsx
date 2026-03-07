@@ -148,6 +148,8 @@ export const Sidebar = ({ currentLang, setLang, t, onLoginClick, onSetView, curr
         { view: 'yatraPlanner', label: t.navYatras, icon: 'compass' },
         { view: 'knowledge', label: t.navKnowledge, icon: 'book-open' },
         { view: 'chantingZone', label: t.navChantingZone, icon: 'om' },
+        { view: 'restorationSanctuary', label: 'Dharma Uddhar', icon: 'heart-hand' },
+        { view: 'divyaMarga', label: 'Divya Marga', icon: 'video' },
         { view: 'satsang', label: t.navSatsang, icon: 'users' },
     ];
 

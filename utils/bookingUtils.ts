@@ -1,4 +1,3 @@
-
 import { Pandit, Booking } from '../types';
 
 export interface AvailabilityStatus {
@@ -58,7 +57,7 @@ export const isPanditAvailable = (
     for (const workPeriod of pandit.availability.hours) {
         const [startH, startM] = workPeriod.start.split(':').map(Number);
         const [endH, endM] = workPeriod.end.split(':').map(Number);
-        
+
         const workStartDateTime = new Date(requestedDateTime);
         workStartDateTime.setHours(startH, startM, 0, 0);
 
@@ -69,7 +68,7 @@ export const isPanditAvailable = (
         if (workEndDateTime.getTime() <= workStartDateTime.getTime()) {
             workEndDateTime.setDate(workEndDateTime.getDate() + 1);
         }
-        
+
         // If the requested time starts before the work shift begins, but spans overnight into the next day's shift start
         // we need to adjust the start time as well to check against the previous day's overnight shift.
         const adjustedWorkStartDateTime = new Date(workStartDateTime);
@@ -88,9 +87,9 @@ export const isPanditAvailable = (
     }
 
     // 3. Check for booking conflicts
-    const panditBookings = allBookings.filter(b => 
-        ((b.type === 'pandit' && b.itemId === pandit.id) || 
-        (b.type === 'pooja' && b.panditId === pandit.id)) && b.bookingDate
+    const panditBookings = allBookings.filter(b =>
+        ((b.type === 'pandit' && b.itemId === pandit.id) ||
+            (b.type === 'pooja' && b.panditId === pandit.id)) && b.bookingDate
     );
 
     for (const booking of panditBookings) {
@@ -98,14 +97,15 @@ export const isPanditAvailable = (
 
         // Create a full Date object for the start of the existing booking
         const bookingStartDateTime = new Date(`${booking.bookingDate}T${booking.timeSlot.split(' - ')[0]}:00`);
-        
+
         const bookingStartMillis = bookingStartDateTime.getTime();
-// FIX: Use the actual duration of the booked pooja, not a hardcoded value.
+        // FIX: Use the actual duration of the booked pooja, not a hardcoded value.
         const bookingDurationMinutes = booking.durationMinutes || 60; // Fallback to 60 mins if not present
         const bookingEndMillis = bookingStartMillis + bookingDurationMinutes * 60 * 1000;
 
-        // Check for overlap: (StartA < EndB) and (EndA > StartB)
-        if (requestedStartMillis < bookingEndMillis && requestedEndMillis > bookingStartMillis) {
+        // Check for overlap: (StartA < EndB + Buffer) and (EndA + Buffer > StartB)
+        const BUFFER_MILLIS = 30 * 60 * 1000; // 30 minute buffer
+        if (requestedStartMillis < (bookingEndMillis + BUFFER_MILLIS) && (requestedEndMillis + BUFFER_MILLIS) > bookingStartMillis) {
             return { available: false, reason: 'BOOKING_CONFLICT' };
         }
     }

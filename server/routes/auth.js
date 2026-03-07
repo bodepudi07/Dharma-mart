@@ -1,37 +1,9 @@
 import express from 'express';
-import { promises as fs } from 'fs';
-import path from 'path';
-import { fileURLToPath } from 'url';
-import { dirname } from 'path';
 import bcrypt from 'bcryptjs';
 import jwt from 'jsonwebtoken';
-
-const __filename = fileURLToPath(import.meta.url);
-const __dirname = dirname(__filename);
+import db from '../db.js';
 
 const router = express.Router();
-
-// Helper function to read and write JSON data
-const readDataFile = async (filename) => {
-    try {
-        const dataPath = path.join(__dirname, '../../data', filename);
-        const data = await fs.readFile(dataPath, 'utf8');
-        return JSON.parse(data);
-    } catch (error) {
-        console.error(`Error reading ${filename}:`, error);
-        return [];
-    }
-};
-
-const writeDataFile = async (filename, data) => {
-    try {
-        const dataPath = path.join(__dirname, '../../data', filename);
-        await fs.writeFile(dataPath, JSON.stringify(data, null, 2));
-    } catch (error) {
-        console.error(`Error writing ${filename}:`, error);
-        throw error;
-    }
-};
 
 // Register a new user
 router.post('/register', async (req, res) => {
@@ -42,8 +14,7 @@ router.post('/register', async (req, res) => {
             return res.status(400).json({ error: 'Name, email, and password are required' });
         }
 
-        const users = await readDataFile('users.json');
-        const existingUser = users.find(u => u.email === email);
+        const existingUser = await db.findOne('users.json', u => u.email === email);
 
         if (existingUser) {
             return res.status(409).json({ error: 'User already exists' });
@@ -51,7 +22,6 @@ router.post('/register', async (req, res) => {
 
         const hashedPassword = await bcrypt.hash(password, 10);
         const newUser = {
-            id: users.length > 0 ? Math.max(...users.map(u => u.id)) + 1 : 1,
             name,
             email,
             password: hashedPassword,
@@ -60,11 +30,10 @@ router.post('/register', async (req, res) => {
             createdAt: new Date().toISOString()
         };
 
-        users.push(newUser);
-        await writeDataFile('users.json', users);
+        const insertedUser = await db.insert('users.json', newUser);
 
         // Return user data without password
-        const { password: _, ...userWithoutPassword } = newUser;
+        const { password: _, ...userWithoutPassword } = insertedUser;
         res.status(201).json({
             message: 'User registered successfully',
             user: userWithoutPassword
@@ -84,8 +53,7 @@ router.post('/login', async (req, res) => {
             return res.status(400).json({ error: 'Email and password are required' });
         }
 
-        const users = await readDataFile('users.json');
-        const user = users.find(u => u.email === email);
+        const user = await db.findOne('users.json', u => u.email === email);
 
         if (!user) {
             return res.status(401).json({ error: 'Invalid credentials' });
@@ -134,9 +102,7 @@ router.get('/verify', async (req, res) => {
         }
         const decoded = jwt.verify(token, process.env.JWT_SECRET);
 
-        // Fetch full user data
-        const users = await readDataFile('users.json');
-        const user = users.find(u => u.id === decoded.id);
+        const user = await db.findOne('users.json', u => u.id === decoded.id);
 
         if (!user) {
             return res.status(401).json({ error: 'User not found' });

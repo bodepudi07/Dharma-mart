@@ -1141,6 +1141,7 @@
     "id": 154,
     "name": "ज्ञान सरस्वती मंदिर, बासर",
     "location": "बासर, तेलंगाना",
+    "region": "Telangana",
     "history": "ज्ञान, संगीत और कला की हिंदू देवी सरस्वती को समर्पित बहुत कम मंदिरों में से एक। अक्षरभ्यासम करने के लिए एकदम सही विकल्प।",
     "imageUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/7/70/Basar_Saraswathi_Temple.jpg/800px-Basar_Saraswathi_Temple.jpg",
     "lat": 18.8833,
@@ -1160,6 +1161,7 @@
     "id": 155,
     "name": "कर्मनघाट हनुमान मंदिर",
     "location": "हैदराबाद, तेलंगाना",
+    "region": "Telangana",
     "history": "12वीं शताब्दी ईस्वी में निर्मित, भगवान हनुमान को समर्पित यह ऐतिहासिक मंदिर हैदराबाद के बीचों-बीच असाधारण शांति और आध्यात्मिक शक्ति प्रदान करता है।",
     "imageUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/e/e0/Karmanghat_Hanuman_Temple.jpg/800px-Karmanghat_Hanuman_Temple.jpg",
     "lat": 17.3486,
@@ -1212,5 +1214,245 @@
     ],
     "estimatedCost": 350,
     "estimatedDays": 1
+  },
+  {
+    "id": 500,
+    "name": "वेमुलावाड़ा राजराजेश्वर स्वामी मंदिर",
+    "location": "वेमुलावाड़ा, तेलंगाना",
+    "region": "Telangana",
+    "history": "'दक्षिण काशी' के रूप में प्रसिद्ध, भगवान शिव को समर्पित यह प्राचीन मंदिर अपनी अनूठी परंपरा के लिए जाना जाता है जहाँ भक्त मन्नत के रूप में एक बैल (कोडे मोक्कू) बांधते हैं। यह चालुक्यों की समृद्ध वास्तुकला विरासत का प्रतिनिधित्व करने वाला एक महत्वपूर्ण तीर्थ केंद्र है।",
+    "imageUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/c/c5/Vemulawada_Temple.jpg/800px-Vemulawada_Temple.jpg",
+    "lat": 18.4633,
+    "lng": 78.8711,
+    "crowdLevel": "High",
+    "darshanTimings": "सुबह 4:00 - रात 9:00",
+    "deity": "श्री राजराजेश्वर स्वामी",
+    "tags": [
+      "shiva",
+      "chalukya",
+      "historical",
+      "telangana"
+    ],
+    "estimatedCost": 500,
+    "estimatedDays": 1
+  },
+  {
+    "id": 501,
+    "name": "रामप्पा मंदिर",
+    "location": "पालमपेट, तेलंगाना",
+    "region": "Telangana",
+    "history": "यूनेस्को की विश्व धरोहर स्थल, रामप्पा मंदिर काकतीय युग की वास्तुकला का एक उत्कृष्ट नमूना है। इसके शिल्पकार रामप्पा के नाम पर रखा गया यह मंदिर, 'तैरती हुई ईंटों', उत्कृष्ट नक्काशी और विशाल नंदी मूर्ति के लिए प्रसिद्ध है जो हर कोण से आपको देखती हुई प्रतीत होती है।",
+    "imageUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/a/a2/Ramappa_Temple_Main.jpg/800px-Ramappa_Temple_Main.jpg",
+    "lat": 18.2614,
+    "lng": 79.9431,
+    "crowdLevel": "Medium",
+    "darshanTimings": "सुबह 6:00 - शाम 6:00",
+    "deity": "रामलिंगेश्वर स्वामी",
+    "tags": [
+      "shiva",
+      "unesco",
+      "kakatiya",
+      "heritage",
+      "telangana"
+    ],
+    "estimatedCost": 600,
+    "estimatedDays": 1
+  },
+  {
+    "id": 502,
+    "name": "हज़ार स्तंभ मंदिर",
+    "location": "हनमकोंडा, तेलंगाना",
+    "region": "Telangana",
+    "history": "1163 ईस्वी में राजा रुद्र देव द्वारा निर्मित यह मंदिर काकतीय वास्तुकला का एक शानदार उदाहरण है। शिव, विष्णु और सूर्य (त्रिकुटाल्यम) को समर्पित इस मंदिर में जटिल नक्काशीदार स्तंभ और एक भव्य अखंड नंदी है।",
+    "imageUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/2/23/Thousand_Pillar_Temple_Hanamkonda.jpg/800px-Thousand_Pillar_Temple_Hanamkonda.jpg",
+    "lat": 18.0163,
+    "lng": 79.5786,
+    "crowdLevel": "Medium",
+    "darshanTimings": "सुबह 6:00 - रात 8:00",
+    "deity": "शिव, विष्णु, सूर्य",
+    "tags": [
+      "shiva",
+      "vishnu",
+      "surya",
+      "kakatiya",
+      "historical",
+      "telangana"
+    ],
+    "estimatedCost": 300,
+    "estimatedDays": 1
+  },
+  {
+    "id": 503,
+    "name": "कीसरगुट्टा मंदिर",
+    "location": "कीसरा, तेलंगाना",
+    "region": "Telangana",
+    "history": "एक पहाड़ी पर स्थित, श्री रामलिंगेश्वर स्वामी मंदिर माना जाता है कि भगवान राम द्वारा स्थापित किया गया था। यह मंदिर अपने चारों ओर पाए जाने वाले हजारों शिवलिंगों के लिए प्रसिद्ध है, जो इसे हैदराबाद के पास एक अनूठा आध्यात्मिक गंतव्य बनाता है।",
+    "imageUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/e/e4/Keesaragutta_Temple_Entrance.jpg/800px-Keesaragutta_Temple_Entrance.jpg",
+    "lat": 17.5255,
+    "lng": 78.6758,
+    "crowdLevel": "High",
+    "darshanTimings": "सुबह 6:00 - शाम 7:30",
+    "deity": "भगवान शिव (रामलिंगेश्वर)",
+    "tags": [
+      "shiva",
+      "rama",
+      "hilltop",
+      "telangana"
+    ],
+    "estimatedCost": 400,
+    "estimatedDays": 1
+  },
+  {
+    "id": 504,
+    "name": "बिड़ला मंदिर",
+    "location": "हैदराबाद, तेलंगाना",
+    "region": "Telangana",
+    "history": "280 फीट ऊँची नौबत पहाड़ पहाड़ी पर निर्मित, यह शानदार सफेद संगमरमर का मंदिर भगवान वेंकटेश्वर को समर्पित है। यह दक्षिण भारतीय और राजस्थानी वास्तुकला शैलियों का मिश्रण है और शहर तथा हुसैन सागर झील का मनोरम दृश्य प्रदान करता है।",
+    "imageUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/4/4b/Birla_Mandir_Hyderabad_Main.jpg/800px-Birla_Mandir_Hyderabad_Main.jpg",
+    "lat": 17.4062,
+    "lng": 78.4691,
+    "crowdLevel": "Very High",
+    "darshanTimings": "सुबह 7:00 - दोपहर 12:00, दोपहर 3:00 - रात 9:00",
+    "deity": "भगवान वेंकटेश्वर",
+    "tags": [
+      "vishnu",
+      "marble",
+      "city-gem",
+      "hilltop",
+      "telangana"
+    ],
+    "estimatedCost": 200,
+    "estimatedDays": 0.5
+  },
+  {
+    "id": 505,
+    "name": "जगन्नाथ मंदिर, हैदराबाद",
+    "location": "बंजारा हिल्स, हैदराबाद, तेलंगाना",
+    "region": "Telangana",
+    "history": "लाल बलुआ पत्थर में निर्मित यह आधुनिक वास्तुशिल्प चमत्कार, मूल पुरी जगन्नाथ मंदिर की प्रतिकृति है। यह अपनी जटिल नक्काशी और वार्षिक रथ यात्रा के लिए प्रसिद्ध है जो शहर में हजारों भक्तों को आकर्षित करती है।",
+    "imageUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/c/cd/Jagannath_Temple_Hyderabad.jpg/800px-Jagannath_Temple_Hyderabad.jpg",
+    "lat": 17.419,
+    "lng": 78.435,
+    "crowdLevel": "High",
+    "darshanTimings": "सुबह 6:00 - दोपहर 12:00, शाम 5:00 - रात 9:00",
+    "deity": "भगवान जगन्नाथ",
+    "tags": [
+      "vishnu",
+      "jagannath",
+      "city-gem",
+      "telangana"
+    ],
+    "estimatedCost": 200,
+    "estimatedDays": 0.5
+  },
+  {
+    "id": 506,
+    "name": "बालकम्पेट येल्लम्मा मंदिर",
+    "location": "बालकम्पेट, हैदराबाद, तेलंगाना",
+    "region": "Telangana",
+    "history": "हैदराबाद के सबसे पुराने और सबसे लोकप्रिय मंदिरों में से एक, देवी येल्लम्मा (काली का अवतार) को समर्पित है। यह मंदिर अद्वितीय है क्योंकि मूर्ति जमीन के स्तर से 10 फीट नीचे एक बारहमासी पानी के झरने में स्थित है।",
+    "imageUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/3/3a/Balkampet_Yellamma_Temple.jpg/800px-Balkampet_Yellamma_Temple.jpg",
+    "lat": 17.4475,
+    "lng": 78.4485,
+    "crowdLevel": "Very High",
+    "darshanTimings": "सुबह 6:00 - दोपहर 1:00, दोपहर 3:00 - रात 8:30",
+    "deity": "देवी येल्लम्मा",
+    "tags": [
+      "shakta",
+      "kali",
+      "city-gem",
+      "ancient",
+      "telangana"
+    ],
+    "estimatedCost": 150,
+    "estimatedDays": 0.5
+  },
+  {
+    "id": 600,
+    "name": "पैतृक शिव मंदिर (विस्मृत)",
+    "location": "वारंगल ग्रामीण, तेलंगाना",
+    "history": "10वीं शताब्दी का काकतीय काल का मंदिर जीर्ण-शीर्ण अवस्था में पाया गया। इसे संरचनात्मक सुदृढ़ीकरण की आवश्यकता है।",
+    "imageUrl": "https://images.unsplash.com/photo-1548013146-72479768bbaa?auto=format&fit=crop&q=80&w=800",
+    "lat": 17.9689,
+    "lng": 79.5941,
+    "crowdLevel": "Low",
+    "darshanTimings": "सूर्योदय से सूर्यास्त तक",
+    "deity": "भगवान शिव",
+    "tags": [
+      "restoration",
+      "kakatiya",
+      "shiva"
+    ],
+    "region": "Telangana",
+    "isDestroyed": true,
+    "restorationProgress": 15,
+    "restorationGoal": 500000,
+    "restorationReceived": 75000,
+    "restorationBricks": 2000,
+    "costPerBrick": 250,
+    "sevaCategories": [
+      "गौ सेवा",
+      "रिमोट"
+    ],
+    "estimatedCost": 0,
+    "estimatedDays": 0
+  },
+  {
+    "id": 601,
+    "name": "लुप्त विष्णु बावड़ी",
+    "location": "नलगोंडा, तेलंगाना",
+    "history": "विष्णु अवतारों से सजी एक प्राचीन बावड़ी, वर्तमान में गाद और मलबे से भरी हुई है।",
+    "imageUrl": "https://images.unsplash.com/photo-1590050752117-23a9d7fc2ee2?auto=format&fit=crop&q=80&w=800",
+    "lat": 17.0575,
+    "lng": 79.2684,
+    "crowdLevel": "Low",
+    "darshanTimings": "हमेशा खुला है",
+    "deity": "भगवान विष्णु",
+    "tags": [
+      "restoration",
+      "stepwell",
+      "heritage"
+    ],
+    "region": "Telangana",
+    "isDestroyed": true,
+    "restorationProgress": 5,
+    "restorationGoal": 1200000,
+    "restorationReceived": 60000,
+    "estimatedDays": 0
+  },
+  {
+    "id": 1400,
+    "name": "डचपल्ली रामालयम",
+    "location": "निज़ामाबाद, तेलंगाना",
+    "region": "Telangana",
+    "history": "इंदूर के खजुराहो के रूप में जाना जाने वाला यह 14वीं शताब्दी का मंदिर अपनी जटिल काकतीय वास्तुकला और पत्थर की नक्काशी के लिए प्रसिद्ध है।",
+    "imageUrl": "https://upload.wikimedia.org/wikipedia/commons/e/e0/Sri_Rama_Temple%2C_Dichpally%2C_Nizamabad_District.jpg",
+    "lat": 18.6657,
+    "lng": 78.1633,
+    "crowdLevel": "Medium",
+    "darshanTimings": "सुबह 06:00 - रात 08:00",
+    "deity": "भगवान राम",
+    "tags": [
+      "rama",
+      "kakatiya",
+      "architecture"
+    ]
+  },
+  {
+    "id": 1401,
+    "name": "श्री नीलकंठेश्वर मंदिर",
+    "location": "निज़ामाबाद, तेलंगाना",
+    "region": "Telangana",
+    "history": "सातवाहन राजा शातकर्णी द्वारा निर्मित एक ऐतिहासिक रूप से महत्वपूर्ण 500 वर्ष पुराना शिव मंदिर, जो स्थानीय लोगों द्वारा पूजनीय है।",
+    "imageUrl": "https://images.unsplash.com/photo-1590050752117-23a9d7fc2ee2?auto=format&fit=crop&q=80&w=800",
+    "lat": 18.6738,
+    "lng": 78.0932,
+    "crowdLevel": "High",
+    "darshanTimings": "सुबह 05:00 - रात 09:00",
+    "deity": "भगवान शिव",
+    "tags": [
+      "shiva",
+      "historical"
+    ]
   }
 ]

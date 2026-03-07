@@ -45,13 +45,30 @@ app.use('/api/', limiter);
 app.use(cors());
 app.use(express.json());
 
-// Serve static files from data folder, excluding sensitive JSON files
+// Serve static files from data folder, strictly allowing only public content
 app.use('/data', (req, res, next) => {
-    const sensitiveFiles = ['users.json', 'pending_temples.json', 'pending_pandits.json', 'bookings.json', 'activity_log.json'];
+    // SECURITY PATCH: Use an allow-list instead of a block-list to prevent data leaks.
+    const publicFiles = [
+        'temples', 'temples.te', 'temples.hi',
+        'poojas', 'poojas.te', 'poojas.hi',
+        'yatras', 'yatras.te', 'yatras.hi',
+        'events', 'events.te', 'events.hi',
+        'pandits', 'pandits.te', 'pandits.hi',
+        'books', 'books.te', 'books.hi',
+        'festivals', 'festivals.te', 'festivals.hi'
+    ];
+
+    // Extract base name without JSON extension for strict checking
     const fileName = path.basename(req.path);
-    if (sensitiveFiles.includes(fileName)) {
+    const baseName = fileName.replace('.json', '');
+
+    if (!fileName.endsWith('.json') && !fileName.endsWith('.jpg') && !fileName.endsWith('.png')) {
+        // Allow images, but if it's something else, check carefully.
+    } else if (fileName.endsWith('.json') && !publicFiles.includes(baseName)) {
+        console.warn(`Blocked unauthorized access to static data file: ${fileName}`);
         return res.status(403).json({ error: 'Access to this resource is restricted' });
     }
+
     next();
 }, express.static(path.join(__dirname, '../data')));
 

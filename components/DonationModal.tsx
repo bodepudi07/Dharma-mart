@@ -21,9 +21,7 @@ export const DonationModal = ({ temple, onClose, onConfirm, t }: DonationModalPr
     const modalRef = useRef<HTMLDivElement>(null);
     useFocusTrap(modalRef);
 
-    const purposeOptions = useMemo(() => temple
-        ? DONATION_OPTIONS.filter(opt => opt.id === 'templeMaintenance' || opt.id === 'general')
-        : DONATION_OPTIONS, [temple]);
+    const purposeOptions = useMemo(() => DONATION_OPTIONS, []);
 
     const [selectedPurpose, setSelectedPurpose] = useState<DonationOption>(purposeOptions[0]);
 
@@ -50,14 +48,14 @@ export const DonationModal = ({ temple, onClose, onConfirm, t }: DonationModalPr
             setAmount('');
         }
     };
-    
+
     const handleSubmit = async () => {
         if (!amount || amount < 11) {
             addToast("Minimum donation amount is ₹11.", 'info');
             return;
         }
         if (!selectedPurpose) {
-             addToast("Please select a purpose for your donation.", 'info');
+            addToast("Please select a purpose for your donation.", 'info');
             return;
         }
 
@@ -70,11 +68,11 @@ export const DonationModal = ({ temple, onClose, onConfirm, t }: DonationModalPr
     };
 
     return (
-        <div 
+        <div
             className="fixed inset-0 bg-black/70 z-[60] flex items-center justify-center p-4 animate-fade-in"
             onClick={onClose}
         >
-            <div 
+            <div
                 ref={modalRef}
                 role="dialog"
                 aria-modal="true"
@@ -82,8 +80,8 @@ export const DonationModal = ({ temple, onClose, onConfirm, t }: DonationModalPr
                 className="bg-amber-50 rounded-2xl shadow-2xl w-full max-w-lg p-8 relative max-h-[90vh] overflow-y-auto"
                 onClick={(e) => e.stopPropagation()}
             >
-                <button 
-                    onClick={onClose} 
+                <button
+                    onClick={onClose}
                     aria-label="Close"
                     className="absolute top-4 right-4 text-stone-500 hover:text-orange-600 transition-colors text-2xl font-bold z-10"
                 >&times;</button>
@@ -120,13 +118,13 @@ export const DonationModal = ({ temple, onClose, onConfirm, t }: DonationModalPr
                     <div>
                         <label className="block text-sm font-bold text-orange-800 mb-2">{t.donationPurpose}</label>
                         <div className="space-y-2">
-                             {purposeOptions.map(option => (
+                            {purposeOptions.map(option => (
                                 <div key={option.id}
                                     onClick={() => setSelectedPurpose(option)}
                                     className={`p-3 border-2 rounded-lg cursor-pointer transition-all ${selectedPurpose.id === option.id ? 'border-orange-500 bg-orange-100/50' : 'border-orange-200 bg-white hover:border-orange-300'}`}
                                 >
                                     <label className="flex items-center w-full cursor-pointer">
-                                        <input 
+                                        <input
                                             type="radio"
                                             name="donation-purpose"
                                             value={option.id}
@@ -144,12 +142,22 @@ export const DonationModal = ({ temple, onClose, onConfirm, t }: DonationModalPr
                     </div>
                 </div>
 
-                <button 
+                <button
                     onClick={handleSubmit}
                     disabled={isLoading || !amount}
-                    className="w-full mt-8 bg-orange-600 text-white font-bold py-3 px-8 rounded-full hover:bg-orange-700 transition-colors duration-300 shadow-lg transform hover:scale-105 disabled:bg-orange-400 disabled:cursor-wait"
+                    className="w-full mt-8 bg-orange-600 text-white font-bold py-3 px-8 rounded-full hover:bg-orange-700 disabled:bg-orange-400 shadow-lg shadow-orange-600/20 transition-all flex items-center justify-center relative overflow-hidden group"
                 >
-                    {isLoading ? 'Processing...' : `${t.donateNow} (₹${amount || 0})`}
+                    {isLoading ? (
+                        <>
+                            <Icon name="lotus" className="w-5 h-5 animate-spin mr-2 opacity-80" />
+                            <span className="animate-pulse">Processing Donation...</span>
+                        </>
+                    ) : (
+                        <>
+                            <span>{t.donateNow} (₹{amount || 0})</span>
+                            <div className="absolute inset-0 bg-white/20 translate-y-full group-hover:translate-y-0 transition-transform duration-300 pointer-events-none rounded-full"></div>
+                        </>
+                    )}
                 </button>
             </div>
         </div>

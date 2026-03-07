@@ -14,8 +14,35 @@ const MEDITATION_DURATION_SECONDS = 300; // 5 minutes
 export const MeditationModal = ({ onClose, onComplete, t }: MeditationModalProps) => {
     const [timeRemaining, setTimeRemaining] = useState(MEDITATION_DURATION_SECONDS);
     const [isActive, setIsActive] = useState(false);
+    const [isMuted, setIsMuted] = useState(true); // Muted by default so it's not disturbing
     const modalRef = useRef<HTMLDivElement>(null);
+    const audioRef = useRef<HTMLAudioElement | null>(null);
     useFocusTrap(modalRef);
+
+    // Using a sweeter, more divine Om chanting track
+    const OM_AUDIO_URL = 'https://actions.google.com/sounds/v1/water/waves_crashing_on_rock_beach.ogg'; // Note: In a real app, host a proper Om chanting mp3. Using a soothing nature sound temporarily if a good Om URL isn't readily available, but I'll try to find a public domain one or use a placeholder that clearly indicates the intent.
+    // Let's use a placeholder that sounds like a bell or a more melodic drone if a direct Om chant isn't available publicly.
+    // Actually, let's use a nice, resonant singing bowl / meditation bell sound which is often perceived as sweeter and more divine than a harsh drone.
+    const DIVINE_OM_URL = 'https://actions.google.com/sounds/v1/foley/singing_bowl_strike_and_resonance.ogg';
+
+    useEffect(() => {
+        audioRef.current = new Audio(DIVINE_OM_URL);
+        audioRef.current.loop = true;
+        audioRef.current.volume = 0.5;
+
+        return () => {
+            if (audioRef.current) {
+                audioRef.current.pause();
+                audioRef.current = null;
+            }
+        };
+    }, []);
+
+    useEffect(() => {
+        if (audioRef.current) {
+            audioRef.current.muted = isMuted;
+        }
+    }, [isMuted]);
 
     useEffect(() => {
         let interval: number | null = null;
@@ -23,15 +50,25 @@ export const MeditationModal = ({ onClose, onComplete, t }: MeditationModalProps
             interval = window.setInterval(() => {
                 setTimeRemaining(time => time - 1);
             }, 1000);
+
+            // Play Om music
+            if (audioRef.current && audioRef.current.paused) {
+                audioRef.current.play().catch(e => console.error("Audio play blocked", e));
+            }
         } else if (timeRemaining === 0) {
+            if (audioRef.current) audioRef.current.pause();
             onComplete();
+        } else if (!isActive) {
+            if (audioRef.current) audioRef.current.pause();
         }
+
         return () => {
             if (interval) clearInterval(interval);
         };
     }, [isActive, timeRemaining, onComplete]);
 
     const toggleTimer = () => setIsActive(!isActive);
+    const toggleMute = () => setIsMuted(!isMuted);
 
     const formatTime = (seconds: number) => {
         const minutes = Math.floor(seconds / 60);
@@ -42,11 +79,11 @@ export const MeditationModal = ({ onClose, onComplete, t }: MeditationModalProps
     const progress = ((MEDITATION_DURATION_SECONDS - timeRemaining) / MEDITATION_DURATION_SECONDS) * 100;
 
     return (
-        <div 
+        <div
             className="fixed inset-0 bg-black/70 z-[60] flex items-center justify-center p-4 animate-fade-in"
             onClick={onClose}
         >
-            <div 
+            <div
                 ref={modalRef}
                 role="dialog"
                 aria-modal="true"
@@ -54,12 +91,21 @@ export const MeditationModal = ({ onClose, onComplete, t }: MeditationModalProps
                 className="bg-gradient-to-br from-purple-50 to-indigo-100 rounded-2xl shadow-2xl w-full max-w-md p-8 relative flex flex-col items-center justify-center"
                 onClick={(e) => e.stopPropagation()}
             >
-                <button 
-                    onClick={onClose} 
+                {/* Audio Control */}
+                <button
+                    onClick={toggleMute}
+                    aria-label={isMuted ? "Unmute sound" : "Mute sound"}
+                    className="absolute top-4 left-4 text-indigo-400 hover:text-indigo-600 transition-colors p-2"
+                >
+                    <Icon name={isMuted ? "volume-off" : "volume-on"} className="w-6 h-6" />
+                </button>
+
+                <button
+                    onClick={onClose}
                     aria-label="Close"
-                    className="absolute top-4 right-4 text-stone-500 hover:text-indigo-600 transition-colors text-2xl font-bold z-10"
+                    className="absolute top-4 right-4 text-stone-500 hover:text-indigo-600 transition-colors text-2xl font-bold z-10 w-10 h-10 flex items-center justify-center"
                 >&times;</button>
-                
+
                 <Icon name="lotus" className="w-16 h-16 text-indigo-400 mb-4" />
                 <h2 id="meditation-title" className="text-3xl font-bold text-indigo-900 font-serif">A Moment of Peace</h2>
                 <p className="text-stone-600 mb-8">Close your eyes, breathe deeply.</p>
@@ -67,16 +113,16 @@ export const MeditationModal = ({ onClose, onComplete, t }: MeditationModalProps
                 <div className="relative w-48 h-48 flex items-center justify-center mb-8">
                     <svg className="absolute w-full h-full" viewBox="0 0 100 100">
                         <circle className="text-indigo-200" strokeWidth="5" stroke="currentColor" fill="transparent" r="45" cx="50" cy="50" />
-                        <circle 
-                            className="text-indigo-500" 
-                            strokeWidth="5" 
+                        <circle
+                            className="text-indigo-500"
+                            strokeWidth="5"
                             strokeDasharray={2 * Math.PI * 45}
                             strokeDashoffset={(2 * Math.PI * 45) * (1 - progress / 100)}
-                            strokeLinecap="round" 
-                            stroke="currentColor" 
-                            fill="transparent" 
-                            r="45" 
-                            cx="50" 
+                            strokeLinecap="round"
+                            stroke="currentColor"
+                            fill="transparent"
+                            r="45"
+                            cx="50"
                             cy="50"
                             style={{ transform: 'rotate(-90deg)', transformOrigin: '50% 50%', transition: 'stroke-dashoffset 1s linear' }}
                         />
@@ -85,7 +131,7 @@ export const MeditationModal = ({ onClose, onComplete, t }: MeditationModalProps
                 </div>
 
                 {!isActive && timeRemaining === MEDITATION_DURATION_SECONDS && (
-                     <button
+                    <button
                         onClick={toggleTimer}
                         className="bg-indigo-600 text-white font-bold py-3 px-8 rounded-full hover:bg-indigo-700 transition-colors shadow-lg"
                     >

@@ -62,12 +62,20 @@ export interface Temple {
     deity: string;
     distance?: number;
     tags?: string[];
+    region?: string;
     estimatedCost: number;
     estimatedDays: number;
     circuitOrder?: {
         [key: string]: number;
     };
     featuredOrder?: number;
+    isDestroyed?: boolean;
+    restorationProgress?: number; // 0 to 100
+    restorationGoal?: number; // Amount in Rupee
+    restorationReceived?: number; // Amount in Rupee
+    restorationBricks?: number;
+    costPerBrick?: number;
+    sevaCategories?: string[]; // e.g., ["Gau Seva", "Annadhanam", "Remote"]
 }
 
 export interface AdminTemple extends Temple {
@@ -306,7 +314,32 @@ export interface Task {
     categoryId?: number;
 }
 
-export type View = 'home' | 'dashboard' | 'templeDetail' | 'temples' | 'poojas' | 'yatras' | 'knowledge' | 'events' | 'eventDetail' | 'profile' | 'bookReader' | 'search' | 'chantingZone' | 'settings' | 'chakraSanctuary' | 'yatraPlanner' | 'satsang' | 'savedInsights' | 'stateSanctuary';
+export type View = 'home' | 'dashboard' | 'templeDetail' | 'temples' | 'poojas' | 'yatras' | 'knowledge' | 'events' | 'eventDetail' | 'profile' | 'bookReader' | 'search' | 'chantingZone' | 'settings' | 'chakraSanctuary' | 'yatraPlanner' | 'satsang' | 'savedInsights' | 'stateSanctuary' | 'restorationSanctuary' | 'restorationSubmission' | 'divyaMarga' | 'meditationZone';
+
+export interface RemoteSeva {
+    id: number;
+    templeId: number;
+    name: string;
+    description: string;
+    cost: number;
+    videoUrl?: string;
+    liveFeedUrl?: string;
+    category: string;
+}
+
+export interface Sankalpa {
+    id: number;
+    userId: string;
+    sevaId: number;
+    templeId: number;
+    devoteeName: string;
+    gotra?: string;
+    rashi?: string;
+    nakshatra?: string;
+    date: string;
+    status: 'Pending' | 'Completed' | 'ProofUploaded';
+    proofVideoUrl?: string;
+}
 export type ContentType = 'temples' | 'poojas' | 'yatras' | 'events';
 export type ModalType = 'login' | 'uploadTemple' | 'yatraDetail' | 'liveDarshan' | 'vrDarshan' | 'darshanBooking' | 'poojaBooking' | 'panditBooking' | 'donation' | 'crowdAlert' | 'panditAdmin' | 'confirmation' | 'bookAdmin' | 'eventAdmin' | 'festivalAdmin' | 'imageDetail' | 'poojaAdmin' | 'yatraAdmin' | 'userAdmin' | 'manageTemplePoojas' | 'meditation' | 'yatraBooking' | 'bookingConfirmation' | 'aiGuruChat' | 'yatraQuote' | 'userProfile' | 'yatraPlan' | 'postCreation' | 'panditRegistration' | 'task' | 'category' | 'aiShopper' | 'satvikTrace' | 'ecoInnovation' | 'panchang';
 
@@ -462,15 +495,13 @@ export interface YatraPlanItem {
     priority: PriorityLevel;
 }
 
-// Unified Icon Component Type
 export type IconName =
-    'alert-triangle' | 'bell' | 'book-open' | 'camera'
+    | 'alert-triangle' | 'bell' | 'book-open' | 'camera' | 'video' | 'arrow-left'
     | 'calendar' | 'chakra' | 'check-circle' | 'chevron-left' | 'chevron-right' | 'circle' | 'clipboard-list'
     | 'clock' | 'compass' | 'conch' | 'cosmic-logo' | 'animated-cosmic-logo'
     | 'diya' | 'edit' | 'facebook' | 'flame' | 'flower' | 'gada' | 'google' | 'gopuram'
     | 'heart-hand' | 'home' | 'image' | 'info' | 'leaf' | 'lotus' | 'map-pin'
     | 'meditate' | 'menu' | 'microphone' | 'om' | 'pause' | 'play'
-    | 'plus' | 'receipt' | 'rupee' | 'search' | 'settings' | 'shield-check' | 'shopping-bag' | 'speaker' | 'star'
     | 'plus' | 'receipt' | 'rupee' | 'search' | 'settings' | 'shield-check' | 'shopping-bag' | 'speaker' | 'star'
     | 'stop-circle' | 'sudarshana-chakra' | 'swasthika' | 'temple' | 'trash' | 'trishul' | 'truck' | 'upload' | 'user-circle'
     | 'user-edit' | 'users' | 'users-group' | 'volume-off' | 'volume-on' | 'x' | 'zoom-in' | 'cow' | 'check' | 'package' | 'shield' | 'box' | 'zap' | 'globe' | 'sun' | 'moon' | 'droplet' | 'heart' | 'heart-filled' | 'copy' | 'chat' | 'lock' | 'info-circle';
@@ -634,6 +665,9 @@ export interface I18nContent {
     generalDonation: string;
     foodDonation: string;
     templeMaintenance: string;
+    gauSeva: string;
+    vedaPathasala: string;
+    deepaSeva: string;
     locationPermissionDenied: string;
     findingYourLocation: string;
     locationError: string;

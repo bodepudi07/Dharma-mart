@@ -428,6 +428,7 @@
     "id": 123,
     "name": "Jogulamba Temple",
     "location": "Alampur, Telangana",
+    "region": "Telangana",
     "history": "One of the 18 Maha Shakti Peeths, this is the sacred site where the upper teeth of Goddess Sati are believed to have fallen. The Goddess Jogulamba is a fierce form of Shakti and is depicted seated on a corpse. The temple is part of the Navabrahma temples complex.",
     "imageUrl": "https://upload.wikimedia.org/wikipedia/commons/6/6b/Brihadeeswarar_Temple_Thanjavur.jpg",
     "lat": 15.869,
@@ -1141,6 +1142,7 @@
     "id": 154,
     "name": "Gnana Saraswati Temple, Basar",
     "location": "Basar, Telangana",
+    "region": "Telangana",
     "history": "One of the very few temples dedicated to Goddess Saraswati, the Hindu goddess of knowledge, music, arts, and wisdom. This serene temple on the banks of the Godavari is the perfect alternative destination for students and seekers of wisdom looking to perform Aksharabhyasam.",
     "imageUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/7/70/Basar_Saraswathi_Temple.jpg/800px-Basar_Saraswathi_Temple.jpg",
     "lat": 18.8833,
@@ -1160,6 +1162,7 @@
     "id": 155,
     "name": "Karmanghat Hanuman Temple",
     "location": "Hyderabad, Telangana",
+    "region": "Telangana",
     "history": "Built in the 12th century A.D., this historical temple dedicated to Lord Hanuman offers exceptional peace and spiritual power right in the heart of Hyderabad. It is said that even the Mughal emperor Aurangzeb could not destroy this temple due to divine intervention.",
     "imageUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/e/e0/Karmanghat_Hanuman_Temple.jpg/800px-Karmanghat_Hanuman_Temple.jpg",
     "lat": 17.3486,
@@ -1212,5 +1215,251 @@
     ],
     "estimatedCost": 350,
     "estimatedDays": 1
+  },
+  {
+    "id": 500,
+    "name": "Vemulawada Raja Rajeshwara Swamy Temple",
+    "location": "Vemulawada, Telangana",
+    "region": "Telangana",
+    "history": "Known as 'Dakshina Kashi', this ancient temple dedicated to Lord Shiva is famous for its unique tradition where devotees tie a bull (Kode Mokku) as a vow. It's a significant pilgrimage center representing the rich architectural heritage of the Chalukyas.",
+    "imageUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/c/c5/Vemulawada_Temple.jpg/800px-Vemulawada_Temple.jpg",
+    "lat": 18.4633,
+    "lng": 78.8711,
+    "crowdLevel": "High",
+    "darshanTimings": "4:00 AM - 9:00 PM",
+    "deity": "Lord Shiva (Raja Rajeshwara Swamy)",
+    "tags": [
+      "shiva",
+      "chalukya",
+      "historical",
+      "telangana"
+    ],
+    "estimatedCost": 500,
+    "estimatedDays": 1
+  },
+  {
+    "id": 501,
+    "name": "Ramappa Temple",
+    "location": "Palampet, Telangana",
+    "region": "Telangana",
+    "history": "A UNESCO World Heritage site, the Ramappa Temple is an architectural masterpiece of the Kakatiya era. Named after its sculptor, it's famous for its 'floating bricks', exquisite carvings, and the massive Nandi statue that seems to look at you from every angle.",
+    "imageUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/a/a2/Ramappa_Temple_Main.jpg/800px-Ramappa_Temple_Main.jpg",
+    "lat": 18.2614,
+    "lng": 79.9431,
+    "crowdLevel": "Medium",
+    "darshanTimings": "6:00 AM - 6:00 PM",
+    "deity": "Lord Shiva (Ramalingeswara)",
+    "tags": [
+      "shiva",
+      "unesco",
+      "kakatiya",
+      "heritage",
+      "telangana"
+    ],
+    "estimatedCost": 600,
+    "estimatedDays": 1
+  },
+  {
+    "id": 502,
+    "name": "Thousand Pillar Temple",
+    "location": "Hanamkonda, Telangana",
+    "region": "Telangana",
+    "history": "Built by King Rudra Deva in 1163 AD, this temple is a brilliant example of Kakatiya architecture. Dedicated to Shiva, Vishnu, and Surya (Trikutalyam), it features intricately carved pillars and a magnificent monolithic Nandi.",
+    "imageUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/2/23/Thousand_Pillar_Temple_Hanamkonda.jpg/800px-Thousand_Pillar_Temple_Hanamkonda.jpg",
+    "lat": 18.0163,
+    "lng": 79.5786,
+    "crowdLevel": "Medium",
+    "darshanTimings": "6:00 AM - 8:00 PM",
+    "deity": "Shiva, Vishnu, Surya",
+    "tags": [
+      "shiva",
+      "vishnu",
+      "surya",
+      "kakatiya",
+      "historical",
+      "telangana"
+    ],
+    "estimatedCost": 300,
+    "estimatedDays": 1
+  },
+  {
+    "id": 503,
+    "name": "Keesaragutta Temple",
+    "location": "Keesara, Telangana",
+    "region": "Telangana",
+    "history": "Located on a hillock, the Sri Ramalingeshwara Swamy Temple is believed to have been established by Lord Rama. It is famous for the thousands of Shivalingas found around the temple, making it a unique spiritual destination near Hyderabad.",
+    "imageUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/e/e4/Keesaragutta_Temple_Entrance.jpg/800px-Keesaragutta_Temple_Entrance.jpg",
+    "lat": 17.5255,
+    "lng": 78.6758,
+    "crowdLevel": "High",
+    "darshanTimings": "6:00 AM - 7:30 PM",
+    "deity": "Lord Shiva (Ramalingeshwara)",
+    "tags": [
+      "shiva",
+      "rama",
+      "hilltop",
+      "telangana"
+    ],
+    "estimatedCost": 400,
+    "estimatedDays": 1
+  },
+  {
+    "id": 504,
+    "name": "Birla Mandir",
+    "location": "Hyderabad, Telangana",
+    "region": "Telangana",
+    "history": "Built on the 280-foot high Naubath Pahad hillock, this stunning white marble temple is dedicated to Lord Venkateswara. It blends South Indian and Rajasthani architectural styles and offers a panoramic view of the city and Hussain Sagar lake.",
+    "imageUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/4/4b/Birla_Mandir_Hyderabad_Main.jpg/800px-Birla_Mandir_Hyderabad_Main.jpg",
+    "lat": 17.4062,
+    "lng": 78.4691,
+    "crowdLevel": "Very High",
+    "darshanTimings": "7:00 AM - 12:00 PM, 3:00 PM - 9:00 PM",
+    "deity": "Lord Venkateswara",
+    "tags": [
+      "vishnu",
+      "marble",
+      "city-gem",
+      "hilltop",
+      "telangana"
+    ],
+    "estimatedCost": 200,
+    "estimatedDays": 0.5
+  },
+  {
+    "id": 505,
+    "name": "Jagannath Temple, Hyderabad",
+    "location": "Banjara Hills, Hyderabad, Telangana",
+    "region": "Telangana",
+    "history": "A modern architectural marvel built in red sandstone, this temple is a replica of the original Puri Jagannath Temple. It is famous for its intricate carvings and the annual Ratha Yatra which draws thousands of devotees in the city.",
+    "imageUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/c/cd/Jagannath_Temple_Hyderabad.jpg/800px-Jagannath_Temple_Hyderabad.jpg",
+    "lat": 17.419,
+    "lng": 78.435,
+    "crowdLevel": "High",
+    "darshanTimings": "6:00 AM - 12:00 PM, 5:00 PM - 9:00 PM",
+    "deity": "Lord Jagannath",
+    "tags": [
+      "vishnu",
+      "jagannath",
+      "city-gem",
+      "telangana"
+    ],
+    "estimatedCost": 200,
+    "estimatedDays": 0.5
+  },
+  {
+    "id": 506,
+    "name": "Balkampet Yellamma Temple",
+    "location": "Balkampet, Hyderabad, Telangana",
+    "region": "Telangana",
+    "history": "One of the oldest and most popular temples in Hyderabad, dedicated to Goddess Yellamma (an incarnation of Kali). The temple is unique as the idol is located 10 feet below the ground level in a perennial water spring.",
+    "imageUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/3/3a/Balkampet_Yellamma_Temple.jpg/800px-Balkampet_Yellamma_Temple.jpg",
+    "lat": 17.4475,
+    "lng": 78.4485,
+    "crowdLevel": "Very High",
+    "darshanTimings": "6:00 AM - 1:00 PM, 3:00 PM - 8:30 PM",
+    "deity": "Goddess Yellamma",
+    "tags": [
+      "shakta",
+      "kali",
+      "city-gem",
+      "ancient",
+      "telangana"
+    ],
+    "estimatedCost": 150,
+    "estimatedDays": 0.5
+  },
+  {
+    "id": 600,
+    "name": "Ancestral Shiva Shrine (Forgotten)",
+    "location": "Warangal Rural, Telangana",
+    "region": "Telangana",
+    "history": "A 10th-century Kakatiya-era shrine found in a dilapidated state. It requires structural reinforcement and clearing of overgrowth.",
+    "imageUrl": "https://images.unsplash.com/photo-1548013146-72479768bbaa?auto=format&fit=crop&q=80&w=800",
+    "lat": 17.9689,
+    "lng": 79.5941,
+    "crowdLevel": "Low",
+    "darshanTimings": "Sunrise to Sunset",
+    "deity": "Lord Shiva",
+    "tags": [
+      "restoration",
+      "kakatiya",
+      "shiva"
+    ],
+    "isDestroyed": true,
+    "restorationProgress": 15,
+    "restorationGoal": 500000,
+    "restorationReceived": 75000,
+    "restorationBricks": 2000,
+    "costPerBrick": 250,
+    "sevaCategories": [
+      "Gau Seva",
+      "Remote"
+    ],
+    "estimatedCost": 0,
+    "estimatedDays": 0
+  },
+  {
+    "id": 601,
+    "name": "Lost Vishnu Stepwell",
+    "location": "Nalgonda, Telangana",
+    "region": "Telangana",
+    "history": "An ancient stepwell decorated with Vishnu avatars, currently filled with silt and debris. A vital part of ancient water management.",
+    "imageUrl": "https://images.unsplash.com/photo-1590050752117-23a9d7fc2ee2?auto=format&fit=crop&q=80&w=800",
+    "lat": 17.0575,
+    "lng": 79.2684,
+    "crowdLevel": "Low",
+    "darshanTimings": "Always open",
+    "deity": "Lord Vishnu",
+    "tags": [
+      "restoration",
+      "stepwell",
+      "heritage"
+    ],
+    "isDestroyed": true,
+    "restorationProgress": 5,
+    "restorationGoal": 1200000,
+    "restorationReceived": 60000,
+    "restorationBricks": 3000,
+    "costPerBrick": 400,
+    "sevaCategories": [
+      "Annadhanam",
+      "Remote"
+    ],
+    "estimatedDays": 0
+  },
+  {
+    "id": 1400,
+    "name": "Dichpally Ramalayam",
+    "location": "Nizamabad, Telangana",
+    "region": "Telangana",
+    "history": "Known as the Khajuraho of Indur, this 14th-century temple is famous for its intricate Kakatiya architecture and stone carvings.",
+    "imageUrl": "https://upload.wikimedia.org/wikipedia/commons/e/e0/Sri_Rama_Temple%2C_Dichpally%2C_Nizamabad_District.jpg",
+    "lat": 18.6657,
+    "lng": 78.1633,
+    "crowdLevel": "Medium",
+    "darshanTimings": "06:00 AM - 08:00 PM",
+    "deity": "Lord Rama",
+    "tags": [
+      "rama",
+      "kakatiya",
+      "architecture"
+    ]
+  },
+  {
+    "id": 1401,
+    "name": "Sri Neelakanteshwara Temple",
+    "location": "Nizamabad, Telangana",
+    "region": "Telangana",
+    "history": "A historically significant 500-year-old Shiva temple built by Satavahana king Satakarni, revered by locals.",
+    "imageUrl": "https://images.unsplash.com/photo-1590050752117-23a9d7fc2ee2?auto=format&fit=crop&q=80&w=800",
+    "lat": 18.6738,
+    "lng": 78.0932,
+    "crowdLevel": "High",
+    "darshanTimings": "05:00 AM - 09:00 PM",
+    "deity": "Lord Shiva",
+    "tags": [
+      "shiva",
+      "historical"
+    ]
   }
 ]

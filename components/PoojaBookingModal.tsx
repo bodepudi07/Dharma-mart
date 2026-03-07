@@ -5,6 +5,7 @@ import { DARSHAN_TIME_SLOTS } from '../constants';
 import * as api from '../services/apiService';
 import { useFocusTrap } from '../hooks/useFocusTrap';
 import { useToast } from '../contexts/ToastContext';
+import { useAuth } from '../contexts/AuthContext';
 import { isPanditAvailable, parseDurationToMinutes, AvailabilityStatus } from '../utils/bookingUtils';
 
 type Step = 'serviceType' | 'location' | 'date' | 'time' | 'pandit' | 'address' | 'confirm';
@@ -18,20 +19,22 @@ export interface PoojaBookingModalProps {
 }
 
 export const PoojaBookingModal = ({ pooja, temple, onClose, onConfirm, t }: PoojaBookingModalProps) => {
-    
+
+    const { currentUser } = useAuth();
+
     const getInitialState = useCallback(() => {
         if (pooja.isOnline && pooja.serviceType === 'General') {
-             // If pooja can be online and is not temple-specific, always ask first.
+            // If pooja can be online and is not temple-specific, always ask first.
             return { step: 'serviceType' as Step, type: null };
         }
-         // If it's offline-only or booked from a temple context
+        // If it's offline-only or booked from a temple context
         return { step: temple ? 'date' as Step : 'location' as Step, type: 'Offline' as 'Offline' | 'Online' };
     }, [pooja, temple]);
 
 
     const [step, setStep] = useState<Step>(() => getInitialState().step);
     const [serviceType, setServiceType] = useState<'Online' | 'Offline' | null>(() => getInitialState().type);
-    
+
     const [city, setCity] = useState('');
     const [address, setAddress] = useState('');
 
@@ -48,7 +51,7 @@ export const PoojaBookingModal = ({ pooja, temple, onClose, onConfirm, t }: Pooj
 
     const [specialtyFilter, setSpecialtyFilter] = useState<string>('');
     const [availableSpecialties, setAvailableSpecialties] = useState<string[]>([]);
-    
+
     const { addToast } = useToast();
     const modalRef = useRef<HTMLDivElement>(null);
     useFocusTrap(modalRef);
@@ -56,7 +59,7 @@ export const PoojaBookingModal = ({ pooja, temple, onClose, onConfirm, t }: Pooj
     useEffect(() => {
         api.getPandits(Language.EN).then(setAllPandits);
     }, []);
-    
+
     const totalCost = useMemo(() => pooja.cost + (selectedPandit?.cost || 0), [pooja, selectedPandit]);
 
     const findAvailablePandits = useCallback(async () => {
@@ -66,8 +69,8 @@ export const PoojaBookingModal = ({ pooja, temple, onClose, onConfirm, t }: Pooj
         setSpecialtyFilter(''); // Reset filter on new search
 
         try {
-            const allBookings = await api.getBookings();
-            
+            const allBookings = await api.getBookings(currentUser?.token || '');
+
             const poojaDuration = parseDurationToMinutes(pooja.duration);
             const [startHour, startMinute] = selectedTime.split(' - ')[0].split(':').map(Number);
             const requestedDateTime = new Date(selectedDate);
@@ -79,7 +82,7 @@ export const PoojaBookingModal = ({ pooja, temple, onClose, onConfirm, t }: Pooj
                 const locationMatch = serviceType === 'Online' || (temple ? true : p.location.toLowerCase().includes(city.toLowerCase()));
                 return serviceMatch && specialtyMatch && locationMatch;
             });
-            
+
             const specialties = [...new Set(panditsToShow.flatMap(p => p.specialties))];
             setAvailableSpecialties(specialties);
 
@@ -93,15 +96,15 @@ export const PoojaBookingModal = ({ pooja, temple, onClose, onConfirm, t }: Pooj
                 if (!a.status.available && b.status.available) return 1;
                 return a.pandit.name.localeCompare(b.pandit.name);
             });
-            
+
             setPanditAvailability(availabilityResults);
         } catch (err) {
             addToast("Could not check pandit availability.", "error");
         } finally {
             setIsPanditLoading(false);
         }
-    }, [selectedDate, selectedTime, serviceType, city, temple, allPandits, pooja.duration, pooja.name, addToast]);
-    
+    }, [selectedDate, selectedTime, serviceType, city, temple, allPandits, pooja.duration, pooja.name, addToast, currentUser?.token]);
+
     const filteredPandits = useMemo(() => {
         if (!specialtyFilter) {
             return panditAvailability;
@@ -110,7 +113,7 @@ export const PoojaBookingModal = ({ pooja, temple, onClose, onConfirm, t }: Pooj
             pandit.specialties.includes(specialtyFilter)
         );
     }, [panditAvailability, specialtyFilter]);
-    
+
     const handleServiceTypeSelect = (type: 'Online' | 'Offline') => {
         setServiceType(type);
         setStep(type === 'Online' ? 'date' : 'location');
@@ -121,13 +124,13 @@ export const PoojaBookingModal = ({ pooja, temple, onClose, onConfirm, t }: Pooj
         if (city.trim()) setStep('date');
         else addToast("Please enter your city.", "info");
     };
-    
+
     const handleDateSelect = (day: number) => {
         const date = new Date(currentDate.getFullYear(), currentDate.getMonth(), day);
         setSelectedDate(date);
         setStep('time');
     };
-    
+
     const handleTimeSelect = (time: string) => {
         setSelectedTime(time);
         setStep('pandit');
@@ -138,12 +141,12 @@ export const PoojaBookingModal = ({ pooja, temple, onClose, onConfirm, t }: Pooj
             findAvailablePandits();
         }
     }, [step, findAvailablePandits]);
-    
+
     const handlePanditSelect = (pandit: Pandit) => {
         setSelectedPandit(pandit);
         setStep(serviceType === 'Offline' && !temple ? 'address' : 'confirm');
     };
-    
+
     const handleAddressSubmit = (e: React.FormEvent) => {
         e.preventDefault();
         if (address.trim()) setStep('confirm');
@@ -156,14 +159,14 @@ export const PoojaBookingModal = ({ pooja, temple, onClose, onConfirm, t }: Pooj
             return;
         }
         if (serviceType === 'Offline' && !temple && !address) {
-             addToast("Please provide an address for the service.", 'error');
+            addToast("Please provide an address for the service.", 'error');
             return;
         }
 
         setIsLoading(true);
         try {
             // --- FINAL VALIDATION (RACE CONDITION FIX) ---
-            const allBookings = await api.getBookings();
+            const allBookings = await api.getBookings(currentUser?.token || '');
             const poojaDuration = parseDurationToMinutes(pooja.duration);
             const [startHour, startMinute] = selectedTime.split(' - ')[0].split(':').map(Number);
             const requestedDateTime = new Date(selectedDate);
@@ -178,7 +181,7 @@ export const PoojaBookingModal = ({ pooja, temple, onClose, onConfirm, t }: Pooj
                 return;
             }
             // --- END VALIDATION ---
-            
+
             await onConfirm({
                 pooja,
                 temple: temple || undefined,
@@ -192,7 +195,7 @@ export const PoojaBookingModal = ({ pooja, temple, onClose, onConfirm, t }: Pooj
             setIsLoading(false);
         }
     };
-    
+
     const calendar = useMemo(() => {
         const year = currentDate.getFullYear();
         const month = currentDate.getMonth();
@@ -219,7 +222,7 @@ export const PoojaBookingModal = ({ pooja, temple, onClose, onConfirm, t }: Pooj
     }, [currentDate]);
 
     const renderStep = () => {
-        switch(step) {
+        switch (step) {
             case 'serviceType': return (
                 <div>
                     <h3 className="font-bold text-lg mb-4 text-center">How would you like to perform this Pooja?</h3>
@@ -296,11 +299,10 @@ export const PoojaBookingModal = ({ pooja, temple, onClose, onConfirm, t }: Pooj
                                         key={pandit.id}
                                         onClick={() => status.available && handlePanditSelect(pandit)}
                                         disabled={!status.available}
-                                        className={`w-full text-left p-3 border-2 rounded-lg transition-all ${
-                                            status.available 
+                                        className={`w-full text-left p-3 border-2 rounded-lg transition-all ${status.available
                                             ? 'border-orange-200 hover:bg-orange-200 cursor-pointer'
                                             : 'border-stone-200 bg-stone-100 cursor-not-allowed opacity-70'
-                                        }`}
+                                            }`}
                                     >
                                         <div className="flex justify-between items-center">
                                             <div>
@@ -323,7 +325,7 @@ export const PoojaBookingModal = ({ pooja, temple, onClose, onConfirm, t }: Pooj
                 </div>
             );
             case 'address': return (
-                 <form onSubmit={handleAddressSubmit}>
+                <form onSubmit={handleAddressSubmit}>
                     <button onClick={() => setStep('pandit')} className="text-sm text-orange-600 mb-2">&larr; Change Pandit</button>
                     <label htmlFor="address-input" className="block font-bold text-lg mb-2 text-center">Enter your Full Address</label>
                     <p className="text-center text-sm text-stone-600 mb-3">Your selected pandit will bring the required Samagri (pooja items) to this location.</p>
@@ -359,8 +361,22 @@ export const PoojaBookingModal = ({ pooja, temple, onClose, onConfirm, t }: Pooj
                 </div>
                 {renderStep()}
                 {step === 'confirm' && (
-                    <button onClick={handleSubmit} disabled={isLoading} className="w-full mt-6 bg-orange-600 text-white font-bold py-3 rounded-full hover:bg-orange-700 disabled:bg-orange-400">
-                         {isLoading ? 'Booking...' : `${t.confirmBooking} (₹${totalCost.toLocaleString()})`}
+                    <button
+                        onClick={handleSubmit}
+                        disabled={isLoading}
+                        className="w-full mt-6 bg-orange-600 text-white font-bold py-3 rounded-full hover:bg-orange-700 disabled:bg-orange-400 shadow-lg shadow-orange-600/20 transition-all flex items-center justify-center relative overflow-hidden group"
+                    >
+                        {isLoading ? (
+                            <>
+                                <Icon name="lotus" className="w-5 h-5 animate-spin mr-2 opacity-80" />
+                                <span className="animate-pulse">Consulting the Stars...</span>
+                            </>
+                        ) : (
+                            <>
+                                <span>{t.confirmBooking} (₹{totalCost.toLocaleString()})</span>
+                                <div className="absolute inset-0 bg-white/20 translate-y-full group-hover:translate-y-0 transition-transform duration-300 pointer-events-none rounded-full"></div>
+                            </>
+                        )}
                     </button>
                 )}
             </div>

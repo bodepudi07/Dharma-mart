@@ -71,6 +71,10 @@ import { AIShopper } from './components/AIShopper';
 import { SatvikTraceModal } from './components/SatvikTraceModal';
 import { PanchangModal } from './components/PanchangModal';
 import { StateSanctuary } from './components/StateSanctuary';
+import { RestorationSanctuary } from './components/RestorationSanctuary';
+import { RestorationSubmission } from './components/RestorationSubmission';
+import { DivyaMarga } from './components/DivyaMarga';
+import { MeditationZone } from './components/MeditationZone';
 
 
 interface PanditBookingDetails {
@@ -107,11 +111,24 @@ export const App = () => {
   });
 
   const [notificationPermission, setNotificationPermission] = useState<'granted' | 'denied' | 'default'>('default');
+  const [userLocation, setUserLocation] = useState<{ latitude: number; longitude: number } | null>(null);
 
   useEffect(() => {
     if ('Notification' in window) {
       setNotificationPermission(Notification.permission);
     }
+  }, []);
+
+  useEffect(() => {
+    const fetchLocation = async () => {
+      try {
+        const coords = await getUserLocation();
+        setUserLocation(coords);
+      } catch (error) {
+        console.warn("Could not fetch user location for sanctuary:", error);
+      }
+    };
+    fetchLocation();
   }, []);
 
   useEffect(() => {
@@ -500,11 +517,16 @@ export const App = () => {
       }
 
       if (alternativeTemple) {
+        const allPoojas = await api.getPoojas(language);
+        const alternativePoojas = allPoojas.filter(p => p.templeIds?.includes(alternativeTemple!.id));
+
         openModal('crowdAlert', {
           originalTemple: temple,
           alternativeTemple: alternativeTemple,
+          alternativePoojas: alternativePoojas,
           onProceed: () => { closeModal(); openModal('darshanBooking', { temple }); },
-          onExploreAlternative: () => { closeModal(); setView('templeDetail', alternativeTemple.id); }
+          onExploreAlternative: () => { closeModal(); setView('templeDetail', alternativeTemple!.id); },
+          onBookPooja: (pooja: Pooja) => { openModal('poojaBooking', { pooja, temple: alternativeTemple }); }
         });
       } else {
         openModal('darshanBooking', { temple });
@@ -565,7 +587,15 @@ export const App = () => {
       case 'savedInsights':
         return currentUser ? <SavedInsights t={t} /> : <Home t={t} language={language} onDarshanClick={handleDarshanClick} {...yatraPlanProps} />;
       case 'stateSanctuary':
-        return <StateSanctuary t={t} />;
+        return <StateSanctuary t={t} language={language} onNavigate={setView} userLocation={userLocation} />;
+      case 'restorationSanctuary':
+        return <RestorationSanctuary t={t} language={language} onNavigate={setView} onDonate={(temple) => openModal('donation', { temple })} openModal={openModal} />;
+      case 'restorationSubmission':
+        return <RestorationSubmission t={t} language={language} onNavigate={setView} onSubmit={handleTempleSubmission} />;
+      case 'divyaMarga':
+        return <DivyaMarga t={t} language={language} onNavigate={setView} openModal={openModal} />;
+      case 'meditationZone':
+        return <MeditationZone t={t} />;
       default:
         return <Home t={t} language={language} onDarshanClick={handleDarshanClick} {...yatraPlanProps} />;
     }

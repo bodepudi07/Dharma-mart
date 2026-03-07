@@ -1141,6 +1141,7 @@
     "id": 154,
     "name": "జ్ఞాన సరస్వతీ దేవస్థానం, బాసర",
     "location": "బాసర, తెలంగాణ",
+    "region": "Telangana",
     "history": "జ్ఞానం, సంగీతం మరియు కళలకు అధిదేవత అయిన సరస్వతీ దేవికి అంకితం చేయబడిన అతికొద్ది దేవాలయాలలో ఒకటి. అక్షరాభ్యాసం చేయడానికి ఇది సరైన ప్రదేశం.",
     "imageUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/7/70/Basar_Saraswathi_Temple.jpg/800px-Basar_Saraswathi_Temple.jpg",
     "lat": 18.8833,
@@ -1160,6 +1161,7 @@
     "id": 155,
     "name": "కర్మన్‌ఘాట్ హనుమాన్ దేవాలయం",
     "location": "హైదరాబాద్, తెలంగాణ",
+    "region": "Telangana",
     "history": "సా.శ. 12వ శతాబ్దంలో నిర్మించబడిన ఈ చారిత్రక ఆలయం హైదరాబాద్ నడిబొడ్డున అసాధారణమైన ప్రశాంతతను మరియు ఆధ్యాత్మిక శక్తిని అందిస్తుంది.",
     "imageUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/e/e0/Karmanghat_Hanuman_Temple.jpg/800px-Karmanghat_Hanuman_Temple.jpg",
     "lat": 17.3486,
@@ -1212,5 +1214,245 @@
     ],
     "estimatedCost": 350,
     "estimatedDays": 1
+  },
+  {
+    "id": 500,
+    "name": "వేములవాడ రాజరాజేశ్వర స్వామి దేవాలయం",
+    "location": "వేములవాడ, తెలంగాణ",
+    "region": "Telangana",
+    "history": " 'దక్షిణ కాశీ'గా పిలువబడే ఈ పురాతన శివాలయం, భక్తులు మొక్కుబడిగా కోడెను కట్టే (కోడె మొక్కు) విలక్షణమైన సంప్రదాయానికి ప్రసిద్ధి చెందింది. ఇది చాళుక్యుల గొప్ప నిర్మాణ వారసత్వాన్ని ప్రతిబింబించే ఒక ముఖ్యమైన పుణ్యక్షేత్రం.",
+    "imageUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/c/c5/Vemulawada_Temple.jpg/800px-Vemulawada_Temple.jpg",
+    "lat": 18.4633,
+    "lng": 78.8711,
+    "crowdLevel": "High",
+    "darshanTimings": "ఉదయం 4:00 - రాత్రి 9:00",
+    "deity": "శ్రీ రాజరాజేశ్వర స్వామి",
+    "tags": [
+      "shiva",
+      "chalukya",
+      "historical",
+      "telangana"
+    ],
+    "estimatedCost": 500,
+    "estimatedDays": 1
+  },
+  {
+    "id": 501,
+    "name": "రామప్ప దేవాలయం",
+    "location": "పాలంపేట, తెలంగాణ",
+    "region": "Telangana",
+    "history": "యునెస్కో ప్రపంచ వారసత్వ ప్రదేశమైన రామప్ప దేవాలయం కాకతీయ యుగపు నిర్మాణ అద్భుతం. దీని శిల్పి రామప్ప పేరు మీదుగా పిలువబడే ఈ ఆలయం, 'నీటిపై తేలే ఇటుకలు', సున్నితమైన శిల్పకళ మరియు ప్రతి కోణం నుండి మిమ్మల్ని చూస్తున్నట్లుగా అనిపించే భారీ నంది విగ్రహానికి ప్రసిద్ధి చెందింది.",
+    "imageUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/a/a2/Ramappa_Temple_Main.jpg/800px-Ramappa_Temple_Main.jpg",
+    "lat": 18.2614,
+    "lng": 79.9431,
+    "crowdLevel": "Medium",
+    "darshanTimings": "ఉదయం 6:00 - సాయంత్రం 6:00",
+    "deity": "రామలింగేశ్వర స్వామి",
+    "tags": [
+      "shiva",
+      "unesco",
+      "kakatiya",
+      "heritage",
+      "telangana"
+    ],
+    "estimatedCost": 600,
+    "estimatedDays": 1
+  },
+  {
+    "id": 502,
+    "name": "వేయి స్తంభాల గుడి",
+    "location": "హన్మకొండ, తెలంగాణ",
+    "region": "Telangana",
+    "history": "క్రీ.శ. 1163లో రుద్రదేవ మహారాజు నిర్మించిన ఈ ఆలయం కాకతీయ నిర్మాణ శైలికి అద్భుత నిదర్శనం. శివుడు, విష్ణువు మరియు సూర్యునికి అంకితం చేయబడిన (త్రికూటాలయం) ఈ ఆలయంలో అద్భుతమైన శిల్పకళతో కూడిన స్తంభాలు మరియు భారీ ఏకశిలా నంది ఉన్నాయి.",
+    "imageUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/2/23/Thousand_Pillar_Temple_Hanamkonda.jpg/800px-Thousand_Pillar_Temple_Hanamkonda.jpg",
+    "lat": 18.0163,
+    "lng": 79.5786,
+    "crowdLevel": "Medium",
+    "darshanTimings": "ఉదయం 6:00 - రాత్రి 8:00",
+    "deity": "శివుడు, విష్ణువు, సూర్యుడు",
+    "tags": [
+      "shiva",
+      "vishnu",
+      "surya",
+      "kakatiya",
+      "historical",
+      "telangana"
+    ],
+    "estimatedCost": 300,
+    "estimatedDays": 1
+  },
+  {
+    "id": 503,
+    "name": "కీసరగుట్ట దేవాలయం",
+    "location": "కీసర, తెలంగాణ",
+    "region": "Telangana",
+    "history": "శ్రీ రామలింగేశ్వర స్వామి ఆలయం ఒక కొండపై ఉంది, దీనిని శ్రీరాముడు స్థాపించాడని నమ్ముతారు. ఆలయం చుట్టూ వేలాది శివలింగాలు ఉన్నాయి, ఇది హైదరాబాద్ సమీపంలోని ఒక ప్రత్యేకమైన ఆధ్యాత్మిక ప్రదేశం.",
+    "imageUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/e/e4/Keesaragutta_Temple_Entrance.jpg/800px-Keesaragutta_Temple_Entrance.jpg",
+    "lat": 17.5255,
+    "lng": 78.6758,
+    "crowdLevel": "High",
+    "darshanTimings": "ఉదయం 6:00 - రాత్రి 7:30",
+    "deity": "రామలింగేశ్వర స్వామి",
+    "tags": [
+      "shiva",
+      "rama",
+      "hilltop",
+      "telangana"
+    ],
+    "estimatedCost": 400,
+    "estimatedDays": 1
+  },
+  {
+    "id": 504,
+    "name": "బిర్లా మందిరం",
+    "location": "హైదరాబాద్, తెలంగాణ",
+    "region": "Telangana",
+    "history": "280 అడుగుల ఎత్తైన నౌబత్ పహాడ్ కొండపై నిర్మించబడిన ఈ అద్భుతమైన తెల్లని పాలరాతి ఆలయం వేంకటేశ్వర స్వామికి అంకితం చేయబడింది. ఇది దక్షిణ భారత మరియు రాజస్థానీ నిర్మాణ శైలుల కలయికతో నగరం మరియు హుస్సేన్ సాగర్ సరస్సుల మనోహరమైన దృశ్యాన్ని అందిస్తుంది.",
+    "imageUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/4/4b/Birla_Mandir_Hyderabad_Main.jpg/800px-Birla_Mandir_Hyderabad_Main.jpg",
+    "lat": 17.4062,
+    "lng": 78.4691,
+    "crowdLevel": "Very High",
+    "darshanTimings": "ఉదయం 7:00 - మధ్యాహ్నం 12:00, మధ్యాహ్నం 3:00 - రాత్రి 9:00",
+    "deity": "వేంకటేశ్వర స్వామి",
+    "tags": [
+      "vishnu",
+      "marble",
+      "city-gem",
+      "hilltop",
+      "telangana"
+    ],
+    "estimatedCost": 200,
+    "estimatedDays": 0.5
+  },
+  {
+    "id": 505,
+    "name": "జగన్నాథ దేవాలయం, హైదరాబాద్",
+    "location": "బంజారాహిల్స్, హైదరాబాద్, తెలంగాణ",
+    "region": "Telangana",
+    "history": "ఎర్ర ఇసుక రాయితో నిర్మించబడిన ఈ ఆధునిక నిర్మాణ అద్భుతం, పూరీ జగన్నాథ ఆలయానికి ప్రతిరూపం. ఇది అద్భుతమైన శిల్పకళకు మరియు ప్రతి సంవత్సరం వేలాది మంది భక్తులను ఆకర్షించే వార్షిక రథయాత్రకు ప్రసిద్ధి చెందింది.",
+    "imageUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/c/cd/Jagannath_Temple_Hyderabad.jpg/800px-Jagannath_Temple_Hyderabad.jpg",
+    "lat": 17.419,
+    "lng": 78.435,
+    "crowdLevel": "High",
+    "darshanTimings": "ఉదయం 6:00 - మధ్యాహ్నం 12:00, సాయంత్రం 5:00 - రాత్రి 9:00",
+    "deity": "జగన్నాథ స్వామి",
+    "tags": [
+      "vishnu",
+      "jagannath",
+      "city-gem",
+      "telangana"
+    ],
+    "estimatedCost": 200,
+    "estimatedDays": 0.5
+  },
+  {
+    "id": 506,
+    "name": "బల్కంపేట ఎల్లమ్మ దేవాలయం",
+    "location": "బల్కంపేట, హైదరాబాద్, తెలంగాణ",
+    "region": "Telangana",
+    "history": "హైదరాబాద్‌లోని పురాతన మరియు అత్యంత ప్రజాదరణ పొందిన దేవాలయాలలో ఒకటి, ఇది ఎల్లమ్మ తల్లికి (కాళికా దేవి రూపం) అంకితం చేయబడింది. ఇక్కడి విగ్రహం భూమట్టానికి 10 అడుగుల కింద నీటి బుగ్గలో ఉండటం విశేషం.",
+    "imageUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/3/3a/Balkampet_Yellamma_Temple.jpg/800px-Balkampet_Yellamma_Temple.jpg",
+    "lat": 17.4475,
+    "lng": 78.4485,
+    "crowdLevel": "Very High",
+    "darshanTimings": "ఉదయం 6:00 - మధ్యాహ్నం 1:00, మధ్యాహ్నం 3:00 - రాత్రి 8:30",
+    "deity": "ఎల్లమ్మ తల్లి",
+    "tags": [
+      "shakta",
+      "kali",
+      "city-gem",
+      "ancient",
+      "telangana"
+    ],
+    "estimatedCost": 150,
+    "estimatedDays": 0.5
+  },
+  {
+    "id": 600,
+    "name": "పురాతన శివాలయం (విస్మరించబడినది)",
+    "location": "వరంగల్ రూరల్, తెలంగాణ",
+    "history": "10వ శతాబ్దపు కాకతీయ కాలం నాటి ఆలయం శిధిలావస్థలో కనుగొనబడింది. దీనికి పునర్నిర్మాణం అవసరం.",
+    "imageUrl": "https://images.unsplash.com/photo-1548013146-72479768bbaa?auto=format&fit=crop&q=80&w=800",
+    "lat": 17.9689,
+    "lng": 79.5941,
+    "crowdLevel": "Low",
+    "darshanTimings": "సూర్యోదయం నుండి సూర్యాస్తమయం వరకు",
+    "deity": "శివుడు",
+    "tags": [
+      "restoration",
+      "kakatiya",
+      "shiva"
+    ],
+    "region": "Telangana",
+    "isDestroyed": true,
+    "restorationProgress": 15,
+    "restorationGoal": 500000,
+    "restorationReceived": 75000,
+    "restorationBricks": 2000,
+    "costPerBrick": 250,
+    "sevaCategories": [
+      "గో సేవ",
+      "రిమోట్"
+    ],
+    "estimatedCost": 0,
+    "estimatedDays": 0
+  },
+  {
+    "id": 601,
+    "name": "మరుగున పడిన విష్ణువు కోనేరు",
+    "location": "నల్గొండ, తెలంగాణ",
+    "history": "విష్ణువు అవతారాలతో అలంకరించబడిన పురాతన కోనేరు, ప్రస్తుతం పూడికతో నిండి ఉంది.",
+    "imageUrl": "https://images.unsplash.com/photo-1590050752117-23a9d7fc2ee2?auto=format&fit=crop&q=80&w=800",
+    "lat": 17.0575,
+    "lng": 79.2684,
+    "crowdLevel": "Low",
+    "darshanTimings": "ఎల్లప్పుడూ తెరిచి ఉంటుంది",
+    "deity": "విష్ణువు",
+    "tags": [
+      "restoration",
+      "stepwell",
+      "heritage"
+    ],
+    "region": "Telangana",
+    "isDestroyed": true,
+    "restorationProgress": 5,
+    "restorationGoal": 1200000,
+    "restorationReceived": 60000,
+    "estimatedDays": 0
+  },
+  {
+    "id": 1400,
+    "name": "డిచ్‌పల్లి రామాలయం",
+    "location": "నిజామాబాద్, తెలంగాణ",
+    "region": "Telangana",
+    "history": "ఇందూరు ఖజురహోగా పిలువబడే ఈ 14వ శతాబ్దపు ఆలయం సంక్లిష్టమైన కాకతీయ వాస్తుశిల్పం మరియు రాతి చెక్కడాలకు ప్రసిద్ధి చెందింది.",
+    "imageUrl": "https://upload.wikimedia.org/wikipedia/commons/e/e0/Sri_Rama_Temple%2C_Dichpally%2C_Nizamabad_District.jpg",
+    "lat": 18.6657,
+    "lng": 78.1633,
+    "crowdLevel": "Medium",
+    "darshanTimings": "ఉదయం 06:00 - రాత్రి 08:00",
+    "deity": "శ్రీ రాముడు",
+    "tags": [
+      "rama",
+      "kakatiya",
+      "architecture"
+    ]
+  },
+  {
+    "id": 1401,
+    "name": "శ్రీ నీలకంఠేశ్వర దేవాలయం",
+    "location": "నిజామాబాద్, తెలంగాణ",
+    "region": "Telangana",
+    "history": "శాతవాహన రాజు శాతకర్ణి నిర్మించిన చారిత్రాత్మకమైన 500 ఏళ్ల నాటి శివాలయం, స్థానికులచే పూజించబడుతుంది.",
+    "imageUrl": "https://images.unsplash.com/photo-1590050752117-23a9d7fc2ee2?auto=format&fit=crop&q=80&w=800",
+    "lat": 18.6738,
+    "lng": 78.0932,
+    "crowdLevel": "High",
+    "darshanTimings": "ఉదయం 05:00 - రాత్రి 09:00",
+    "deity": "శివుడు",
+    "tags": [
+      "shiva",
+      "historical"
+    ]
   }
 ]

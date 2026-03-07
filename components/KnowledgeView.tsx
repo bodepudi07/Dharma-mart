@@ -28,11 +28,10 @@ const bookToCategory = (book: Book): string => {
     return 'other';
 };
 
-
 export const KnowledgeView = ({ t, language }: { t: I18nContent, language: Language }) => {
     const [books, setBooks] = useState<Book[]>([]);
     const [isLoading, setIsLoading] = useState(true);
-    const [openAccordion, setOpenAccordion] = useState<string | null>('veda');
+    const [isPremium, setIsPremium] = useState(false); // Mock premium state
     const { addToast } = useToast();
     const { openModal } = useModal();
 
@@ -53,7 +52,6 @@ export const KnowledgeView = ({ t, language }: { t: I18nContent, language: Langu
                 categories[category].push(book);
             }
         });
-        // Sort books within each category alphabetically
         for (const key in categories) {
             categories[key].sort((a, b) => a.name.localeCompare(b.name));
         }
@@ -70,128 +68,226 @@ export const KnowledgeView = ({ t, language }: { t: I18nContent, language: Langu
 
     const handleAskGuru = (e: React.MouseEvent, book: Book) => {
         e.stopPropagation();
+        if (!isPremium && book.tags?.includes('veda')) {
+            addToast("Deep Guru Analysis is a Gyan Prime feature.", 'info');
+            return;
+        }
         openModal('aiGuruChat', { book });
     };
 
     const handleExplainCategory = async (e: React.MouseEvent, categoryTag: string, categoryName: string) => {
         e.stopPropagation();
-
-        if (explanations[categoryTag]) {
-            setOpenAccordion(categoryTag);
-            return;
-        }
+        if (explanations[categoryTag]) return;
 
         setLoadingExplanation(categoryTag);
-        setOpenAccordion(categoryTag);
-
         try {
             const result = await api.explainScripture(`the ${categoryName}`);
             setExplanations(prev => ({ ...prev, [categoryTag]: result }));
         } catch (err) {
             const message = err instanceof Error ? err.message : "Failed to get explanation.";
             addToast(message, 'error');
-            setExplanations(prev => ({ ...prev, [categoryTag]: "Sorry, the Guru could not provide an explanation at this time. Please try again later." }));
+            setExplanations(prev => ({ ...prev, [categoryTag]: "Sorry, the Guru could not provide an explanation at this time." }));
         } finally {
             setLoadingExplanation(null);
         }
     };
 
+    const handlePremiumAction = () => {
+        addToast("Subscribing to Gyan Prime... (Mock)", 'success');
+        setTimeout(() => setIsPremium(true), 1500);
+    };
+
     return (
-        <div className="knowledge-hub-container min-h-full p-4 sm:p-8 animate-fade-in">
-            <header className="text-center mb-8 relative">
-                <div className="absolute inset-0 bg-primary/10 rounded-full blur-[80px] -z-10 animate-pulse"></div>
-                <h1 className="text-4xl md:text-5xl font-bold font-heading text-transparent bg-clip-text bg-gradient-to-r from-primary to-secondary drop-shadow-sm">{t.knowledgeHubTitle}</h1>
+        <div className="knowledge-hub-container min-h-full p-4 sm:p-8 animate-fade-in bg-[#0d0f1a] text-white relative overflow-hidden">
+            {/* Ethereal Background Elements */}
+            <div className="absolute top-0 left-0 w-full h-full pointer-events-none">
+                <div className="absolute top-[-10%] left-[-10%] w-[40%] h-[40%] bg-indigo-600/10 rounded-full blur-[120px] animate-pulse"></div>
+                <div className="absolute bottom-[-10%] right-[-10%] w-[40%] h-[40%] bg-purple-600/10 rounded-full blur-[120px] animate-pulse" style={{ animationDelay: '2s' }}></div>
+            </div>
+
+            <header className="text-center mb-12 relative z-10">
+                <div className="flex items-center justify-center gap-3 mb-2">
+                    <Icon name="cosmic-logo" className="w-10 h-10 text-amber-400 drop-shadow-[0_0_8px_rgba(251,191,36,0.5)]" />
+                    <span className="text-amber-400 font-bold tracking-widest text-sm uppercase">The Akashic Records</span>
+                </div>
+                <h1 className="text-5xl md:text-6xl font-bold font-heading text-transparent bg-clip-text bg-gradient-to-r from-amber-200 via-yellow-400 to-amber-200 drop-shadow-xl mb-4">
+                    {t.knowledgeHubTitle}
+                </h1>
+                {!isPremium ? (
+                    <button
+                        onClick={handlePremiumAction}
+                        className="mt-4 px-6 py-2 bg-gradient-to-r from-amber-500 to-amber-700 rounded-full text-sm font-bold shadow-lg shadow-amber-600/20 hover:scale-105 transition-transform flex items-center gap-2 mx-auto text-white"
+                    >
+                        <Icon name="star" className="w-4 h-4" />
+                        Unlock Gyan Prime
+                    </button>
+                ) : (
+                    <div className="mt-4 px-4 py-1.5 bg-amber-500/10 border border-amber-500/30 rounded-full text-xs font-bold text-amber-400 inline-flex items-center gap-2">
+                        <Icon name="check-circle" className="w-4 h-4" />
+                        Gyan Prime Active
+                    </div>
+                )}
             </header>
 
-            <section className="mb-12 animate-float">
-                <div className="daily-wisdom-card max-w-3xl mx-auto p-6 rounded-2xl shadow-xl border border-primary/20 bg-gradient-to-b from-white/80 to-amber-50/50 backdrop-blur-md relative overflow-hidden group">
-                    <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-transparent via-primary to-transparent opacity-50 group-hover:opacity-100 transition-opacity"></div>
-                    <Icon name="om" className="absolute -top-4 -right-4 w-24 h-24 text-primary/5 -rotate-12 transition-transform duration-700 group-hover:rotate-0 group-hover:scale-110" />
+            {/* Daily Wisdom Altar */}
+            <section className="mb-16 relative z-10 box-border px-4">
+                <div className="max-w-4xl mx-auto p-1 bg-gradient-to-r from-amber-500/20 via-amber-400/50 to-amber-500/20 rounded-[2.5rem]">
+                    <div className="bg-[#161b33]/90 backdrop-blur-xl p-8 md:p-12 rounded-[2.4rem] relative overflow-hidden border border-white/10 group">
+                        <div className="absolute inset-0 bg-gradient-to-br from-amber-500/5 to-transparent pointer-events-none"></div>
+                        <Icon name="om" className="absolute -top-10 -right-10 w-48 h-48 text-amber-500/5 -rotate-12 group-hover:rotate-0 transition-transform duration-1000" />
 
-                    <h2 className="font-bold text-center text-xl text-primary mb-4 flex items-center justify-center gap-2">
-                        <Icon name="meditate" className="w-6 h-6" />
-                        {t.dailyWisdom}
-                    </h2>
-                    <p className="text-center text-lg md:text-xl italic text-ink/80 leading-relaxed max-w-2xl mx-auto font-serif relative z-10">"{dailySloka.meaning}"</p>
+                        <div className="flex flex-col items-center text-center space-y-6">
+                            <div className="w-16 h-16 rounded-full bg-amber-500/10 flex items-center justify-center border border-amber-500/20">
+                                <Icon name="lotus" className="w-8 h-8 text-amber-400 animate-pulse" />
+                            </div>
+                            <h2 className="text-amber-400 font-bold tracking-widest uppercase text-sm">{t.dailyWisdom}</h2>
+                            <p className="text-2xl md:text-3xl font-serif italic text-blue-100 leading-relaxed max-w-2xl drop-shadow-md">
+                                "{dailySloka.meaning}"
+                            </p>
+                            <div className="flex items-center gap-4 pt-4">
+                                <div className="h-[1px] w-12 bg-amber-500/30"></div>
+                                <span className="text-xs text-amber-500/60 font-bold tracking-tighter">— Sacred Verses —</span>
+                                <div className="h-[1px] w-12 bg-amber-500/30"></div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </section>
 
-            <main className="max-w-3xl mx-auto space-y-4">
+            {/* Main Knowledge Grid */}
+            <main className="max-w-7xl mx-auto relative z-10">
                 {isLoading ? (
-                    <div className="flex justify-center items-center h-64"><Icon name="lotus" className="w-12 h-12 text-primary animate-spin" /></div>
+                    <div className="flex flex-col items-center justify-center h-64 gap-4">
+                        <Icon name="lotus" className="w-16 h-16 text-amber-400 animate-spin" />
+                        <p className="text-amber-200/50 animate-pulse font-serif italic">Unrolling the celestial scrolls...</p>
+                    </div>
                 ) : (
-                    scriptureCategories.map((category, index) => {
-                        const booksInCategory = categorizedBooks[category.tag];
-                        if (!booksInCategory || booksInCategory.length === 0) return null;
-                        const isOpen = openAccordion === category.tag;
-                        return (
-                            <div
-                                key={category.key}
-                                className={`accordion-item rounded-xl shadow-md border hover:border-primary/30 transition-all duration-300 overflow-hidden bg-white/60 backdrop-blur-sm ${isOpen ? 'open shadow-xl border-primary/50' : 'border-stone-200'}`}
-                                style={{ animationDelay: `${index * 0.1}s` }}
-                            >
-                                <header className="accordion-header flex items-center p-4" onClick={() => setOpenAccordion(isOpen ? null : category.tag)}>
-                                    <div className="mandala-icon w-12 h-12 rounded-full flex items-center justify-center mr-4">
-                                        <Icon name="om" className="w-8 h-8 text-white" />
-                                    </div>
-                                    <h3 className="text-2xl font-bold font-heading flex-grow text-text-base">{t[category.key as keyof I18nContent]}</h3>
-                                    <button
-                                        onClick={(e) => handleExplainCategory(e, category.tag, t[category.key as keyof I18nContent])}
-                                        className="p-2 bg-primary/10 rounded-full text-primary hover:bg-primary/20 transition-colors ml-4 z-10 flex-shrink-0"
-                                        title={`Explain ${t[category.key as keyof I18nContent]} with AI`}
-                                        disabled={loadingExplanation === category.tag}
-                                    >
-                                        {loadingExplanation === category.tag
-                                            ? <Icon name="lotus" className="w-5 h-5 animate-spin" />
-                                            : <Icon name="cosmic-logo" className="w-5 h-5" />
-                                        }
-                                    </button>
-                                    <Icon name="chevron-left" className="w-6 h-6 chevron-icon transform -rotate-90 text-primary ml-2 flex-shrink-0" />
-                                </header>
-                                <div className="accordion-content">
-                                    <div>
-                                        {(explanations[category.tag] || loadingExplanation === category.tag) && (
-                                            <div className="p-4 mb-4 bg-amber-100/50 border-l-4 border-primary rounded-r-lg animate-fade-in">
-                                                {loadingExplanation === category.tag ? (
-                                                    <div className="flex items-center gap-2 text-text-muted">
-                                                        <Icon name="lotus" className="w-5 h-5 animate-spin" />
-                                                        <span>{t.guruThinking}</span>
-                                                    </div>
-                                                ) : (
-                                                    <p className="text-text-base italic whitespace-pre-wrap">{explanations[category.tag]}</p>
-                                                )}
-                                            </div>
-                                        )}
-                                        <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                                            {booksInCategory.map(book => (
-                                                <div
-                                                    key={book.id}
-                                                    className="book-entry-card p-3 rounded-lg hover:text-primary transition-colors flex justify-between items-center"
-                                                >
-                                                    <button
-                                                        onClick={() => book.contentKey ? navigateTo(`/bookReader/${book.contentKey}`) : addToast(t.bookNotAvailable, 'info')}
-                                                        className="text-left flex-grow"
-                                                    >
-                                                        <p className="font-bold">{book.name}</p>
-                                                        <p className="text-sm text-text-muted">Tap to Explore &rarr;</p>
-                                                    </button>
-                                                    <button
-                                                        onClick={(e) => handleAskGuru(e, book)}
-                                                        className="p-2 bg-primary/10 rounded-full text-primary hover:bg-primary/20 transition-colors ml-2 flex-shrink-0"
-                                                        title={`Ask Guru about ${book.name}`}
-                                                    >
-                                                        <Icon name="cosmic-logo" className="w-5 h-5" />
-                                                    </button>
-                                                </div>
-                                            ))}
+                    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                        {scriptureCategories.map((category) => {
+                            const booksInCategory = categorizedBooks[category.tag];
+                            if (!booksInCategory || booksInCategory.length === 0) return null;
+                            const isLocked = !isPremium && ['veda', 'upanishad'].includes(category.tag);
+
+                            return (
+                                <div
+                                    key={category.key}
+                                    className="group relative bg-white/5 border border-white/10 p-6 rounded-3xl hover:bg-white/10 transition-all duration-500 flex flex-col h-full overflow-hidden"
+                                >
+                                    {isLocked && (
+                                        <div className="absolute inset-0 bg-[#0d0f1a]/80 backdrop-blur-md z-20 rounded-3xl flex flex-col items-center justify-center p-6 text-center">
+                                            <Icon name="lock" className="w-10 h-10 text-amber-400 mb-3" />
+                                            <h4 className="text-lg font-bold text-amber-100 mb-1">Advanced Wisdom</h4>
+                                            <p className="text-xs text-amber-200/60 mb-4">Requires Gyan Prime for deep structural analysis</p>
+                                            <button
+                                                onClick={handlePremiumAction}
+                                                className="px-4 py-1.5 bg-amber-600/20 border border-amber-500/40 text-amber-400 text-xs font-bold rounded-full hover:bg-amber-600/40 transition-colors"
+                                            >
+                                                Unlock Tier
+                                            </button>
                                         </div>
+                                    )}
+
+                                    <div className="flex items-center justify-between mb-6">
+                                        <div className="w-12 h-12 rounded-2xl bg-gradient-to-br from-amber-400 to-amber-600 flex items-center justify-center shadow-lg shadow-amber-900/20">
+                                            <Icon name="om" className="w-7 h-7 text-white" />
+                                        </div>
+                                        <Icon name="cosmic-logo" className="w-5 h-5 text-amber-400/30 group-hover:text-amber-400/100 transition-colors" />
                                     </div>
+
+                                    <h3 className="text-2xl font-bold font-heading mb-4 text-amber-100">{t[category.key as keyof I18nContent]}</h3>
+
+                                    <div className="space-y-3 flex-grow mb-6">
+                                        {booksInCategory.slice(0, 4).map(book => (
+                                            <button
+                                                key={book.id}
+                                                onClick={() => book.contentKey ? navigateTo(`/bookReader/${book.contentKey}`) : addToast(t.bookNotAvailable, 'info')}
+                                                className="w-full text-left p-3 rounded-xl bg-white/5 hover:bg-amber-500/20 border border-white/5 flex items-center justify-between group/book transition-all"
+                                            >
+                                                <span className="text-sm font-medium text-blue-100 group-hover/book:text-white">{book.name}</span>
+                                                <Icon name="chevron-left" className="w-4 h-4 transform rotate-180 text-amber-500/40 group-hover/book:text-amber-400" />
+                                            </button>
+                                        ))}
+                                        {booksInCategory.length > 4 && (
+                                            <p className="text-xs text-center text-amber-500/60 pt-2">+ {booksInCategory.length - 4} more scriptures</p>
+                                        )}
+                                    </div>
+
+                                    <button
+                                        onClick={(e) => handleExplainCategory(e, category.tag, t[category.key as keyof I18nContent] || category.tag)}
+                                        disabled={loadingExplanation === category.tag}
+                                        className="w-full py-3 rounded-2xl bg-amber-500/10 border border-amber-500/20 text-amber-400 font-bold text-sm flex items-center justify-center gap-2 hover:bg-amber-500/20 transition-all disabled:opacity-50"
+                                    >
+                                        {loadingExplanation === category.tag ? (
+                                            <Icon name="lotus" className="w-4 h-4 animate-spin" />
+                                        ) : (
+                                            <Icon name="cosmic-logo" className="w-4 h-4" />
+                                        )}
+                                        Scholarly Overview
+                                    </button>
+
+                                    {explanations[category.tag] && (
+                                        <div className="mt-4 p-4 rounded-xl bg-amber-900/20 border border-amber-500/20 text-xs text-amber-200/80 italic animate-fade-in line-clamp-3 hover:line-clamp-none transition-all">
+                                            {explanations[category.tag]}
+                                        </div>
+                                    )}
                                 </div>
-                            </div>
-                        )
-                    })
+                            );
+                        })}
+                    </div>
                 )}
             </main>
+
+            {/* Premium Sections */}
+            <section className="max-w-7xl mx-auto mt-20 pt-20 border-t border-white/10 relative z-10">
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-12">
+                    {/* Curated Paths */}
+                    <div className="space-y-6">
+                        <h2 className="text-3xl font-bold font-heading text-amber-200">Curated Philosophical Paths</h2>
+                        <div className="space-y-4">
+                            {[
+                                { title: "Dharma of the Soul", time: "12 Lessons", level: "Beginner", premium: false },
+                                { title: "Secrets of Karma Yoga", time: "8 Lessons", level: "Intermediate", premium: false },
+                                { title: "Advaita Vedanta Masterclass", time: "24 Lessons", level: "Prime Only", premium: true }
+                            ].map((path, i) => (
+                                <div
+                                    key={i}
+                                    onClick={() => path.premium && !isPremium ? handlePremiumAction() : addToast("Path Loaded", "success")}
+                                    className={`p-5 rounded-2xl border ${path.premium && !isPremium ? 'border-amber-500/30 bg-amber-500/5' : 'border-white/10 bg-white/5'} flex justify-between items-center group cursor-pointer hover:border-amber-400/50 transition-all`}
+                                >
+                                    <div>
+                                        <h4 className="font-bold text-lg mb-1">{path.title}</h4>
+                                        <div className="flex gap-4 text-xs text-white/40">
+                                            <span>{path.time}</span>
+                                            <span className={path.premium && !isPremium ? 'text-amber-400 font-bold' : ''}>{path.level}</span>
+                                        </div>
+                                    </div>
+                                    <div className="p-3 rounded-full bg-white/5 group-hover:bg-amber-400/20 transition-all">
+                                        <Icon name={path.premium && !isPremium ? "lock" : "chevron-left"} className={`w-5 h-5 ${path.premium && !isPremium ? 'text-amber-500' : 'text-white/20 transform rotate-180'}`} />
+                                    </div>
+                                </div>
+                            ))}
+                        </div>
+                    </div>
+
+                    {/* Audio Library */}
+                    <div className="space-y-6">
+                        <div className="flex items-center justify-between">
+                            <h2 className="text-3xl font-bold font-heading text-amber-200">Sacred Recitations</h2>
+                            <span className="px-3 py-1 bg-amber-500/20 text-amber-400 text-[10px] font-bold uppercase rounded-full tracking-widest border border-amber-500/30">Prime Feature</span>
+                        </div>
+                        <div className="p-8 rounded-[2.5rem] bg-gradient-to-br from-[#1a1c2e] to-[#0d0f1a] border border-amber-500/20 flex flex-col items-center text-center space-y-6 opacity-80 filter grayscale-[0.5]">
+                            <Icon name="volume-on" className="w-16 h-16 text-amber-400/40" />
+                            <p className="text-lg text-amber-100/60 font-serif italic">Unlock authentic Chants from the high priests of the Kashi Vishwanath temple.</p>
+                            <button
+                                onClick={handlePremiumAction}
+                                className="px-8 py-3 bg-white/5 border border-white/10 rounded-full text-sm font-bold text-amber-400 hover:bg-white/10 transition-all"
+                            >
+                                {isPremium ? "Enter Library" : "Get Prime Access"}
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </section>
         </div>
     );
 };

@@ -8,7 +8,7 @@ const initializationPromises = new Map<string, Promise<any[]>>();
 
 // --- Cache Invalidation ---
 // Adding a version to clear outdated static caches (like old SVG images)
-const CURRENT_CACHE_VERSION = 'v2-images';
+const CURRENT_CACHE_VERSION = 'v4-divya-marga';
 if (localStorage.getItem('dharma-setu-cache-version') !== CURRENT_CACHE_VERSION) {
     const staticKeys = ['temples', 'poojas', 'yatras', 'events', 'festivals', 'books', 'pandits'];
     staticKeys.forEach(key => localStorage.removeItem(`dharma-setu-${key}`));

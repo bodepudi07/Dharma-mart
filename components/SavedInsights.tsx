@@ -31,15 +31,15 @@ export const SavedInsights = ({ t }: SavedInsightsProps) => {
         try {
             await api.deleteBookmark(id, currentUser.token);
             setBookmarks(prev => prev.filter(b => b.id !== id));
-            addToast('success', 'Insight removed.');
+            addToast('Insight removed.', 'success');
         } catch (err) {
-            addToast('error', 'Failed to remove insight.');
+            addToast('Failed to remove insight.', 'error');
         }
     };
 
     const copyToClipboard = (text: string) => {
         navigator.clipboard.writeText(text);
-        addToast('success', 'Copied to clipboard!');
+        addToast('Copied to clipboard!', 'success');
     };
 
     if (!currentUser) {

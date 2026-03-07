@@ -126,8 +126,11 @@ const I18N_EN: I18nContent = {
     donationSuccess: "Donation Successful!",
     donationFailed: "Donation Failed.",
     generalDonation: "General Donation",
-    foodDonation: "Annadanam (Food)",
+    foodDonation: "Annadanam (Food Offering)",
     templeMaintenance: "Temple Maintenance",
+    gauSeva: "Gau Seva (Cow Protection)",
+    vedaPathasala: "Veda Pathasala Support",
+    deepaSeva: "Deepa Seva (Sacred Light)",
     locationPermissionDenied: "To use this feature, please enable location services in your browser settings and try again.",
     findingYourLocation: "Finding your location...",
     locationError: "Could not determine your location.",
@@ -406,7 +409,7 @@ const I18N_HI: I18nContent = {
     liveDarshanButton: "लाइव देखें",
     majorEvents: "प्रमुख आयोजन और त्यौहार",
     sevaTitle: "सेवा प्रदान करें",
-    sevaDesc: "आपका योगदान मंदिर के रखरखाव, अन्नदानम (भोजन प्रसाद), और विभिन्न आध्यात्मिक गतिविधियों का समर्थन करता है। इस दिव्य सेवा का हिस्सा बनें।",
+    sevaDesc: "Your contribution supports temple maintenance, annadanam (food offerings), and various spiritual activities like Gau Seva. Be a part of this divine service.",
     donateNow: "अभी दान करें",
     knowledgeHubTitle: "ज्ञान केंद्र",
     navChantingZone: "मंत्र जाप क्षेत्र",
@@ -434,6 +437,9 @@ const I18N_HI: I18nContent = {
     satsang_gau_seva_desc: "पवित्र गायों की रक्षा और सेवा करें, गौशालाओं का समर्थन करें।",
     satsang_temple_rebuilding_name: "मंदिर पुनर्निर्माण",
     satsang_temple_rebuilding_desc: "प्राचीन, भूले हुए मंदिरों को बहाल करने और पुनर्जीवित करने के लिए हाथ मिलाएं।",
+    gauSeva: "गौ सेवा (गौ रक्षा)",
+    vedaPathasala: "वेद पाठशाला सहायता",
+    deepaSeva: "दीप सेवा (पवित्र ज्योति)",
     setTask: "कार्य सेट करें",
     taskFor: "के लिए कार्य",
     taskDateTime: "दिनांक और समय",
@@ -545,6 +551,9 @@ const I18N_TE: I18nContent = {
     satsang_gau_seva_desc: "పవిత్ర గోవుల రక్షణ మరియు సేవ, గోశాలలకు మద్దతు ఇవ్వండి.",
     satsang_temple_rebuilding_name: "దేవాలయ పునర్నిర్మాణం",
     satsang_temple_rebuilding_desc: "పురాతన, విస్మరించబడిన దేవాలయాలను పునరుద్ధరించడానికి మరియు పునరుజ్జీవింపజేయడానికి చేయి కలపండి.",
+    gauSeva: "గో సేవ (గోసంరక్షణ)",
+    vedaPathasala: "వేద పాఠశాల మద్దతు",
+    deepaSeva: "దీప సేవ (పవిత్ర జ్యోతి)",
     setTask: "టాస్క్ సెట్ చేయండి",
     taskFor: "కోసం టాస్క్",
     taskDateTime: "తేదీ & సమయం",
@@ -656,7 +665,10 @@ export const DARSHAN_TIME_SLOTS = ["06:00 - 07:00", "07:00 - 08:00", "08:00 - 09
 export const DONATION_OPTIONS: DonationOption[] = [
     { id: 'general', title: 'generalDonation', description: 'Support the daily operations and upkeep of spiritual activities.' },
     { id: 'food', title: 'foodDonation', description: 'Contribute to Annadanam, the sacred offering of food to devotees and the needy.' },
-    { id: 'templeMaintenance', title: 'templeMaintenance', description: 'Help preserve the sanctity and structure of the temple for future generations.' }
+    { id: 'templeMaintenance', title: 'templeMaintenance', description: 'Help preserve the sanctity and structure of the temple for future generations.' },
+    { id: 'gauSeva', title: 'gauSeva', description: 'Protect and serve the sacred cows, supporting Goshalas and Vedic cattle care.' },
+    { id: 'vedaPathasala', title: 'vedaPathasala', description: 'Support the education of young priests and the preservation of Vedic oral traditions.' },
+    { id: 'deepaSeva', title: 'deepaSeva', description: 'Provide oil and ghee for the eternal lamps that illuminate the sanctum.' }
 ];
 
 export const BELL_SOUND_URL = "https://actions.google.com/sounds/v1/household/small_bell_ringing.ogg";

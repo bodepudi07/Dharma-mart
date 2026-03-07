@@ -220,8 +220,18 @@ export const DarshanBookingModal = ({ temple, onClose, onConfirm, t }: DarshanBo
                 {step === 'confirm' && renderConfirmStep()}
 
                 {step === 'confirm' && (
-                    <button onClick={handleSubmit} disabled={isLoading} className="w-full mt-6 bg-primary text-white font-bold py-3 px-8 rounded-full hover:bg-secondary transition-all shadow-lg disabled:bg-secondary/50 transform hover:scale-105">
-                        {isLoading ? 'Booking...' : `${t.confirmBooking} (₹${selectedTier.cost})`}
+                    <button onClick={handleSubmit} disabled={isLoading} className="w-full mt-6 bg-primary text-white font-bold py-3 px-8 rounded-full hover:bg-secondary transition-all shadow-lg disabled:bg-secondary/50 transform hover:scale-105 flex items-center justify-center relative overflow-hidden group">
+                        {isLoading ? (
+                            <>
+                                <Icon name="lotus" className="w-5 h-5 animate-spin mr-2 opacity-80" />
+                                <span className="animate-pulse">Reserving Darshan...</span>
+                            </>
+                        ) : (
+                            <>
+                                <span>{t.confirmBooking} (₹{selectedTier.cost})</span>
+                                <div className="absolute inset-0 bg-white/20 translate-y-full group-hover:translate-y-0 transition-transform duration-300 pointer-events-none rounded-full"></div>
+                            </>
+                        )}
                     </button>
                 )}
             </div>
