@@ -1,6 +1,7 @@
 import express from 'express';
 import db from '../db.js';
 import { authenticate } from './middleware/auth.js';
+import { standardResponse, errorResponse } from '../middleware/responseHandler.js';
 
 const router = express.Router();
 
@@ -41,9 +42,9 @@ router.post('/', authenticate, async (req, res) => {
             timestamp: new Date().toISOString()
         });
 
-        res.json({ message: `${type.charAt(0).toUpperCase() + type.slice(1)} booked successfully!`, booking: newBooking });
+        return standardResponse(res, 201, { booking: newBooking }, `${type.charAt(0).toUpperCase() + type.slice(1)} booked successfully!`);
     } catch (error) {
-        res.status(500).json({ error: 'Failed to create booking' });
+        next(error);
     }
 });
 
@@ -53,15 +54,15 @@ router.get('/user/:userId', authenticate, async (req, res) => {
 
     // Authorization: User can only see their own bookings unless they are an admin
     if (req.user.id !== userId && req.user.role !== 'admin') {
-        return res.status(403).json({ error: 'Access denied' });
+        return errorResponse(res, 403, 'Access denied');
     }
 
     try {
         const bookings = await db.read('bookings.json');
         const userBookings = bookings.filter(b => b.userId === userId);
-        res.json(userBookings.sort((a, b) => new Date(b.timestamp) - new Date(a.timestamp)));
+        return standardResponse(res, 200, userBookings.sort((a, b) => new Date(b.timestamp) - new Date(a.timestamp)));
     } catch (error) {
-        res.status(500).json({ error: 'Failed to fetch bookings' });
+        next(error);
     }
 });
 

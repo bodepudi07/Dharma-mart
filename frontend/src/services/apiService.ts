@@ -77,16 +77,18 @@ export const getPendingTemples = async (token: string): Promise<AdminTemple[]> =
     const response = await fetch('/api/admin/pending-temples', {
         headers: { 'Authorization': `Bearer ${token}` }
     });
-    if (!response.ok) throw new Error("Failed to fetch pending temples.");
-    return response.json();
+    const result = await response.json();
+    if (!response.ok || !result.success) throw new Error(result.error || "Failed to fetch pending temples.");
+    return result.data;
 };
 
 export const getPendingPandits = async (token: string): Promise<Pandit[]> => {
     const response = await fetch('/api/admin/pending-pandits', {
         headers: { 'Authorization': `Bearer ${token}` }
     });
-    if (!response.ok) throw new Error("Failed to fetch pending pandits.");
-    return response.json();
+    const result = await response.json();
+    if (!response.ok || !result.success) throw new Error(result.error || "Failed to fetch pending pandits.");
+    return result.data;
 };
 
 export const getUsersList = async (token?: string): Promise<User[]> => {
@@ -94,31 +96,35 @@ export const getUsersList = async (token?: string): Promise<User[]> => {
     const response = await fetch('/api/admin/users', {
         headers: { 'Authorization': `Bearer ${token}` }
     });
-    if (!response.ok) throw new Error("Failed to fetch Users.");
-    return response.json();
+    const result = await response.json();
+    if (!response.ok || !result.success) throw new Error(result.error || "Failed to fetch Users.");
+    return result.data;
 };
 
 export const getActivityLog = async (token: string): Promise<ActivityLogItem[]> => {
     const response = await fetch('/api/admin/activity-log', {
         headers: { 'Authorization': `Bearer ${token}` }
     });
-    if (!response.ok) throw new Error("Failed to fetch activity log.");
-    return response.json();
+    const result = await response.json();
+    if (!response.ok || !result.success) throw new Error(result.error || "Failed to fetch activity log.");
+    return result.data;
 };
 export const getBookings = async (token: string): Promise<Booking[]> => {
-    const response = await fetch('/api/admin/bookings', { // Need to add this to admin route too
+    const response = await fetch('/api/admin/bookings', {
         headers: { 'Authorization': `Bearer ${token}` }
     });
-    if (!response.ok) throw new Error("Failed to fetch bookings.");
-    return response.json();
+    const result = await response.json();
+    if (!response.ok || !result.success) throw new Error(result.error || "Failed to fetch bookings.");
+    return result.data;
 };
 
 export const getUserBookings = async (userId: number, token: string): Promise<Booking[]> => {
     const response = await fetch(`/api/bookings/user/${userId}`, {
         headers: { 'Authorization': `Bearer ${token}` }
     });
-    if (!response.ok) throw new Error("Failed to fetch your bookings.");
-    return response.json();
+    const result = await response.json();
+    if (!response.ok || !result.success) throw new Error(result.error || "Failed to fetch your bookings.");
+    return result.data;
 };
 
 export const getPoojasByTempleId = async (templeId: number, language: Language): Promise<Pooja[]> => {
@@ -134,8 +140,16 @@ export const getTemplesByPoojaId = async (poojaId: number, language: Language): 
 };
 
 export const getBookContent = async (contentKey: string): Promise<BookContent> => {
-    const response = await fetch(`/data/book-content/${contentKey}.json`);
+    // Append a timestamp to break aggressive browser caching of accidental 200 OK HTML fallbacks
+    const response = await fetch(`/data/book-content/${contentKey}.json?_t=${Date.now()}`);
     if (!response.ok) throw new Error("Failed to fetch book content.");
+
+    // Protect against SPA dev server fallback returning index.html (which throws "Unexpected token '<'")
+    const contentType = response.headers.get("content-type");
+    if (contentType && (contentType.includes("text/html") || contentType.includes("text/plain"))) {
+        throw new Error("Book content is currently being updated and will be available soon.");
+    }
+
     return response.json();
 };
 
@@ -170,9 +184,15 @@ export const verifyToken = async (token: string): Promise<User> => {
     const response = await fetch('/api/auth/verify', {
         headers: { 'Authorization': `Bearer ${token}` }
     });
-    if (!response.ok) throw new Error("Invalid token");
-    const data = await response.json();
-    return data.user;
+
+    // Read JSON once to handle standardized response { success, data, error }
+    const result = await response.json();
+
+    if (!response.ok || !result.success) {
+        throw new Error(result.error || "Invalid token");
+    }
+
+    return result.data.user;
 };
 
 export const getTestimonials = (): Promise<Testimonial[]> => {
@@ -434,8 +454,9 @@ export const bookDarshan = async (temple: Temple, details: DarshanBookingDetails
             tierName: details.tier.name
         })
     });
-    if (!response.ok) throw new Error("Failed to book Darshan.");
-    return response.json();
+    const result = await response.json();
+    if (!response.ok || !result.success) throw new Error(result.error || "Failed to book Darshan.");
+    return result; // return the entire envelope where result.message exists
 };
 
 export const bookPooja = async (details: PoojaBookingDetails, user: User, token: string): Promise<{ message: string }> => {
@@ -462,8 +483,9 @@ export const bookPooja = async (details: PoojaBookingDetails, user: User, token:
             duration: durationMinutes
         })
     });
-    if (!response.ok) throw new Error("Failed to book Pooja.");
-    return response.json();
+    const result = await response.json();
+    if (!response.ok || !result.success) throw new Error(result.error || "Failed to book Pooja.");
+    return result;
 };
 
 export const bookYatra = async (details: YatraBookingDetails, user: User, token: string): Promise<{ message: string }> => {
@@ -487,8 +509,9 @@ export const bookYatra = async (details: YatraBookingDetails, user: User, token:
             tierName: details.tier.name
         })
     });
-    if (!response.ok) throw new Error("Failed to book Yatra.");
-    return response.json();
+    const result = await response.json();
+    if (!response.ok || !result.success) throw new Error(result.error || "Failed to book Yatra.");
+    return result;
 };
 
 export const submitYatraQuoteRequest = async (details: YatraQuoteRequest, user: User): Promise<{ message: string }> => {
@@ -614,12 +637,13 @@ export const loginUser = async (email: string, pass: string): Promise<{ user: Us
         body: JSON.stringify({ email, password: pass })
     });
 
-    if (!response.ok) {
-        const error = await response.json();
-        throw new Error(error.error || "Login failed");
+    const result = await response.json();
+
+    if (!response.ok || !result.success) {
+        throw new Error(result.error || result.details?.[0]?.message || "Login failed");
     }
 
-    return response.json();
+    return result.data;
 };
 
 export const registerUser = async (name: string, email: string, pass: string): Promise<{ user: User }> => {
@@ -629,12 +653,13 @@ export const registerUser = async (name: string, email: string, pass: string): P
         body: JSON.stringify({ name, email, password: pass })
     });
 
-    if (!response.ok) {
-        const error = await response.json();
-        throw new Error(error.error || "Registration failed");
+    const result = await response.json();
+
+    if (!response.ok || !result.success) {
+        throw new Error(result.error || result.details?.[0]?.message || "Registration failed");
     }
 
-    return response.json();
+    return result.data;
 };
 
 export const loginWithProvider = async (provider: 'google' | 'facebook'): Promise<{ user: User }> => {
@@ -669,8 +694,9 @@ export const updateUserProfile = async (userId: number, updates: Partial<User>, 
         headers: { 'Authorization': `Bearer ${token}`, 'Content-Type': 'application/json' },
         body: JSON.stringify(updates)
     });
-    if (!response.ok) throw new Error("Failed to update profile.");
-    return response.json();
+    const result = await response.json();
+    if (!response.ok || !result.success) throw new Error(result.error || "Failed to update profile.");
+    return result.data;
 };
 
 export const deleteUser = async (userId: number, token: string): Promise<{ message: string }> => {

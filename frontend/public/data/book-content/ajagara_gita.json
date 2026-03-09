@@ -1,15 +1,24 @@
-
 {
   "title": "Ājagara Gītā",
   "chapters": [
     {
       "chapter": 1,
-      "title": "The Wisdom of the Python",
+      "title": "The Python's Way of Wisdom",
       "verses": [
         {
           "verse": 1,
-          "sanskrit": "Placeholder Sanskrit text for Ājagara Gītā.",
-          "translation": "Placeholder English translation for Ājagara Gītā."
+          "sanskrit": "अजगरो यथा लोके शेते निष्क्रियतां गतः ।\nएवमात्मनि संतुष्टो मुनिः शान्तिमवाप्नुयात् ॥",
+          "translation": "Just as a python lies in the world having attained inaction, so too a sage content in the Self attains supreme peace."
+        },
+        {
+          "verse": 2,
+          "sanskrit": "यत् किञ्चित् लभते भोज्यं स्वल्पं वा यदि वा बहु ।\nतुष्टः प्राश्नाति तत्सर्वं शुभं वाप्यशुभं तथा ॥",
+          "translation": "Whatever food one obtains, whether little or much, whether good or bad — one should eat it with contentment, without complaint."
+        },
+        {
+          "verse": 3,
+          "sanskrit": "त्यजेद् आत्मविशुद्ध्यर्थं कामं क्रोधं परिग्रहम् ।\nसमो जनेभ्यः सर्वेभ्यो ज्ञानवैराग्यसंयुतः ॥",
+          "translation": "For the purification of the Self, one should renounce desire, anger, and possessiveness. Being equal towards all people, endowed with knowledge and detachment."
         }
       ]
     }

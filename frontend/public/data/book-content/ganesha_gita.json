@@ -1,15 +1,40 @@
-
 {
   "title": "Gaṇeśa Gītā",
   "chapters": [
     {
       "chapter": 1,
-      "title": "The Song of Ganesha",
+      "title": "The Glory of Lord Ganesha",
       "verses": [
         {
           "verse": 1,
-          "sanskrit": "Placeholder Sanskrit text for Gaṇeśa Gītā.",
-          "translation": "Placeholder English translation for Gaṇeśa Gītā."
+          "sanskrit": "वक्रतुण्ड महाकाय सूर्यकोटिसमप्रभ ।\nनिर्विघ्नं कुरु मे देव सर्वकार्येषु सर्वदा ॥",
+          "translation": "O Lord of the curved trunk and massive body, with the radiance of a million suns — please make all my endeavors free from obstacles at all times."
+        },
+        {
+          "verse": 2,
+          "sanskrit": "शुक्लाम्बरधरं विष्णुं शशिवर्णं चतुर्भुजम् ।\nप्रसन्नवदनं ध्यायेत् सर्वविघ्नोपशान्तये ॥",
+          "translation": "For the removal of all obstacles, one should meditate upon the Lord who wears white garments, who is all-pervading, who is of moonlike complexion, who has four arms, and whose face is always serene."
+        },
+        {
+          "verse": 3,
+          "sanskrit": "अगजाननपद्मार्कं गजाननमहर्निशम् ।\nअनेकदं तं भक्तानां एकदन्तमुपास्महे ॥",
+          "translation": "We worship the single-tusked one, who is the sun to the lotus face of Parvati, the elephant-faced one worshipped day and night, who bestows many boons upon his devotees."
+        }
+      ]
+    },
+    {
+      "chapter": 2,
+      "title": "The Wisdom of Ganesha",
+      "verses": [
+        {
+          "verse": 1,
+          "sanskrit": "गणानां त्वां गणपतिं हवामहे कविं कवीनामुपमश्रवस्तमम् ।\nज्येष्ठराजं ब्रह्मणां ब्रह्मणस्पत आ नः शृण्वन्नूतिभिः सीद सादनम् ॥",
+          "translation": "O Lord of the Ganas, we invoke You, O Ganapati, the seer among seers, most renowned, the eldest king among prayers. Hear our invocations and take your seat, bringing blessings."
+        },
+        {
+          "verse": 2,
+          "sanskrit": "प्रणम्य शिरसा देवं गौरीपुत्रं विनायकम् ।\nभक्तावासं स्मरेन्नित्यं आयुःकामार्थसिद्धये ॥",
+          "translation": "Having bowed one's head to the divine Vinayaka, son of Gauri, who resides in the hearts of devotees — one should remember Him always for the attainment of long life, desires, and prosperity."
         }
       ]
     }

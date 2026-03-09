@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { motion, AnimatePresence } from 'motion/react';
+import { motion, AnimatePresence } from 'framer-motion';
 import { Icon } from './Icon';
 import { useToast } from '../contexts/ToastContext';
 
@@ -75,8 +75,8 @@ export const AmritCollector = () => {
             <button
                 onClick={handleCollect}
                 className={`relative w-16 h-16 rounded-full flex items-center justify-center border-2 shadow-lg transition-all duration-300 ${isFull
-                        ? 'bg-amber-100 border-amber-400 shadow-[0_0_30px_rgba(245,158,11,0.5)] hover:scale-110'
-                        : 'bg-white border-stone-200 opacity-80 hover:opacity-100'
+                    ? 'bg-amber-100 border-amber-400 shadow-[0_0_30px_rgba(245,158,11,0.5)] hover:scale-110'
+                    : 'bg-white border-stone-200 opacity-80 hover:opacity-100'
                     }`}
             >
                 {/* Water level fill background */}

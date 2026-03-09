@@ -4,7 +4,7 @@ import { Icon } from './Icon';
 import { useToast } from '../contexts/ToastContext';
 import { useAuth } from '../contexts/AuthContext';
 import { useModal } from '../contexts/ModalContext';
-import { motion, AnimatePresence } from 'motion/react';
+import { motion, AnimatePresence } from 'framer-motion';
 
 const CATEGORIES = [
     { id: 'all', label: 'All', emoji: '🪔', color: 'from-amber-500 to-orange-600' },

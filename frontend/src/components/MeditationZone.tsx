@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef, useCallback, useMemo } from 'react';
-import { motion, AnimatePresence } from 'motion/react';
+import { motion, AnimatePresence } from 'framer-motion';
 import { Icon } from './Icon';
 import { I18nContent, IconName } from '../types';
 import { useAuth } from '../contexts/AuthContext';

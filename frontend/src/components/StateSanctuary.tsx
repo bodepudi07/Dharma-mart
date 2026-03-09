@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useMemo } from 'react';
 import { I18nContent, Temple, Language } from '../types';
 import { Icon } from './Icon';
-import { motion, AnimatePresence } from 'motion/react';
+import { motion, AnimatePresence } from 'framer-motion';
 import { getTemples } from '../services/apiService';
 import { fuzzySearch, calculateDistance } from '../utils/geolocation';
 

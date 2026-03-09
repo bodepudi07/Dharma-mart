@@ -1,6 +1,7 @@
 import express from 'express';
 import { authenticate, authorize } from './middleware/auth.js';
 import db from '../db.js';
+import { standardResponse, errorResponse } from '../middleware/responseHandler.js';
 
 const router = express.Router();
 
@@ -17,20 +18,29 @@ router.get('/users', async (req, res) => {
             const { password, passwordHash, ...userWithoutPassword } = u;
             return userWithoutPassword;
         });
-        res.json(usersWithoutPasswords);
+        return standardResponse(res, 200, usersWithoutPasswords);
     } catch (error) {
-        console.error('API Error: /admin/users', error);
-        res.status(500).json({ error: 'Failed to Fetch users' });
+        next(error);
     }
 });
 
 // GET activity log
-router.get('/activity-log', async (req, res) => {
+router.get('/activity-log', async (req, res, next) => {
     try {
         const logs = await db.read('activity_log.json');
-        res.json(logs.sort((a, b) => new Date(b.timestamp) - new Date(a.timestamp)));
+        return standardResponse(res, 200, logs.sort((a, b) => new Date(b.timestamp) - new Date(a.timestamp)));
     } catch (error) {
-        res.status(500).json({ error: 'Failed to fetch activity log' });
+        next(error);
+    }
+});
+
+// GET all bookings
+router.get('/bookings', async (req, res, next) => {
+    try {
+        const bookings = await db.read('bookings.json');
+        return standardResponse(res, 200, bookings);
+    } catch (error) {
+        next(error);
     }
 });
 
@@ -61,38 +71,37 @@ router.get('/stats', async (req, res) => {
             festivals: festivals.length
         });
     } catch (error) {
-        console.error('API Error: /admin/stats', error);
-        res.status(500).json({ error: 'Failed to fetch stats' });
+        next(error);
     }
 });
 
 // GET pending temples
-router.get('/pending-temples', async (req, res) => {
+router.get('/pending-temples', async (req, res, next) => {
     try {
         const temples = await db.read('pending_temples.json');
-        res.json(temples);
+        return standardResponse(res, 200, temples);
     } catch (error) {
-        res.status(500).json({ error: 'Failed to fetch pending temples' });
+        next(error);
     }
 });
 
 // GET pending pandits
-router.get('/pending-pandits', async (req, res) => {
+router.get('/pending-pandits', async (req, res, next) => {
     try {
         const pandits = await db.read('pending_pandits.json');
-        res.json(pandits);
+        return standardResponse(res, 200, pandits);
     } catch (error) {
-        res.status(500).json({ error: 'Failed to fetch pending pandits' });
+        next(error);
     }
 });
 
 // Process temple submission
-router.post('/process-temple', async (req, res) => {
+router.post('/process-temple', async (req, res, next) => {
     const { templeId, status } = req.body;
     try {
         let pending = await db.read('pending_temples.json');
         const submission = pending.find(t => t.id === templeId);
-        if (!submission) return res.status(404).json({ error: 'Submission not found' });
+        if (!submission) return errorResponse(res, 404, 'Submission not found');
 
         pending = pending.filter(t => t.id !== templeId);
         await db.write('pending_temples.json', pending);
@@ -100,28 +109,26 @@ router.post('/process-temple', async (req, res) => {
         if (status === 'approved') {
             const { submittedBy, status: _, ...newTemple } = submission;
             await db.insert('temples.json', newTemple);
-            res.json({ message: 'Temple approved and added successfully' });
+            return standardResponse(res, 200, null, 'Temple approved and added successfully');
         } else {
-            res.json({ message: 'Temple submission rejected' });
+            return standardResponse(res, 200, null, 'Temple submission rejected');
         }
     } catch (error) {
-        console.error('API Error: /admin/process-temple', error);
-        res.status(500).json({ error: 'Failed to process temple submission' });
+        next(error);
     }
 });
 
 // Update user role
-router.put('/users/:id/role', async (req, res) => {
+router.put('/users/:id/role', async (req, res, next) => {
     const { role } = req.body;
     const userId = parseInt(req.params.id);
     try {
         const updatedUser = await db.update('users.json', userId, { role });
-        if (!updatedUser) return res.status(404).json({ error: 'User not found' });
+        if (!updatedUser) return errorResponse(res, 404, 'User not found');
 
-        res.json({ message: `Role for ${updatedUser.name} updated to ${role}` });
+        return standardResponse(res, 200, null, `Role for ${updatedUser.name} updated to ${role}`);
     } catch (error) {
-        console.error('API Error: /admin/users/:id/role', error);
-        res.status(500).json({ error: 'Failed to update user role' });
+        next(error);
     }
 });
 
@@ -143,53 +150,50 @@ const cascadeDeleteUserData = async (userId) => {
 };
 
 // Delete user by admin
-router.delete('/users/:id', async (req, res) => {
+router.delete('/users/:id', async (req, res, next) => {
     const userId = parseInt(req.params.id);
     try {
         const user = await db.findOne('users.json', u => u.id === userId);
-        if (!user) return res.status(404).json({ error: 'User not found' });
+        if (!user) return errorResponse(res, 404, 'User not found');
 
         await cascadeDeleteUserData(userId);
 
         await db.delete('users.json', userId);
-        res.json({ message: `User ${user.name} and all associated data deleted successfully` });
+        return standardResponse(res, 200, null, `User ${user.name} and all associated data deleted successfully`);
     } catch (error) {
-        console.error('API Error: DELETE /admin/users', error);
-        res.status(500).json({ error: 'Failed to delete user' });
+        next(error);
     }
 });
 
 // Approve Pandit
-router.post('/approve-pandit/:id', async (req, res) => {
+router.post('/approve-pandit/:id', async (req, res, next) => {
     const panditId = parseInt(req.params.id);
     try {
         const pending = await db.read('pending_pandits.json');
         const pandit = pending.find(p => p.id === panditId);
-        if (!pandit) return res.status(404).json({ error: 'Pending pandit not found' });
+        if (!pandit) return errorResponse(res, 404, 'Pending pandit not found');
 
         const newPending = pending.filter(p => p.id !== panditId);
         await db.write('pending_pandits.json', newPending);
 
         await db.insert('pandits.json', { ...pandit, status: 'verified', rating: 4.5 });
 
-        res.json({ message: 'Pandit approved and verified' });
+        return standardResponse(res, 200, null, 'Pandit approved and verified');
     } catch (error) {
-        console.error('API Error: POST /admin/approve-pandit', error);
-        res.status(500).json({ error: 'Failed to approve pandit' });
+        next(error);
     }
 });
 
 // Reject Pandit
-router.post('/reject-pandit/:id', async (req, res) => {
+router.post('/reject-pandit/:id', async (req, res, next) => {
     const panditId = parseInt(req.params.id);
     try {
         const pending = await db.read('pending_pandits.json');
         const newPending = pending.filter(p => p.id !== panditId);
         await db.write('pending_pandits.json', newPending);
-        res.json({ message: 'Pandit registration rejected' });
+        return standardResponse(res, 200, null, 'Pandit registration rejected');
     } catch (error) {
-        console.error('API Error: POST /admin/reject-pandit', error);
-        res.status(500).json({ error: 'Failed to reject pandit' });
+        next(error);
     }
 });
 

@@ -1,15 +1,56 @@
-
 {
   "title": "Uddhava Gītā",
   "chapters": [
     {
       "chapter": 1,
-      "title": "Krishna's Final Instructions",
+      "title": "The Lord's Final Teachings to Uddhava",
       "verses": [
         {
           "verse": 1,
-          "sanskrit": "Placeholder Sanskrit text for Uddhava Gītā.",
-          "translation": "Placeholder English translation for Uddhava Gītā."
+          "sanskrit": "श्रीभगवानुवाच ।\nयो विद्यया मां विजानाति यो विद्यामपि तत्त्वतः ।\nस मे प्रियतमो लोके सर्वभूतात्मभावनः ॥",
+          "translation": "The Supreme Lord said: He who knows Me through wisdom, and who also knows wisdom in truth — he is the dearest to Me in this world, seeing the Self in all beings."
+        },
+        {
+          "verse": 2,
+          "sanskrit": "एतावान् एव लोकेऽस्मिन् पुंसां धर्मः परः स्मृतः ।\nभक्तियोगो भगवति तन्नामग्रहणादिभिः ॥",
+          "translation": "In this world, the supreme dharma for all beings is known as Bhakti-yoga to the Supreme Lord, beginning with the chanting of His holy names."
+        },
+        {
+          "verse": 3,
+          "sanskrit": "मद्भक्तिं लभते नित्यां मच्चित्तः सततं स्थितः ।\nमत्प्रसादात् अवाप्नोति शाश्वतं पदमव्ययम् ॥",
+          "translation": "One who is always absorbed in thought of Me obtains eternal devotion to Me. By My grace, he attains the eternal, imperishable abode."
+        }
+      ]
+    },
+    {
+      "chapter": 2,
+      "title": "The Twenty-Four Gurus",
+      "verses": [
+        {
+          "verse": 1,
+          "sanskrit": "पृथिव्यापस्तथा तेजो वायुः खं मनो बुद्धिरिति ।\nचतुर्विंशतिगुरवो मया प्रोक्ता उद्धवाय हि ॥",
+          "translation": "Earth, water, fire, air, sky, mind, and intellect — twenty-four gurus I have described to Uddhava indeed."
+        },
+        {
+          "verse": 2,
+          "sanskrit": "पृथ्वी गुरुर्धैर्यगुणात् क्षमायाः ।\nवायोर्गुरुः प्राणतत्त्वात् स्पर्शनात् ।\nआकाशो गुरुः सर्वव्यापकत्वात् ॥",
+          "translation": "Earth is a guru from whom we learn patience and forgiveness. Wind is a guru from whom we learn the principle of life force and touch. Space is a guru from whom we learn all-pervasiveness."
+        }
+      ]
+    },
+    {
+      "chapter": 3,
+      "title": "Detachment and Devotion",
+      "verses": [
+        {
+          "verse": 1,
+          "sanskrit": "न प्राण संस्थानमिदं शरीरं यदात्मनोऽन्यत् किमपि प्रधानम् ।\nन रूपमस्य विपरैति यत्र वाचो निवर्तन्ते असंप्राप्य मनसा सहैव ॥",
+          "translation": "This body is not the Self; the Self is something altogether different from the body. The form of the Self is beyond description, where words return along with the mind, unable to reach it."
+        },
+        {
+          "verse": 2,
+          "sanskrit": "ज्ञानविज्ञानसम्पन्नो भज मामकृतात्मभिः ।\nभक्त्या परमया राजन् निर्गुणेन ससूत्रतः ॥",
+          "translation": "Endowed with knowledge and realized wisdom, worship Me with supreme devotion, O king, beyond material qualities and in full understanding."
         }
       ]
     }

@@ -8,8 +8,266 @@ import { useAuth } from '../contexts/AuthContext';
 import * as api from '../services/apiService';
 
 type ViewMode = 'kids' | 'sadhana';
-type KidsMode = 'chantAlong' | 'repeatLearn';
+type KidsMode = 'chantAlong' | 'repeatLearn' | 'spellingPractice';
 type ChantState = 'idle' | 'guru' | 'user' | 'recording' | 'playing';
+
+// --- Confetti Burst Effect ---
+const ConfettiBurst = ({ active }: { active: boolean }) => {
+    if (!active) return null;
+    const particles = Array.from({ length: 30 }, (_, i) => {
+        const colors = ['#f59e0b', '#ef4444', '#22c55e', '#3b82f6', '#a855f7', '#ec4899', '#14b8a6'];
+        const color = colors[i % colors.length];
+        const angle = (i / 30) * 360;
+        const distance = 60 + Math.random() * 100;
+        const x = Math.cos((angle * Math.PI) / 180) * distance;
+        const y = Math.sin((angle * Math.PI) / 180) * distance;
+        const size = 4 + Math.random() * 8;
+        const delay = Math.random() * 0.3;
+        return (
+            <div key={i} className="absolute rounded-full" style={{
+                width: size, height: size, backgroundColor: color,
+                left: '50%', top: '50%',
+                animation: `confetti-fly 1s ease-out ${delay}s forwards`,
+                transform: 'translate(-50%, -50%) scale(1)',
+                '--tx': `${x}px`, '--ty': `${y}px`,
+            } as React.CSSProperties} />
+        );
+    });
+    return <div className="absolute inset-0 pointer-events-none z-50">{particles}</div>;
+};
+
+// --- Animated Star Reward ---
+const StarReward = ({ count }: { count: number }) => (
+    <div className="flex items-center gap-1">
+        {Array.from({ length: 3 }, (_, i) => (
+            <span key={i} className={`text-2xl transition-all duration-500 ${i < count ? 'text-amber-400 scale-110 drop-shadow-[0_0_8px_rgba(245,158,11,0.8)]' : 'text-stone-600 scale-90'}`}
+                style={{ animationDelay: `${i * 0.15}s` }}>⭐</span>
+        ))}
+    </div>
+);
+
+// --- XP Progress Bar ---
+const XPBar = ({ xp, level }: { xp: number; level: number }) => {
+    const xpForLevel = level * 50;
+    const progress = Math.min((xp % xpForLevel) / xpForLevel * 100, 100);
+    return (
+        <div className="w-full max-w-xs">
+            <div className="flex items-center justify-between text-xs mb-1.5">
+                <span className="text-amber-300 font-bold flex items-center gap-1">
+                    <span className="text-base">🏆</span> Level {level}
+                </span>
+                <span className="text-stone-400">{xp % xpForLevel}/{xpForLevel} XP</span>
+            </div>
+            <div className="h-3 bg-stone-800 rounded-full overflow-hidden border border-stone-700">
+                <div className="h-full bg-gradient-to-r from-amber-500 via-orange-500 to-amber-400 rounded-full transition-all duration-1000 ease-out relative"
+                    style={{ width: `${progress}%` }}>
+                    <div className="absolute inset-0 bg-white/20 animate-pulse rounded-full" />
+                </div>
+            </div>
+        </div>
+    );
+};
+
+// --- Difficulty Badge ---
+const DifficultyBadge = ({ difficulty }: { difficulty?: string }) => {
+    const config = {
+        easy: { label: '🌱 Easy', bg: 'bg-emerald-500/20 text-emerald-400 border-emerald-500/40' },
+        medium: { label: '🔥 Medium', bg: 'bg-amber-500/20 text-amber-400 border-amber-500/40' },
+        hard: { label: '💎 Hard', bg: 'bg-purple-500/20 text-purple-400 border-purple-500/40' },
+    };
+    const c = config[(difficulty as keyof typeof config) || 'easy'] || config.easy;
+    return <span className={`text-[10px] font-bold px-2 py-0.5 rounded-full border ${c.bg}`}>{c.label}</span>;
+};
+
+// --- Streak Flame ---
+const StreakFlame = ({ streak }: { streak: number }) => {
+    if (streak < 2) return null;
+    return (
+        <div className="flex items-center gap-1 bg-orange-500/10 px-3 py-1.5 rounded-full border border-orange-500/30 animate-bounce" style={{ animationDuration: '2s' }}>
+            <span className="text-xl">🔥</span>
+            <span className="text-orange-400 font-bold text-sm">{streak} Streak!</span>
+        </div>
+    );
+};
+
+// --- Spelling Practice Game ---
+const SpellingPractice = ({ chant, onComplete, t }: { chant: Chant; onComplete: () => void; t: I18nContent }) => {
+    const [currentLineIdx, setCurrentLineIdx] = useState(0);
+    const [currentWordIdx, setCurrentWordIdx] = useState(0);
+    const [userInput, setUserInput] = useState('');
+    const [showHint, setShowHint] = useState(false);
+    const [attempts, setAttempts] = useState(0);
+    const [isCorrect, setIsCorrect] = useState<boolean | null>(null);
+    const [lineComplete, setLineComplete] = useState(false);
+    const [stars, setStars] = useState(3);
+    const [showConfetti, setShowConfetti] = useState(false);
+    const inputRef = useRef<HTMLInputElement>(null);
+
+    const phonetic = chant.phonetic || chant.mantra.map(line => line.split(' '));
+    const words = chant.mantra[currentLineIdx]?.split(' ') || [];
+    const currentWord = words[currentWordIdx] || '';
+    const currentPhonetic = phonetic[currentLineIdx]?.[currentWordIdx] || '';
+
+    useEffect(() => {
+        inputRef.current?.focus();
+        setIsCorrect(null);
+        setUserInput('');
+        setShowHint(false);
+        setAttempts(0);
+        setStars(3);
+    }, [currentLineIdx, currentWordIdx]);
+
+    const normalizeText = (text: string) => text.toLowerCase().replace(/[,.'"\s]/g, '').trim();
+
+    const checkAnswer = () => {
+        if (!userInput.trim()) return;
+        const normalized = normalizeText(userInput);
+        const expected = normalizeText(currentWord);
+
+        if (normalized === expected) {
+            setIsCorrect(true);
+            setShowConfetti(true);
+            setTimeout(() => setShowConfetti(false), 1200);
+
+            setTimeout(() => {
+                if (currentWordIdx + 1 < words.length) {
+                    setCurrentWordIdx(prev => prev + 1);
+                } else if (currentLineIdx + 1 < chant.mantra.length) {
+                    setLineComplete(true);
+                    setTimeout(() => {
+                        setCurrentLineIdx(prev => prev + 1);
+                        setCurrentWordIdx(0);
+                        setLineComplete(false);
+                    }, 1500);
+                } else {
+                    setLineComplete(true);
+                    setTimeout(() => onComplete(), 1500);
+                }
+            }, 800);
+        } else {
+            setIsCorrect(false);
+            setAttempts(prev => prev + 1);
+            setStars(prev => Math.max(1, prev - 1));
+            if (attempts >= 1) setShowHint(true);
+            setTimeout(() => {
+                setIsCorrect(null);
+                setUserInput('');
+                inputRef.current?.focus();
+            }, 1000);
+        }
+    };
+
+    return (
+        <div className="flex flex-col items-center gap-6 p-4 relative">
+            <ConfettiBurst active={showConfetti} />
+            <style>{`
+                @keyframes confetti-fly {
+                    0% { transform: translate(-50%, -50%) scale(1); opacity: 1; }
+                    100% { transform: translate(calc(-50% + var(--tx)), calc(-50% + var(--ty))) scale(0); opacity: 0; }
+                }
+                @keyframes word-bounce { 0%,100%{transform:translateY(0)} 50%{transform:translateY(-8px)} }
+                @keyframes shake { 0%,100%{transform:translateX(0)} 25%{transform:translateX(-8px)} 75%{transform:translateX(8px)} }
+            `}</style>
+
+            {/* Progress bar */}
+            <div className="w-full max-w-md">
+                <div className="flex items-center justify-between text-xs mb-2">
+                    <span className="text-stone-400">Line {currentLineIdx + 1}/{chant.mantra.length}</span>
+                    <StarReward count={stars} />
+                </div>
+                <div className="h-2 bg-stone-800 rounded-full overflow-hidden">
+                    <div className="h-full bg-gradient-to-r from-green-400 to-emerald-500 rounded-full transition-all duration-500"
+                        style={{ width: `${((currentLineIdx * words.length + currentWordIdx) / (chant.mantra.reduce((a, l) => a + l.split(' ').length, 0))) * 100}%` }} />
+                </div>
+            </div>
+
+            {/* Current line display with word highlighting */}
+            <div className="bg-black/40 rounded-2xl p-6 border border-white/10 w-full max-w-md">
+                <p className="text-stone-500 text-xs uppercase tracking-widest mb-3">Spell each word correctly</p>
+                <div className="flex flex-wrap gap-2 justify-center">
+                    {words.map((word, idx) => (
+                        <span key={idx} className={`text-lg md:text-xl font-serif px-2 py-1 rounded-lg transition-all duration-300 ${idx < currentWordIdx ? 'text-emerald-400 bg-emerald-500/10 line-through decoration-emerald-500/50' :
+                            idx === currentWordIdx ? 'text-amber-300 bg-amber-500/15 border border-amber-500/40 shadow-[0_0_12px_rgba(245,158,11,0.3)]' :
+                                'text-stone-600'
+                            }`} style={idx === currentWordIdx ? { animation: 'word-bounce 1.5s ease-in-out infinite' } : {}}>
+                            {idx <= currentWordIdx ? word : '•'.repeat(word.length)}
+                        </span>
+                    ))}
+                </div>
+            </div>
+
+            {/* Input area */}
+            {!lineComplete ? (
+                <div className="w-full max-w-md space-y-3">
+                    {showHint && (
+                        <div className="bg-amber-500/10 border border-amber-500/30 rounded-xl p-3 flex items-center gap-2">
+                            <span className="text-xl">💡</span>
+                            <div>
+                                <p className="text-amber-400 text-sm font-medium">Pronunciation Hint:</p>
+                                <p className="text-amber-300 font-serif text-lg">{currentPhonetic}</p>
+                            </div>
+                        </div>
+                    )}
+
+                    <div className="flex gap-2">
+                        <input
+                            ref={inputRef}
+                            type="text"
+                            value={userInput}
+                            onChange={(e) => setUserInput(e.target.value)}
+                            onKeyDown={(e) => e.key === 'Enter' && checkAnswer()}
+                            placeholder={`Type "${currentWord.substring(0, 2)}..." here`}
+                            className={`flex-1 bg-black/50 border-2 rounded-xl px-4 py-3 text-lg text-white outline-none transition-all duration-300 ${isCorrect === true ? 'border-emerald-500 shadow-[0_0_20px_rgba(16,185,129,0.4)]' :
+                                isCorrect === false ? 'border-red-500 shadow-[0_0_20px_rgba(239,68,68,0.4)]' :
+                                    'border-white/20 focus:border-amber-500'
+                                }`}
+                            style={isCorrect === false ? { animation: 'shake 0.4s ease-in-out' } : {}}
+                            autoComplete="off"
+                            autoCorrect="off"
+                            spellCheck={false}
+                        />
+                        <button onClick={checkAnswer}
+                            className="bg-gradient-to-r from-amber-500 to-orange-500 text-white font-bold px-6 py-3 rounded-xl hover:scale-105 transition-all shadow-[0_0_20px_rgba(245,158,11,0.3)] border border-amber-400/50">
+                            ✓
+                        </button>
+                    </div>
+
+                    {isCorrect === true && (
+                        <p className="text-emerald-400 text-center font-bold text-lg animate-bounce">✨ Correct! Amazing! ✨</p>
+                    )}
+                    {isCorrect === false && (
+                        <p className="text-red-400 text-center font-medium">Not quite! Try again 💪</p>
+                    )}
+
+                    <div className="flex justify-center gap-3">
+                        <button onClick={() => setShowHint(true)}
+                            className="text-xs text-stone-500 hover:text-amber-400 transition-colors flex items-center gap-1">
+                            <span>💡</span> Show Hint
+                        </button>
+                        <button onClick={() => {
+                            const utterance = new SpeechSynthesisUtterance(currentWord);
+                            utterance.rate = 0.7;
+                            utterance.pitch = 1.1;
+                            const voices = window.speechSynthesis.getVoices();
+                            utterance.voice = voices.find(v => v.lang.startsWith('hi-IN')) || voices.find(v => v.lang.startsWith('en-IN')) || null;
+                            window.speechSynthesis.speak(utterance);
+                        }}
+                            className="text-xs text-stone-500 hover:text-amber-400 transition-colors flex items-center gap-1">
+                            <span>🔊</span> Listen
+                        </button>
+                    </div>
+                </div>
+            ) : (
+                <div className="text-center space-y-2">
+                    <p className="text-3xl">🎉</p>
+                    <p className="text-emerald-400 font-bold text-xl">Line Complete!</p>
+                    <StarReward count={stars} />
+                </div>
+            )}
+        </div>
+    );
+};
+
 
 // --- Japa Mala Component for Sadhana Mode ---
 const JapaMala = ({ chant, onComplete, t }: { chant: Chant; onComplete: () => void; t: I18nContent }) => {
@@ -279,9 +537,22 @@ export const ChantingZone = ({ t }: { t: I18nContent }) => {
     // Kids Zone State
     const [kidsMode, setKidsMode] = useState<KidsMode>('chantAlong');
     const [chantCount, setChantCount] = useState(() => { try { const s = localStorage.getItem('dd-chant-count'); return s ? parseInt(s, 10) : 0; } catch { return 0; } });
+    const [kidsXP, setKidsXP] = useState(() => { try { const s = localStorage.getItem('dd-kids-xp'); return s ? parseInt(s, 10) : 0; } catch { return 0; } });
+    const [kidsLevel, setKidsLevel] = useState(() => { try { const s = localStorage.getItem('dd-kids-level'); return s ? parseInt(s, 10) : 1; } catch { return 1; } });
+    const [kidsStreak, setKidsStreak] = useState(() => { try { const s = localStorage.getItem('dd-kids-streak'); return s ? parseInt(s, 10) : 0; } catch { return 0; } });
+    const [lastChantDate, setLastChantDate] = useState(() => { try { return localStorage.getItem('dd-kids-last-date') || ''; } catch { return ''; } });
     const [unlockedBadges, setUnlockedBadges] = useState<string[]>([]);
     const [chantState, setChantState] = useState<ChantState>('idle');
     const [currentLine, setCurrentLine] = useState(0);
+    const [showLevelUp, setShowLevelUp] = useState(false);
+
+    // Sadhana Mode State
+    const [sadhanaTab, setSadhanaTab] = useState<'mala' | 'recite'>('mala');
+    const [reciteActiveLine, setReciteActiveLine] = useState(0);
+    const [reciteRecording, setReciteRecording] = useState<string | null>(null);
+    const [isReciteRecording, setIsReciteRecording] = useState(false);
+    const [reciteSpelling, setReciteSpelling] = useState<Record<number, boolean>>({});
+    const reciteMediaRef = useRef<MediaRecorder | null>(null);
 
     // Shared Refs
     const mediaRecorderRef = useRef<MediaRecorder | null>(null);
@@ -302,6 +573,45 @@ export const ChantingZone = ({ t }: { t: I18nContent }) => {
             if (err instanceof Error) addToast(err.message, 'error');
         }
     };
+
+    // --- Gamification: XP & Level System ---
+    const addXP = useCallback((amount: number) => {
+        setKidsXP(prev => {
+            const newXP = prev + amount;
+            const xpForLevel = kidsLevel * 50;
+            if (newXP >= xpForLevel) {
+                setKidsLevel(l => {
+                    const newLevel = l + 1;
+                    localStorage.setItem('dd-kids-level', String(newLevel));
+                    setShowLevelUp(true);
+                    setTimeout(() => setShowLevelUp(false), 3000);
+                    return newLevel;
+                });
+            }
+            localStorage.setItem('dd-kids-xp', String(newXP));
+            return newXP;
+        });
+    }, [kidsLevel]);
+
+    // --- Streak Tracking ---
+    const updateStreak = useCallback(() => {
+        const today = new Date().toDateString();
+        if (lastChantDate === today) return;
+
+        const yesterday = new Date(Date.now() - 86400000).toDateString();
+        if (lastChantDate === yesterday) {
+            setKidsStreak(prev => {
+                const newStreak = prev + 1;
+                localStorage.setItem('dd-kids-streak', String(newStreak));
+                return newStreak;
+            });
+        } else if (lastChantDate !== today) {
+            setKidsStreak(1);
+            localStorage.setItem('dd-kids-streak', '1');
+        }
+        setLastChantDate(today);
+        localStorage.setItem('dd-kids-last-date', today);
+    }, [lastChantDate]);
 
     // --- Kids Mode Badge Logic ---
     useEffect(() => {
@@ -346,7 +656,9 @@ export const ChantingZone = ({ t }: { t: I18nContent }) => {
     const handleKidChantCompletion = useCallback(() => {
         setChantState('idle');
         setChantCount(prev => prev + 1);
-    }, []);
+        addXP(10);
+        updateStreak();
+    }, [addXP, updateStreak]);
 
     const startChantAlong = useCallback(() => {
         setChantState('guru');
@@ -422,6 +734,16 @@ export const ChantingZone = ({ t }: { t: I18nContent }) => {
         setSelectedChant(chant);
         setChantState('idle');
         setCurrentLine(0);
+        setReciteSpelling({});
+        setReciteRecording(null);
+        setReciteActiveLine(0);
+    };
+
+    const handleSpellingComplete = () => {
+        setChantCount(prev => prev + 1);
+        addXP(25); // More XP for spelling practice
+        updateStreak();
+        addToast('🎉 Amazing! You spelled the whole mantra correctly! +25 XP', 'success');
     };
 
     const chantStatusText = () => {
@@ -436,6 +758,18 @@ export const ChantingZone = ({ t }: { t: I18nContent }) => {
 
     return (
         <div className="min-h-full flex flex-col items-center justify-center p-4 md:p-8 text-center bg-black relative overflow-hidden">
+            {/* Level Up Celebration */}
+            {showLevelUp && (
+                <div className="fixed inset-0 z-[100] flex items-center justify-center bg-black/70 backdrop-blur-sm animate-fade-in">
+                    <div className="text-center space-y-4 animate-bounce">
+                        <p className="text-6xl">🎊</p>
+                        <p className="text-4xl font-bold text-amber-400 font-serif drop-shadow-[0_0_30px_rgba(245,158,11,0.8)]">Level Up!</p>
+                        <p className="text-2xl text-white">Level {kidsLevel} 🏆</p>
+                        <p className="text-stone-400">Keep chanting for more rewards!</p>
+                    </div>
+                </div>
+            )}
+
             {/* Ambient Background Glow */}
             <div className="absolute inset-0 pointer-events-none overflow-hidden flex items-center justify-center">
                 <div className="absolute top-1/4 right-1/4 w-[40vw] h-[40vw] max-w-[500px] max-h-[500px] bg-amber-600/20 rounded-full blur-[120px] opacity-40 mix-blend-screen animate-pulse"></div>
@@ -456,9 +790,55 @@ export const ChantingZone = ({ t }: { t: I18nContent }) => {
                         {/* Inner subtle glow */}
                         <div className="absolute inset-0 bg-gradient-to-b from-white/5 to-transparent pointer-events-none"></div>
 
-                        <div className="relative z-10 flex justify-center gap-3 mb-8">
-                            <button onClick={() => setKidsMode('chantAlong')} className={`px-6 py-2.5 rounded-full text-sm font-bold tracking-wide transition-all duration-300 ${kidsMode === 'chantAlong' ? 'bg-amber-500 text-amber-950 shadow-[0_0_20px_rgba(245,158,11,0.5)] scale-105' : 'bg-white/10 text-stone-300 hover:bg-white/20'}`}>{t.chantAlongMode}</button>
-                            <button onClick={() => setKidsMode('repeatLearn')} className={`px-6 py-2.5 rounded-full text-sm font-bold tracking-wide transition-all duration-300 ${kidsMode === 'repeatLearn' ? 'bg-amber-500 text-amber-950 shadow-[0_0_20px_rgba(245,158,11,0.5)] scale-105' : 'bg-white/10 text-stone-300 hover:bg-white/20'}`}>{t.repeatLearnMode}</button>
+                        {/* Top Stats Bar */}
+                        <div className="relative z-10 w-full flex flex-wrap items-center justify-between gap-4 mb-4 bg-black/30 rounded-2xl p-4 border border-white/5">
+                            <XPBar xp={kidsXP} level={kidsLevel} />
+                            <div className="flex items-center gap-3">
+                                <StreakFlame streak={kidsStreak} />
+                                <div className="bg-white/5 px-3 py-1.5 rounded-full border border-white/10 flex items-center gap-1.5">
+                                    <span className="text-lg">🕉️</span>
+                                    <span className="text-amber-400 font-bold">{chantCount}</span>
+                                    <span className="text-stone-500 text-xs">chants</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        {/* Daily Challenge & Motivation Banner */}
+                        <div className="relative z-10 w-full mb-6">
+                            <div className="bg-gradient-to-r from-purple-500/10 via-pink-500/10 to-amber-500/10 rounded-2xl p-4 border border-purple-500/20 flex items-center gap-4">
+                                <div className="text-4xl animate-bounce" style={{ animationDuration: '2s' }}>
+                                    {kidsStreak >= 7 ? '🏆' : kidsStreak >= 3 ? '⭐' : '🌟'}
+                                </div>
+                                <div className="flex-1">
+                                    <p className="text-white font-bold text-sm tracking-wider">
+                                        {kidsStreak === 0 ? '🎯 Start Your Chanting Journey!' :
+                                            kidsStreak >= 7 ? `🔥 ${kidsStreak}-Day Master Streak!` :
+                                                kidsStreak >= 3 ? `⚡ ${kidsStreak}-Day Streak — Keep Going!` :
+                                                    `✨ Day ${kidsStreak} — You're Doing Great!`}
+                                    </p>
+                                    <p className="text-stone-400 text-xs mt-0.5">
+                                        {chantCount < 5 ? 'Complete 5 chants to earn your first badge!' :
+                                            chantCount < 25 ? `${25 - chantCount} more to unlock 🌿 Devotee badge!` :
+                                                chantCount < 50 ? `${50 - chantCount} more to unlock 🪷 Scholar badge!` :
+                                                    `Level ${kidsLevel} — ${(kidsLevel * 100) - kidsXP} XP to next level!`}
+                                    </p>
+                                </div>
+                                <div className="shrink-0 bg-white/10 rounded-xl px-3 py-2 border border-white/10 text-center">
+                                    <p className="text-amber-400 font-bold text-lg">{Math.min(chantCount, 3)}/3</p>
+                                    <p className="text-stone-500 text-[10px] uppercase tracking-wider">Today</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div className="relative z-10 flex flex-wrap justify-center gap-2 mb-8">
+                            <button onClick={() => setKidsMode('chantAlong')} className={`px-5 py-2.5 rounded-full text-sm font-bold tracking-wide transition-all duration-300 flex items-center gap-2 ${kidsMode === 'chantAlong' ? 'bg-amber-500 text-amber-950 shadow-[0_0_20px_rgba(245,158,11,0.5)] scale-105' : 'bg-white/10 text-stone-300 hover:bg-white/20'}`}>
+                                <span>🎵</span> {t.chantAlongMode}
+                            </button>
+                            <button onClick={() => setKidsMode('repeatLearn')} className={`px-5 py-2.5 rounded-full text-sm font-bold tracking-wide transition-all duration-300 flex items-center gap-2 ${kidsMode === 'repeatLearn' ? 'bg-amber-500 text-amber-950 shadow-[0_0_20px_rgba(245,158,11,0.5)] scale-105' : 'bg-white/10 text-stone-300 hover:bg-white/20'}`}>
+                                <span>🔄</span> {t.repeatLearnMode}
+                            </button>
+                            <button onClick={() => setKidsMode('spellingPractice')} className={`px-5 py-2.5 rounded-full text-sm font-bold tracking-wide transition-all duration-300 flex items-center gap-2 ${kidsMode === 'spellingPractice' ? 'bg-gradient-to-r from-purple-500 to-pink-500 text-white shadow-[0_0_20px_rgba(168,85,247,0.5)] scale-105' : 'bg-white/10 text-stone-300 hover:bg-white/20'}`}>
+                                <span>✏️</span> Spelling Practice
+                            </button>
                         </div>
 
                         {/* Deity Selector Grid */}
@@ -479,44 +859,82 @@ export const ChantingZone = ({ t }: { t: I18nContent }) => {
                                         <span className={`text-[9px] font-bold tracking-wide uppercase leading-tight text-center ${selectedChant.id === c.id ? 'text-amber-300' : 'text-stone-400'}`}>
                                             {c.deity.split(' ')[0]}
                                         </span>
+                                        {c.difficulty && <DifficultyBadge difficulty={c.difficulty} />}
                                     </button>
                                 ))}
                             </div>
                         </div>
 
-                        <div className="relative z-10">
-                            <AnimatedDeity chant={selectedChant} currentUser={currentUser} />
+                        {/* Spelling Practice Mode */}
+                        {kidsMode === 'spellingPractice' ? (
+                            <div className="relative z-10 w-full">
+                                <div className="text-center mb-6">
+                                    <h3 className="text-2xl font-serif text-amber-300 mb-1">{selectedChant.title}</h3>
+                                    <p className="text-stone-500 text-sm">Practice spelling each word of the mantra correctly!</p>
+                                    <p className="text-amber-400/60 text-xs mt-1">+25 XP per completed mantra</p>
+                                </div>
+                                <SpellingPractice chant={selectedChant} onComplete={handleSpellingComplete} t={t} />
+                            </div>
+                        ) : (
+                            <>
+                                <div className="relative z-10">
+                                    <AnimatedDeity chant={selectedChant} currentUser={currentUser} />
+                                </div>
+
+                                <div className="relative z-10 text-3xl md:text-5xl font-serif text-amber-300 mb-6 h-32 flex items-center justify-center p-4 text-center leading-relaxed drop-shadow-[0_2px_10px_rgba(245,158,11,0.3)]">
+                                    <p>{selectedChant.sanskrit}</p>
+                                </div>
+
+                                {/* Phonetic pronunciation guide */}
+                                {selectedChant.phonetic && chantState === 'idle' && (
+                                    <div className="relative z-10 mb-4 bg-black/30 rounded-xl p-4 border border-white/5 max-w-md w-full">
+                                        <p className="text-xs text-stone-500 uppercase tracking-widest mb-2">📖 Pronunciation Guide</p>
+                                        {selectedChant.phonetic.map((line, i) => (
+                                            <p key={i} className="text-stone-300 font-mono text-sm leading-relaxed">
+                                                {line.map((word, j) => (
+                                                    <span key={j} className="inline-block mr-2 px-1 py-0.5 rounded bg-white/5 text-amber-300/80 mb-1">{word}</span>
+                                                ))}
+                                            </p>
+                                        ))}
+                                    </div>
+                                )}
+
+                                <div className="relative z-10 h-8 mb-8 text-stone-300 font-light tracking-wide text-lg bg-black/30 px-6 py-1 rounded-full border border-white/5">{chantStatusText()}</div>
+
+                                {/* Interaction Buttons */}
+                                <div className="relative z-10 flex items-center gap-4">
+                                    {kidsMode === 'chantAlong' && <button onClick={handleMainButtonClick} className="relative overflow-hidden group bg-gradient-to-br from-amber-500 to-orange-600 text-white font-bold text-xl px-12 py-4 rounded-full shadow-[0_0_30px_rgba(245,158,11,0.4)] transform hover:scale-105 transition-all duration-300 border border-amber-400/50 hover:border-white">
+                                        <span className="relative z-10 tracking-wider flex items-center gap-2">{chantState === 'idle' ? <><Icon name="play" className="w-5 h-5" /> {t.chantNow}</> : <><Icon name="stop-circle" className="w-5 h-5" /> Stop</>}</span>
+                                        <div className="absolute inset-0 bg-white/20 transform scale-x-0 group-hover:scale-x-100 transition-transform duration-500 origin-left"></div>
+                                    </button>}
+
+                                    {kidsMode === 'repeatLearn' && (
+                                        chantState === 'user' ?
+                                            <button onClick={startRecording} className="bg-red-500/80 hover:bg-red-500 text-white font-bold text-lg px-8 py-4 rounded-full shadow-[0_0_20px_rgba(239,68,68,0.4)] flex items-center gap-2 backdrop-blur-md border border-red-400/50 transition-all hover:scale-105 tracking-wider"><Icon name="microphone" className="w-6 h-6" /> {t.recordYourVoice}</button> :
+                                            chantState === 'recording' ?
+                                                <button onClick={stopRecording} className="bg-red-600 text-white font-bold text-lg px-8 py-4 rounded-full shadow-[0_0_30px_rgba(220,38,38,0.6)] flex items-center gap-2 animate-pulse border border-red-400 tracking-wider"><Icon name="stop-circle" className="w-6 h-6" /> {t.stopRecording}</button> :
+                                                chantState === 'playing' ?
+                                                    <button onClick={playRecording} className="bg-emerald-500/80 hover:bg-emerald-500 text-white font-bold text-lg px-8 py-4 rounded-full shadow-[0_0_20px_rgba(16,185,129,0.4)] flex items-center gap-2 border border-emerald-400/50 transition-all hover:scale-105 tracking-wider"><Icon name="play" className="w-6 h-6" /> {t.playYourChant}</button> :
+                                                    <button onClick={handleMainButtonClick} className="bg-gradient-to-br from-amber-500 to-orange-600 text-white font-bold text-xl px-12 py-4 rounded-full shadow-[0_0_30px_rgba(245,158,11,0.4)] transform hover:scale-105 transition-all duration-300 flex items-center justify-center border border-amber-400/50">
+                                                        {chantState === 'idle' ? <Icon name="speaker" className="w-7 h-7 drop-shadow-md" /> : <Icon name="stop-circle" className="w-7 h-7 drop-shadow-md" />}
+                                                    </button>
+                                    )}
+                                </div>
+                            </>
+                        )}
+
+                        {/* Story Section */}
+                        <div className="relative z-10 mt-8 w-full bg-gradient-to-r from-amber-500/5 to-orange-500/5 rounded-2xl p-5 border border-amber-500/10">
+                            <div className="flex items-center gap-2 mb-2">
+                                <span className="text-lg">📜</span>
+                                <p className="text-amber-400 font-bold text-sm uppercase tracking-wider">{t.storyMode}</p>
+                            </div>
+                            <p className="text-stone-300 text-sm leading-relaxed italic">{selectedChant.story}</p>
                         </div>
 
-                        <div className="relative z-10 text-3xl md:text-5xl font-serif text-amber-300 mb-6 h-32 flex items-center justify-center p-4 text-center leading-relaxed drop-shadow-[0_2px_10px_rgba(245,158,11,0.3)]">
-                            <p>{selectedChant.sanskrit}</p>
-                        </div>
-
-                        <div className="relative z-10 h-8 mb-8 text-stone-300 font-light tracking-wide text-lg bg-black/30 px-6 py-1 rounded-full border border-white/5">{chantStatusText()}</div>
-
-                        {/* Interaction Buttons */}
-                        <div className="relative z-10 flex items-center gap-4">
-                            {kidsMode === 'chantAlong' && <button onClick={handleMainButtonClick} className="relative overflow-hidden group bg-gradient-to-br from-amber-500 to-orange-600 text-white font-bold text-xl px-12 py-4 rounded-full shadow-[0_0_30px_rgba(245,158,11,0.4)] transform hover:scale-105 transition-all duration-300 border border-amber-400/50 hover:border-white">
-                                <span className="relative z-10 tracking-wider flex items-center gap-2">{chantState === 'idle' ? <><Icon name="play" className="w-5 h-5" /> {t.chantNow}</> : <><Icon name="stop-circle" className="w-5 h-5" /> Stop</>}</span>
-                                <div className="absolute inset-0 bg-white/20 transform scale-x-0 group-hover:scale-x-100 transition-transform duration-500 origin-left"></div>
-                            </button>}
-
-                            {kidsMode === 'repeatLearn' && (
-                                chantState === 'user' ?
-                                    <button onClick={startRecording} className="bg-red-500/80 hover:bg-red-500 text-white font-bold text-lg px-8 py-4 rounded-full shadow-[0_0_20px_rgba(239,68,68,0.4)] flex items-center gap-2 backdrop-blur-md border border-red-400/50 transition-all hover:scale-105 tracking-wider"><Icon name="microphone" className="w-6 h-6" /> {t.recordYourVoice}</button> :
-                                    chantState === 'recording' ?
-                                        <button onClick={stopRecording} className="bg-red-600 text-white font-bold text-lg px-8 py-4 rounded-full shadow-[0_0_30px_rgba(220,38,38,0.6)] flex items-center gap-2 animate-pulse border border-red-400 tracking-wider"><Icon name="stop-circle" className="w-6 h-6" /> {t.stopRecording}</button> :
-                                        chantState === 'playing' ?
-                                            <button onClick={playRecording} className="bg-emerald-500/80 hover:bg-emerald-500 text-white font-bold text-lg px-8 py-4 rounded-full shadow-[0_0_20px_rgba(16,185,129,0.4)] flex items-center gap-2 border border-emerald-400/50 transition-all hover:scale-105 tracking-wider"><Icon name="play" className="w-6 h-6" /> {t.playYourChant}</button> :
-                                            <button onClick={handleMainButtonClick} className="bg-gradient-to-br from-amber-500 to-orange-600 text-white font-bold text-xl px-12 py-4 rounded-full shadow-[0_0_30px_rgba(245,158,11,0.4)] transform hover:scale-105 transition-all duration-300 flex items-center justify-center border border-amber-400/50">
-                                                {chantState === 'idle' ? <Icon name="speaker" className="w-7 h-7 drop-shadow-md" /> : <Icon name="stop-circle" className="w-7 h-7 drop-shadow-md" />}
-                                            </button>
-                            )}
-                        </div>
-
-                        <div className="relative z-10 mt-12 w-full pt-8 border-t border-white/10">
-                            <p className="font-medium text-stone-300 tracking-wider text-sm uppercase">{t.chantCountLabel} <span className="text-3xl text-amber-400 font-bold ml-2 font-serif drop-shadow-[0_0_10px_rgba(245,158,11,0.5)]">{chantCount}</span></p>
-                            <h4 className="font-medium text-stone-400 tracking-wider text-xs uppercase mt-6 mb-4">{t.badgeCollection}</h4>
+                        {/* Badges Section */}
+                        <div className="relative z-10 mt-8 w-full pt-6 border-t border-white/10">
+                            <h4 className="font-medium text-stone-400 tracking-wider text-xs uppercase mb-4">{t.badgeCollection}</h4>
                             <div className="flex justify-center gap-4">
                                 {CHANTING_BADGES_DATA.map(badge => (
                                     <div key={badge.id} className={`p-3 rounded-full relative group transition-all duration-500 ${chantCount >= badge.chantCount ? 'bg-amber-500/20 border border-amber-500/50 shadow-[0_0_15px_rgba(245,158,11,0.3)]' : 'bg-white/5 border border-white/10 opacity-50 grayscale'}`} title={`${t[badge.nameKey as keyof I18nContent]}: ${t[badge.descriptionKey as keyof I18nContent]}`}>
@@ -532,9 +950,19 @@ export const ChantingZone = ({ t }: { t: I18nContent }) => {
                     <div className="relative bg-white/5 backdrop-blur-2xl rounded-[2.5rem] border border-white/10 shadow-[0_0_50px_rgba(0,0,0,0.5)] p-8 md:p-12 flex flex-col items-center overflow-hidden">
                         <div className="absolute inset-0 bg-gradient-to-b from-white/5 to-transparent pointer-events-none"></div>
                         <h2 className="relative z-10 text-3xl md:text-4xl font-serif text-white tracking-widest mb-2 drop-shadow-[0_0_15px_rgba(255,255,255,0.3)]">{t.sadhanaModeTitle}</h2>
-                        <p className="relative z-10 text-stone-400 font-light tracking-wide mb-8">{t.sadhanaModeSubtitle}</p>
+                        <p className="relative z-10 text-stone-400 font-light tracking-wide mb-4">{t.sadhanaModeSubtitle}</p>
 
-                        <div className="relative z-10 w-full max-w-md mb-8">
+                        {/* Sadhana Sub-Mode Tabs */}
+                        <div className="relative z-10 flex gap-2 bg-black/30 p-1.5 rounded-full border border-white/10 mb-6">
+                            <button onClick={() => setSadhanaTab('mala')} className={`px-5 py-2 rounded-full text-sm tracking-wider transition-all duration-300 ${sadhanaTab === 'mala' ? 'bg-amber-500/20 text-amber-300 border border-amber-500/50' : 'text-stone-400 hover:text-white'}`}>
+                                🕉️ Japa Mala
+                            </button>
+                            <button onClick={() => setSadhanaTab('recite')} className={`px-5 py-2 rounded-full text-sm tracking-wider transition-all duration-300 ${sadhanaTab === 'recite' ? 'bg-emerald-500/20 text-emerald-300 border border-emerald-500/50' : 'text-stone-400 hover:text-white'}`}>
+                                🎙️ Recite & Verify
+                            </button>
+                        </div>
+
+                        <div className="relative z-10 w-full max-w-md mb-6">
                             <select onChange={(e) => handleChantSelection(CHANTS_DATA.find(c => c.id === parseInt(e.target.value))!)} value={selectedChant.id} className="w-full bg-black/50 border border-white/20 text-stone-200 text-base md:text-lg rounded-xl focus:ring-amber-500 focus:border-amber-500 block p-3.5 appearance-none shadow-[0_4px_20px_rgba(0,0,0,0.5)] outline-none tracking-wide cursor-pointer transition-all hover:border-white/40">
                                 {CHANTS_DATA.map(c => <option key={c.id} value={c.id} className="bg-stone-900">{c.title}</option>)}
                             </select>
@@ -543,9 +971,193 @@ export const ChantingZone = ({ t }: { t: I18nContent }) => {
                             </div>
                         </div>
 
-                        <div className="relative z-10 w-full">
-                            <JapaMala chant={selectedChant} onComplete={handleCompleteSadhana} t={t} />
-                        </div>
+                        {sadhanaTab === 'mala' && (
+                            <div className="relative z-10 w-full">
+                                <JapaMala chant={selectedChant} onComplete={handleCompleteSadhana} t={t} />
+                            </div>
+                        )}
+
+                        {sadhanaTab === 'recite' && (
+                            <div className="relative z-10 w-full max-w-2xl space-y-6">
+                                {/* Sanskrit Display */}
+                                <div className="text-center mb-4">
+                                    <p className="font-serif text-3xl md:text-4xl text-amber-300 drop-shadow-[0_2px_15px_rgba(245,158,11,0.4)] leading-relaxed mb-3">{selectedChant.sanskrit}</p>
+                                    <p className="text-stone-500 text-sm uppercase tracking-widest">{selectedChant.deity} • {selectedChant.category}</p>
+                                </div>
+
+                                {/* Line-by-line Sloka Display */}
+                                <div className="space-y-3">
+                                    {selectedChant.mantra.map((line, idx) => (
+                                        <div key={idx} className={`group bg-black/30 rounded-xl p-4 border transition-all duration-300 cursor-pointer hover:bg-black/50 ${reciteActiveLine === idx ? 'border-amber-500/60 shadow-[0_0_15px_rgba(245,158,11,0.2)]' : 'border-white/10'}`}
+                                            onClick={() => setReciteActiveLine(idx)}>
+                                            <div className="flex items-start justify-between gap-3">
+                                                <div className="flex-1">
+                                                    <p className={`font-serif text-lg transition-colors ${reciteActiveLine === idx ? 'text-amber-300' : 'text-stone-200'}`}>{line}</p>
+                                                    {selectedChant.phonetic && selectedChant.phonetic[idx] && (
+                                                        <p className="text-stone-500 text-xs mt-1 font-mono tracking-wider">
+                                                            {selectedChant.phonetic[idx].join(' · ')}
+                                                        </p>
+                                                    )}
+                                                </div>
+                                                <button
+                                                    onClick={(e) => {
+                                                        e.stopPropagation();
+                                                        const utterance = new SpeechSynthesisUtterance(line);
+                                                        utterance.rate = 0.7; utterance.pitch = 1.0;
+                                                        const voices = window.speechSynthesis.getVoices();
+                                                        utterance.voice = voices.find(v => v.lang.startsWith('hi-IN')) || voices.find(v => v.lang.startsWith('en-IN')) || null;
+                                                        window.speechSynthesis.cancel();
+                                                        window.speechSynthesis.speak(utterance);
+                                                    }}
+                                                    className="shrink-0 w-9 h-9 rounded-full bg-white/10 hover:bg-amber-500/30 flex items-center justify-center transition-all hover:scale-110 border border-white/10"
+                                                    title="Listen to correct pronunciation"
+                                                >
+                                                    <Icon name="speaker" className="w-4 h-4 text-amber-400" />
+                                                </button>
+                                            </div>
+                                        </div>
+                                    ))}
+                                </div>
+
+                                {/* Listen to Full Mantra */}
+                                <button
+                                    onClick={() => {
+                                        const text = selectedChant.mantra.join('. ');
+                                        const utterance = new SpeechSynthesisUtterance(text);
+                                        utterance.rate = 0.65; utterance.pitch = 1.0;
+                                        const voices = window.speechSynthesis.getVoices();
+                                        utterance.voice = voices.find(v => v.lang.startsWith('hi-IN')) || voices.find(v => v.lang.startsWith('en-IN')) || null;
+                                        window.speechSynthesis.cancel();
+                                        window.speechSynthesis.speak(utterance);
+                                    }}
+                                    className="w-full bg-gradient-to-r from-amber-500/10 to-orange-500/10 border border-amber-500/30 rounded-xl p-4 text-amber-300 font-medium hover:bg-amber-500/20 transition-all flex items-center justify-center gap-3 tracking-wider"
+                                >
+                                    <Icon name="speaker" className="w-5 h-5" /> Listen Complete Mantra (Correct Pronunciation)
+                                </button>
+
+                                {/* Record Your Chanting */}
+                                <div className="bg-black/30 rounded-2xl p-6 border border-white/10 space-y-4">
+                                    <h3 className="text-white font-medium tracking-wider flex items-center gap-2">
+                                        <Icon name="microphone" className="w-5 h-5 text-red-400" /> Record Your Chanting
+                                    </h3>
+                                    <p className="text-stone-500 text-sm">Record yourself chanting the sloka, then play back to compare with the correct pronunciation above.</p>
+
+                                    <div className="flex flex-wrap gap-3 justify-center">
+                                        {!reciteRecording ? (
+                                            <button
+                                                onClick={async () => {
+                                                    try {
+                                                        const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
+                                                        const mr = new MediaRecorder(stream);
+                                                        const chunks: Blob[] = [];
+                                                        mr.ondataavailable = e => chunks.push(e.data);
+                                                        mr.onstop = () => {
+                                                            const blob = new Blob(chunks, { type: mr.mimeType });
+                                                            setReciteRecording(URL.createObjectURL(blob));
+                                                            stream.getTracks().forEach(t => t.stop());
+                                                        };
+                                                        reciteMediaRef.current = mr;
+                                                        mr.start();
+                                                        setIsReciteRecording(true);
+                                                    } catch { addToast('Microphone access required to record your chanting.', 'error'); }
+                                                }}
+                                                className="bg-red-500/20 text-red-400 border border-red-500/40 px-6 py-3 rounded-full font-bold flex items-center gap-2 hover:bg-red-500/30 transition-all hover:scale-105"
+                                            >
+                                                <Icon name="microphone" className="w-5 h-5" /> Start Recording
+                                            </button>
+                                        ) : null}
+
+                                        {isReciteRecording && (
+                                            <button
+                                                onClick={() => {
+                                                    reciteMediaRef.current?.stop();
+                                                    setIsReciteRecording(false);
+                                                }}
+                                                className="bg-red-600 text-white px-6 py-3 rounded-full font-bold flex items-center gap-2 animate-pulse border border-red-400 shadow-[0_0_15px_rgba(239,68,68,0.4)]"
+                                            >
+                                                <Icon name="stop-circle" className="w-5 h-5" /> Stop Recording
+                                            </button>
+                                        )}
+
+                                        {reciteRecording && !isReciteRecording && (
+                                            <>
+                                                <button
+                                                    onClick={() => {
+                                                        const audio = new Audio(reciteRecording);
+                                                        audio.play();
+                                                    }}
+                                                    className="bg-emerald-500/20 text-emerald-400 border border-emerald-500/40 px-6 py-3 rounded-full font-bold flex items-center gap-2 hover:bg-emerald-500/30 transition-all hover:scale-105"
+                                                >
+                                                    <Icon name="play" className="w-5 h-5" /> Play My Recording
+                                                </button>
+                                                <button
+                                                    onClick={() => setReciteRecording(null)}
+                                                    className="bg-white/10 text-stone-400 border border-white/10 px-6 py-3 rounded-full font-bold flex items-center gap-2 hover:bg-white/20 transition-all"
+                                                >
+                                                    <Icon name="microphone" className="w-5 h-5" /> Re-Record
+                                                </button>
+                                            </>
+                                        )}
+                                    </div>
+
+                                    {reciteRecording && !isReciteRecording && (
+                                        <div className="bg-emerald-500/10 border border-emerald-500/20 rounded-xl p-3 text-emerald-400 text-sm text-center">
+                                            ✅ Recording saved! Use "Listen Complete Mantra" above to hear the correct version, then "Play My Recording" to compare.
+                                        </div>
+                                    )}
+                                </div>
+
+                                {/* Spelling Verification for Adults */}
+                                <div className="bg-black/30 rounded-2xl p-6 border border-white/10 space-y-4">
+                                    <h3 className="text-white font-medium tracking-wider flex items-center gap-2">
+                                        ✏️ Sloka Spelling Verification
+                                    </h3>
+                                    <p className="text-stone-500 text-sm">Type each line of the mantra to verify your spelling knowledge.</p>
+
+                                    {selectedChant.mantra.map((line, idx) => (
+                                        <div key={idx} className="space-y-1">
+                                            <label className="text-xs text-stone-500 uppercase tracking-widest">Line {idx + 1}</label>
+                                            <input
+                                                type="text"
+                                                placeholder={`Type line ${idx + 1}...`}
+                                                className={`w-full bg-black/50 border rounded-lg px-4 py-2.5 text-white outline-none transition-all ${reciteSpelling[idx] === undefined ? 'border-white/15 focus:border-amber-500' :
+                                                    reciteSpelling[idx] ? 'border-emerald-500 shadow-[0_0_10px_rgba(16,185,129,0.2)]' :
+                                                        'border-red-500 shadow-[0_0_10px_rgba(239,68,68,0.2)]'
+                                                    }`}
+                                                onChange={(e) => {
+                                                    const val = e.target.value.toLowerCase().replace(/[,.'"\s]/g, '').trim();
+                                                    const expected = line.toLowerCase().replace(/[,.'"\s]/g, '').trim();
+                                                    setReciteSpelling(prev => ({ ...prev, [idx]: val === expected }));
+                                                }}
+                                                autoComplete="off" autoCorrect="off" spellCheck={false}
+                                            />
+                                            {reciteSpelling[idx] !== undefined && (
+                                                <p className={`text-xs ${reciteSpelling[idx] ? 'text-emerald-400' : 'text-red-400'}`}>
+                                                    {reciteSpelling[idx] ? '✅ Correct!' : `❌ Expected: "${line}"`}
+                                                </p>
+                                            )}
+                                        </div>
+                                    ))}
+
+                                    {Object.keys(reciteSpelling).length === selectedChant.mantra.length && Object.values(reciteSpelling).every(Boolean) && (
+                                        <div className="bg-emerald-500/10 border border-emerald-500/30 rounded-xl p-4 text-center space-y-2">
+                                            <p className="text-2xl">🎉</p>
+                                            <p className="text-emerald-400 font-bold">Perfect! All lines spelled correctly!</p>
+                                            <p className="text-stone-500 text-sm">Your knowledge of this sloka's spelling is verified.</p>
+                                        </div>
+                                    )}
+                                </div>
+
+                                {/* Story Section */}
+                                <div className="bg-gradient-to-r from-amber-500/5 to-orange-500/5 rounded-2xl p-5 border border-amber-500/10">
+                                    <div className="flex items-center gap-2 mb-2">
+                                        <span className="text-lg">📜</span>
+                                        <p className="text-amber-400 font-bold text-sm uppercase tracking-wider">{t.storyMode}</p>
+                                    </div>
+                                    <p className="text-stone-300 text-sm leading-relaxed italic">{selectedChant.story}</p>
+                                </div>
+                            </div>
+                        )}
                     </div>
                 )}
             </div>

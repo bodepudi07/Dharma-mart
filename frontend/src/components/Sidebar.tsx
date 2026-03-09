@@ -3,7 +3,7 @@
 
 
 import React, { useState, useEffect } from 'react';
-import { motion } from 'motion/react';
+import { motion } from 'framer-motion';
 import { LanguageSwitcher } from './LanguageSwitcher';
 import { Language, type I18nContent, type User, type View, type IconName, type Temple } from '../types';
 import { Icon } from './Icon';
@@ -216,16 +216,27 @@ export const Sidebar = ({ currentLang, setLang, t, onLoginClick, onSetView, curr
                 {currentUser ? (
                     <div className="space-y-3">
                         <button
-                            onClick={() => handleLinkClick('settings')}
+                            onClick={() => {
+                                onSetView('home'); // or just open user modal directly, but the logic flows through App
+                                // we will just open user setting, wait, in App 'settings' is user profile
+                                handleLinkClick('settings');
+                            }}
                             className={`w-full flex items-center gap-3 text-left p-3 rounded-2xl transition-all ${currentView === 'settings' ? 'bg-primary/5 border border-primary/10' : 'hover:bg-stone-100/50'}`}
                         >
                             <div className="relative">
-                                <Icon name="user-circle" className="w-10 h-10 text-primary flex-shrink-0" />
+                                <img
+                                    src={currentUser.avatarUrl || `https://ui-avatars.com/api/?name=${currentUser.name}&background=random`}
+                                    alt="Profile"
+                                    className="w-10 h-10 rounded-full border-2 border-primary flex-shrink-0 object-cover"
+                                />
                                 <div className="absolute bottom-0 right-0 w-3 h-3 bg-green-500 border-2 border-white rounded-full"></div>
                             </div>
-                            <div className="overflow-hidden">
+                            <div className="overflow-hidden flex-1">
                                 <p className="font-semibold text-sm truncate text-ink">{currentUser.name}</p>
-                                <p className="text-xs text-stone-500">{t.navSettings}</p>
+                                <div className="flex items-center gap-2 text-xs text-stone-500 mt-0.5">
+                                    <span className="flex items-center gap-1"><Icon name="star" className="w-3 h-3 text-amber-500" /> Lvl {currentUser.level || 1}</span>
+                                    <span className="flex items-center gap-1"><Icon name="flame" className="w-3 h-3 text-orange-500" /> {currentUser.currentStreak || 0}</span>
+                                </div>
                             </div>
                         </button>
                         <button

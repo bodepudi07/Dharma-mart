@@ -1,6 +1,7 @@
 import express from 'express';
 import db from '../db.js';
 import { authenticate } from './middleware/auth.js';
+import { standardResponse, errorResponse } from '../middleware/responseHandler.js';
 
 const router = express.Router();
 
@@ -8,16 +9,15 @@ const router = express.Router();
 router.get('/history/:userId', authenticate, async (req, res) => {
     const userId = parseInt(req.params.userId);
     if (req.user.id !== userId && req.user.role !== 'admin') {
-        return res.status(403).json({ error: 'Access denied' });
+        return errorResponse(res, 403, 'Access denied');
     }
 
     try {
         const histories = await db.read('chat_history.json');
         const userHistory = histories.find(h => h.userId === userId);
-        res.json(userHistory ? userHistory.messages : []);
+        return standardResponse(res, 200, userHistory ? userHistory.messages : []);
     } catch (error) {
-        console.error('API Error: /chats/history', error);
-        res.status(500).json({ error: 'Failed to fetch chat history' });
+        next(error);
     }
 });
 
@@ -42,10 +42,9 @@ router.post('/history', authenticate, async (req, res) => {
         }
 
         await db.write('chat_history.json', histories);
-        res.json({ message: 'History saved successfully' });
+        return standardResponse(res, 200, null, 'History saved successfully');
     } catch (error) {
-        console.error('API Error: /chats/history/save', error);
-        res.status(500).json({ error: 'Failed to save history' });
+        next(error);
     }
 });
 
@@ -53,16 +52,15 @@ router.post('/history', authenticate, async (req, res) => {
 router.get('/bookmarks/:userId', authenticate, async (req, res) => {
     const userId = parseInt(req.params.userId);
     if (req.user.id !== userId && req.user.role !== 'admin') {
-        return res.status(403).json({ error: 'Access denied' });
+        return errorResponse(res, 403, 'Access denied');
     }
 
     try {
         const allBookmarks = await db.read('bookmarks.json');
         const userBookmarks = allBookmarks.filter(b => b.userId === userId);
-        res.json(userBookmarks);
+        return standardResponse(res, 200, userBookmarks);
     } catch (error) {
-        console.error('API Error: /chats/bookmarks', error);
-        res.status(500).json({ error: 'Failed to fetch bookmarks' });
+        next(error);
     }
 });
 
@@ -81,10 +79,9 @@ router.post('/bookmarks', authenticate, async (req, res) => {
             timestamp: new Date().toISOString()
         };
         await db.insert('bookmarks.json', newBookmark);
-        res.json({ message: 'Insight bookmarked successfully', bookmark: newBookmark });
+        return standardResponse(res, 201, { bookmark: newBookmark }, 'Insight bookmarked successfully');
     } catch (error) {
-        console.error('API Error: POST /chats/bookmarks', error);
-        res.status(500).json({ error: 'Failed to save bookmark' });
+        next(error);
     }
 });
 
@@ -97,14 +94,13 @@ router.delete('/bookmarks/:id', authenticate, async (req, res) => {
         let bookmarks = await db.read('bookmarks.json');
         const index = bookmarks.findIndex(b => b.id === bookmarkId && (b.userId === userId || req.user.role === 'admin'));
 
-        if (index === -1) return res.status(404).json({ error: 'Bookmark not found' });
+        if (index === -1) return errorResponse(res, 404, 'Bookmark not found');
 
         bookmarks.splice(index, 1);
         await db.write('bookmarks.json', bookmarks);
-        res.json({ message: 'Bookmark removed' });
+        return standardResponse(res, 200, null, 'Bookmark removed');
     } catch (error) {
-        console.error('API Error: DELETE /chats/bookmarks', error);
-        res.status(500).json({ error: 'Failed to remove bookmark' });
+        next(error);
     }
 });
 

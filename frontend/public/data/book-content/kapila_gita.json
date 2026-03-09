@@ -1,15 +1,35 @@
-
 {
   "title": "Kapila Gītā",
   "chapters": [
     {
       "chapter": 1,
-      "title": "The Teachings of Kapila",
+      "title": "Sankhya Philosophy — The Nature of Creation",
       "verses": [
         {
           "verse": 1,
-          "sanskrit": "Placeholder Sanskrit text for Kapila Gītā.",
-          "translation": "Placeholder English translation for Kapila Gītā."
+          "sanskrit": "श्रीभगवानुवाच ।\nअथ ते सम्प्रवक्ष्यामि तत्त्वानां लक्षणं पृथक् ।\nयद्विदित्वा विमुच्यते पुरुषः प्रकृतेर्गुणैः ॥",
+          "translation": "The Supreme Lord said: Now I shall explain to you the individual characteristics of the elements (tattvas), knowing which, a person becomes liberated from the qualities of material nature."
+        },
+        {
+          "verse": 2,
+          "sanskrit": "ज्ञानं निःश्रेयसार्थाय पुरुषस्याविवेकिनः ।\nयद्बुध्य मुच्यते सांख्यं प्रवदन्ति अथो तत् ज्ञानम् ॥",
+          "translation": "Knowledge that is meant for the ultimate good of the undiscriminating person, by understanding which one becomes liberated — that knowledge is called Sankhya."
+        }
+      ]
+    },
+    {
+      "chapter": 2,
+      "title": "Devotion as the Path to Liberation",
+      "verses": [
+        {
+          "verse": 1,
+          "sanskrit": "भक्तिं परां मया लब्ध्वा याति ब्रह्म सनातनम् ।\nमद्भक्तः संत्यजेत् सर्वं कर्तव्यं विधिपूर्वकम् ॥",
+          "translation": "Having attained supreme devotion to Me, one reaches the eternal Brahman. My devotee should renounce all obligatory duties performed according to scriptural injunctions."
+        },
+        {
+          "verse": 2,
+          "sanskrit": "अहं सर्वस्य प्रभवो मत्तः सर्वं प्रवर्तते ।\nइति मत्वा भजन्ते मां बुधा भावसमन्विताः ॥",
+          "translation": "I am the origin of everything, and from Me everything proceeds. Knowing this, the wise worship Me with heartfelt devotion."
         }
       ]
     }

@@ -1,15 +1,24 @@
-
 {
-  "title": "Brahma Purana",
+  "title": "Brahma Purāṇa",
   "chapters": [
     {
       "chapter": 1,
-      "title": "The Creation by Brahma",
+      "title": "The Creation — From Brahma's Thought",
       "verses": [
         {
           "verse": 1,
-          "sanskrit": "Placeholder Sanskrit text for the Brahma Purana.",
-          "translation": "Placeholder English translation for the Brahma Purana."
+          "sanskrit": "ब्रह्मा सृजति लोकांस्तु स विष्णुः पालयत्यपि ।\nत्रैलोक्यं संहरत्येव रुद्रो नान्यः कदाचन ॥",
+          "translation": "Brahma creates the worlds, Vishnu protects them, and Rudra alone destroys the three worlds — no one else."
+        },
+        {
+          "verse": 2,
+          "sanskrit": "प्रवृत्तं च निवृत्तं च द्विविधं कर्म वैदिकम् ।\nप्रवृत्तं सुखसंयुक्तं निवृत्तं मोक्षकारणम् ॥",
+          "translation": "Vedic karma is of two kinds — pravritti (engagement) and nivritti (detachment). Pravritti is associated with happiness; nivritti is the cause of liberation."
+        },
+        {
+          "verse": 3,
+          "sanskrit": "ॐ तत्सदिति निर्देशो ब्रह्मणस्त्रिविधः स्मृतः ।\nब्राह्मणास्तेन वेदाश्च यज्ञाश्च विहिताः पुरा ॥",
+          "translation": "'Om Tat Sat' — this threefold designation of Brahman has been remembered. By this, the Brahmanas, the Vedas, and the sacrifices were ordained in ancient times."
         }
       ]
     }

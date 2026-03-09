@@ -40,6 +40,9 @@ export interface User {
     longestStreak?: number;
     dharmaCoins?: number;
     totalJapaCount?: number;
+    xp?: number;
+    level?: number;
+    badges?: string[];
 }
 
 export interface UserPreferences {
@@ -341,7 +344,7 @@ export interface Sankalpa {
     proofVideoUrl?: string;
 }
 export type ContentType = 'temples' | 'poojas' | 'yatras' | 'events';
-export type ModalType = 'login' | 'uploadTemple' | 'yatraDetail' | 'liveDarshan' | 'vrDarshan' | 'darshanBooking' | 'poojaBooking' | 'panditBooking' | 'donation' | 'crowdAlert' | 'panditAdmin' | 'confirmation' | 'bookAdmin' | 'eventAdmin' | 'festivalAdmin' | 'imageDetail' | 'poojaAdmin' | 'yatraAdmin' | 'userAdmin' | 'manageTemplePoojas' | 'meditation' | 'yatraBooking' | 'bookingConfirmation' | 'aiGuruChat' | 'yatraQuote' | 'userProfile' | 'yatraPlan' | 'postCreation' | 'panditRegistration' | 'task' | 'category' | 'aiShopper' | 'satvikTrace' | 'ecoInnovation' | 'panchang';
+export type ModalType = 'login' | 'uploadTemple' | 'yatraDetail' | 'liveDarshan' | 'vrDarshan' | 'darshanBooking' | 'poojaBooking' | 'panditBooking' | 'donation' | 'crowdAlert' | 'panditAdmin' | 'confirmation' | 'bookAdmin' | 'eventAdmin' | 'festivalAdmin' | 'imageDetail' | 'poojaAdmin' | 'yatraAdmin' | 'userAdmin' | 'manageTemplePoojas' | 'meditation' | 'yatraBooking' | 'bookingConfirmation' | 'aiGuruChat' | 'yatraQuote' | 'userProfile' | 'yatraPlan' | 'postCreation' | 'panditRegistration' | 'task' | 'category' | 'aiShopper' | 'satvikTrace' | 'ecoInnovation' | 'panchang' | 'commandPalette';
 
 export type TaskType = 'meditate' | 'seva' | 'shloka' | 'darshan' | 'chant';
 
@@ -433,9 +436,11 @@ export interface Chant {
     deity: string;
     category: string; // Lifted restriction to allow any category string
     mantra: string[];
+    phonetic?: string[][]; // Word-by-word pronunciation guide for each mantra line
     story: string;
     deityImage: string;
     sanskrit: string;
+    difficulty?: 'easy' | 'medium' | 'hard';
 }
 
 export interface Badge {
@@ -471,9 +476,15 @@ export interface ShoppingRecommendation {
 // Satsang Community Hub Types
 export interface ChatRoom {
     id: number;
-    name: keyof I18nContent;
-    description: keyof I18nContent;
+    name: string;
+    description: string;
     icon: IconName;
+    membersCount?: number;
+    lastActive?: string;
+    category?: string;
+    tags?: string[];
+    type?: 'public' | 'private' | 'restricted' | 'academic' | 'volunteer' | 'action' | 'local';
+    isLocal?: boolean;
 }
 
 export interface ChatMessage {
@@ -504,7 +515,7 @@ export type IconName =
     | 'meditate' | 'menu' | 'microphone' | 'om' | 'pause' | 'play'
     | 'plus' | 'receipt' | 'rupee' | 'search' | 'settings' | 'shield-check' | 'shopping-bag' | 'speaker' | 'star'
     | 'stop-circle' | 'sudarshana-chakra' | 'swasthika' | 'temple' | 'trash' | 'trishul' | 'truck' | 'upload' | 'user-circle'
-    | 'user-edit' | 'users' | 'users-group' | 'volume-off' | 'volume-on' | 'x' | 'zoom-in' | 'cow' | 'check' | 'package' | 'shield' | 'box' | 'zap' | 'globe' | 'sun' | 'moon' | 'droplet' | 'heart' | 'heart-filled' | 'copy' | 'chat' | 'lock' | 'info-circle';
+    | 'user-edit' | 'users' | 'users-group' | 'volume-off' | 'volume-on' | 'x' | 'zoom-in' | 'cow' | 'check' | 'package' | 'shield' | 'box' | 'zap' | 'globe' | 'sun' | 'moon' | 'droplet' | 'heart' | 'heart-filled' | 'copy' | 'chat' | 'lock' | 'info-circle' | 'alert-circle' | 'bookmark';
 
 export interface I18nContent {
     navHome: string;

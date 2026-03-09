@@ -1,15 +1,24 @@
-
 {
   "title": "Vibhīśaṇa Gītā",
   "chapters": [
     {
       "chapter": 1,
-      "title": "The Song of Vibhishana",
+      "title": "The Chariot of Dharma",
       "verses": [
         {
           "verse": 1,
-          "sanskrit": "Placeholder Sanskrit text for Vibhīśaṇa Gītā.",
-          "translation": "Placeholder English translation for Vibhīśaṇa Gītā."
+          "sanskrit": "शौर्यं धैर्यं बलं वीर्यं प्राणत्यागपराक्रमम् ।\nधर्मो रथस्य केतुश्च तत्र वै विजयो ध्रुवम् ॥",
+          "translation": "Valor, patience, strength, heroism, self-sacrifice, and bravery — when dharma is the banner of the chariot, then victory is certain."
+        },
+        {
+          "verse": 2,
+          "sanskrit": "सत्यं शीलं दया धर्मो सुनयो विनयो नृणाम् ।\nएते असत्र शस्त्राणि जेतुं लोकमनामयम् ॥",
+          "translation": "Truth, good character, compassion, dharma, righteousness, and modesty — these are the true weapons for mortals to conquer the world of suffering."
+        },
+        {
+          "verse": 3,
+          "sanskrit": "यस्य एते चतुरो भागाः सत्यं धर्मो दमः क्षमा ।\nतम् अरीन् नैव सेवन्ते विजयः तस्य निश्चितम् ॥",
+          "translation": "He who possesses these four qualities — truth, dharma, self-control, and forgiveness — enemies cannot overpower him, and his victory is assured."
         }
       ]
     }

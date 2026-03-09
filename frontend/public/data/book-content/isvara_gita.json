@@ -1,15 +1,40 @@
-
 {
   "title": "Īśvara Gītā",
   "chapters": [
     {
       "chapter": 1,
-      "title": "The Discourse of the Lord",
+      "title": "Shiva's Discourse on the Supreme",
       "verses": [
         {
           "verse": 1,
-          "sanskrit": "Placeholder Sanskrit text for Īśvara Gītā.",
-          "translation": "Placeholder English translation for Īśvara Gītā."
+          "sanskrit": "अहं हि सर्वभूतानामात्मा सर्वगतः सदा ।\nमामेव सर्वभूतेषु पश्यन् सर्वत्र मुच्यते ॥",
+          "translation": "I am indeed the Self of all beings, ever all-pervading. Seeing Me in all beings everywhere, one is liberated."
+        },
+        {
+          "verse": 2,
+          "sanskrit": "मां ये प्रपद्यन्ते भक्त्या ते मां नात्येति माययी ।\nदैवी ह्येषा गुणमयी मम माया दुरत्यया ॥",
+          "translation": "Those who surrender unto Me with devotion are not overcome by My Maya. This divine Maya of Mine, consisting of the three gunas, is very difficult to overcome."
+        },
+        {
+          "verse": 3,
+          "sanskrit": "ज्ञानं विज्ञानमास्तिक्यं ब्रह्मणो यत् पराभवः ।\nएतत्कृत्वोपसन्ध्यार्त मोक्षमास्थापयेन्नरः ॥",
+          "translation": "Knowledge, realized wisdom, and faith in Brahman that transcends the material — by practicing these at the junctions of the day, one should establish oneself in liberation."
+        }
+      ]
+    },
+    {
+      "chapter": 2,
+      "title": "The Path of Yoga and Meditation",
+      "verses": [
+        {
+          "verse": 1,
+          "sanskrit": "योगस्थः कुरु कर्माणि सङ्गं त्यक्त्वा महेश्वरे ।\nसिद्ध्यसिद्ध्योः समो भूत्वा समत्वं योग उच्यते ॥",
+          "translation": "Established in yoga, perform actions surrendering attachment to Maheshvara. Being equal in success and failure — that equanimity is called yoga."
+        },
+        {
+          "verse": 2,
+          "sanskrit": "मन एव मनुष्याणां कारणं बन्धमोक्षयोः ।\nबन्धाय विषयासक्तं मुक्त्यै निर्विषयं स्मृतम् ॥",
+          "translation": "The mind alone is the cause of bondage and liberation for human beings. Attached to sense objects it leads to bondage; free from sense objects it leads to liberation."
         }
       ]
     }

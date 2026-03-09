@@ -1,15 +1,24 @@
-
 {
   "title": "Sūrya Gītā",
   "chapters": [
     {
       "chapter": 1,
-      "title": "The Song of the Sun God",
+      "title": "The Sun God's Discourse on Self-Realization",
       "verses": [
         {
           "verse": 1,
-          "sanskrit": "Placeholder Sanskrit text for Sūrya Gītā.",
-          "translation": "Placeholder English translation for Sūrya Gītā."
+          "sanskrit": "ॐ आदित्यवर्णं तमसस्तु पारे सर्वाणि रूपाणि विचित्य धीरः ।\nआदित्यमेव भगवन्तमेकम् अर्चन्ति ये तेषु परं प्रकाशम् ॥",
+          "translation": "Om! Having reflected upon all forms beyond darkness, with the hue of the Sun — the wise worship the one Bhagavan Aditya (Sun God), in whom the supreme light shines."
+        },
+        {
+          "verse": 2,
+          "sanskrit": "उद्यन्नद्य मित्रमहः आरोहन्नुत्तरां दिवम् ।\nहृद्रोगं मम सूर्यो हरिमाणं च नाशय ॥",
+          "translation": "Rising today as a friend of all, ascending the northern sky — O Sun, destroy the disease of my heart and remove all my grief."
+        },
+        {
+          "verse": 3,
+          "sanskrit": "आदित्यहृदयं पुण्यं सर्वशत्रुविनाशनम् ।\nजयावहं जपेन्नित्यमक्षय्यं परमं शिवम् ॥",
+          "translation": "The sacred Aditya Hridayam, the destroyer of all enemies, the bestower of victory — one should chant it daily. It is imperishable, supreme, and auspicious."
         }
       ]
     }

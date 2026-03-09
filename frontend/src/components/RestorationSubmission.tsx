@@ -2,7 +2,7 @@
 import React, { useState } from 'react';
 import { I18nContent, Language } from '../types';
 import { Icon } from './Icon';
-import { motion } from 'motion/react';
+import { motion } from 'framer-motion';
 import { useToast } from '../contexts/ToastContext';
 
 interface RestorationSubmissionProps {

@@ -6,6 +6,7 @@ import { fileURLToPath } from 'url';
 import { dirname } from 'path';
 import helmet from 'helmet';
 import rateLimit from 'express-rate-limit';
+import { errorResponse } from './middleware/responseHandler.js';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
@@ -90,7 +91,7 @@ app.use('/api/chats', chatsRoute);
 // Error handling middleware
 app.use((err, req, res, next) => {
     console.error(err.stack);
-    res.status(500).json({ error: 'Something went wrong!' });
+    errorResponse(res, err.status || 500, err.message || 'Something went wrong!', process.env.NODE_ENV === 'development' ? err.stack : undefined);
 });
 
 // Start server

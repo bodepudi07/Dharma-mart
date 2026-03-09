@@ -1,15 +1,19 @@
-
 {
   "title": "Rūdra Gītā",
   "chapters": [
     {
       "chapter": 1,
-      "title": "The Song of Rudra",
+      "title": "Rudra's Prayers to Lord Vishnu",
       "verses": [
         {
           "verse": 1,
-          "sanskrit": "Placeholder Sanskrit text for Rūdra Gītā.",
-          "translation": "Placeholder English translation for Rūdra Gītā."
+          "sanskrit": "ज्योतीरूपाय विद्महे सहस्रशीर्षाय धीमहि ।\nतन्नो रुद्रः प्रचोदयात् ॥",
+          "translation": "We meditate upon the one with a thousand heads, the form of light. May Rudra inspire and enlighten our consciousness."
+        },
+        {
+          "verse": 2,
+          "sanskrit": "नमस्ते अस्तु भगवन् विश्वेश्वराय महादेवाय त्र्यम्बकाय ।\nत्रिपुरान्तकाय त्रिकालाग्निकालाय कालाग्निरुद्राय नमः ॥",
+          "translation": "Salutations to You, O Bhagavan, Lord of the universe, Mahadeva, Three-eyed One, Destroyer of the three cities, Time of the three-fold fire of time — salutations to Kalagni Rudra."
         }
       ]
     }

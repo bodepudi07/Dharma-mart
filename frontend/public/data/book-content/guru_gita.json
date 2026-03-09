@@ -1,15 +1,45 @@
-
 {
   "title": "Guru Gītā",
   "chapters": [
     {
       "chapter": 1,
-      "title": "The Song of the Guru",
+      "title": "The Supreme Importance of the Guru",
       "verses": [
         {
           "verse": 1,
-          "sanskrit": "Placeholder Sanskrit text for Guru Gītā.",
-          "translation": "Placeholder English translation for Guru Gītā."
+          "sanskrit": "गुरुर्ब्रह्मा गुरुर्विष्णुर्गुरुर्देवो महेश्वरः ।\nगुरुः साक्षात् परं ब्रह्म तस्मै श्रीगुरवे नमः ॥",
+          "translation": "The Guru is Brahma, the Guru is Vishnu, the Guru is Mahadeva. The Guru is verily the Supreme Brahman. Salutations to that Sri Guru."
+        },
+        {
+          "verse": 2,
+          "sanskrit": "अखण्डमण्डलाकारं व्याप्तं येन चराचरम् ।\nतत्पदं दर्शितं येन तस्मै श्रीगुरवे नमः ॥",
+          "translation": "Salutations to that Sri Guru who revealed that state which pervades the entire undivided sphere of existence, both moving and unmoving."
+        },
+        {
+          "verse": 3,
+          "sanskrit": "अज्ञानतिमिरान्धस्य ज्ञानाञ्जनशलाकया ।\nचक्षुरुन्मीलितं येन तस्मै श्रीगुरवे नमः ॥",
+          "translation": "Salutations to that Sri Guru who opened the eyes of one blinded by the darkness of ignorance with the collyrium stick of knowledge."
+        },
+        {
+          "verse": 4,
+          "sanskrit": "गुरुपादोदकं पानं गुरुशिष्टान्नभोजनम् ।\nगुरोर्वचनचिन्तनं गुरुरूपस्य ध्यानम् ॥",
+          "translation": "Drinking the water from the Guru's feet, eating the food left by the Guru, contemplating the words of the Guru, and meditating on the form of the Guru — these are the greatest spiritual practices."
+        }
+      ]
+    },
+    {
+      "chapter": 2,
+      "title": "The Nature of the Guru-Disciple Relationship",
+      "verses": [
+        {
+          "verse": 1,
+          "sanskrit": "ध्यानमूलं गुरोर्मूर्तिः पूजामूलं गुरोः पदम् ।\nमन्त्रमूलं गुरोर्वाक्यं मोक्षमूलं गुरोः कृपा ॥",
+          "translation": "The root of meditation is the Guru's form. The root of worship is the Guru's feet. The root of mantra is the Guru's word. The root of liberation is the Guru's grace."
+        },
+        {
+          "verse": 2,
+          "sanskrit": "गुरोः कृपाप्रसादेन ब्रह्मविष्णुमहेश्वराः ।\nसामर्थ्यमभिजायन्ते सृष्टिस्थित्यन्तकर्मणि ॥",
+          "translation": "By the grace and blessing of the Guru, even Brahma, Vishnu, and Maheshwara derive the power for their functions of creation, preservation, and dissolution."
         }
       ]
     }

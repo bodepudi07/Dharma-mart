@@ -1,15 +1,19 @@
-
 {
   "title": "Brāhmaṇa Gītā",
   "chapters": [
     {
       "chapter": 1,
-      "title": "The Song of the Brahmana",
+      "title": "The Knowledge of Brahman",
       "verses": [
         {
           "verse": 1,
-          "sanskrit": "Placeholder Sanskrit text for Brāhmaṇa Gītā.",
-          "translation": "Placeholder English translation for Brāhmaṇa Gītā."
+          "sanskrit": "ब्रह्म सत्यं जगन्मिथ्या जीवो ब्रह्मैव नापरः ।\nअनेन वेद्यं सच्छास्त्रम् इति वेदान्तडिण्डिमः ॥",
+          "translation": "Brahman (the Absolute) is the truth, the world is illusion, the individual soul is Brahman itself and nothing else — this is the proclamation of Vedanta."
+        },
+        {
+          "verse": 2,
+          "sanskrit": "सर्वभूतस्थितं यो मां भजत्येकत्वमास्थितः ।\nसर्वथा वर्तमानोऽपि स योगी मयि वर्तते ॥",
+          "translation": "He who worships Me as dwelling equally in all beings, having established himself in unity — that yogi, in all circumstances, abides in Me."
         }
       ]
     }

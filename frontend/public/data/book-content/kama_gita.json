@@ -1,15 +1,24 @@
-
 {
   "title": "Kāma Gītā",
   "chapters": [
     {
       "chapter": 1,
-      "title": "The Song of Desire",
+      "title": "The Nature of Desire",
       "verses": [
         {
           "verse": 1,
-          "sanskrit": "Placeholder Sanskrit text for Kāma Gītā.",
-          "translation": "Placeholder English translation for Kāma Gītā."
+          "sanskrit": "इन्द्रियाणि पराण्याहुरिन्द्रियेभ्यः परं मनः ।\nमनसस्तु परा बुद्धिर्यो बुद्धेः परतस्तु सः ॥",
+          "translation": "The senses are said to be superior to the body. The mind is superior to the senses. The intellect is superior to the mind. But one who is beyond the intellect — that is the Self."
+        },
+        {
+          "verse": 2,
+          "sanskrit": "कामक्रोधो सदा त्याज्यो मोहो लोभश्च मानवैः ।\nयोगमार्गे स्थितो यस्तु सर्वकामैर्विमुच्यते ॥",
+          "translation": "Desire and anger should always be renounced by humans, along with delusion and greed. One established on the path of yoga is freed from all desires."
+        },
+        {
+          "verse": 3,
+          "sanskrit": "धर्मार्थकाममोक्षाणां यः कामं प्राप्नुते नरः ।\nधर्ममूलं भवेत्तस्य न कामो मूलकारणम् ॥",
+          "translation": "Among dharma, artha, kama, and moksha — when a person attains desire, dharma should be its root, not desire the root cause."
         }
       ]
     }

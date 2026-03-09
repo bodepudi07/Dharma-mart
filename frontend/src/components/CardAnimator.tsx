@@ -1,7 +1,7 @@
 
 import React, { useRef, useState } from 'react';
 import { useInView } from '../hooks/useInView';
-import { motion, useSpring, useMotionValue, useTransform } from 'motion/react';
+import { motion, useSpring, useMotionValue, useTransform } from 'framer-motion';
 
 interface CardAnimatorProps {
   children: React.ReactNode;

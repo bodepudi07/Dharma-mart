@@ -1,15 +1,40 @@
-
 {
   "title": "Avadhūta Gītā",
   "chapters": [
     {
       "chapter": 1,
-      "title": "The Song of the Liberated",
+      "title": "The Nature of the Self",
       "verses": [
         {
           "verse": 1,
-          "sanskrit": "Placeholder Sanskrit text for Avadhūta Gītā.",
-          "translation": "Placeholder English translation for Avadhūta Gītā."
+          "sanskrit": "ईश्वरानुग्रहादेव पुंसामद्वैतवासना ।\nमहद्भयपरित्राणात् विप्राणामुपजायते ॥",
+          "translation": "Only by the grace of God does the desire for non-duality arise in the wise, which delivers them from the great fear of worldly existence."
+        },
+        {
+          "verse": 2,
+          "sanskrit": "कथं ते निर्गुणे तत्त्वे कल्पयिष्यामि वा गुणान् ।\nआत्मानं सततं शान्तं निर्विकल्पं निरामयम् ॥",
+          "translation": "How shall I attribute qualities to that Reality which is beyond all qualities? The Self is ever peaceful, free of all distinctions and ailments."
+        },
+        {
+          "verse": 3,
+          "sanskrit": "आत्मैव केवलं सत्यं सर्वं ब्रह्ममयं जगत् ।\nन मृत्युर्न च मे जन्म न बन्धो न च मे गतिः ॥",
+          "translation": "The Self alone is the sole truth; the entire universe is pervaded by Brahman. There is no death for me, no birth, no bondage, no journey."
+        }
+      ]
+    },
+    {
+      "chapter": 2,
+      "title": "Beyond All Distinctions",
+      "verses": [
+        {
+          "verse": 1,
+          "sanskrit": "पवनवदनिर्देशो विश्वमात्रेति यः स्थितः ।\nस एव स्वयमात्मानमात्मनैवावलोकयेत् ॥",
+          "translation": "Like the wind which is imperceptible, the Self pervades as the entire cosmos. One should see the Self by the Self alone."
+        },
+        {
+          "verse": 2,
+          "sanskrit": "नाहं देहो न मे देहो बोधोऽहम् इति निश्चिनु ।\nएवं विचारयन् विद्वान् आत्मारामो विरजस्कः ॥",
+          "translation": "I am not the body, nor is the body mine — I am pure consciousness. Determine this with certainty. Thus reflecting, the wise one rejoices in the Self, free from impurity."
         }
       ]
     }

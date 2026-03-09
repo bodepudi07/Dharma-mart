@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { motion } from 'motion/react';
+import { motion } from 'framer-motion';
 import { Sloka, I18nContent } from '../types';
 import { explainScripture, getDailySloka } from '../services/aiService';
 import { Icon } from './Icon';
@@ -14,7 +14,7 @@ export const SlokaOfTheDay = ({ sloka, t }: SlokaOfTheDayProps) => {
     const [explanation, setExplanation] = useState('');
     const [isExplaining, setIsExplaining] = useState(false);
     const [showExplanation, setShowExplanation] = useState(false);
-    
+
     const synthRef = useRef(window.speechSynthesis);
     const isSpeechSupported = !!synthRef.current;
 
@@ -68,33 +68,33 @@ export const SlokaOfTheDay = ({ sloka, t }: SlokaOfTheDayProps) => {
             if (englishVoice) {
                 utteranceMeaning.voice = englishVoice;
             }
-            
+
             // --- Event Handlers ---
             utteranceSanskrit.onstart = () => setIsSpeaking(true);
-            
+
             utteranceSanskrit.onend = () => {
                 // Check if cancel() was called, which stops the synth
                 if (synth.speaking) {
-                   synth.speak(utteranceMeaning);
+                    synth.speak(utteranceMeaning);
                 } else {
-                   // This case happens if the user presses "Stop" during the Sanskrit part
-                   setIsSpeaking(false);
+                    // This case happens if the user presses "Stop" during the Sanskrit part
+                    setIsSpeaking(false);
                 }
             };
-            
+
             utteranceMeaning.onend = () => setIsSpeaking(false);
-            
+
             const onError = (event: SpeechSynthesisErrorEvent) => {
                 console.error(`Speech synthesis error:`, event.error);
                 setIsSpeaking(false);
             }
             utteranceSanskrit.onerror = onError;
             utteranceMeaning.onerror = onError;
-            
+
             // Start speaking
             synth.speak(utteranceSanskrit);
         };
-        
+
         // Voices may load asynchronously. If they aren't loaded, wait for the `voiceschanged` event.
         if (synth.getVoices().length === 0) {
             synth.onvoiceschanged = speak;
@@ -118,20 +118,20 @@ export const SlokaOfTheDay = ({ sloka, t }: SlokaOfTheDayProps) => {
                 setIsExplaining(false);
             }
         } else {
-             setShowExplanation(!showExplanation);
+            setShowExplanation(!showExplanation);
         }
     };
 
     return (
         <div className="bg-white border border-stone-200 rounded-[2rem] p-8 md:p-12 text-center shadow-sm w-full relative overflow-hidden group transition-all duration-500 hover:border-primary/30">
             <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-transparent via-primary/50 to-transparent opacity-0 group-hover:opacity-100 transition-opacity"></div>
-            
+
             <div className="flex justify-center items-center mb-8 gap-4">
-              <div className="h-px w-12 bg-stone-200"></div>
-              <Icon name="om" className="h-6 w-6 text-primary/60" />
-              <h2 className="text-xs uppercase tracking-[0.3em] font-semibold text-stone-500">{t.dailySloka}</h2>
-              <Icon name="om" className="h-6 w-6 text-primary/60" />
-              <div className="h-px w-12 bg-stone-200"></div>
+                <div className="h-px w-12 bg-stone-200"></div>
+                <Icon name="om" className="h-6 w-6 text-primary/60" />
+                <h2 className="text-xs uppercase tracking-[0.3em] font-semibold text-stone-500">{t.dailySloka}</h2>
+                <Icon name="om" className="h-6 w-6 text-primary/60" />
+                <div className="h-px w-12 bg-stone-200"></div>
             </div>
 
             <p className="text-2xl md:text-4xl leading-relaxed text-ink font-serif mb-10 tracking-wide">
@@ -149,15 +149,14 @@ export const SlokaOfTheDay = ({ sloka, t }: SlokaOfTheDayProps) => {
                 </div>
             </div>
 
-             <div className="mt-12 flex flex-wrap justify-center items-center gap-4">
+            <div className="mt-12 flex flex-wrap justify-center items-center gap-4">
                 <button
                     onClick={handleListen}
                     disabled={!isSpeechSupported}
-                    className={`flex items-center gap-3 px-6 py-3 rounded-full transition-all duration-300 ${
-                        isSpeaking 
-                        ? 'bg-primary text-white shadow-lg shadow-primary/20' 
-                        : 'bg-stone-100 text-stone-600 hover:bg-stone-200 hover:text-ink border border-stone-200'
-                    }`}
+                    className={`flex items-center gap-3 px-6 py-3 rounded-full transition-all duration-300 ${isSpeaking
+                            ? 'bg-primary text-white shadow-lg shadow-primary/20'
+                            : 'bg-stone-100 text-stone-600 hover:bg-stone-200 hover:text-ink border border-stone-200'
+                        }`}
                 >
                     <Icon name="speaker" className={`w-4 h-4 ${isSpeaking ? 'animate-pulse' : ''}`} />
                     <span className="text-xs font-bold tracking-wider uppercase">{isSpeaking ? 'Stop' : t.listen}</span>
@@ -165,11 +164,10 @@ export const SlokaOfTheDay = ({ sloka, t }: SlokaOfTheDayProps) => {
                 <button
                     onClick={handleExplainDeeper}
                     disabled={isExplaining}
-                    className={`flex items-center gap-3 px-6 py-3 rounded-full transition-all duration-300 ${
-                        showExplanation 
-                        ? 'bg-stone-200 text-ink border border-stone-300' 
-                        : 'bg-stone-100 text-stone-600 hover:bg-stone-200 hover:text-ink border border-stone-200'
-                    }`}
+                    className={`flex items-center gap-3 px-6 py-3 rounded-full transition-all duration-300 ${showExplanation
+                            ? 'bg-stone-200 text-ink border border-stone-300'
+                            : 'bg-stone-100 text-stone-600 hover:bg-stone-200 hover:text-ink border border-stone-200'
+                        }`}
                 >
                     <Icon name="info" className="w-4 h-4" />
                     <span className="text-xs font-bold tracking-wider uppercase">{showExplanation ? 'Hide Explanation' : 'Explain Deeper'}</span>
@@ -177,15 +175,15 @@ export const SlokaOfTheDay = ({ sloka, t }: SlokaOfTheDayProps) => {
             </div>
 
             {showExplanation && (
-                <motion.div 
+                <motion.div
                     initial={{ opacity: 0, y: 10 }}
                     animate={{ opacity: 1, y: 0 }}
                     className="mt-10 text-left p-8 bg-stone-50 rounded-2xl border border-stone-200 max-w-3xl mx-auto"
                 >
                     {isExplaining ? (
                         <div className="flex items-center justify-center gap-4 text-stone-500 py-6">
-                           <Icon name="lotus" className="w-5 h-5 animate-spin" />
-                           <span className="text-xs tracking-widest uppercase font-medium">{t.guruThinking}</span>
+                            <Icon name="lotus" className="w-5 h-5 animate-spin" />
+                            <span className="text-xs tracking-widest uppercase font-medium">{t.guruThinking}</span>
                         </div>
                     ) : (
                         <p className="text-stone-600 text-sm leading-relaxed whitespace-pre-wrap font-light">{explanation}</p>

@@ -1,23 +1,34 @@
 import express from 'express';
 import bcrypt from 'bcryptjs';
 import jwt from 'jsonwebtoken';
+import joi from 'joi';
 import db from '../db.js';
+import { standardResponse, errorResponse } from '../middleware/responseHandler.js';
+import { validateRequest } from '../middleware/validator.js';
 
 const router = express.Router();
 
+const registerSchema = joi.object({
+    name: joi.string().required(),
+    email: joi.string().email().required(),
+    password: joi.string().min(6).required(),
+    phone: joi.string().allow('', null)
+});
+
+const loginSchema = joi.object({
+    email: joi.string().email().required(),
+    password: joi.string().required()
+});
+
 // Register a new user
-router.post('/register', async (req, res) => {
+router.post('/register', validateRequest(registerSchema), async (req, res, next) => {
     try {
         const { name, email, password, phone } = req.body;
-
-        if (!name || !email || !password) {
-            return res.status(400).json({ error: 'Name, email, and password are required' });
-        }
 
         const existingUser = await db.findOne('users.json', u => u.email === email);
 
         if (existingUser) {
-            return res.status(409).json({ error: 'User already exists' });
+            return errorResponse(res, 409, 'User already exists');
         }
 
         const hashedPassword = await bcrypt.hash(password, 10);
@@ -32,39 +43,29 @@ router.post('/register', async (req, res) => {
 
         const insertedUser = await db.insert('users.json', newUser);
 
-        // Return user data without password
         const { password: _, ...userWithoutPassword } = insertedUser;
-        res.status(201).json({
-            message: 'User registered successfully',
-            user: userWithoutPassword
-        });
+        return standardResponse(res, 201, { user: userWithoutPassword }, 'User registered successfully');
     } catch (error) {
-        console.error('Registration error:', error);
-        res.status(500).json({ error: 'Registration failed' });
+        next(error);
     }
 });
 
 // Login user
-router.post('/login', async (req, res) => {
+router.post('/login', validateRequest(loginSchema), async (req, res, next) => {
     try {
         const { email, password } = req.body;
-
-        if (!email || !password) {
-            return res.status(400).json({ error: 'Email and password are required' });
-        }
 
         const user = await db.findOne('users.json', u => u.email === email);
 
         if (!user) {
-            return res.status(401).json({ error: 'Invalid credentials' });
+            return errorResponse(res, 401, 'Invalid credentials');
         }
 
         const isValidPassword = await bcrypt.compare(password, user.password);
         if (!isValidPassword) {
-            return res.status(401).json({ error: 'Invalid credentials' });
+            return errorResponse(res, 401, 'Invalid credentials');
         }
 
-        // Generate JWT token
         if (!process.env.JWT_SECRET) {
             throw new Error('JWT_SECRET is not defined in environment variables');
         }
@@ -75,28 +76,22 @@ router.post('/login', async (req, res) => {
             { expiresIn: '24h' }
         );
 
-        // Return user data without password
         const { password: _, ...userWithoutPassword } = user;
-        res.json({
-            message: 'Login successful',
-            user: userWithoutPassword,
-            token
-        });
+        return standardResponse(res, 200, { user: userWithoutPassword, token }, 'Login successful');
     } catch (error) {
-        console.error('Login error:', error);
-        res.status(500).json({ error: 'Login failed' });
+        next(error);
     }
 });
 
 // Verify token
-router.get('/verify', async (req, res) => {
-    const token = req.headers.authorization?.split(' ')[1];
-
-    if (!token) {
-        return res.status(401).json({ error: 'Access token required' });
-    }
-
+router.get('/verify', async (req, res, next) => {
     try {
+        const token = req.headers.authorization?.split(' ')[1];
+
+        if (!token) {
+            return errorResponse(res, 401, 'Access token required');
+        }
+
         if (!process.env.JWT_SECRET) {
             throw new Error('JWT_SECRET is not defined in environment variables');
         }
@@ -105,13 +100,16 @@ router.get('/verify', async (req, res) => {
         const user = await db.findOne('users.json', u => u.id === decoded.id);
 
         if (!user) {
-            return res.status(401).json({ error: 'User not found' });
+            return errorResponse(res, 401, 'User not found');
         }
 
         const { password: _, ...userWithoutPassword } = user;
-        res.json({ valid: true, user: { ...userWithoutPassword, token } });
+        return standardResponse(res, 200, { user: { ...userWithoutPassword, token } }, 'Token verified');
     } catch (error) {
-        res.status(401).json({ error: 'Invalid or expired token' });
+        if (error.name === 'JsonWebTokenError' || error.name === 'TokenExpiredError') {
+            return errorResponse(res, 401, 'Invalid or expired token');
+        }
+        next(error);
     }
 });
 

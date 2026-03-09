@@ -1,6 +1,7 @@
 import express from 'express';
 import db from '../db.js';
 import { authenticate } from './middleware/auth.js';
+import { standardResponse, errorResponse } from '../middleware/responseHandler.js';
 
 const router = express.Router();
 
@@ -11,26 +12,26 @@ router.put('/profile', authenticate, async (req, res) => {
         const { role, passwordHash, id, ...safeUpdates } = updates;
         const updatedUser = await db.update('users.json', req.user.id, safeUpdates);
 
-        if (!updatedUser) return res.status(404).json({ error: 'User not found' });
+        if (!updatedUser) return errorResponse(res, 404, 'User not found');
 
         const { passwordHash: _, ...userWithoutPass } = updatedUser;
-        res.json({ message: 'Profile updated successfully', user: userWithoutPass });
+        return standardResponse(res, 200, { user: userWithoutPass }, 'Profile updated successfully');
     } catch (error) {
-        res.status(500).json({ error: 'Failed to update profile' });
+        next(error);
     }
 });
 
 // Toggle follow user
 router.post('/follow/:targetId', authenticate, async (req, res) => {
     const targetId = parseInt(req.params.targetId);
-    if (req.user.id === targetId) return res.status(400).json({ error: 'Cannot follow yourself' });
+    if (req.user.id === targetId) return errorResponse(res, 400, 'Cannot follow yourself');
 
     try {
         const users = await db.read('users.json');
         const currentUserIndex = users.findIndex(u => u.id === req.user.id);
         const targetUserIndex = users.findIndex(u => u.id === targetId);
 
-        if (currentUserIndex === -1 || targetUserIndex === -1) return res.status(404).json({ error: 'User not found' });
+        if (currentUserIndex === -1 || targetUserIndex === -1) return errorResponse(res, 404, 'User not found');
 
         const currentUser = users[currentUserIndex];
         const targetUser = users[targetUserIndex];
@@ -48,9 +49,9 @@ router.post('/follow/:targetId', authenticate, async (req, res) => {
         }
 
         await db.write('users.json', users);
-        res.json({ message: isFollowing ? 'Unfollowed' : 'Followed' });
+        return standardResponse(res, 200, null, isFollowing ? 'Unfollowed' : 'Followed');
     } catch (error) {
-        res.status(500).json({ error: 'Failed to toggle follow' });
+        next(error);
     }
 });
 

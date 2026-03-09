@@ -1,6 +1,6 @@
 
 import React, { useMemo, useState, useEffect, useCallback } from 'react';
-import { motion, AnimatePresence } from 'motion/react';
+import { motion, AnimatePresence } from 'framer-motion';
 import * as api from './services/apiService';
 import { Language, DarshanBookingDetails, PoojaBookingDetails, DonationOption, Pandit, View, Temple, MajorEvent, TempleSubmissionData, Book, Festival, Pooja, Yatra, User, TaskType, YatraBookingDetails, CustomYatraBookingDetails, YatraQuoteRequest, YatraPlanItem, TravelMode, Task, YatraPlanSettings, FamilyMember, Category } from './types';
 import { I18N_DATA } from './constants';
@@ -75,6 +75,7 @@ import { RestorationSanctuary } from './components/RestorationSanctuary';
 import { RestorationSubmission } from './components/RestorationSubmission';
 import { DivyaMarga } from './components/DivyaMarga';
 import { MeditationZone } from './components/MeditationZone';
+import { CommandPaletteModal } from './components/CommandPaletteModal';
 
 
 interface PanditBookingDetails {
@@ -316,6 +317,18 @@ export const App = () => {
     window.addEventListener('resize', handleResize);
     return () => window.removeEventListener('resize', handleResize);
   }, []);
+
+  useEffect(() => {
+    const handleGlobalKeyDown = (e: KeyboardEvent) => {
+      // Check for Cmd+K (Mac) or Ctrl+K (Windows)
+      if ((e.metaKey || e.ctrlKey) && e.key === 'k') {
+        e.preventDefault();
+        openModal('commandPalette');
+      }
+    };
+    window.addEventListener('keydown', handleGlobalKeyDown);
+    return () => window.removeEventListener('keydown', handleGlobalKeyDown);
+  }, [openModal]);
 
   const handleLogout = () => {
     logout();
@@ -648,10 +661,10 @@ export const App = () => {
               <AnimatePresence mode="wait">
                 <motion.div
                   key={view + (id || '')}
-                  initial={{ opacity: 0, y: 10 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  exit={{ opacity: 0, y: -10 }}
-                  transition={{ duration: 0.3, ease: "easeOut" }}
+                  initial={{ opacity: 0, scale: 0.98, y: 15, filter: 'blur(4px)' }}
+                  animate={{ opacity: 1, scale: 1, y: 0, filter: 'blur(0px)' }}
+                  exit={{ opacity: 0, scale: 0.98, y: -15, filter: 'blur(4px)' }}
+                  transition={{ duration: 0.4, ease: [0.22, 1, 0.36, 1] }}
                   className="h-full"
                 >
                   {renderView()}
@@ -721,6 +734,7 @@ export const App = () => {
       {modalType === 'satvikTrace' && <SatvikTraceModal onClose={closeModal} />}
       {modalType === 'ecoInnovation' && <EcoInnovationModal onClose={closeModal} t={t} />}
       {modalType === 'panchang' && <PanchangModal language={language} onClose={closeModal} t={t} />}
+      {modalType === 'commandPalette' && <CommandPaletteModal onClose={closeModal} language={language} />}
 
       {currentUser && <AmritCollector />}
       <FloatingDock />
