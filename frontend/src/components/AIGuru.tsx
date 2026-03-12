@@ -1,9 +1,10 @@
-import React, { useState, useRef, useEffect } from 'react';
+﻿import React, { useState, useRef, useEffect } from 'react';
 // FIX: Import Language enum for typed API calls.
 import { I18nContent, Temple, Book, Pooja, ShoppingRecommendation, Language } from '../types';
 import { streamDevaGptResponse } from '../services/aiService';
 import { Icon } from './Icon';
 import { useAuth } from '../contexts/AuthContext';
+import { useToast } from '../contexts/ToastContext';
 import * as api from '../services/apiService';
 import { ProductRecommendationCard } from './ProductRecommendationCard';
 import { useModal } from '../contexts/ModalContext';
@@ -28,6 +29,7 @@ const CHAT_HISTORY_KEY = 'dharma-setu-chat-history';
 
 export const AIGuru = ({ t, temple, book, pooja, pillar, onBookPooja, onBuyItem }: AIGuruProps) => {
     const { currentUser } = useAuth();
+    const { addToast } = useToast();
     const { openModal } = useModal();
 
     const getGreeting = () => {
@@ -44,7 +46,7 @@ export const AIGuru = ({ t, temple, book, pooja, pillar, onBookPooja, onBuyItem 
         if (pooja) {
             return `🙏 Pranam! I can provide more details about the ${pooja.name} ritual. What would you like to know?`;
         }
-        return `🙏 Swagatam! I am Deva-GPT, your digital sevak. Ask me any question about dharma, philosophy, or rituals.`;
+        return `🙏 Swagatam! I am Deva-GPT, your digital sevak.\n\nI can also set your **Spiritual Task Plan** in this app.\nTell me:\n1) How many minutes you want to meditate daily\n2) Whether you want to learn slokas/padyas\n3) Morning or evening preference\n\nI will generate your personalized routine.`;
     };
 
     const [messages, setMessages] = useState<Message[]>([]);
@@ -62,8 +64,8 @@ export const AIGuru = ({ t, temple, book, pooja, pillar, onBookPooja, onBuyItem 
     useEffect(() => {
         api.getPoojas(Language.EN).then(setAllPoojas);
         if (currentUser?.token) {
-            api.getUserBookings(currentUser.id, currentUser.token).then(setUserBookings).catch(console.error);
-            api.getBookmarks(currentUser.id, currentUser.token).then(setBookmarks).catch(console.error);
+            api.getUserBookings(currentUser.id, currentUser.token).then(setUserBookings).catch(() => addToast('Could not load your bookings for context.', 'error'));
+            api.getBookmarks(currentUser.id, currentUser.token).then(setBookmarks).catch(() => addToast('Could not load your bookmarks.', 'error'));
 
             if (!temple && !book && !pooja && !pillar) {
                 api.getChatHistory(currentUser.id, currentUser.token).then(history => {
@@ -92,7 +94,7 @@ export const AIGuru = ({ t, temple, book, pooja, pillar, onBookPooja, onBuyItem 
 
     useEffect(() => {
         if (!temple && !book && !pooja && !pillar && currentUser?.token && messages.length > 1) {
-            api.saveChatHistory(messages, currentUser.token).catch(console.error);
+            api.saveChatHistory(messages, currentUser.token).catch(() => {});
         }
     }, [messages, temple, book, pooja, pillar, currentUser]);
 
@@ -106,7 +108,7 @@ export const AIGuru = ({ t, temple, book, pooja, pillar, onBookPooja, onBuyItem 
             const { bookmark } = await api.saveBookmark(text, contextStr, currentUser.token);
             setBookmarks(prev => [...prev, bookmark]);
         } catch (err) {
-            console.error("Failed to save bookmark", err);
+            addToast('Failed to save bookmark', 'error');
         }
     };
 
