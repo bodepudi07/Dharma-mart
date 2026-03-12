@@ -1,11 +1,11 @@
-import { promises as fs } from 'fs';
+﻿import { promises as fs } from 'fs';
 import path from 'path';
 import { fileURLToPath } from 'url';
 import { dirname } from 'path';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
-const dataDir = path.join(__dirname, '../data');
+const dataDir = path.join(__dirname, 'database');
 
 /**
  * A robust JSON-based database engine.
@@ -15,58 +15,69 @@ const dataDir = path.join(__dirname, '../data');
 class Database {
     constructor() {
         this.dataDir = dataDir;
-        this.memoryCache = new Map(); // In-memory cache: Map<filename, any[]>
-        this.writeQueue = new Map();  // Promise queue for safe writes: Map<filename, Promise>
+        this.memoryCache = new Map();
+        this.writeQueue = new Map();
+    }
+
+    /**
+     * Validates and resolves a collection path, preventing path traversal attacks.
+     */
+    _resolveCollectionPath(collection) {
+        const filePath = path.join(this.dataDir, collection);
+        const resolved = path.resolve(filePath);
+        if (!resolved.startsWith(path.resolve(this.dataDir))) {
+            throw new Error(`Invalid collection path: ${collection}`);
+        }
+        return resolved;
     }
 
     /**
      * Reads a collection from memory or disk.
-     * @param {string} collection - The JSON filename (e.g., 'temples.json').
-     * @returns {Promise<any[]>} The collection data.
      */
     async read(collection) {
-        // Return from high-speed memory cache if initialized
         if (this.memoryCache.has(collection)) {
             return this.memoryCache.get(collection);
         }
 
         try {
-            const filePath = path.join(this.dataDir, collection);
+            const filePath = this._resolveCollectionPath(collection);
             const data = await fs.readFile(filePath, 'utf8');
             const parsedData = JSON.parse(data);
-
-            // Populate cache
             this.memoryCache.set(collection, parsedData);
             return parsedData;
         } catch (error) {
-            console.error(`DB Read Error [${collection}]:`, error);
-            // Default to empty array if file missing
+            if (error.code === 'ENOENT') {
+                // File doesn't exist yet, return empty array and create it
+                this.memoryCache.set(collection, []);
+                return [];
+            }
+            console.error(`DB Read Error [${collection}]:`, error.message);
             return [];
         }
     }
 
     /**
-     * Writes data safely to disk by queuing operations per file.
-     * @param {string} collection - The JSON filename.
-     * @param {any[]} data - The updated data array.
-     * @returns {Promise<boolean>} True if successful.
+     * Writes data safely to disk using atomic write pattern.
      */
     async write(collection, data) {
-        // Update high-speed memory cache immediately for instantaneous consistent reads
         this.memoryCache.set(collection, data);
 
-        const filePath = path.join(this.dataDir, collection);
+        const filePath = this._resolveCollectionPath(collection);
+        const tempPath = filePath + '.tmp';
         const dataString = JSON.stringify(data, null, 2);
 
-        // Queue the disk write to prevent race conditions Corrupting JSON files
         let promise = this.writeQueue.get(collection) || Promise.resolve();
 
         promise = promise.then(async () => {
             try {
-                await fs.writeFile(filePath, dataString);
+                // Atomic write: write to temp file first, then rename
+                await fs.writeFile(tempPath, dataString, 'utf8');
+                await fs.rename(tempPath, filePath);
                 return true;
             } catch (error) {
-                console.error(`DB Write Error [${collection}]:`, error);
+                console.error(`DB Write Error [${collection}]:`, error.message);
+                // Clean up temp file if it exists
+                try { await fs.unlink(tempPath); } catch { }
                 return false;
             }
         });
@@ -75,21 +86,11 @@ class Database {
         return promise;
     }
 
-    // --- Query API ---
-
-    /**
-     * Finds a single item by a specific condition.
-     */
     async findOne(collection, predicate) {
         const data = await this.read(collection);
         return data.find(predicate) || null;
     }
 
-    /**
-     * Retrieves all items, with optional query parameters.
-     * @param {string} collection - The JSON filename.
-     * @param {Object} query - Query options (limit, offset, filter).
-     */
     async find(collection, query = {}) {
         let data = await this.read(collection);
 
@@ -98,7 +99,7 @@ class Database {
         }
 
         if (query.sort) {
-            data = data.sort(query.sort);
+            data = [...data].sort(query.sort);
         }
 
         if (query.offset !== undefined || query.limit !== undefined) {
@@ -110,13 +111,9 @@ class Database {
         return data;
     }
 
-    /**
-     * Inserts a new item into the collection.
-     */
     async insert(collection, item) {
         const data = await this.read(collection);
 
-        // Auto-increment ID implementation
         if (!item.id) {
             item.id = data.length > 0 ? Math.max(...data.map(d => d.id || 0)) + 1 : 1;
         }
@@ -126,12 +123,9 @@ class Database {
         return item;
     }
 
-    /**
-     * Updates an existing item by ID.
-     */
     async update(collection, id, updates) {
         const data = await this.read(collection);
-        const index = data.findIndex(item => item.id == id);
+        const index = data.findIndex(item => String(item.id) === String(id));
 
         if (index === -1) return null;
 
@@ -140,12 +134,9 @@ class Database {
         return data[index];
     }
 
-    /**
-     * Deletes an item by ID.
-     */
     async delete(collection, id) {
         const data = await this.read(collection);
-        const filteredData = data.filter(item => item.id != id);
+        const filteredData = data.filter(item => String(item.id) !== String(id));
 
         if (filteredData.length === data.length) return false;
 
@@ -154,5 +145,4 @@ class Database {
     }
 }
 
-// Export a singleton instance
 export default new Database();

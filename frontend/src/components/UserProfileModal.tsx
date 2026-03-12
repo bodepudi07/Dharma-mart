@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useCallback, useRef } from 'react';
+﻿import React, { useState, useEffect, useCallback, useRef } from 'react';
 import { I18nContent, User, Post } from '../types';
 import { useFocusTrap } from '../hooks/useFocusTrap';
 import { useAuth } from '../contexts/AuthContext';
@@ -53,15 +53,15 @@ export const UserProfileModal = ({ user: initialUser, t, onClose }: UserProfileM
                 api.getPosts()
             ]);
             if (fullUser) {
-                // Merge dummy gamification data if missing for demo purposes
+                // Use default values for gamification fields if missing
                 setUser({
                     ...fullUser,
-                    level: fullUser.level || Math.floor(Math.random() * 20) + 1,
-                    xp: fullUser.xp || Math.floor(Math.random() * 900) + 100,
-                    currentStreak: fullUser.currentStreak || Math.floor(Math.random() * 15),
-                    longestStreak: fullUser.longestStreak || Math.floor(Math.random() * 30),
-                    dharmaCoins: fullUser.dharmaCoins || Math.floor(Math.random() * 500) + 50,
-                    badges: fullUser.badges || ['early_bird', 'streak_7']
+                    level: fullUser.level || 1,
+                    xp: fullUser.xp || 0,
+                    currentStreak: fullUser.currentStreak || 0,
+                    longestStreak: fullUser.longestStreak || 0,
+                    dharmaCoins: fullUser.dharmaCoins || 0,
+                    badges: fullUser.badges || []
                 });
                 if (currentUser) {
                     setIsFollowing(fullUser.followers.includes(currentUser.id));

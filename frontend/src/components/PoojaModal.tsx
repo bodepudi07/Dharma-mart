@@ -1,4 +1,4 @@
-
+﻿
 import React, { useState, useEffect, useRef, useMemo } from 'react';
 import { Icon } from './Icon';
 import { useToast } from '../contexts/ToastContext';

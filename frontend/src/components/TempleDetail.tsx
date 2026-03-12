@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from 'react';
+﻿import React, { useState, useEffect, useRef } from 'react';
 import DOMPurify from 'dompurify';
 import { Temple, I18nContent, Pooja, Language, Pandit } from '../types';
 import * as api from '../services/apiService';

@@ -1,4 +1,4 @@
-import path from 'path';
+﻿import path from 'path';
 import { defineConfig, loadEnv } from 'vite';
 import react from '@vitejs/plugin-react';
 import tailwindcss from '@tailwindcss/vite';
@@ -10,7 +10,7 @@ export default defineConfig(({ mode }) => {
     server: {
       port: 3000,
       host: '0.0.0.0',
-      // Serve /data folder as static files so the app works without starting the backend server
+      // Serve /data as static files in local development as a fallback
       middlewareMode: false,
       proxy: {
         '/api': {
@@ -27,12 +27,12 @@ export default defineConfig(({ mode }) => {
     plugins: [
       react(),
       tailwindcss(),
-      // Custom plugin to serve the /data directory as static files at /data/*
+      // Custom plugin to serve the frontend public data directory at /data/*
       {
         name: 'serve-data-directory',
         configureServer(server) {
           server.middlewares.use('/data', (req, res, next) => {
-            const dataDir = path.resolve(__dirname, '../data');
+            const dataDir = path.resolve(__dirname, './public/data');
             const filePath = path.join(dataDir, req.url || '');
 
             // Security: ensure we don't escape the data directory
@@ -62,14 +62,23 @@ export default defineConfig(({ mode }) => {
       },
     ],
     define: {
-      'process.env.API_KEY': JSON.stringify(env.GEMINI_API_KEY),
-      'process.env.GEMINI_API_KEY': JSON.stringify(env.GEMINI_API_KEY),
-      'process.env.GROQ_API_KEY': JSON.stringify(env.GROQ_API_KEY)
+      // API keys are now handled server-side only. Never expose secrets in the frontend bundle.
+      'process.env.NODE_ENV': JSON.stringify(mode),
     },
     resolve: {
       alias: {
         '@': path.resolve(__dirname, './src'),
       }
-    }
+    },
+    build: {
+      rollupOptions: {
+        output: {
+          manualChunks: {
+            vendor: ['react', 'react-dom'],
+            animations: ['framer-motion'],
+          },
+        },
+      },
+    },
   };
 });

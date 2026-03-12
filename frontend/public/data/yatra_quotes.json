@@ -1,1 +1,52 @@
-[]
+[
+    {
+        "id": 1,
+        "quote": "He who undertakes a pilgrimage with a pure heart finds God not at the destination, but along the very path.",
+        "author": "Sri Ramakrishna Paramahamsa"
+    },
+    {
+        "id": 2,
+        "quote": "The yatra is not merely a journey of the feet, but a journey of the soul returning home.",
+        "author": "Swami Vivekananda"
+    },
+    {
+        "id": 3,
+        "quote": "Every step taken on sacred ground is a prayer; every breath inhaled in a holy place is a blessing.",
+        "author": "Traditional Vedic Teaching"
+    },
+    {
+        "id": 4,
+        "quote": "Char Dham is not just four shrines. It is the four directions of liberation — dharma, artha, kama, moksha.",
+        "author": "Adi Shankaracharya"
+    },
+    {
+        "id": 5,
+        "quote": "When your feet touch the earth of a tīrtha, your karmic debts begin to dissolve with every step.",
+        "author": "Skanda Purana"
+    },
+    {
+        "id": 6,
+        "quote": "The Ganges does not merely purify the body; She washes the residue of lifetimes from the soul.",
+        "author": "Sacred Hindu Tradition"
+    },
+    {
+        "id": 7,
+        "quote": "To walk the Himalayan path to Badrinath is to walk in the footsteps of the divine.",
+        "author": "Vedic Proverb"
+    },
+    {
+        "id": 8,
+        "quote": "Kashi is not a city — it is the light of Shiva made manifest on earth. To die here is to receive liberation.",
+        "author": "Kashi Khand, Skanda Purana"
+    },
+    {
+        "id": 9,
+        "quote": "A single dip in the confluence of the Ganga, Yamuna, and Saraswati at Prayagraj purifies a hundred generations.",
+        "author": "Prayaga Mahatmya"
+    },
+    {
+        "id": 10,
+        "quote": "The true pilgrim travels not with their feet alone, but with devotion in their heart and the name of God on their lips.",
+        "author": "Sant Tukaram"
+    }
+]

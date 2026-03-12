@@ -1,4 +1,4 @@
-import React, { useRef, useState, useEffect } from 'react';
+﻿import React, { useRef, useState, useEffect } from 'react';
 import { PLACEHOLDER_IMAGE_URL } from '../constants';
 import { useFocusTrap } from '../hooks/useFocusTrap';
 import { Icon } from './Icon';

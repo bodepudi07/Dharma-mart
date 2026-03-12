@@ -1,4 +1,4 @@
-
+﻿
 import React, { useState, useRef, useEffect } from 'react';
 import { I18nContent, Book } from '../types';
 import * as aiService from '../services/aiService';

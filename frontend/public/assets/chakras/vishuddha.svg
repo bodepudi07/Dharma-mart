@@ -1,0 +1,27 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200" width="200" height="200">
+  <!-- 16-Petal Lotus -->
+  <g fill="none" stroke="#1a1a1a" stroke-width="1.2">
+    <ellipse cx="100" cy="60" rx="12" ry="32" />
+    <ellipse cx="100" cy="60" rx="12" ry="32" transform="rotate(22.5,100,100)"/>
+    <ellipse cx="100" cy="60" rx="12" ry="32" transform="rotate(45,100,100)"/>
+    <ellipse cx="100" cy="60" rx="12" ry="32" transform="rotate(67.5,100,100)"/>
+    <ellipse cx="100" cy="60" rx="12" ry="32" transform="rotate(90,100,100)"/>
+    <ellipse cx="100" cy="60" rx="12" ry="32" transform="rotate(112.5,100,100)"/>
+    <ellipse cx="100" cy="60" rx="12" ry="32" transform="rotate(135,100,100)"/>
+    <ellipse cx="100" cy="60" rx="12" ry="32" transform="rotate(157.5,100,100)"/>
+    <ellipse cx="100" cy="60" rx="12" ry="32" transform="rotate(180,100,100)"/>
+    <ellipse cx="100" cy="60" rx="12" ry="32" transform="rotate(202.5,100,100)"/>
+    <ellipse cx="100" cy="60" rx="12" ry="32" transform="rotate(225,100,100)"/>
+    <ellipse cx="100" cy="60" rx="12" ry="32" transform="rotate(247.5,100,100)"/>
+    <ellipse cx="100" cy="60" rx="12" ry="32" transform="rotate(270,100,100)"/>
+    <ellipse cx="100" cy="60" rx="12" ry="32" transform="rotate(292.5,100,100)"/>
+    <ellipse cx="100" cy="60" rx="12" ry="32" transform="rotate(315,100,100)"/>
+    <ellipse cx="100" cy="60" rx="12" ry="32" transform="rotate(337.5,100,100)"/>
+  </g>
+  <!-- Circle (Ether/Akasha Element) -->
+  <circle cx="100" cy="100" r="30" fill="none" stroke="#1a1a1a" stroke-width="2.5"/>
+  <!-- Downward Triangle -->
+  <polygon points="100,120 82,88 118,88" fill="none" stroke="#1a1a1a" stroke-width="2"/>
+  <!-- Bija Mantra HAM -->
+  <text x="100" y="108" text-anchor="middle" font-family="serif" font-size="20" font-weight="bold" fill="#1a1a1a">हं</text>
+</svg>

@@ -1,4 +1,4 @@
-import React from 'react';
+﻿import React from 'react';
 import { MajorEvent, I18nContent } from '../types';
 import { CrowdLevelIndicator } from './CrowdLevelIndicator';
 import { Icon } from './Icon';
@@ -17,7 +17,7 @@ interface EventCardProps {
     onViewImage: () => void;
 }
 
-export const EventCard = ({ event, t, onSelectEvent, isAdmin, onEdit, onDelete, onViewImage }: EventCardProps) => {
+export const EventCard = React.memo(({ event, t, onSelectEvent, isAdmin, onEdit, onDelete, onViewImage }: EventCardProps) => {
     const fallbackImg = getItemFallbackImage(event.name, 'event');
     const { imgSrc, status, onLoad, onError } = useImageWithFallback(event.imageUrl, fallbackImg);
     const { addToast } = useToast();
@@ -136,4 +136,4 @@ export const EventCard = ({ event, t, onSelectEvent, isAdmin, onEdit, onDelete, 
             </div>
         </div>
     );
-};
+});

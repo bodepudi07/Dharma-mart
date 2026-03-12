@@ -1,81 +1,90 @@
-
-import React, { useMemo, useState, useEffect, useCallback } from 'react';
+﻿
+import React, { useMemo, useState, useEffect, useCallback, Suspense } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import * as api from './services/apiService';
 import { Language, DarshanBookingDetails, PoojaBookingDetails, DonationOption, Pandit, View, Temple, MajorEvent, TempleSubmissionData, Book, Festival, Pooja, Yatra, User, TaskType, YatraBookingDetails, CustomYatraBookingDetails, YatraQuoteRequest, YatraPlanItem, TravelMode, Task, YatraPlanSettings, FamilyMember, Category } from './types';
 import { I18N_DATA } from './constants';
 import { useAuth } from './contexts/AuthContext';
 import { useToast } from './contexts/ToastContext';
-import { LoginModal } from './components/LoginModal';
-import { UploadTempleModal } from './components/UploadTempleModal';
-import { YatraDetailModal } from './components/YatraDetailModal';
-import { LiveDarshanModal } from './components/LiveDarshanModal';
-import { VRDarshanModal } from './components/VRDarshanModal';
-import { EcoInnovationModal } from './components/EcoInnovationModal';
-import { DarshanBookingModal } from './components/DarshanBookingModal';
-import { PoojaBookingModal } from './components/PoojaBookingModal';
-import { PanditBookingModal } from './components/PanditBookingModal';
-import { DonationModal } from './components/DonationModal';
-import { CrowdAlertModal } from './components/CrowdAlertModal';
-import { PanditModal } from './components/PanditModal';
-import { ConfirmationModal } from './components/ConfirmationModal';
 import { useModal } from './contexts/ModalContext';
-import { Sidebar } from './components/Sidebar';
 import { useHashRouter } from './hooks/useHashRouter';
-import { BookModal } from './components/BookModal';
-import { EventModal } from './components/EventModal';
-import { FestivalModal } from './components/FestivalModal';
-import { SplashScreen } from './components/SplashScreen';
-import { ImageDetailModal } from './components/ImageDetailModal';
-import { PoojaModal } from './components/PoojaModal';
-import { YatraModal } from './components/YatraModal';
-import { UserModal } from './components/UserModal';
-import { ManageTemplePoojasModal } from './components/ManageTemplePoojasModal';
-import { MeditationModal } from './components/MeditationModal';
 import { useTheme } from './contexts/ThemeContext';
+import { useNotifications } from './contexts/NotificationContext';
+
+// Core layout components (always loaded)
+import { Sidebar } from './components/Sidebar';
+import { Header } from './components/Header';
 import { Icon } from './components/Icon';
 import { FloatingDock } from './components/FloatingDock';
 import { AnimatedBackground } from './components/AnimatedBackground';
 import { AmritCollector } from './components/AmritCollector';
 import { ErrorBoundary } from './components/ErrorBoundary';
-
-// Page Components
+import { SplashScreen } from './components/SplashScreen';
+import { NetworkStatus } from './components/NetworkStatus';
 import { Home } from './components/Home';
-import { GridView } from './components/GridView';
-import { TempleDetail } from './components/TempleDetail';
-import { EventDetail } from './components/EventDetail';
-import { BookReader } from './components/BookReader';
-import { AdminDashboard } from './components/AdminDashboard';
-import { SearchView } from './components/SearchView';
-import { Header } from './components/Header';
-import { ChantingZone } from './components/SlokaWidget';
-import { SettingsView } from './components/SettingsView';
-import { YatraBookingModal } from './components/YatraBookingModal';
-import { KnowledgeView } from './components/KnowledgeView';
-import { ChakraSanctuary } from './components/ChakraSanctuary';
+import { WelcomeFlow } from './components/WelcomeFlow';
+
+// Eagerly loaded modals (commonly opened)
+import { LoginModal } from './components/LoginModal';
+import { ConfirmationModal } from './components/ConfirmationModal';
 import { BookingConfirmationModal } from './components/BookingConfirmationModal';
-import { YatraPlannerView } from './components/YatraPlannerView';
-import { AIGuruModal } from './components/AIGuruModal';
-import { YatraQuoteModal } from './components/YatraQuoteModal';
-import { SatsangView } from './components/SatsangView';
-import { SavedInsights } from './components/SavedInsights';
-import { ChatRoom } from './components/ChatRoom';
-import { UserProfileModal } from './components/UserProfileModal';
-import { YatraPlannerModal } from './components/YatraPlannerModal';
-import { PostCreationModal } from './components/PostCreationModal';
-import { PanditRegistrationModal } from './components/PanditRegistrationModal';
-import { TaskModal } from './components/ReminderModal';
-import { NearbyView } from './components/NearbyView';
-import { CategoryModal } from './components/CategoryModal';
-import { AIShopper } from './components/AIShopper';
-import { SatvikTraceModal } from './components/SatvikTraceModal';
-import { PanchangModal } from './components/PanchangModal';
-import { StateSanctuary } from './components/StateSanctuary';
-import { RestorationSanctuary } from './components/RestorationSanctuary';
-import { RestorationSubmission } from './components/RestorationSubmission';
-import { DivyaMarga } from './components/DivyaMarga';
-import { MeditationZone } from './components/MeditationZone';
-import { CommandPaletteModal } from './components/CommandPaletteModal';
+
+// Lazy-loaded page views
+const GridView = React.lazy(() => import('./components/GridView').then(m => ({ default: m.GridView })));
+const TempleDetail = React.lazy(() => import('./components/TempleDetail').then(m => ({ default: m.TempleDetail })));
+const EventDetail = React.lazy(() => import('./components/EventDetail').then(m => ({ default: m.EventDetail })));
+const BookReader = React.lazy(() => import('./components/BookReader').then(m => ({ default: m.BookReader })));
+const AdminDashboard = React.lazy(() => import('./components/AdminDashboard').then(m => ({ default: m.AdminDashboard })));
+const SearchView = React.lazy(() => import('./components/SearchView').then(m => ({ default: m.SearchView })));
+const ChantingZone = React.lazy(() => import('./components/SlokaWidget').then(m => ({ default: m.ChantingZone })));
+const SettingsView = React.lazy(() => import('./components/SettingsView').then(m => ({ default: m.SettingsView })));
+const KnowledgeView = React.lazy(() => import('./components/KnowledgeView').then(m => ({ default: m.KnowledgeView })));
+const ChakraSanctuary = React.lazy(() => import('./components/ChakraSanctuary').then(m => ({ default: m.ChakraSanctuary })));
+const YatraPlannerView = React.lazy(() => import('./components/YatraPlannerView').then(m => ({ default: m.YatraPlannerView })));
+const SatsangView = React.lazy(() => import('./components/SatsangView').then(m => ({ default: m.SatsangView })));
+const SavedInsights = React.lazy(() => import('./components/SavedInsights').then(m => ({ default: m.SavedInsights })));
+const ChatRoom = React.lazy(() => import('./components/ChatRoom').then(m => ({ default: m.ChatRoom })));
+const NearbyView = React.lazy(() => import('./components/NearbyView').then(m => ({ default: m.NearbyView })));
+const StateSanctuary = React.lazy(() => import('./components/StateSanctuary').then(m => ({ default: m.StateSanctuary })));
+const RestorationSanctuary = React.lazy(() => import('./components/RestorationSanctuary').then(m => ({ default: m.RestorationSanctuary })));
+const RestorationSubmission = React.lazy(() => import('./components/RestorationSubmission').then(m => ({ default: m.RestorationSubmission })));
+const DivyaMarga = React.lazy(() => import('./components/DivyaMarga').then(m => ({ default: m.DivyaMarga })));
+const MeditationZone = React.lazy(() => import('./components/MeditationZone').then(m => ({ default: m.MeditationZone })));
+
+// Lazy-loaded modals (opened on demand)
+const UploadTempleModal = React.lazy(() => import('./components/UploadTempleModal').then(m => ({ default: m.UploadTempleModal })));
+const YatraDetailModal = React.lazy(() => import('./components/YatraDetailModal').then(m => ({ default: m.YatraDetailModal })));
+const LiveDarshanModal = React.lazy(() => import('./components/LiveDarshanModal').then(m => ({ default: m.LiveDarshanModal })));
+const VRDarshanModal = React.lazy(() => import('./components/VRDarshanModal').then(m => ({ default: m.VRDarshanModal })));
+const EcoInnovationModal = React.lazy(() => import('./components/EcoInnovationModal').then(m => ({ default: m.EcoInnovationModal })));
+const DarshanBookingModal = React.lazy(() => import('./components/DarshanBookingModal').then(m => ({ default: m.DarshanBookingModal })));
+const PoojaBookingModal = React.lazy(() => import('./components/PoojaBookingModal').then(m => ({ default: m.PoojaBookingModal })));
+const PanditBookingModal = React.lazy(() => import('./components/PanditBookingModal').then(m => ({ default: m.PanditBookingModal })));
+const DonationModal = React.lazy(() => import('./components/DonationModal').then(m => ({ default: m.DonationModal })));
+const CrowdAlertModal = React.lazy(() => import('./components/CrowdAlertModal').then(m => ({ default: m.CrowdAlertModal })));
+const PanditModal = React.lazy(() => import('./components/PanditModal').then(m => ({ default: m.PanditModal })));
+const BookModal = React.lazy(() => import('./components/BookModal').then(m => ({ default: m.BookModal })));
+const EventModal = React.lazy(() => import('./components/EventModal').then(m => ({ default: m.EventModal })));
+const FestivalModal = React.lazy(() => import('./components/FestivalModal').then(m => ({ default: m.FestivalModal })));
+const ImageDetailModal = React.lazy(() => import('./components/ImageDetailModal').then(m => ({ default: m.ImageDetailModal })));
+const PoojaModal = React.lazy(() => import('./components/PoojaModal').then(m => ({ default: m.PoojaModal })));
+const YatraModal = React.lazy(() => import('./components/YatraModal').then(m => ({ default: m.YatraModal })));
+const UserModal = React.lazy(() => import('./components/UserModal').then(m => ({ default: m.UserModal })));
+const ManageTemplePoojasModal = React.lazy(() => import('./components/ManageTemplePoojasModal').then(m => ({ default: m.ManageTemplePoojasModal })));
+const MeditationModal = React.lazy(() => import('./components/MeditationModal').then(m => ({ default: m.MeditationModal })));
+const YatraBookingModal = React.lazy(() => import('./components/YatraBookingModal').then(m => ({ default: m.YatraBookingModal })));
+const AIGuruModal = React.lazy(() => import('./components/AIGuruModal').then(m => ({ default: m.AIGuruModal })));
+const YatraQuoteModal = React.lazy(() => import('./components/YatraQuoteModal').then(m => ({ default: m.YatraQuoteModal })));
+const UserProfileModal = React.lazy(() => import('./components/UserProfileModal').then(m => ({ default: m.UserProfileModal })));
+const YatraPlannerModal = React.lazy(() => import('./components/YatraPlannerModal').then(m => ({ default: m.YatraPlannerModal })));
+const PostCreationModal = React.lazy(() => import('./components/PostCreationModal').then(m => ({ default: m.PostCreationModal })));
+const PanditRegistrationModal = React.lazy(() => import('./components/PanditRegistrationModal').then(m => ({ default: m.PanditRegistrationModal })));
+const TaskModal = React.lazy(() => import('./components/ReminderModal').then(m => ({ default: m.TaskModal })));
+const CategoryModal = React.lazy(() => import('./components/CategoryModal').then(m => ({ default: m.CategoryModal })));
+const AIShopper = React.lazy(() => import('./components/AIShopper').then(m => ({ default: m.AIShopper })));
+const SatvikTraceModal = React.lazy(() => import('./components/SatvikTraceModal').then(m => ({ default: m.SatvikTraceModal })));
+const PanchangModal = React.lazy(() => import('./components/PanchangModal').then(m => ({ default: m.PanchangModal })));
+const CommandPaletteModal = React.lazy(() => import('./components/CommandPaletteModal').then(m => ({ default: m.CommandPaletteModal })));
 
 
 interface PanditBookingDetails {
@@ -91,7 +100,9 @@ export const App = () => {
   const { view, id } = useHashRouter();
   const [showSplash, setShowSplash] = React.useState(true);
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
+  const [showWelcome, setShowWelcome] = useState(() => !localStorage.getItem('dharmasetu_onboarded'));
   const { theme } = useTheme();
+  const { addNotification } = useNotifications();
 
   const [tasks, setTasks] = useState<Task[]>(() => {
     try {
@@ -378,7 +389,8 @@ export const App = () => {
     try {
       const result = await api.bookDarshan(modalProps.temple, details, currentUser, currentUser.token!);
       addToast(result.message, 'success');
-      await api.completeSpiritualTask(currentUser.id, 'darshan');
+      addNotification({ title: 'Darshan Booked', message: `Darshan at ${modalProps.temple.name} confirmed!`, type: 'booking', icon: 'eye' });
+      await api.completeSpiritualTask(currentUser.id, 'darshan', currentUser.token);
       addToast("You've completed the 'Visit a Temple' task!", 'success');
       closeModal();
       openModal('bookingConfirmation', { type: 'Darshan', itemName: modalProps.temple.name, details, temple: modalProps.temple });
@@ -392,6 +404,7 @@ export const App = () => {
     try {
       const result = await api.bookPooja(details, currentUser, currentUser.token!);
       addToast(result.message, 'success');
+      addNotification({ title: 'Pooja Booked', message: `${details.pooja.name} pooja booking confirmed!`, type: 'booking', icon: 'flame' });
       closeModal();
       openModal('bookingConfirmation', { type: 'Pooja', itemName: details.pooja.name, details, temple: details.temple });
     } catch (err) {
@@ -404,6 +417,7 @@ export const App = () => {
     try {
       const result = await api.bookYatra(details, currentUser, currentUser.token!);
       addToast(result.message, 'success');
+      addNotification({ title: 'Yatra Booked', message: `${details.yatra.name} pilgrimage booking confirmed!`, type: 'booking', icon: 'compass' });
       closeModal();
       openModal('bookingConfirmation', { type: 'Yatra', itemName: details.yatra.name, details });
     } catch (err) {
@@ -438,7 +452,8 @@ export const App = () => {
     try {
       const result = await api.makeDonation(amount, purpose, currentUser, modalProps.temple);
       addToast(result.message, 'success');
-      await api.completeSpiritualTask(currentUser.id, 'seva');
+      addNotification({ title: 'Donation Received', message: `₹${amount} donated for ${purpose.title}. Thank you for your seva!`, type: 'booking', icon: 'heart-hand' });
+      await api.completeSpiritualTask(currentUser.id, 'seva', currentUser.token);
       addToast("You've completed the 'Offer Seva' task!", 'success');
       closeModal();
     } catch (err) {
@@ -471,7 +486,7 @@ export const App = () => {
   const handleCompleteMeditation = async () => {
     if (!currentUser) return;
     try {
-      await api.completeSpiritualTask(currentUser.id, 'meditate');
+      await api.completeSpiritualTask(currentUser.id, 'meditate', currentUser.token);
       addToast(t.meditationComplete, 'success');
       closeModal();
     } catch (err) {
@@ -620,6 +635,11 @@ export const App = () => {
 
   return (
     <div className={`relative h-screen md:flex ${theme.className}`}>
+      {/* Skip to main content link for keyboard/screen reader users */}
+      <a href="#main-content" className="sr-only focus:not-sr-only focus:absolute focus:top-2 focus:left-2 focus:z-[200] focus:bg-primary focus:text-white focus:px-4 focus:py-2 focus:rounded-lg focus:font-bold focus:text-sm">
+        Skip to main content
+      </a>
+      <NetworkStatus />
       <AnimatedBackground />
       <Sidebar
         currentLang={language}
@@ -651,13 +671,14 @@ export const App = () => {
           onUserClick={() => setView('settings')}
           onLoginClick={() => openModal('login')}
         />
-        <main id="main-content" className="flex-1 overflow-y-auto bg-stone-50/50 transition-colors duration-500 pb-24" aria-live="polite" aria-busy={userLoading}>
+        <main id="main-content" className={`flex-1 overflow-y-auto transition-colors duration-500 pb-24 ${view === 'satsang' ? 'bg-[#08090f]' : 'bg-stone-50/50'}`} aria-live="polite" aria-busy={userLoading}>
           {userLoading ? (
             <div role="status" className="flex justify-center items-center h-full" aria-label={t.festivalsLoading}>
               <Icon name="lotus" className="h-16 w-16 text-primary animate-spin" />
             </div>
           ) : (
             <ErrorBoundary>
+              <Suspense fallback={<div className="flex justify-center items-center h-full"><Icon name="lotus" className="h-12 w-12 text-primary animate-spin" /></div>}>
               <AnimatePresence mode="wait">
                 <motion.div
                   key={view + (id || '')}
@@ -670,6 +691,7 @@ export const App = () => {
                   {renderView()}
                 </motion.div>
               </AnimatePresence>
+              </Suspense>
             </ErrorBoundary>
           )}
         </main>
@@ -699,6 +721,7 @@ export const App = () => {
       )}
 
       {/* MODAL RENDERER */}
+      <Suspense fallback={null}>
       {modalType === 'login' && <LoginModal onClose={closeModal} t={t} />}
       {modalType === 'uploadTemple' && <UploadTempleModal {...modalProps} onClose={closeModal} onSubmit={modalProps.onSubmit || handleTempleSubmission} />}
       {modalType === 'yatraDetail' && modalProps.yatra && <YatraDetailModal yatra={modalProps.yatra} t={t} onClose={closeModal} onBook={() => openModal('yatraBooking', { yatra: modalProps.yatra })} />}
@@ -735,6 +758,7 @@ export const App = () => {
       {modalType === 'ecoInnovation' && <EcoInnovationModal onClose={closeModal} t={t} />}
       {modalType === 'panchang' && <PanchangModal language={language} onClose={closeModal} t={t} />}
       {modalType === 'commandPalette' && <CommandPaletteModal onClose={closeModal} language={language} />}
+      </Suspense>
 
       {currentUser && <AmritCollector />}
       <FloatingDock />
@@ -761,6 +785,10 @@ export const App = () => {
         >
           <Icon name="cosmic-logo" className="w-8 h-8 group-hover:animate-om-pulse" />
         </button>
+      )}
+      {/* Welcome Onboarding Flow */}
+      {showWelcome && !showSplash && (
+        <WelcomeFlow t={t} onComplete={() => setShowWelcome(false)} onNavigate={setView} />
       )}
     </div>
   );

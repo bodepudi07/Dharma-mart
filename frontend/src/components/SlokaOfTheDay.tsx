@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from 'react';
+﻿import React, { useState, useEffect, useRef } from 'react';
 import { motion } from 'framer-motion';
 import { Sloka, I18nContent } from '../types';
 import { explainScripture, getDailySloka } from '../services/aiService';

@@ -1,4 +1,4 @@
-import React from 'react';
+﻿import React from 'react';
 import { ShoppingRecommendation, Pooja, I18nContent } from '../types';
 import { useImageWithFallback } from '../hooks/useImageWithFallback';
 import { PLACEHOLDER_IMAGE_URL } from '../constants';

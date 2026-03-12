@@ -1,39 +1,31 @@
-import express from 'express';
+﻿import express from 'express';
 import db from '../db.js';
+import { standardResponse, errorResponse } from '../middleware/responseHandler.js';
 
 const router = express.Router();
 
-// GET all yatras
-router.get('/', async (req, res) => {
+router.get('/', async (req, res, next) => {
     try {
         const { limit, offset } = req.query;
         const query = {};
-
         if (limit) query.limit = parseInt(limit);
         if (offset) query.offset = parseInt(offset);
-
         const yatras = await db.find('yatras.json', query);
-        res.json(yatras);
+        return standardResponse(res, 200, yatras);
     } catch (error) {
-        console.error('API Error: /yatras', error);
-        res.status(500).json({ error: 'Failed to fetch yatras' });
+        next(error);
     }
 });
 
-// GET yatra by ID
-router.get('/:id', async (req, res) => {
+router.get('/:id', async (req, res, next) => {
     try {
         const yatraId = parseInt(req.params.id);
+        if (isNaN(yatraId)) return errorResponse(res, 400, 'Invalid yatra ID');
         const yatra = await db.findOne('yatras.json', y => y.id === yatraId);
-
-        if (!yatra) {
-            return res.status(404).json({ error: 'Yatra not found' });
-        }
-
-        res.json(yatra);
+        if (!yatra) return errorResponse(res, 404, 'Yatra not found');
+        return standardResponse(res, 200, yatra);
     } catch (error) {
-        console.error('API Error: /yatras/:id', error);
-        res.status(500).json({ error: 'Failed to fetch yatra' });
+        next(error);
     }
 });
 

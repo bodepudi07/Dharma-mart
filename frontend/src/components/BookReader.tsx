@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+﻿import React, { useState, useEffect, useRef } from 'react';
 import { Book, I18nContent, BookContent, BookVerse, Language } from '../types';
 import * as api from '../services/apiService';
 import { useToast } from '../contexts/ToastContext';
@@ -18,6 +18,8 @@ export const BookReader = ({ bookId, t, language }: BookReaderProps) => {
     const [isLoading, setIsLoading] = useState(true);
     const [error, setError] = useState<string | null>(null);
     const [activeTab, setActiveTab] = useState<Tab>('sanskrit');
+    const [activeChapter, setActiveChapter] = useState<number | null>(null);
+    const chapterRefs = useRef<Record<number, HTMLDivElement | null>>({});
     const { addToast } = useToast();
 
     useEffect(() => {
@@ -70,8 +72,6 @@ export const BookReader = ({ bookId, t, language }: BookReaderProps) => {
 
     const onBack = () => window.history.back();
 
-    const comingSoonToast = () => addToast("This feature is coming soon!", 'info');
-
     if (isLoading) {
         return (
             <div className="min-h-screen bg-[#0d0f1a] flex flex-col items-center justify-center gap-4">
@@ -83,14 +83,23 @@ export const BookReader = ({ bookId, t, language }: BookReaderProps) => {
 
     if (error || !book) {
         return (
-            <div className="min-h-screen bg-[#0d0f1a] container mx-auto px-4 py-8 text-center">
-                <div className="max-w-md mx-auto bg-white/5 border border-red-500/20 p-8 rounded-3xl backdrop-blur-xl">
-                    <Icon name="alert-circle" className="w-12 h-12 text-red-500 mx-auto mb-4" />
-                    <h2 className="text-2xl font-bold text-white mb-2">Wisdom Unavailable</h2>
-                    <p className="text-stone-400 mb-6">{error || 'The requested scripture could not be found in the celestial records.'}</p>
-                    <button onClick={onBack} className="w-full btn-primary py-3 rounded-2xl font-bold">
-                        Return to Hub
-                    </button>
+            <div className="min-h-screen bg-[#0d0f1a] flex items-center justify-center px-4">
+                <div className="max-w-md w-full bg-white/5 border border-white/10 p-10 rounded-3xl backdrop-blur-xl text-center space-y-6">
+                    <div className="w-20 h-20 mx-auto rounded-full bg-red-500/10 flex items-center justify-center">
+                        <Icon name="alert-circle" className="w-10 h-10 text-red-400" />
+                    </div>
+                    <div>
+                        <h2 className="text-2xl font-bold text-white mb-2">Scripture Not Found</h2>
+                        <p className="text-stone-400 text-sm leading-relaxed">{error || 'This scripture could not be loaded. It may not have content available yet.'}</p>
+                    </div>
+                    <div className="flex flex-col sm:flex-row gap-3">
+                        <button onClick={onBack} className="flex-1 py-3 rounded-2xl font-bold bg-white/5 border border-white/10 text-white hover:bg-white/10 transition-all">
+                            Go Back
+                        </button>
+                        <button onClick={() => window.location.hash = '/knowledge'} className="flex-1 py-3 rounded-2xl font-bold bg-amber-600 text-white hover:bg-amber-700 transition-all">
+                            Browse Library
+                        </button>
+                    </div>
                 </div>
             </div>
         );
@@ -103,20 +112,20 @@ export const BookReader = ({ bookId, t, language }: BookReaderProps) => {
                     {verse.verse}
                 </span>
                 <div className="flex-grow">
-                    <p className={`mb-4 leading-relaxed ${activeTab === 'sanskrit'
+                    <p className={`leading-relaxed ${activeTab === 'sanskrit'
                         ? 'font-noto-serif text-2xl text-amber-100 drop-shadow-[0_2px_10px_rgba(251,191,36,0.1)]'
                         : 'text-lg text-blue-100/90 italic font-light'}`}>
                         {activeTab === 'sanskrit' ? verse.sanskrit : verse.translation}
                     </p>
-                    <div className="flex items-center gap-4 opacity-0 group-hover/verse:opacity-100 transition-opacity">
-                        <button onClick={comingSoonToast} className="text-stone-500 hover:text-amber-400 transition-colors" title="Bookmark"><Icon name="bookmark" className="w-4 h-4" /></button>
-                        <button onClick={comingSoonToast} className="text-stone-500 hover:text-amber-400 transition-colors" title="Note"><Icon name="edit" className="w-4 h-4" /></button>
-                        <button onClick={comingSoonToast} className="text-stone-500 hover:text-amber-400 transition-colors" title="AI Guru Analysis"><Icon name="cosmic-logo" className="w-4 h-4" /></button>
-                    </div>
                 </div>
             </div>
         </div>
     );
+
+    const scrollToChapter = (chapterNum: number) => {
+        setActiveChapter(chapterNum);
+        chapterRefs.current[chapterNum]?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    };
 
     const renderChapterContent = () => {
         if (!content || !content.chapters || content.chapters.length === 0) {
@@ -127,22 +136,42 @@ export const BookReader = ({ bookId, t, language }: BookReaderProps) => {
                 </div>
             );
         }
+
+        const chapters = content.chapters;
+
         return (
-            <div className="space-y-12">
-                {content.chapters.map((chapter: any) => (
-                    <div key={chapter.chapter} className="animate-fade-in-up">
-                        <div className="flex items-center gap-4 mb-8">
-                            <div className="h-[1px] flex-grow bg-gradient-to-r from-transparent to-amber-500/30"></div>
-                            <h2 className="text-xl md:text-2xl font-bold text-amber-400 uppercase tracking-[0.2em] px-4 text-center">
-                                Chapter {chapter.chapter}: {chapter.title}
-                            </h2>
-                            <div className="h-[1px] flex-grow bg-gradient-to-l from-transparent to-amber-500/30"></div>
-                        </div>
-                        <div className="bg-white/[0.02] rounded-[2rem] p-4 md:p-8 border border-white/5 shadow-inner">
-                            {chapter.verses.map((verse: any) => renderVerse(verse))}
-                        </div>
+            <div>
+                {/* Chapter Navigation */}
+                {chapters.length > 1 && (
+                    <div className="mb-8 flex flex-wrap gap-2 justify-center">
+                        {chapters.map((chapter: any) => (
+                            <button
+                                key={chapter.chapter}
+                                onClick={() => scrollToChapter(chapter.chapter)}
+                                className={`px-3 py-1.5 rounded-full text-xs font-bold transition-all ${activeChapter === chapter.chapter ? 'bg-amber-500 text-white' : 'bg-white/5 text-white/40 hover:bg-white/10 hover:text-white/70'}`}
+                            >
+                                Ch. {chapter.chapter}
+                            </button>
+                        ))}
                     </div>
-                ))}
+                )}
+
+                <div className="space-y-12">
+                    {chapters.map((chapter: any) => (
+                        <div key={chapter.chapter} ref={el => { chapterRefs.current[chapter.chapter] = el; }} className="animate-fade-in-up scroll-mt-20">
+                            <div className="flex items-center gap-4 mb-8">
+                                <div className="h-[1px] flex-grow bg-gradient-to-r from-transparent to-amber-500/30"></div>
+                                <h2 className="text-xl md:text-2xl font-bold text-amber-400 uppercase tracking-[0.2em] px-4 text-center">
+                                    Chapter {chapter.chapter}: {chapter.title}
+                                </h2>
+                                <div className="h-[1px] flex-grow bg-gradient-to-l from-transparent to-amber-500/30"></div>
+                            </div>
+                            <div className="bg-white/[0.02] rounded-[2rem] p-4 md:p-8 border border-white/5 shadow-inner">
+                                {chapter.verses.map((verse: any) => renderVerse(verse))}
+                            </div>
+                        </div>
+                    ))}
+                </div>
             </div>
         );
     };

@@ -1,4 +1,4 @@
-
+﻿
 import React, { useState, useMemo, useRef, useEffect } from 'react';
 import { Temple, I18nContent, DonationOption } from '../types';
 import { Icon } from './Icon';

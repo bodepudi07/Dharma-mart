@@ -1,4 +1,4 @@
-
+﻿
 import React, { useMemo } from 'react';
 import type { Yatra, I18nContent } from '../types';
 import { useImageWithFallback } from '../hooks/useImageWithFallback';
@@ -15,7 +15,7 @@ interface YatraCardProps {
     onDelete?: () => void;
 }
 
-export const YatraCard = ({ yatra, t, onViewItinerary, onViewImage, isAdmin, onEdit, onDelete }: YatraCardProps) => {
+export const YatraCard = React.memo(({ yatra, t, onViewItinerary, onViewImage, isAdmin, onEdit, onDelete }: YatraCardProps) => {
     const fallbackImg = getItemFallbackImage(yatra.name, 'yatra');
     const { imgSrc, status, onLoad, onError } = useImageWithFallback(yatra.imageUrl, fallbackImg);
 
@@ -141,4 +141,4 @@ export const YatraCard = ({ yatra, t, onViewItinerary, onViewImage, isAdmin, onE
             </div>
         </div>
     );
-};
+});

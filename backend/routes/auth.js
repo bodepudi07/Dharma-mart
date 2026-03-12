@@ -1,7 +1,8 @@
-import express from 'express';
+﻿import express from 'express';
 import bcrypt from 'bcryptjs';
 import jwt from 'jsonwebtoken';
 import joi from 'joi';
+import { OAuth2Client } from 'google-auth-library';
 import db from '../db.js';
 import { standardResponse, errorResponse } from '../middleware/responseHandler.js';
 import { validateRequest } from '../middleware/validator.js';
@@ -11,7 +12,7 @@ const router = express.Router();
 const registerSchema = joi.object({
     name: joi.string().required(),
     email: joi.string().email().required(),
-    password: joi.string().min(6).required(),
+    password: joi.string().min(8).required(),
     phone: joi.string().allow('', null)
 });
 
@@ -64,6 +65,79 @@ router.post('/login', validateRequest(loginSchema), async (req, res, next) => {
         const isValidPassword = await bcrypt.compare(password, user.password);
         if (!isValidPassword) {
             return errorResponse(res, 401, 'Invalid credentials');
+        }
+
+        if (!process.env.JWT_SECRET) {
+            throw new Error('JWT_SECRET is not defined in environment variables');
+        }
+
+        const token = jwt.sign(
+            { id: user.id, email: user.email, role: user.role },
+            process.env.JWT_SECRET,
+            { expiresIn: '24h' }
+        );
+
+        const { password: _, ...userWithoutPassword } = user;
+        return standardResponse(res, 200, { user: userWithoutPassword, token }, 'Login successful');
+    } catch (error) {
+        next(error);
+    }
+});
+
+// Google Sign-In
+const googleSchema = joi.object({
+    credential: joi.string().required(),
+    mock: joi.boolean().optional(),
+    name: joi.string().when('mock', { is: true, then: joi.required() }),
+    email: joi.string().email().when('mock', { is: true, then: joi.required() })
+});
+
+router.post('/google', validateRequest(googleSchema), async (req, res, next) => {
+    try {
+        const { credential, mock, name: mockName, email: mockEmail } = req.body;
+        let payload;
+
+        if (mock && credential === 'mock_google_credential') {
+            // Mock mode for local development
+            payload = { email: mockEmail, name: mockName, picture: '' };
+        } else {
+            const clientId = process.env.GOOGLE_CLIENT_ID;
+            if (!clientId || clientId === 'your_google_client_id_here') {
+                return errorResponse(res, 500, 'Google Sign-In is not configured on the server.');
+            }
+
+            const client = new OAuth2Client(clientId);
+            try {
+                const ticket = await client.verifyIdToken({
+                    idToken: credential,
+                    audience: clientId,
+                });
+                payload = ticket.getPayload();
+            } catch (err) {
+                return errorResponse(res, 401, 'Invalid Google credential');
+            }
+        }
+
+        if (!payload || !payload.email) {
+            return errorResponse(res, 401, 'Invalid Google credential');
+        }
+
+        // Find or create user
+        let user = await db.findOne('users.json', u => u.email === payload.email);
+
+        if (!user) {
+            // Create new user from Google profile
+            const newUser = {
+                name: payload.name || payload.email.split('@')[0],
+                email: payload.email,
+                password: '',
+                phone: '',
+                role: 'user',
+                avatarUrl: payload.picture || '',
+                createdAt: new Date().toISOString(),
+                authProvider: 'google'
+            };
+            user = await db.insert('users.json', newUser);
         }
 
         if (!process.env.JWT_SECRET) {

@@ -1,4 +1,4 @@
-import React from 'react';
+﻿import React from 'react';
 
 type ToastType = 'success' | 'error' | 'info';
 
@@ -26,7 +26,7 @@ export const Toast = ({ message, type, onClose }: ToastProps) => {
     }
 
   return (
-      <div className={`${baseClasses} ${typeClasses[type]}`}>
+      <div role="alert" aria-live="assertive" className={`${baseClasses} ${typeClasses[type]}`}>
           <div className="mr-3"><Icon /></div>
           <div className="flex-grow text-sm font-medium">{message}</div>
           <button onClick={onClose} className="ml-4 -mr-2 p-1.5 text-white/80 hover:text-white rounded-lg focus:ring-2 focus:ring-white/50">

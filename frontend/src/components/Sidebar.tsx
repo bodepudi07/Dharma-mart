@@ -1,4 +1,4 @@
-
+﻿
 
 
 
@@ -9,6 +9,7 @@ import { Language, type I18nContent, type User, type View, type IconName, type T
 import { Icon } from './Icon';
 import * as api from '../services/apiService';
 import { fuzzySearch } from '../utils/geolocation';
+import { NotificationBell } from './NotificationBell';
 
 
 interface SidebarProps {
@@ -38,6 +39,8 @@ const NavLink = React.memo(({
 }) => (
     <button
         onClick={onClick}
+        aria-current={isActive ? 'page' : undefined}
+        aria-label={label}
         className={`w-full flex items-center space-x-4 px-5 py-3 rounded-2xl text-base transition-all duration-300 group relative ${isActive
             ? 'text-primary font-semibold'
             : 'text-stone-500 hover:text-stone-900 hover:bg-stone-100/50'
@@ -154,7 +157,7 @@ export const Sidebar = ({ currentLang, setLang, t, onLoginClick, onSetView, curr
     ];
 
     return (
-        <aside className={`fixed inset-y-0 left-0 z-40 w-72 bg-paper/95 backdrop-blur-2xl border-r border-stone-200/50 flex flex-col p-6 h-full overflow-y-auto transition-transform duration-500 ease-[cubic-bezier(0.4,0,0.2,1)] md:relative md:translate-x-0 shadow-[10px_0_30px_-15px_rgba(0,0,0,0.1)] ${isOpen ? 'translate-x-0 shadow-2xl' : '-translate-x-full'}`}>
+        <aside role="navigation" aria-label="Main navigation" className={`fixed inset-y-0 left-0 z-40 w-72 bg-paper/95 backdrop-blur-2xl border-r border-stone-200/50 flex flex-col p-6 h-full overflow-y-auto transition-transform duration-500 ease-[cubic-bezier(0.4,0,0.2,1)] md:relative md:translate-x-0 shadow-[10px_0_30px_-15px_rgba(0,0,0,0.1)] ${isOpen ? 'translate-x-0 shadow-2xl' : '-translate-x-full'}`}>
             <div className="flex items-center justify-between mb-8 relative">
                 {/* Subtle cosmic glow behind logo */}
                 <div className="absolute top-1/2 left-4 -translate-y-1/2 w-16 h-16 bg-primary/20 blur-xl rounded-full pointer-events-none"></div>
@@ -212,7 +215,10 @@ export const Sidebar = ({ currentLang, setLang, t, onLoginClick, onSetView, curr
             </nav>
 
             <div className="mt-auto flex-shrink-0 space-y-4 pt-6 border-t border-stone-100">
-                <LanguageSwitcher currentLang={currentLang} setLang={setLang} />
+                <div className="flex items-center justify-between">
+                    <LanguageSwitcher currentLang={currentLang} setLang={setLang} />
+                    {currentUser && <NotificationBell />}
+                </div>
                 {currentUser ? (
                     <div className="space-y-3">
                         <button

@@ -1,4 +1,4 @@
-
+﻿
 import React, { useState } from 'react';
 import { FamilyMember, I18nContent } from '../types';
 import { Icon } from './Icon';

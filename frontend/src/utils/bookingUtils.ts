@@ -1,4 +1,4 @@
-import { Pandit, Booking } from '../types';
+﻿import { Pandit, Booking } from '../types';
 
 export interface AvailabilityStatus {
     available: boolean;
@@ -99,7 +99,6 @@ export const isPanditAvailable = (
         const bookingStartDateTime = new Date(`${booking.bookingDate}T${booking.timeSlot.split(' - ')[0]}:00`);
 
         const bookingStartMillis = bookingStartDateTime.getTime();
-        // FIX: Use the actual duration of the booked pooja, not a hardcoded value.
         const bookingDurationMinutes = booking.durationMinutes || 60; // Fallback to 60 mins if not present
         const bookingEndMillis = bookingStartMillis + bookingDurationMinutes * 60 * 1000;
 

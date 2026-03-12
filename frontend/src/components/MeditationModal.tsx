@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from 'react';
+﻿import React, { useState, useEffect, useRef } from 'react';
 import { I18nContent } from '../types';
 import { useFocusTrap } from '../hooks/useFocusTrap';
 import { Icon } from './Icon';
@@ -19,10 +19,6 @@ export const MeditationModal = ({ onClose, onComplete, t }: MeditationModalProps
     const audioRef = useRef<HTMLAudioElement | null>(null);
     useFocusTrap(modalRef);
 
-    // Using a sweeter, more divine Om chanting track
-    const OM_AUDIO_URL = 'https://actions.google.com/sounds/v1/water/waves_crashing_on_rock_beach.ogg'; // Note: In a real app, host a proper Om chanting mp3. Using a soothing nature sound temporarily if a good Om URL isn't readily available, but I'll try to find a public domain one or use a placeholder that clearly indicates the intent.
-    // Let's use a placeholder that sounds like a bell or a more melodic drone if a direct Om chant isn't available publicly.
-    // Actually, let's use a nice, resonant singing bowl / meditation bell sound which is often perceived as sweeter and more divine than a harsh drone.
     const DIVINE_OM_URL = 'https://actions.google.com/sounds/v1/foley/singing_bowl_strike_and_resonance.ogg';
 
     useEffect(() => {

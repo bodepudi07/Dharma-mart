@@ -1,39 +1,31 @@
-import express from 'express';
+﻿import express from 'express';
 import db from '../db.js';
+import { standardResponse, errorResponse } from '../middleware/responseHandler.js';
 
 const router = express.Router();
 
-// GET all books
-router.get('/', async (req, res) => {
+router.get('/', async (req, res, next) => {
     try {
         const { limit, offset } = req.query;
         const query = {};
-
         if (limit) query.limit = parseInt(limit);
         if (offset) query.offset = parseInt(offset);
-
         const books = await db.find('books.json', query);
-        res.json(books);
+        return standardResponse(res, 200, books);
     } catch (error) {
-        console.error('API Error: /books', error);
-        res.status(500).json({ error: 'Failed to fetch books' });
+        next(error);
     }
 });
 
-// GET book by ID
-router.get('/:id', async (req, res) => {
+router.get('/:id', async (req, res, next) => {
     try {
         const bookId = parseInt(req.params.id);
+        if (isNaN(bookId)) return errorResponse(res, 400, 'Invalid book ID');
         const book = await db.findOne('books.json', b => b.id === bookId);
-
-        if (!book) {
-            return res.status(404).json({ error: 'Book not found' });
-        }
-
-        res.json(book);
+        if (!book) return errorResponse(res, 404, 'Book not found');
+        return standardResponse(res, 200, book);
     } catch (error) {
-        console.error('API Error: /books/:id', error);
-        res.status(500).json({ error: 'Failed to fetch book' });
+        next(error);
     }
 });
 

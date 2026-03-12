@@ -1,4 +1,4 @@
-
+﻿
 import React, { useRef, useState } from 'react';
 import { useInView } from '../hooks/useInView';
 import { motion, useSpring, useMotionValue, useTransform } from 'framer-motion';

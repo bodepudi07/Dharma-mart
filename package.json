@@ -10,7 +10,9 @@
     "preview": "vite preview frontend",
     "server": "node --env-file=.env backend/index.js",
     "dev:fullstack": "concurrently \"npm run dev\" \"npm run server\"",
-    "preview:fullstack": "concurrently \"npm run preview\" \"npm run server\""
+    "preview:fullstack": "concurrently \"npm run preview\" \"npm run server\"",
+    "start": "node --env-file=.env backend/index.js",
+    "build:prod": "vite build frontend"
   },
   "dependencies": {
     "@google/genai": "^0.14.0",

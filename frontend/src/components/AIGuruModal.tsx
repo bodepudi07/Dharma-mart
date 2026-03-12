@@ -1,4 +1,4 @@
-import React, { useRef } from 'react';
+﻿import React, { useRef } from 'react';
 import { I18nContent, Temple, Book, Pooja } from '../types';
 import { AIGuru } from './AIGuru';
 import { useFocusTrap } from '../hooks/useFocusTrap';

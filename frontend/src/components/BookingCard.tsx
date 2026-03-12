@@ -1,4 +1,4 @@
-
+﻿
 
 import React from 'react';
 import { Booking, I18nContent } from '../types';

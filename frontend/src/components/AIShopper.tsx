@@ -1,10 +1,25 @@
-import React, { useRef, useState, useEffect } from 'react';
+﻿import React, { useRef, useState, useEffect } from 'react';
 import { useFocusTrap } from '../hooks/useFocusTrap';
 import { Icon } from './Icon';
 import { useToast } from '../contexts/ToastContext';
 import { useAuth } from '../contexts/AuthContext';
 import { useModal } from '../contexts/ModalContext';
 import { motion, AnimatePresence } from 'framer-motion';
+
+interface Product {
+    id: number;
+    name: string;
+    price: number;
+    originalPrice: number;
+    desc: string;
+    type: string;
+    relevance: number;
+    imageUrl: string;
+    detailedDesc: string;
+    tag: string | null;
+}
+
+const PLACEHOLDER_IMAGE = 'data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iODAwIiBoZWlnaHQ9IjYwMCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48cmVjdCB3aWR0aD0iMTAwJSIgaGVpZ2h0PSIxMDAlIiBmaWxsPSIjMWExMDA1Ii8+PHRleHQgeD0iNTAlIiB5PSI1MCUiIGRvbWluYW50LWJhc2VsaW5lPSJtaWRkbGUiIHRleHQtYW5jaG9yPSJtaWRkbGUiIGZpbGw9IiM4ODgiIGZvbnQtc2l6ZT0iMjAiPvCfqZQ8L3RleHQ+PC9zdmc+';
 
 const CATEGORIES = [
     { id: 'all', label: 'All', emoji: '🪔', color: 'from-amber-500 to-orange-600' },
@@ -39,21 +54,25 @@ export const AIShopper = ({ onClose }: { onClose: () => void }) => {
     const [hoveredId, setHoveredId] = useState<number | null>(null);
     const [cartCount, setCartCount] = useState(0);
     const [addedToCart, setAddedToCart] = useState<Set<number>>(new Set());
+    const [products, setProducts] = useState<Product[]>([]);
+    const [isLoading, setIsLoading] = useState(true);
 
-    const products = [
-        { id: 1, name: "Smart Puja Kit (Basic)", price: 501, originalPrice: 699, desc: "Auto-suggested samagri for daily rituals.", type: "kit", relevance: 9, imageUrl: "https://picsum.photos/seed/pujakit1/800/600", detailedDesc: "Contains haldi, kumkum, akshata, camphor, incense sticks, and a small brass diya. Perfect for everyday home puja.", tag: "Best Seller" },
-        { id: 2, name: "Pure A2 Ghee (1L)", price: 1200, originalPrice: 1500, desc: "Lab-tested purity delivered to your doorstep.", type: "essential", relevance: 8, imageUrl: "https://picsum.photos/seed/ghee2/800/600", detailedDesc: "100% pure A2 cow ghee made using the traditional bilona method. Ideal for deepam and naivedyam.", tag: "Top Rated" },
-        { id: 3, name: "Organic Kumkum & Camphor", price: 251, originalPrice: 320, desc: "100% natural, chemical-free formulation.", type: "essential", relevance: 7, imageUrl: "https://picsum.photos/seed/kumkum3/800/600", detailedDesc: "Sourced from organic farms. The camphor burns completely without leaving any black residue.", tag: null },
-        { id: 4, name: "Satyanarayana Swamy Vratham Kit", price: 1101, originalPrice: 1400, desc: "Complete kit with idol, patri, and all samagri.", type: "kit", relevance: 10, imageUrl: "https://picsum.photos/seed/vratham4/800/600", detailedDesc: "Includes a beautiful photo frame, navagraha vastram, kalasham, and 40+ items required for the vratham.", tag: "Divine Pick" },
-        { id: 5, name: "Griha Pravesham Kit", price: 2501, originalPrice: 3200, desc: "Everything for a perfect housewarming ceremony.", type: "kit", relevance: 8, imageUrl: "https://picsum.photos/seed/griha5/800/600", detailedDesc: "A comprehensive kit featuring homa samagri, navaratnas, panchaloha, and a detailed instruction manual.", tag: null },
-        { id: 6, name: "Navagraha Shanti Homa Kit", price: 1501, originalPrice: 1800, desc: "Specific wood, grains & samagri for 9 planets.", type: "kit", relevance: 7, imageUrl: "https://picsum.photos/seed/navagraha6/800/600", detailedDesc: "Contains 9 types of samidha (wood), 9 types of grains (navadhanya), and specific vastrams for each graha.", tag: null },
-        { id: 7, name: "Premium Agarbatti Set (4 Fragrances)", price: 351, originalPrice: 450, desc: "Hand-rolled, charcoal-free incense sticks.", type: "essential", relevance: 6, imageUrl: "https://picsum.photos/seed/agarbatti7/800/600", detailedDesc: "A set of 4 fragrances: Sandalwood, Jasmine, Rose, and Lavender. Long-lasting and soothing.", tag: null },
-        { id: 8, name: "Brass Diya Set (Pair)", price: 851, originalPrice: 1100, desc: "Heavy brass traditional oil lamps, hand-crafted.", type: "accessory", relevance: 5, imageUrl: "https://picsum.photos/seed/diya8/800/600", detailedDesc: "Exquisitely crafted 6-inch brass diyas. Heavy base ensures stability. Perfect for daily aarti.", tag: null },
-        { id: 9, name: "Rudraksha Mala (108 beads)", price: 551, originalPrice: 800, desc: "Authentic 5 Mukhi Rudraksha from Nepal.", type: "accessory", relevance: 6, imageUrl: "https://picsum.photos/seed/rudraksha9/800/600", detailedDesc: "Lab-certified authentic 5-mukhi rudraksha beads strung in traditional red thread with a sumeru bead.", tag: "Authenticated" },
-        { id: 10, name: "Eco-Devotion Waste Collection", price: 299, originalPrice: 399, desc: "Monthly pickup of home floral waste. Keep rivers clean.", type: "eco", relevance: 10, imageUrl: "https://picsum.photos/seed/ecofloral10/800/600", detailedDesc: "We collect your used pooja flowers and organic waste weekly to upcycle them into compost and incense.", tag: "Eco Hero" },
-        { id: 11, name: "Sacred Floral Compost (5kg)", price: 350, originalPrice: 450, desc: "Compost from upcycled temple flowers.", type: "eco", relevance: 9, imageUrl: "https://picsum.photos/seed/compost11/800/600", detailedDesc: "Premium organic compost made entirely from sacred flowers offered at local temples. Perfect for your home garden.", tag: null },
-        { id: 12, name: "Homa Bhasma Briquettes (1kg)", price: 251, originalPrice: 320, desc: "Eco-friendly ash & cow dung fuel briquettes.", type: "eco", relevance: 8, imageUrl: "https://picsum.photos/seed/bhasma12/800/600", detailedDesc: "Sustainable, slow-burning briquettes made from Vedic homa bhasma and cow dung. Ideal for dhoop and purification.", tag: null },
-    ];
+    useEffect(() => {
+        fetch('/data/products.json')
+            .then(res => {
+                if (!res.ok) throw new Error('Failed to load products');
+                return res.json();
+            })
+            .then((data: Product[]) => {
+                setProducts(data);
+                setIsLoading(false);
+            })
+            .catch(err => {
+                console.error('Failed to load products:', err);
+                setIsLoading(false);
+                addToast('Could not load products. Please try again.', 'error');
+            });
+    }, [addToast]);
 
 
     const filteredProducts = products
@@ -64,7 +83,7 @@ export const AIShopper = ({ onClose }: { onClose: () => void }) => {
             return b.relevance - a.relevance;
         });
 
-    const handleAddToCart = (product: typeof products[0]) => {
+    const handleAddToCart = (product: Product) => {
         if (!currentUser) { openModal('login'); return; }
         if (addedToCart.has(product.id)) return;
         setAddedToCart(prev => new Set(prev).add(product.id));
@@ -72,7 +91,7 @@ export const AIShopper = ({ onClose }: { onClose: () => void }) => {
         addToast(`${product.name} added to cart!`, 'success');
     };
 
-    const handlePurchase = (product: typeof products[0]) => {
+    const handlePurchase = (product: Product) => {
         if (!currentUser) { openModal('login'); return; }
         setIsPurchasing(product.id);
         setTimeout(() => {
@@ -80,6 +99,10 @@ export const AIShopper = ({ onClose }: { onClose: () => void }) => {
             setIsPurchasing(null);
             onClose();
         }, 1800);
+    };
+
+    const handleImageError = (e: React.SyntheticEvent<HTMLImageElement>) => {
+        e.currentTarget.src = PLACEHOLDER_IMAGE;
     };
 
     const rarityInfo = (relevance: number) => RARITY_LABELS[relevance] || RARITY_LABELS[7];

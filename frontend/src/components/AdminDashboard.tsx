@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useCallback } from 'react';
+﻿import React, { useState, useEffect, useCallback } from 'react';
 import { AdminTemple, User, ActivityLogItem, Temple, CrowdLevel, Festival, I18nContent, Pooja, Yatra, Book, Language, MajorEvent, Pandit } from '../types';
 import { useAuth } from '../contexts/AuthContext';
 import { useToast } from '../contexts/ToastContext';
@@ -199,8 +199,28 @@ export const AdminDashboard = ({ t }: AdminDashboardProps) => {
 
         const handleDataUpdate = (e: Event) => {
             const customEvent = e as CustomEvent;
-            if (customEvent.detail?.key) {
-                fetchAllData();
+            const key = customEvent.detail?.key;
+            if (key) {
+                const dataFetchers: Record<string, () => Promise<void>> = {
+                    pending_temples: () => fetchData('pending temples', () => api.getPendingTemples(currentUser!.token!), setPendingTemples),
+                    pending_pandits: () => fetchData('pending pandits', () => api.getPendingPandits(currentUser!.token!), setPendingPandits),
+                    users: () => fetchData('users', () => api.getUsersList(currentUser!.token!), setUsers),
+                    activity_log: () => fetchData('activity log', () => api.getActivityLog(currentUser!.token!), setActivityLog),
+                    temples: () => fetchData('temples', () => api.getTemples(Language.EN), (data) => setAllTemples(data.sort((a: Temple, b: Temple) => a.name.localeCompare(b.name)))),
+                    festivals: () => fetchData('festivals', () => api.getFestivals(Language.EN), (data) => setFestivals(data.sort((a: Festival, b: Festival) => a.name.localeCompare(b.name)))),
+                    poojas: () => fetchData('poojas', () => api.getPoojas(Language.EN), (data) => setPoojas(data.sort((a: Pooja, b: Pooja) => a.name.localeCompare(b.name)))),
+                    yatras: () => fetchData('yatras', () => api.getYatras(Language.EN), (data) => setYatras(data.sort((a: Yatra, b: Yatra) => a.name.localeCompare(b.name)))),
+                    books: () => fetchData('books', () => api.getBooks(Language.EN), (data) => setBooks(data.sort((a: Book, b: Book) => a.name.localeCompare(b.name)))),
+                    pandits: () => fetchData('pandits', () => api.getPandits(Language.EN), (data) => setPandits(data.sort((a: Pandit, b: Pandit) => a.name.localeCompare(b.name)))),
+                    events: () => fetchData('events', () => api.getMajorEvents(Language.EN), (data) => setEvents(data.sort((a: MajorEvent, b: MajorEvent) => a.name.localeCompare(b.name)))),
+                };
+                const fetcher = dataFetchers[key];
+                if (fetcher) {
+                    fetcher();
+                    fetchData('stats', () => api.getAdminStats(currentUser!.token!), setStats);
+                } else {
+                    fetchAllData();
+                }
             }
         };
 

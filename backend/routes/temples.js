@@ -1,10 +1,11 @@
-import express from 'express';
+﻿import express from 'express';
 import db from '../db.js';
+import { standardResponse, errorResponse } from '../middleware/responseHandler.js';
 
 const router = express.Router();
 
 // GET all temples (with optional pagination)
-router.get('/', async (req, res) => {
+router.get('/', async (req, res, next) => {
     try {
         const { limit, offset } = req.query;
         const query = {};
@@ -13,27 +14,28 @@ router.get('/', async (req, res) => {
         if (offset) query.offset = parseInt(offset);
 
         const temples = await db.find('temples.json', query);
-        res.json(temples);
+        return standardResponse(res, 200, temples);
     } catch (error) {
-        console.error('API Error: /temples', error);
-        res.status(500).json({ error: 'Failed to fetch temples' });
+        next(error);
     }
 });
 
 // GET temple by ID
-router.get('/:id', async (req, res) => {
+router.get('/:id', async (req, res, next) => {
     try {
         const templeId = parseInt(req.params.id);
+        if (isNaN(templeId)) {
+            return errorResponse(res, 400, 'Invalid temple ID');
+        }
         const temple = await db.findOne('temples.json', t => t.id === templeId);
 
         if (!temple) {
-            return res.status(404).json({ error: 'Temple not found' });
+            return errorResponse(res, 404, 'Temple not found');
         }
 
-        res.json(temple);
+        return standardResponse(res, 200, temple);
     } catch (error) {
-        console.error('API Error: /temples/:id', error);
-        res.status(500).json({ error: 'Failed to fetch temple' });
+        next(error);
     }
 });
 

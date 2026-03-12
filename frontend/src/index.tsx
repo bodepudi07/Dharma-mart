@@ -1,4 +1,4 @@
-import React from 'react';
+﻿import React from 'react';
 // @ts-ignore
 import ReactDOM from 'react-dom/client';
 import './index.css';
@@ -7,6 +7,7 @@ import { AuthProvider } from './contexts/AuthContext';
 import { ToastProvider } from './contexts/ToastContext';
 import { ModalProvider } from './contexts/ModalContext';
 import { ThemeProvider } from './contexts/ThemeContext';
+import { NotificationProvider } from './contexts/NotificationContext';
 
 const rootElement = document.getElementById('root');
 if (!rootElement) {
@@ -20,7 +21,9 @@ root.render(
       <AuthProvider>
         <ModalProvider>
           <ThemeProvider>
-            <App />
+            <NotificationProvider>
+              <App />
+            </NotificationProvider>
           </ThemeProvider>
         </ModalProvider>
       </AuthProvider>

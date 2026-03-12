@@ -1,4 +1,4 @@
-
+﻿
 import React from 'react';
 import type { I18nContent } from '../types';
 import { Icon } from './Icon';

@@ -1,4 +1,4 @@
-import React, { createContext, useState, useContext, ReactNode, useCallback, useRef } from 'react';
+﻿import React, { createContext, useState, useContext, ReactNode, useCallback, useRef } from 'react';
 import { ModalType, ModalContextType } from '../types';
 
 const ModalContext = createContext<ModalContextType | undefined>(undefined);

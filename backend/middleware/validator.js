@@ -1,4 +1,4 @@
-import { errorResponse } from './responseHandler.js';
+﻿import { errorResponse } from './responseHandler.js';
 
 export const validateRequest = (schema) => {
     return (req, res, next) => {

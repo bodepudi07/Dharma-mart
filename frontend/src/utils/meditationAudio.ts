@@ -1,4 +1,4 @@
-/**
+﻿/**
  * Meditation Audio Engine
  * Uses Web Audio API to generate authentic meditation sounds:
  *  - Om drones (layered oscillators)

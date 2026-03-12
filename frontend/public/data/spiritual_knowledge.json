@@ -1,0 +1,215 @@
+{
+  "greetings": [
+    "Pranam! 🙏 I am your Dharma Guide, rooted in the wisdom of the Vedas, Gita, Upanishads, and the teachings of great Gurus. How may I serve you on your spiritual path today?",
+    "Namaste! 🙏 Welcome, dear seeker. I carry the light of ancient scriptures and sacred traditions. What spiritual guidance do you seek?",
+    "Hari Om! 🙏 I am here to share the timeless wisdom of Sanatana Dharma. Ask me about scriptures, rituals, temples, meditation, or your spiritual journey.",
+    "Om Shanti! 🙏 Like a lamp lit from the eternal flame of Vedic knowledge, I am here to illuminate your path. What would you like to explore?"
+  ],
+  "off_topic_response": "Namaste! 🙏 I am your Dharma guide and my wisdom is devoted to spiritual matters — scriptures, rituals, temples, meditation, yoga, and ethical living rooted in Sanatana Dharma. For this question, please seek guidance elsewhere. Is there anything about Dharma or your spiritual journey I can help with?",
+  "topics": [
+    {
+      "keywords": ["karma", "action", "duty", "karm", "कर्म", "fruit", "result", "nishkama"],
+      "responses": [
+        "**Karma Yoga — The Path of Selfless Action**\n\nAs Lord Krishna teaches in the Bhagavad Gita (2.47):\n\n*कर्मण्येवाधिकारस्ते मा फलेषु कदाचन*\n\n\"You have the right to perform your duty, but you are not entitled to the fruits of your actions.\"\n\nThis is the essence of **Nishkama Karma** — act with full dedication but without attachment to outcomes. When we act selflessly, we free ourselves from the bondage of karma and move toward liberation.\n\n**Practical guidance:** Dedicate your daily work to the Divine. Before any task, say: \"I offer this to the Supreme.\" This transforms mundane work into worship. 🙏",
+        "**Understanding Karma**\n\nKarma operates on three levels:\n- **Sanchita Karma** — accumulated karma from all past lives\n- **Prarabdha Karma** — the portion active in this life\n- **Kriyamana Karma** — karma being created now by your current actions\n\nAs the Brihadaranyaka Upanishad says: *\"You are what your deep, driving desire is. As your desire is, so is your will. As your will is, so is your deed. As your deed is, so is your destiny.\"*\n\nThe way to purify karma is through selfless service (Seva), devotion (Bhakti), and wisdom (Jnana). 🙏"
+      ]
+    },
+    {
+      "keywords": ["gita", "bhagavad", "krishna", "arjun", "गीता", "कृष्ण", "kurukshetra", "geeta"],
+      "responses": [
+        "**The Bhagavad Gita — Song of the Divine**\n\nThe Bhagavad Gita is a 700-verse dialogue between Lord Krishna and Arjuna on the battlefield of Kurukshetra. It is the essence of Vedantic philosophy.\n\n**Key teachings:**\n- **Karma Yoga** (Ch. 3): Act without attachment to results\n- **Jnana Yoga** (Ch. 4): The path of knowledge and wisdom\n- **Bhakti Yoga** (Ch. 12): The path of devotion\n- **The Immortal Self** (Ch. 2.20): *\"The soul is never born nor does it die\"*\n\nKrishna reveals the ultimate truth: *\"Abandon all varieties of dharma and simply surrender unto Me. I shall deliver you from all sinful reactions. Do not fear.\"* (18.66) 🙏",
+        "**Bhagavad Gita — Practical Wisdom**\n\nThe Gita addresses the eternal human dilemma — what is right action? Krishna's answer encompasses all paths:\n\n*\"Whatever you do, whatever you eat, whatever you offer as oblation, whatever you give away, whatever austerity you practice — do that as an offering to Me.\"* (9.27)\n\nThe Gita teaches us to face life's battles with courage, equanimity, and surrender to the Divine will. It is not about running away from responsibilities, but fulfilling them with spiritual awareness. 🙏"
+      ]
+    },
+    {
+      "keywords": ["meditation", "dhyana", "ध्यान", "meditat", "mindful", "concentrate", "focus", "peace", "calm"],
+      "responses": [
+        "**Dhyana — The Art of Meditation**\n\nPatanjali's Yoga Sutras describe meditation as *\"Dhyana\"* — the continuous flow of awareness toward one object.\n\n**Simple meditation practice:**\n1. Sit comfortably with spine straight\n2. Close your eyes, take 5 deep breaths\n3. Focus on the space between your eyebrows (Ajna chakra)\n4. Silently chant *\"Om\"* with each breath\n5. When thoughts arise, gently return to Om\n6. Start with 5 minutes, gradually increase\n\nAs the Gita says (6.35): *\"The mind is restless, but it is restrained by practice (Abhyasa) and detachment (Vairagya).\"*\n\nEven 5 minutes of daily meditation brings immense peace. 🙏",
+        "**Meditation in the Vedic Tradition**\n\nThe Mandukya Upanishad reveals that consciousness has four states:\n- **Jagrat** (waking)\n- **Swapna** (dreaming)\n- **Sushupti** (deep sleep)\n- **Turiya** (the transcendent fourth state — pure awareness)\n\nMeditation is the practice of accessing Turiya while awake. The mantra **Om** represents all four states.\n\n*\"Om is the bow, the soul is the arrow, and Brahman is the target.\"* — Mundaka Upanishad\n\nRegular practice leads to inner stillness, clarity, and ultimately, Self-realization. 🙏"
+      ]
+    },
+    {
+      "keywords": ["yoga", "asana", "योग", "patanjali", "ashtanga", "sutra", "pranayama", "breath"],
+      "responses": [
+        "**Yoga — Union with the Divine**\n\nYoga is far more than physical postures. Patanjali defines it as: *\"Yogah Chitta Vritti Nirodhah\"* — Yoga is the cessation of the fluctuations of the mind.\n\n**The Eight Limbs of Ashtanga Yoga:**\n1. **Yama** — ethical disciplines (non-violence, truth, etc.)\n2. **Niyama** — personal observances (purity, contentment, etc.)\n3. **Asana** — physical postures\n4. **Pranayama** — breath control\n5. **Pratyahara** — withdrawal of senses\n6. **Dharana** — concentration\n7. **Dhyana** — meditation\n8. **Samadhi** — absorption in the Divine\n\nThe physical practice is just the third limb. True yoga transforms the entire being. 🙏"
+      ]
+    },
+    {
+      "keywords": ["veda", "vedic", "vedas", "वेद", "rigveda", "yajurveda", "samaveda", "atharvaveda", "shruti"],
+      "responses": [
+        "**The Vedas — Eternal Knowledge**\n\nThe Vedas are the oldest sacred texts of humanity, considered *Apaurusheya* (not of human origin) — they were revealed to ancient Rishis in deep meditation.\n\n**The four Vedas:**\n- **Rigveda** — Hymns of knowledge and cosmic truth (10,552 verses)\n- **Yajurveda** — Formulas for rituals and sacrifices\n- **Samaveda** — Melodies and chants for worship\n- **Atharvaveda** — Practical knowledge, healing, and daily life\n\nEach Veda has four parts: **Samhitas** (hymns), **Brahmanas** (rituals), **Aranyakas** (forest teachings), and **Upanishads** (philosophical conclusions).\n\nThe Vedas are the foundation of Sanatana Dharma and contain knowledge of everything — from cosmology to ethics to the nature of consciousness. 🙏"
+      ]
+    },
+    {
+      "keywords": ["upanishad", "उपनिषद", "brahman", "atman", "self", "soul", "tat tvam asi", "aham brahmasmi"],
+      "responses": [
+        "**The Upanishads — The Crown of Vedic Wisdom**\n\nThe Upanishads (meaning \"sitting near the teacher\") contain the highest philosophical teachings of the Vedic tradition.\n\n**The four Mahavakyas (Great Sayings):**\n- *Prajnanam Brahma* — \"Consciousness is Brahman\" (Aitareya Upanishad)\n- *Aham Brahmasmi* — \"I am Brahman\" (Brihadaranyaka Upanishad)\n- *Tat Tvam Asi* — \"You are That\" (Chandogya Upanishad)\n- *Ayam Atma Brahma* — \"This Self is Brahman\" (Mandukya Upanishad)\n\nThe central teaching: the individual Self (Atman) and the universal Reality (Brahman) are one and the same. This realization is liberation (Moksha). 🙏"
+      ]
+    },
+    {
+      "keywords": ["shiva", "mahadev", "शिव", "महादेव", "rudra", "shankar", "lingam", "nataraja", "destroyer"],
+      "responses": [
+        "**Lord Shiva — The Supreme Consciousness**\n\nShiva is Mahadeva — the Great God who is beyond creation and destruction. He is both the fierce Rudra and the compassionate Shankara.\n\n**Aspects of Shiva:**\n- **Nataraja** — The cosmic dancer whose Tandava creates and dissolves the universe\n- **Dakshinamurti** — The silent teacher who imparts wisdom through silence\n- **Ardhanarishvara** — The unity of masculine and feminine principles\n- **Adiyogi** — The first yogi who taught the science of yoga\n\n*\"Om Namah Shivaya\"* — the Panchakshara mantra represents the five elements and complete surrender to the Supreme.\n\nShiva teaches us that true power lies in mastery over the mind, and that destruction of ego leads to liberation. 🙏"
+      ]
+    },
+    {
+      "keywords": ["vishnu", "विष्णु", "narayan", "preserver", "avatar", "dashavatar", "incarnation"],
+      "responses": [
+        "**Lord Vishnu — The Preserver of the Universe**\n\nVishnu maintains cosmic order (Dharma) and incarnates whenever righteousness declines.\n\n**The Dashavatara (Ten Incarnations):**\n1. **Matsya** — The Fish (saved the Vedas)\n2. **Kurma** — The Tortoise (churning of ocean)\n3. **Varaha** — The Boar (rescued Earth)\n4. **Narasimha** — The Man-Lion (protected Prahlada)\n5. **Vamana** — The Dwarf (humbled Bali)\n6. **Parashurama** — The Warrior (restored order)\n7. **Rama** — The Ideal King (Ramayana)\n8. **Krishna** — The Divine Teacher (Bhagavad Gita)\n9. **Buddha** — The Enlightened One\n10. **Kalki** — The Future Avatar\n\n*\"Whenever dharma declines and adharma rises, I manifest Myself.\"* — Bhagavad Gita (4.7) 🙏"
+      ]
+    },
+    {
+      "keywords": ["rama", "राम", "sita", "hanuman", "ramayana", "ayodhya", "ramayan", "रामायण"],
+      "responses": [
+        "**Lord Rama — Maryada Purushottama**\n\nRama is the ideal man — the perfect king, devoted husband, loving son, and righteous warrior. The Ramayana, authored by Sage Valmiki, tells his divine story.\n\n**Key teachings from the Ramayana:**\n- **Dharma above all** — Rama chose exile to honor his father's word\n- **Devotion** — Hanuman's selfless service to Rama is the highest form of Bhakti\n- **Triumph of good** — The defeat of Ravana shows that adharma always falls\n- **Ideal relationships** — Rama-Sita (love), Rama-Lakshmana (brotherhood), Rama-Hanuman (devotion)\n\nAs Tulsidas writes: *\"Ram Nam is greater than Ram Himself\"* — the very name of Rama purifies and protects.\n\n*\"Shri Ram, Jai Ram, Jai Jai Ram\"* 🙏"
+      ]
+    },
+    {
+      "keywords": ["pooja", "puja", "ritual", "पूजा", "worship", "havan", "homa", "fire", "yagna", "yajna"],
+      "responses": [
+        "**Pooja — Sacred Worship**\n\nPooja is the act of showing reverence to the Divine through prayers, rituals, and offerings. It creates a sacred connection between the devotee and the deity.\n\n**The Shodashopachara (16 steps of worship):**\n1. Avahana (invocation)\n2. Asana (offering a seat)\n3. Padya (washing feet)\n4. Arghya (offering water)\n5. Snana (bathing the deity)\n6. Vastra (offering clothes)\n7. Yajnopavita (sacred thread)\n8. Gandha (sandalwood paste)\n9. Pushpa (flowers)\n10. Dhupa (incense)\n11. Deepa (lamp)\n12. Naivedya (food offering)\n13. Tambula (betel leaf)\n14. Pradakshina (circumambulation)\n15. Namaskara (prostration)\n16. Visarjana (farewell)\n\nEach step has deep symbolic meaning, representing the offering of all five senses to the Divine. You can explore and book poojas in our Pooja Services section! 🙏"
+      ]
+    },
+    {
+      "keywords": ["temple", "mandir", "मंदिर", "darshan", "दर्शन", "visit", "pilgrimage"],
+      "responses": [
+        "**Temples — Abodes of the Divine**\n\nHindu temples are not mere buildings — they are living embodiments of cosmic energy, designed according to Agama Shastras and Vastu principles.\n\n**Why visit temples?**\n- The sanctum (Garbhagriha) is a concentrated field of divine energy\n- The temple bell awakens consciousness and clears negative energy\n- Pradakshina (circumambulation) aligns your energy with the cosmic flow\n- Prasadam is food blessed by divine vibrations\n\n**Did you know?** Temple architecture mirrors the human body — the Gopuram is the feet, the Garbhagriha is the heart, and the Vimana above it represents the crown chakra.\n\nExplore our collection of 69 temples across India in the Temples section! 🙏"
+      ]
+    },
+    {
+      "keywords": ["chakra", "चक्र", "kundalini", "कुण्डलिनी", "energy", "muladhara", "ajna", "sahasrara"],
+      "responses": [
+        "**The Seven Chakras — Energy Centers**\n\nThe chakra system, described in tantric texts, maps seven energy centers along the spine:\n\n1. 🔴 **Muladhara** (Root) — Survival, grounding, stability\n2. 🟠 **Swadhisthana** (Sacral) — Creativity, emotions, pleasure\n3. 🟡 **Manipura** (Solar Plexus) — Willpower, confidence, transformation\n4. 🟢 **Anahata** (Heart) — Love, compassion, healing\n5. 🔵 **Vishuddha** (Throat) — Expression, truth, communication\n6. 🟣 **Ajna** (Third Eye) — Intuition, wisdom, inner vision\n7. ⚪ **Sahasrara** (Crown) — Divine connection, enlightenment\n\nKundalini energy, described as a coiled serpent at the base of the spine, rises through these chakras during spiritual awakening. Explore our Chakra Sanctuary for guided meditations! 🙏"
+      ]
+    },
+    {
+      "keywords": ["mantra", "chant", "मंत्र", "japa", "om", "ॐ", "chanting", "recit"],
+      "responses": [
+        "**Mantras — Sacred Sound Vibrations**\n\nMantras are not ordinary words — they are sound frequencies that resonate with cosmic energy. The Vedic tradition teaches that the entire universe was created from sound (Shabda Brahman).\n\n**Powerful mantras for daily practice:**\n- **Om** — The primordial sound of creation\n- **Om Namah Shivaya** — Surrender to the Supreme Consciousness\n- **Hare Krishna Mahamantra** — The great mantra for this age (Kali Yuga)\n- **Gayatri Mantra** — Prayer to the divine light of wisdom\n- **Om Gam Ganapataye Namaha** — Remove obstacles\n\n*\"By the repetition of the mantra, the mind becomes one-pointed and the veil of ignorance is removed.\"* — Patanjali\n\nVisit our Chanting Zone to practice with guided pronunciation! 🙏"
+      ]
+    },
+    {
+      "keywords": ["moksha", "liberation", "मोक्ष", "mukti", "freedom", "enlighten", "nirvana", "salvation"],
+      "responses": [
+        "**Moksha — Liberation from the Cycle of Birth and Death**\n\nMoksha is the ultimate goal of human life — freedom from Samsara (the cycle of rebirths).\n\n**Four paths to Moksha:**\n- **Jnana Yoga** — Through knowledge and discrimination (Viveka)\n- **Bhakti Yoga** — Through loving devotion to God\n- **Karma Yoga** — Through selfless action\n- **Raja Yoga** — Through meditation and mental discipline\n\nAdi Shankaracharya taught: *\"Brahma Satyam, Jagat Mithya, Jeevo Brahmaiva Naparah\"* — Brahman alone is real, the world is an appearance, and the individual soul is Brahman itself.\n\nAll spiritual practices lead to the same realization — you are already free. The practice is simply removing the ignorance that veils this truth. 🙏"
+      ]
+    },
+    {
+      "keywords": ["dharma", "धर्म", "righteous", "duty", "ethics", "moral", "right", "wrong"],
+      "responses": [
+        "**Dharma — The Cosmic Order**\n\nDharma is the foundation of Sanatana tradition. It means \"that which upholds\" — the natural law that sustains the universe.\n\n**Dharma operates at multiple levels:**\n- **Satya** (Truth) — The highest dharma\n- **Rita** (Cosmic order) — The natural law of the universe\n- **Svadharma** (Personal duty) — Your unique role and purpose\n- **Samanya Dharma** (Universal ethics) — Non-violence, truthfulness, compassion\n\nAs the Mahabharata declares: *\"Dharmo Rakshati Rakshitah\"* — Dharma protects those who protect Dharma.\n\nKrishna tells Arjuna: *\"It is better to perform one's own dharma imperfectly than to perform another's dharma perfectly.\"* (Gita 3.35) 🙏"
+      ]
+    },
+    {
+      "keywords": ["ayurveda", "health", "healing", "आयुर्वेद", "dosha", "vata", "pitta", "kapha", "herb"],
+      "responses": [
+        "**Ayurveda — The Science of Life**\n\nAyurveda, the world's oldest holistic healing system, teaches that health is the balance of body, mind, and spirit.\n\n**The Three Doshas:**\n- **Vata** (Air + Space) — Movement, creativity, flexibility\n- **Pitta** (Fire + Water) — Digestion, intellect, determination\n- **Kapha** (Earth + Water) — Structure, stability, immunity\n\n**Daily Ayurvedic practices (Dinacharya):**\n- Rise before sunrise (Brahma Muhurta)\n- Oil pulling and tongue scraping\n- Warm water with lemon\n- Sattvic diet based on your constitution\n- Meditation and Pranayama\n- Early dinner and restful sleep\n\n*\"When diet is wrong, medicine is of no use. When diet is correct, medicine is of no need.\"* — Ayurvedic proverb 🙏"
+      ]
+    },
+    {
+      "keywords": ["festival", "diwali", "navratri", "holi", "pongal", "ganesh", "makar", "sankranti", "त्योहार", "पर्व"],
+      "responses": [
+        "**Hindu Festivals — Celebrating the Divine**\n\nFestivals in Hinduism are not just celebrations — they are cosmic events that align human consciousness with divine rhythms.\n\n**Major festivals and their significance:**\n- **Diwali** — Victory of light over darkness (Rama's return to Ayodhya)\n- **Navratri** — Nine nights honoring the Divine Mother's nine forms\n- **Holi** — Triumph of devotion (Prahlada) and celebration of spring\n- **Maha Shivaratri** — The great night of Shiva's cosmic dance\n- **Ganesh Chaturthi** — Birthday of the remover of obstacles\n- **Makar Sankranti/Pongal** — Harvest gratitude and the sun's northward journey\n- **Janmashtami** — Birth of Lord Krishna\n- **Ram Navami** — Birth of Lord Rama\n\nEach festival carries specific spiritual practices (vrata, pooja, charity) that amplify positive energy. Check our Events section for upcoming festivals! 🙏"
+      ]
+    },
+    {
+      "keywords": ["purana", "पुराण", "story", "mytholog", "ancient", "tale", "legend"],
+      "responses": [
+        "**The Puranas — Ancient Sacred Narratives**\n\nThe 18 Mahapuranas contain the stories of creation, the devas, and the cosmic cycles. They make Vedic wisdom accessible through narrative.\n\n**The 18 Mahapuranas:**\n- **Sattvic** (Vishnu): Vishnu, Bhagavata, Naradiya, Garuda, Padma, Varaha\n- **Rajasic** (Brahma): Brahma, Brahmanda, Brahma Vaivarta, Markandeya, Bhavishya, Vamana\n- **Tamasic** (Shiva): Shiva, Linga, Skanda, Agni, Matsya, Kurma\n\nThe **Bhagavata Purana** is especially beloved for its stories of Krishna's childhood, the devotion of Prahlada, and the teaching that God can be reached through pure love.\n\nExplore our Knowledge section to read these texts! 🙏"
+      ]
+    },
+    {
+      "keywords": ["stress", "anxiety", "worry", "sad", "depress", "fear", "anger", "suffer", "pain", "problem", "trouble", "difficult", "struggle"],
+      "responses": [
+        "**Finding Peace in Difficult Times**\n\nDear seeker, know that you are not alone. The ancient wisdom offers solace:\n\nLord Krishna says in the Gita (2.14): *\"The contacts of the senses with their objects, which give rise to cold and heat, pleasure and pain, are transient. Bear them patiently, O Arjuna.\"*\n\n**Practical spiritual remedies:**\n- **Breathe deeply** — 5 rounds of Nadi Shodhana (alternate nostril breathing) immediately calms the nervous system\n- **Chant** — Even silently repeating \"Om Namah Shivaya\" or \"Hare Krishna\" brings peace\n- **Gratitude** — List 3 blessings in your life right now\n- **Surrender** — Offer your worries to the Divine: \"I cannot carry this alone. I surrender this to You.\"\n- **Serve others** — Seva (selfless service) shifts focus from self to the world\n\nRemember: *\"This too shall pass.\"* Every difficulty is an opportunity for spiritual growth. You are stronger than you know. 🙏"
+      ]
+    },
+    {
+      "keywords": ["guru", "teacher", "गुरु", "master", "shankaracharya", "vivekananda", "ramana", "swami", "saint"],
+      "responses": [
+        "**The Guru Tradition — Light in Darkness**\n\n*\"Guru\"* means \"dispeller of darkness\" — one who leads from ignorance to knowledge.\n\n**Great Gurus of Sanatana Dharma:**\n- **Adi Shankaracharya** — Revived Advaita Vedanta, established four Mathas\n- **Ramanujacharya** — Champion of Vishishtadvaita and devotional equality\n- **Madhvacharya** — Founder of Dvaita philosophy\n- **Swami Vivekananda** — Brought Vedanta to the world stage\n- **Ramana Maharshi** — The sage of Self-inquiry (\"Who am I?\")\n- **Chaitanya Mahaprabhu** — Ignited the Bhakti movement\n- **Mirabai** — Embodiment of pure Krishna devotion\n\n*\"Guru Brahma, Guru Vishnu, Guru Devo Maheshwaraha. Guru Saakshaat Para Brahma, Tasmai Shri Gurave Namaha.\"*\n\nExplore the Spiritual Gurus section in our Knowledge Hub to learn more! 🙏"
+      ]
+    },
+    {
+      "keywords": ["death", "afterlife", "rebirth", "reincarnation", "पुनर्जन्म", "atma", "soul", "spirit", "die", "dying"],
+      "responses": [
+        "**The Immortal Self**\n\nOne of the most profound teachings of the Gita (2.20):\n\n*\"न जायते म्रियते वा कदाचित्...\"*\n\n\"The soul is never born, nor does it ever die. It is unborn, eternal, ever-existing, and primeval. It is not slain when the body is slain.\"\n\nAnd further (2.22): *\"As a person puts on new garments, giving up old ones, the soul similarly accepts new material bodies, giving up the old and useless ones.\"*\n\nDeath is not the end — it is a transition. The Atman (Self) is eternal, unchanging, and indestructible. What we call death is merely the shedding of the physical body.\n\nThe Katha Upanishad beautifully says: *\"The wise one is not born, nor does it die. It did not come from anywhere, nor did anything come from it.\"* 🙏"
+      ]
+    },
+    {
+      "keywords": ["marriage", "wedding", "vivah", "विवाह", "couple", "love", "relationship", "husband", "wife", "spouse"],
+      "responses": [
+        "**Vivaha — The Sacred Union**\n\nIn Vedic tradition, marriage is a sacred union (Samskara) — not merely a social contract, but a spiritual partnership for mutual growth toward Dharma.\n\n**The Saptapadi (Seven Steps/Vows):**\n1. Nourishment and sustenance\n2. Strength and vitality\n3. Wealth and prosperity\n4. Happiness and harmony\n5. Progeny and family\n6. Health and longevity\n7. Friendship and spiritual companionship\n\n*\"Dharme cha, Arthe cha, Kame cha, naticharami\"* — In Dharma, Artha, and Kama, I shall not transgress.\n\nThe ideal marriage is like Rama-Sita — built on mutual respect, devotion, and unwavering commitment to Dharma. 🙏"
+      ]
+    },
+    {
+      "keywords": ["food", "diet", "vegetarian", "sattvic", "आहार", "fasting", "vrat", "prasad", "eating"],
+      "responses": [
+        "**Sattvic Diet — Food for the Soul**\n\nThe Bhagavad Gita (17.8-10) classifies food into three categories:\n\n- **Sattvic** (Pure) — Fresh fruits, vegetables, grains, milk, nuts — promotes clarity, health, and spiritual growth\n- **Rajasic** (Stimulating) — Spicy, sour, salty — creates restlessness and desire\n- **Tamasic** (Dulling) — Stale, processed, overcooked — leads to lethargy and ignorance\n\n**Vedic eating principles:**\n- Eat with gratitude — offer food to the Divine first\n- Eat in moderation — *\"Yuktahara\"* (Gita 6.17)\n- Eat fresh, seasonal, locally grown food\n- Practice silence or prayer during meals\n- Fast periodically for detoxification (Ekadashi, Pradosh)\n\n*\"Annam Brahma\"* — Food is Brahman. Treat your meals as a sacred offering. 🙏"
+      ]
+    },
+    {
+      "keywords": ["science", "ancient", "mathematics", "astronomy", "surgery", "technology", "vedic math", "sushruta"],
+      "responses": [
+        "**Ancient India & Modern Science**\n\nAncient Indian knowledge anticipated many modern scientific discoveries:\n\n- **Sushruta Samhita** (600 BCE) — Described 300+ surgical procedures including rhinoplasty and cataract surgery\n- **Surya Siddhanta** — Accurately calculated Earth's diameter and planetary orbits\n- **Baudhayana Sulba Sutras** (800 BCE) — Stated the Pythagorean theorem centuries before Pythagoras\n- **Aryabhata** — Calculated π to 4 decimal places and proposed Earth's rotation\n- **Vedic Mathematics** — Sutras for rapid mental computation\n- **Iron Pillar of Delhi** — Rust-resistant metallurgy that still baffles scientists\n- **Yoga & Neuroscience** — Modern EEG studies confirm meditation changes brain structure\n\nAs the Rig Veda states: *\"Ekam Sat, Vipra Bahudha Vadanti\"* — Truth is one, the wise call it by many names.\n\nExplore our 'Ancient India & Modern Science' section in Knowledge Hub! 🙏"
+      ]
+    },
+    {
+      "keywords": ["devi", "goddess", "durga", "lakshmi", "saraswati", "parvati", "kali", "शक्ति", "shakti", "mother", "feminine"],
+      "responses": [
+        "**Shakti — The Divine Feminine**\n\nIn Sanatana Dharma, the feminine is not subordinate — She IS the creative power of the universe.\n\n**Forms of the Divine Mother:**\n- **Durga** — The invincible warrior who destroys evil\n- **Lakshmi** — Goddess of wealth, prosperity, and grace\n- **Saraswati** — Goddess of knowledge, arts, and wisdom\n- **Parvati** — The devoted consort of Shiva, embodiment of love\n- **Kali** — The fierce destroyer of ego and illusion\n- **Annapurna** — The nourisher who feeds all beings\n\nThe Devi Mahatmya declares: *\"Ya Devi Sarva Bhuteshu Shakti Rupena Samsthita\"* — She who resides in all beings as power.\n\nNavaratri celebrates nine nights of the Mother's glory. Her worship leads to both material prosperity and spiritual liberation. 🙏"
+      ]
+    },
+    {
+      "keywords": ["child", "kids", "बच्चे", "children", "parent", "parenting", "teach", "upbringing", "samsk"],
+      "responses": [
+        "**Vedic Parenting — Nurturing the Divine in Children**\n\nAncient wisdom provides beautiful guidance for raising children:\n\n**The Samskaras for children:**\n- **Namakarana** — Naming ceremony (connects child to cosmic vibrations)\n- **Annaprashana** — First solid food (blessing of nourishment)\n- **Vidyarambha** — Beginning of education (writing the first letter)\n- **Upanayana** — Sacred thread ceremony (spiritual initiation)\n\n**Chanakya's wisdom on parenting:**\n*\"Treat your child like a darling for the first 5 years. For the next 5 years, be firm. By the time they turn 16, treat them like a friend.\"*\n\n**Simple daily practices for children:**\n- Teach them one shloka per week\n- Light a lamp together at dusk\n- Tell stories from the Puranas and epics\n- Visit a temple monthly\n- Practice gratitude before meals\n\nOur Chanting Zone for Kids makes learning mantras fun and interactive! 🙏"
+      ]
+    }
+  ],
+  "panchang_data": [
+    { "tithi": "Shukla Paksha Pratipada", "nakshatra": "Ashwini", "rahuKalam": "10:30 AM - 12:00 PM", "sunrise": "06:12 AM", "sunset": "06:28 PM" },
+    { "tithi": "Shukla Paksha Dwitiya", "nakshatra": "Bharani", "rahuKalam": "3:00 PM - 4:30 PM", "sunrise": "06:10 AM", "sunset": "06:30 PM" },
+    { "tithi": "Shukla Paksha Tritiya", "nakshatra": "Krittika", "rahuKalam": "12:00 PM - 1:30 PM", "sunrise": "06:09 AM", "sunset": "06:31 PM" },
+    { "tithi": "Shukla Paksha Chaturthi", "nakshatra": "Rohini", "rahuKalam": "1:30 PM - 3:00 PM", "sunrise": "06:08 AM", "sunset": "06:32 PM" },
+    { "tithi": "Shukla Paksha Panchami", "nakshatra": "Mrigashira", "rahuKalam": "7:30 AM - 9:00 AM", "sunrise": "06:07 AM", "sunset": "06:33 PM" },
+    { "tithi": "Shukla Paksha Shashthi", "nakshatra": "Ardra", "rahuKalam": "9:00 AM - 10:30 AM", "sunrise": "06:06 AM", "sunset": "06:34 PM" },
+    { "tithi": "Shukla Paksha Saptami", "nakshatra": "Punarvasu", "rahuKalam": "4:30 PM - 6:00 PM", "sunrise": "06:05 AM", "sunset": "06:35 PM" },
+    { "tithi": "Shukla Paksha Ashtami", "nakshatra": "Pushya", "rahuKalam": "10:30 AM - 12:00 PM", "sunrise": "06:15 AM", "sunset": "06:25 PM" },
+    { "tithi": "Shukla Paksha Navami", "nakshatra": "Ashlesha", "rahuKalam": "3:00 PM - 4:30 PM", "sunrise": "06:14 AM", "sunset": "06:26 PM" },
+    { "tithi": "Shukla Paksha Dashami", "nakshatra": "Magha", "rahuKalam": "12:00 PM - 1:30 PM", "sunrise": "06:13 AM", "sunset": "06:27 PM" },
+    { "tithi": "Shukla Paksha Ekadashi", "nakshatra": "Purva Phalguni", "rahuKalam": "1:30 PM - 3:00 PM", "sunrise": "06:12 AM", "sunset": "06:28 PM" },
+    { "tithi": "Shukla Paksha Dwadashi", "nakshatra": "Uttara Phalguni", "rahuKalam": "7:30 AM - 9:00 AM", "sunrise": "06:11 AM", "sunset": "06:29 PM" },
+    { "tithi": "Shukla Paksha Trayodashi", "nakshatra": "Hasta", "rahuKalam": "9:00 AM - 10:30 AM", "sunrise": "06:10 AM", "sunset": "06:30 PM" },
+    { "tithi": "Shukla Paksha Chaturdashi", "nakshatra": "Chitra", "rahuKalam": "4:30 PM - 6:00 PM", "sunrise": "06:09 AM", "sunset": "06:31 PM" },
+    { "tithi": "Purnima", "nakshatra": "Swati", "rahuKalam": "10:30 AM - 12:00 PM", "sunrise": "06:08 AM", "sunset": "06:32 PM" },
+    { "tithi": "Krishna Paksha Pratipada", "nakshatra": "Vishakha", "rahuKalam": "3:00 PM - 4:30 PM", "sunrise": "06:14 AM", "sunset": "06:26 PM" },
+    { "tithi": "Krishna Paksha Dwitiya", "nakshatra": "Anuradha", "rahuKalam": "12:00 PM - 1:30 PM", "sunrise": "06:13 AM", "sunset": "06:27 PM" },
+    { "tithi": "Krishna Paksha Tritiya", "nakshatra": "Jyeshtha", "rahuKalam": "1:30 PM - 3:00 PM", "sunrise": "06:12 AM", "sunset": "06:28 PM" },
+    { "tithi": "Krishna Paksha Chaturthi", "nakshatra": "Mula", "rahuKalam": "7:30 AM - 9:00 AM", "sunrise": "06:11 AM", "sunset": "06:29 PM" },
+    { "tithi": "Krishna Paksha Panchami", "nakshatra": "Purva Ashadha", "rahuKalam": "9:00 AM - 10:30 AM", "sunrise": "06:10 AM", "sunset": "06:30 PM" },
+    { "tithi": "Krishna Paksha Shashthi", "nakshatra": "Uttara Ashadha", "rahuKalam": "4:30 PM - 6:00 PM", "sunrise": "06:09 AM", "sunset": "06:31 PM" },
+    { "tithi": "Krishna Paksha Saptami", "nakshatra": "Shravana", "rahuKalam": "10:30 AM - 12:00 PM", "sunrise": "06:15 AM", "sunset": "06:25 PM" },
+    { "tithi": "Krishna Paksha Ashtami", "nakshatra": "Dhanishtha", "rahuKalam": "3:00 PM - 4:30 PM", "sunrise": "06:14 AM", "sunset": "06:26 PM" },
+    { "tithi": "Krishna Paksha Navami", "nakshatra": "Shatabhisha", "rahuKalam": "12:00 PM - 1:30 PM", "sunrise": "06:13 AM", "sunset": "06:27 PM" },
+    { "tithi": "Krishna Paksha Dashami", "nakshatra": "Purva Bhadrapada", "rahuKalam": "1:30 PM - 3:00 PM", "sunrise": "06:12 AM", "sunset": "06:28 PM" },
+    { "tithi": "Krishna Paksha Ekadashi", "nakshatra": "Uttara Bhadrapada", "rahuKalam": "7:30 AM - 9:00 AM", "sunrise": "06:11 AM", "sunset": "06:29 PM" },
+    { "tithi": "Krishna Paksha Dwadashi", "nakshatra": "Revati", "rahuKalam": "9:00 AM - 10:30 AM", "sunrise": "06:10 AM", "sunset": "06:30 PM" },
+    { "tithi": "Krishna Paksha Trayodashi", "nakshatra": "Ashwini", "rahuKalam": "4:30 PM - 6:00 PM", "sunrise": "06:09 AM", "sunset": "06:31 PM" },
+    { "tithi": "Krishna Paksha Chaturdashi", "nakshatra": "Bharani", "rahuKalam": "10:30 AM - 12:00 PM", "sunrise": "06:08 AM", "sunset": "06:32 PM" },
+    { "tithi": "Amavasya", "nakshatra": "Krittika", "rahuKalam": "3:00 PM - 4:30 PM", "sunrise": "06:13 AM", "sunset": "06:27 PM" }
+  ],
+  "scripture_explanations": {
+    "veda": "The Vedas are the oldest and most authoritative scriptures of Sanatana Dharma, dating back over 5,000 years. They are considered Shruti (that which is heard) — divine revelations received by the Rishis in deep meditation. The four Vedas — Rigveda, Yajurveda, Samaveda, and Atharvaveda — collectively contain hymns, rituals, philosophical teachings, and practical knowledge that form the foundation of Hindu thought and practice.",
+    "gita": "The Bhagavad Gita, often called the 'Song of God,' is a 700-verse dialogue between Lord Krishna and the warrior Arjuna on the battlefield of Kurukshetra. Part of the Mahabharata, it addresses the fundamental questions of duty, righteousness, and the nature of reality. Its teachings on Karma Yoga, Bhakti Yoga, and Jnana Yoga continue to guide millions on the path of spiritual growth.",
+    "upanishad": "The Upanishads represent the pinnacle of Vedic philosophy, exploring the deepest questions about the nature of reality, consciousness, and the Self. The word means 'sitting near' — referring to disciples receiving secret teachings from their guru. The 108+ Upanishads contain profound insights like 'Tat Tvam Asi' (You Are That) and 'Aham Brahmasmi' (I Am Brahman), revealing the identity of the individual soul with the universal spirit.",
+    "purana": "The Puranas are encyclopedic texts that make the Vedic wisdom accessible through stories, legends, and genealogies. The 18 Mahapuranas cover creation, cosmology, the avatars of Vishnu, the legends of Shiva, and the glory of the Divine Mother. They serve as the primary scripture for devotional Hinduism and contain some of the most beloved stories in Indian culture.",
+    "itihasa": "The Itihasas — the Ramayana and the Mahabharata — are the great epics of India, classified as 'thus it happened.' The Ramayana tells the story of Lord Rama, the ideal king, while the Mahabharata narrates the great dynastic war and contains the Bhagavad Gita. Together, they teach dharma, devotion, and the eternal struggle between good and evil.",
+    "guru": "The Guru tradition is central to Sanatana Dharma. From Adi Shankaracharya's Advaita Vedanta to Ramanuja's devotional theism, from Swami Vivekananda's modern Vedanta to Ramana Maharshi's self-inquiry, great Gurus have illuminated different paths to the same truth. The Guru is not merely a teacher but a living embodiment of wisdom who guides the disciple from darkness to light.",
+    "ancient_science": "Ancient India made remarkable contributions to science, mathematics, medicine, and astronomy. From Sushruta's surgical techniques to Aryabhata's astronomical calculations, from Baudhayana's geometric theorems to the metallurgical marvels like the Iron Pillar of Delhi — Indian scientific thought was deeply advanced. Modern research continues to validate many ancient Vedic insights.",
+    "animated_video": "These animated works bring the timeless stories of Indian epics and mythology to life for audiences of all ages. From the adventures of Lord Krishna and the valor of Hanuman to the epic battles of the Mahabharata, animated retellings make ancient wisdom accessible and engaging for the modern generation."
+  },
+  "temple_significance": {
+    "default": "This sacred temple is a living center of divine energy, built according to ancient Agama Shastra principles. The sanctum (Garbhagriha) houses the deity, and the temple's architecture channels cosmic forces to create a space of spiritual upliftment. Each visit is an opportunity to align your consciousness with the Divine."
+  }
+}

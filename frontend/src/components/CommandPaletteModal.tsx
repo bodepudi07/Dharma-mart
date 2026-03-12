@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from 'react';
+﻿import React, { useState, useEffect, useRef } from 'react';
 import { Icon } from './Icon';
 import * as api from '../services/apiService';
 import { SearchResults, Language } from '../types';

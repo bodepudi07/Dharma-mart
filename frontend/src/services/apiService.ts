@@ -1,4 +1,4 @@
-import { Temple, Pooja, Yatra, User, AdminTemple, Book, NearbyTemple, Testimonial, ActivityLogItem, Booking, DarshanTier, MajorEvent, Pandit, DonationOption, BookContent, CrowdLevel, Festival, TempleSubmissionData, SearchResults, Role, DarshanBookingDetails, PoojaBookingDetails, SpiritualGrowthData, LifetimeStats, DailyTask, TaskType, FeedItem, UserPreferences, YatraTier, YatraBookingDetails, Language, CustomYatraBookingDetails, YatraQuoteRequest, ChatRoom, ChatMessage, SearchFilters, Post } from '../types';
+﻿import { Temple, Pooja, Yatra, User, AdminTemple, Book, NearbyTemple, Testimonial, ActivityLogItem, Booking, DarshanTier, MajorEvent, Pandit, DonationOption, BookContent, CrowdLevel, Festival, TempleSubmissionData, SearchResults, Role, DarshanBookingDetails, PoojaBookingDetails, SpiritualGrowthData, LifetimeStats, DailyTask, TaskType, FeedItem, UserPreferences, YatraTier, YatraBookingDetails, Language, CustomYatraBookingDetails, YatraQuoteRequest, ChatRoom, ChatMessage, SearchFilters, Post, RemoteSeva, Sankalpa } from '../types';
 import { TESTIMONIALS_DATA } from '../constants';
 import { calculateDistance, fuzzySearch } from '../utils/geolocation';
 import { dataCache, DATA_UPDATED_EVENT } from './dataCache';
@@ -7,12 +7,7 @@ import { explainScripture as explainScriptureAI } from './aiService';
 
 export { DATA_UPDATED_EVENT }; // Re-export for components that use it
 
-// --- Network Simulation Helper ---
-/**
- * Simulates network latency.
- * Use this to mimic real-world DB wait times (e.g., 500-1500ms) to ensure UI loading states feel authentic.
- */
-const delay = (ms: number) => new Promise(resolve => setTimeout(resolve, ms));
+
 
 // --- Internationalization Helper ---
 
@@ -40,7 +35,8 @@ async function fetchAndMerge<T extends { id: number }>(
             return baseData;
         }
 
-        const langData = await response.json();
+        const langText = await response.text();
+        const langData = JSON.parse(langText.charCodeAt(0) === 0xFEFF ? langText.slice(1) : langText);
         // Create a map for efficient lookups of translations.
         const langMap = new Map(langData.map((item: T) => [item.id, item]));
 
@@ -65,6 +61,7 @@ export const getYatras = (language: Language): Promise<Yatra[]> => fetchAndMerge
 export const getBooks = (language: Language): Promise<Book[]> => fetchAndMerge<Book>('books', language);
 export const getMajorEvents = (language: Language): Promise<MajorEvent[]> => fetchAndMerge<MajorEvent>('events', language);
 export const getFestivals = (language: Language): Promise<Festival[]> => fetchAndMerge<Festival>('festivals', language);
+export const getRemoteSevas = (language: Language): Promise<RemoteSeva[]> => fetchAndMerge<RemoteSeva>('remote_sevas', language);
 export const getPandits = (language: Language, eventId?: number): Promise<Pandit[]> => {
     return fetchAndMerge<Pandit>('pandits', language).then(pandits => {
         if (eventId) {
@@ -127,6 +124,75 @@ export const getUserBookings = async (userId: number, token: string): Promise<Bo
     return result.data;
 };
 
+export const cancelBooking = async (bookingId: number, token: string, reason?: string): Promise<Booking> => {
+    const response = await fetch(`/api/bookings/${bookingId}/cancel`, {
+        method: 'PUT',
+        headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${token}` },
+        body: JSON.stringify({ reason })
+    });
+    const result = await response.json();
+    if (!response.ok || !result.success) throw new Error(result.error || "Failed to cancel booking.");
+    return result.data.booking;
+};
+
+export const rescheduleBooking = async (bookingId: number, token: string, bookingDate: string, timeSlot?: string): Promise<Booking> => {
+    const response = await fetch(`/api/bookings/${bookingId}/reschedule`, {
+        method: 'PUT',
+        headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${token}` },
+        body: JSON.stringify({ bookingDate, timeSlot })
+    });
+    const result = await response.json();
+    if (!response.ok || !result.success) throw new Error(result.error || "Failed to reschedule booking.");
+    return result.data.booking;
+};
+
+// Sankalpa (Remote Seva) API
+export const createSankalpa = async (data: {
+    sevaId: number; devoteeName: string; gotra: string; rashi?: string; nakshatra?: string;
+    address: string; pincode: string; phone: string; date: string; panditId: number;
+}, token: string): Promise<Sankalpa> => {
+    const response = await fetch('/api/sankalpas', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${token}` },
+        body: JSON.stringify(data)
+    });
+    const result = await response.json();
+    if (!response.ok || !result.success) throw new Error(result.error || "Failed to create sankalpa.");
+    return result.data.sankalpa;
+};
+
+export const getUserSankalpas = async (token: string): Promise<Sankalpa[]> => {
+    const response = await fetch('/api/sankalpas/user', {
+        headers: { 'Authorization': `Bearer ${token}` }
+    });
+    const result = await response.json();
+    if (!response.ok || !result.success) throw new Error(result.error || "Failed to fetch sankalpas.");
+    return result.data;
+};
+
+export const getAllSankalpas = async (token: string): Promise<Sankalpa[]> => {
+    const response = await fetch('/api/sankalpas/all', {
+        headers: { 'Authorization': `Bearer ${token}` }
+    });
+    const result = await response.json();
+    if (!response.ok || !result.success) throw new Error(result.error || "Failed to fetch sankalpas.");
+    return result.data;
+};
+
+export const updateSankalpaStatus = async (
+    sankalpaId: string, status: string, token: string,
+    extras?: { proofVideoUrl?: string; trackingId?: string; panditNotes?: string }
+): Promise<Sankalpa> => {
+    const response = await fetch(`/api/sankalpas/${encodeURIComponent(sankalpaId)}/status`, {
+        method: 'PUT',
+        headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${token}` },
+        body: JSON.stringify({ status, ...extras })
+    });
+    const result = await response.json();
+    if (!response.ok || !result.success) throw new Error(result.error || "Failed to update sankalpa.");
+    return result.data.sankalpa;
+};
+
 export const getPoojasByTempleId = async (templeId: number, language: Language): Promise<Pooja[]> => {
     const allPoojas = await getPoojas(language);
     return allPoojas.filter(pooja => pooja.templeIds?.includes(templeId));
@@ -140,17 +206,20 @@ export const getTemplesByPoojaId = async (poojaId: number, language: Language): 
 };
 
 export const getBookContent = async (contentKey: string): Promise<BookContent> => {
-    // Append a timestamp to break aggressive browser caching of accidental 200 OK HTML fallbacks
-    const response = await fetch(`/data/book-content/${contentKey}.json?_t=${Date.now()}`);
+    const response = await fetch(`/data/book-content/${contentKey}.json`);
     if (!response.ok) throw new Error("Failed to fetch book content.");
 
-    // Protect against SPA dev server fallback returning index.html (which throws "Unexpected token '<'")
     const contentType = response.headers.get("content-type");
     if (contentType && (contentType.includes("text/html") || contentType.includes("text/plain"))) {
         throw new Error("Book content is currently being updated and will be available soon.");
     }
 
-    return response.json();
+    // Strip UTF-8 BOM if present before parsing
+    let text = await response.text();
+    if (text.charCodeAt(0) === 0xFEFF) {
+        text = text.slice(1);
+    }
+    return JSON.parse(text);
 };
 
 export const getTempleById = async (id: number, language: Language): Promise<Temple | undefined> => {
@@ -196,7 +265,7 @@ export const verifyToken = async (token: string): Promise<User> => {
 };
 
 export const getTestimonials = (): Promise<Testimonial[]> => {
-    return new Promise(resolve => setTimeout(() => resolve(TESTIMONIALS_DATA), 500));
+    return Promise.resolve(TESTIMONIALS_DATA);
 };
 
 export const searchAll = async (
@@ -291,40 +360,34 @@ export const getDetailedCrowdLevel = (temple: Temple, dateTime: Date): CrowdLeve
 };
 
 export const getTempleAvailability = async (templeId: number): Promise<Map<string, CrowdLevel>> => {
-    return new Promise(async resolve => {
-        const temples = await getTemples(Language.EN);
-        const temple = temples.find(t => t.id === templeId);
-        if (!temple) return resolve(new Map());
+    const temples = await getTemples(Language.EN);
+    const temple = temples.find(t => t.id === templeId);
+    if (!temple) return new Map();
 
-        const availability = new Map<string, CrowdLevel>();
-        const today = new Date();
+    const availability = new Map<string, CrowdLevel>();
+    const today = new Date();
 
-        for (let i = 0; i < 30; i++) {
-            const date = new Date(today);
-            date.setDate(today.getDate() + i);
-            const dateString = date.toISOString().split('T')[0];
+    for (let i = 0; i < 30; i++) {
+        const date = new Date(today);
+        date.setDate(today.getDate() + i);
+        const dateString = date.toISOString().split('T')[0];
 
-            // Generate for "Morning" peak
-            const morningDate = new Date(date);
-            morningDate.setHours(8, 0, 0);
-            availability.set(dateString, getDetailedCrowdLevel(temple, morningDate));
-        }
-        setTimeout(() => resolve(availability), 300);
-    });
+        // Generate for "Morning" peak
+        const morningDate = new Date(date);
+        morningDate.setHours(8, 0, 0);
+        availability.set(dateString, getDetailedCrowdLevel(temple, morningDate));
+    }
+    return availability;
 };
 
 export const getYatraAvailability = async (yatraId: number): Promise<Date[]> => {
-    return new Promise(resolve => {
-        const dates: Date[] = [];
-        const today = new Date();
-        for (let i = 0; i < 3; i++) {
-            // First of the month
-            dates.push(new Date(today.getFullYear(), today.getMonth() + i + 1, 1));
-            // 15th of the month
-            dates.push(new Date(today.getFullYear(), today.getMonth() + i + 1, 15));
-        }
-        setTimeout(() => resolve(dates), 300); // Simulate network
-    });
+    const dates: Date[] = [];
+    const today = new Date();
+    for (let i = 0; i < 3; i++) {
+        dates.push(new Date(today.getFullYear(), today.getMonth() + i + 1, 1));
+        dates.push(new Date(today.getFullYear(), today.getMonth() + i + 1, 15));
+    }
+    return dates;
 };
 
 // --- Spiritual Growth Tracker ---
@@ -357,38 +420,18 @@ const getSpiritualGrowthTemplate = (userId: number): SpiritualGrowthData => ({
     lastUpdate: new Date().toISOString().split('T')[0],
 });
 
-export const getSpiritualGrowth = async (userId: number): Promise<SpiritualGrowthData> => {
-    const allGrowthData = await dataCache.get<any>('spiritual_growth', '/data/spiritual_growth.json');
-    let userData = allGrowthData.find(d => d.userId === userId);
-
-    if (!userData) {
+export const getSpiritualGrowth = async (userId: number, token?: string): Promise<SpiritualGrowthData> => {
+    if (!token) return getSpiritualGrowthTemplate(userId);
+    try {
+        const response = await fetch(`/api/growth/${userId}`, {
+            headers: { 'Authorization': `Bearer ${token}` }
+        });
+        const result = await response.json();
+        if (!response.ok || !result.success) return getSpiritualGrowthTemplate(userId);
+        return result.data;
+    } catch {
         return getSpiritualGrowthTemplate(userId);
     }
-
-    const todayStr = new Date().toISOString().split('T')[0];
-
-    // If last update was not today, reset daily tasks.
-    if (userData.lastUpdate !== todayStr) {
-        userData.dailyTasks = getSpiritualGrowthTemplate(userId).dailyTasks;
-        userData.lastUpdate = todayStr;
-        dataCache.set('spiritual_growth', allGrowthData); // Persist the reset
-    }
-
-    // Ensure dailyTasks array exists for backward compatibility
-    if (!userData.dailyTasks) {
-        userData.dailyTasks = getSpiritualGrowthTemplate(userId).dailyTasks;
-    }
-
-    const level = getLevelFromXp(userData.xp);
-    return {
-        userId: userData.userId,
-        xp: userData.xp,
-        streak: userData.streak,
-        level,
-        xpForCurrentLevel: LEVEL_THRESHOLDS[level - 1],
-        xpForNextLevel: LEVEL_THRESHOLDS[level] || userData.xp,
-        dailyTasks: userData.dailyTasks,
-    };
 };
 
 export const logActivity = async (
@@ -396,51 +439,24 @@ export const logActivity = async (
     message: string,
     user: User | null
 ): Promise<void> => {
-    const activityLog = await dataCache.get<ActivityLogItem>('activity_log', '/data/activity_log.json');
-    const newLog: ActivityLogItem = {
-        id: Date.now(),
-        type,
-        message,
-        user: user ? { id: user.id, name: user.name } : null,
-        timestamp: new Date().toISOString()
-    };
-    activityLog.unshift(newLog); // Add to the beginning
-    dataCache.set('activity_log', activityLog.slice(0, 100)); // Keep last 100 entries
+    if (!user || !user.token) return; // Can't log without auth
+    try {
+        await fetch('/api/users/activity', {
+            method: 'POST',
+            headers: { 'Authorization': `Bearer ${user.token}`, 'Content-Type': 'application/json' },
+            body: JSON.stringify({ type, message })
+        });
+    } catch {
+        // Activity logging is non-critical; don't throw
+    }
 };
 
-// --- MOCK USER ACTIONS (Implementations for App.tsx) ---
-
-const createBooking = (
-    type: Booking['type'],
-    user: User,
-    itemId: number | string,
-    itemName: string,
-    cost: number,
-    details: any,
-    itemContext?: string,
-    durationMinutes?: number,
-): Booking => ({
-    id: Date.now(),
-    type,
-    userId: user.id,
-    itemId,
-    itemName,
-    itemContext,
-    cost,
-    timestamp: new Date().toISOString(),
-    bookingDate: details.date?.toISOString().split('T')[0],
-    timeSlot: details.timeSlot,
-    numberOfPersons: details.numberOfPersons,
-    durationMinutes
-});
+// --- USER ACTIONS ---
 
 export const bookDarshan = async (temple: Temple, details: DarshanBookingDetails, user: User, token: string): Promise<{ message: string }> => {
     // Strict Input Validation
     if (!temple || !user || !token) throw new Error("Authentication and temple data required.");
     if (!details || !details.date || !details.tier) throw new Error("Invalid booking details.");
-
-    // Simulate Network Latency (Processing payment & booking...)
-    await delay(800 + Math.random() * 700);
 
     const response = await fetch('/api/bookings', {
         method: 'POST',
@@ -464,9 +480,6 @@ export const bookPooja = async (details: PoojaBookingDetails, user: User, token:
     if (!user || !token) throw new Error("Authentication required.");
     if (!details || !details.pooja || !details.date) throw new Error("Invalid pooja booking details.");
     if (details.pooja.cost < 0) throw new Error("Invalid pooja cost configuration.");
-
-    // Simulate Network Latency
-    await delay(1000 + Math.random() * 500);
 
     const totalCost = details.pooja.cost + (details.pandit?.cost || 0);
     const durationMinutes = parseDurationToMinutes(details.pooja.duration);
@@ -493,9 +506,6 @@ export const bookYatra = async (details: YatraBookingDetails, user: User, token:
     if (!user || !token) throw new Error("Authentication required.");
     if (!details || !details.yatra || !details.tier || details.numberOfPersons <= 0) throw new Error("Invalid yatra booking details.");
 
-    // Simulate Network Latency
-    await delay(1200 + Math.random() * 500);
-
     const cost = details.tier.cost * details.numberOfPersons;
     const response = await fetch('/api/bookings', {
         method: 'POST',
@@ -515,119 +525,98 @@ export const bookYatra = async (details: YatraBookingDetails, user: User, token:
 };
 
 export const submitYatraQuoteRequest = async (details: YatraQuoteRequest, user: User): Promise<{ message: string }> => {
-    const quotes = await dataCache.get<YatraQuoteRequest>('yatra_quotes', '/data/yatra_quotes.json');
-    quotes.push(details);
-    dataCache.set('yatra_quotes', quotes);
-    await logActivity('submission', `Submitted a custom yatra quote request.`, user);
-    return { message: 'Your custom yatra plan has been submitted! Our partners will contact you shortly.' };
+    if (!user || !user.token) throw new Error('Authentication required.');
+    const response = await fetch('/api/users/yatra-quote', {
+        method: 'POST',
+        headers: { 'Authorization': `Bearer ${user.token}`, 'Content-Type': 'application/json' },
+        body: JSON.stringify(details)
+    });
+    const result = await response.json();
+    if (!response.ok || !result.success) throw new Error(result.error || 'Failed to submit quote request.');
+    return { message: result.message || 'Your custom yatra plan has been submitted! Our partners will contact you shortly.' };
 };
 
 export const bookPandit = async (pandit: Pandit, contextItem: { name: string }, user: User, details: { date: Date, timeSlot: string }): Promise<{ message: string }> => {
-    if (!user) throw new Error("Authentication required to book a Pandit.");
+    if (!user || !user.token) throw new Error("Authentication required to book a Pandit.");
     if (!pandit || !details || !details.date || !details.timeSlot) throw new Error("Incomplete Pandit booking details.");
 
-    await delay(600 + Math.random() * 400);
-
-    const bookings = await dataCache.get<Booking>('bookings', '/data/bookings.json');
-    const newBooking = createBooking('pandit', user, pandit.id, pandit.name, pandit.cost, details, contextItem.name, 60); // Assume 1 hour for misc pandit booking
-    bookings.push(newBooking);
-    dataCache.set('bookings', bookings);
-    await logActivity('booking', `Booked Pandit ${pandit.name} for ${contextItem.name}.`, user);
-    return { message: `Pandit ${pandit.name} booked successfully for ${contextItem.name}!` };
+    const response = await fetch('/api/bookings', {
+        method: 'POST',
+        headers: { 'Authorization': `Bearer ${user.token}`, 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+            type: 'pandit',
+            itemId: pandit.id,
+            itemName: pandit.name,
+            cost: pandit.cost,
+            details: { ...details, date: details.date?.toISOString() },
+            tierName: contextItem.name,
+            duration: 60
+        })
+    });
+    const result = await response.json();
+    if (!response.ok || !result.success) throw new Error(result.error || 'Failed to book pandit.');
+    return { message: result.message || `Pandit ${pandit.name} booked successfully for ${contextItem.name}!` };
 };
 
 export const makeDonation = async (amount: number, purpose: DonationOption, user: User, temple?: Temple): Promise<{ message: string }> => {
-    if (!user) throw new Error("Authentication required to make a donation.");
-    if (amount < 11) throw new Error("Minimum donation amount is ₹11 for processing reasons."); // Logic check
+    if (!user || !user.token) throw new Error("Authentication required to make a donation.");
+    if (amount < 11) throw new Error("Minimum donation amount is ₹11 for processing reasons.");
     if (!purpose) throw new Error("Invalid donation purpose.");
 
-    await delay(1000 + Math.random() * 500); // Simulate payment gateway delay
-
-    const bookings = await dataCache.get<Booking>('bookings', '/data/bookings.json');
-    const newDonation = createBooking('donation', user, purpose.id, purpose.title, amount, {}, temple?.name);
-    bookings.push(newDonation);
-    dataCache.set('bookings', bookings);
-    const logMessage = temple
-        ? `Donated ₹${amount} to ${temple.name} for '${purpose.title}'.`
-        : `Donated ₹${amount} for '${purpose.title}'.`;
-    await logActivity('donation', logMessage, user);
-    return { message: 'Thank you for your generous donation!' };
+    const response = await fetch('/api/bookings', {
+        method: 'POST',
+        headers: { 'Authorization': `Bearer ${user.token}`, 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+            type: 'donation',
+            itemId: purpose.id,
+            itemName: purpose.title,
+            cost: amount,
+            details: {},
+            tierName: temple?.name
+        })
+    });
+    const result = await response.json();
+    if (!response.ok || !result.success) throw new Error(result.error || 'Failed to process donation.');
+    return { message: result.message || 'Thank you for your generous donation!' };
 };
 
 export const submitTemple = async (templeData: TempleSubmissionData, user: User): Promise<{ message: string }> => {
-    const pendingTemples = await dataCache.get<AdminTemple>('pending_temples', '/data/pending_temples.json');
-    const newSubmission: AdminTemple = {
-        ...templeData,
-        id: Date.now(),
-        lat: 0,
-        lng: 0,
-        crowdLevel: 'Medium',
-        deity: 'Unknown',
-        submittedBy: user.email,
-        status: 'pending',
-        estimatedCost: 0,
-        estimatedDays: 0,
-    };
-    pendingTemples.push(newSubmission);
-    dataCache.set('pending_temples', pendingTemples);
-    await logActivity('submission', `Submitted new temple for review: ${templeData.name}.`, user);
-    return { message: 'Temple submitted for review. Thank you for your contribution!' };
+    if (!user || !user.token) throw new Error('Authentication required.');
+    const response = await fetch('/api/users/submit-temple', {
+        method: 'POST',
+        headers: { 'Authorization': `Bearer ${user.token}`, 'Content-Type': 'application/json' },
+        body: JSON.stringify(templeData)
+    });
+    const result = await response.json();
+    if (!response.ok || !result.success) throw new Error(result.error || 'Failed to submit temple.');
+    return { message: result.message || 'Temple submitted for review. Thank you for your contribution!' };
 };
 
 export const updatePoojaAssociationsForTemple = async (templeId: number, selectedPoojaIds: number[], token: string): Promise<{ message: string }> => {
-    // This is a complex operation in a real DB. Here we simulate it.
-    const poojas = await dataCache.get<Pooja>('poojas', '/data/poojas.json');
-    poojas.forEach(pooja => {
-        const isSelected = selectedPoojaIds.includes(pooja.id);
-        const isAssociated = pooja.templeIds?.includes(templeId);
-
-        if (isSelected && !isAssociated) {
-            pooja.templeIds = [...(pooja.templeIds || []), templeId];
-        } else if (!isSelected && isAssociated) {
-            pooja.templeIds = pooja.templeIds?.filter(id => id !== templeId);
-        }
+    const response = await fetch(`/api/admin/temples/${templeId}/pooja-associations`, {
+        method: 'PUT',
+        headers: { 'Authorization': `Bearer ${token}`, 'Content-Type': 'application/json' },
+        body: JSON.stringify({ selectedPoojaIds })
     });
-    dataCache.set('poojas', poojas);
-    await logActivity('update', `Updated pooja associations for temple ID ${templeId}.`, null);
-    return { message: 'Pooja associations updated successfully!' };
+    const result = await response.json();
+    if (!response.ok || !result.success) throw new Error(result.error || 'Failed to update pooja associations.');
+    return { message: result.message || 'Pooja associations updated successfully!' };
 };
 
-export const checkAndResetStreak = async (userId: number): Promise<SpiritualGrowthData> => {
-    // Simplified: In a real app, this would be more robust.
-    return getSpiritualGrowth(userId);
+export const checkAndResetStreak = async (userId: number, token?: string): Promise<SpiritualGrowthData> => {
+    return getSpiritualGrowth(userId, token);
 };
 
-export const completeSpiritualTask = async (userId: number, taskType: TaskType): Promise<SpiritualGrowthData> => {
-    // This call ensures data is fresh and daily tasks are reset if needed. It has the side effect of writing to cache.
-    await getSpiritualGrowth(userId);
-
-    // Now that the cache is guaranteed to be fresh, read the full dataset again.
-    const allGrowthData = await dataCache.get<any>('spiritual_growth', '/data/spiritual_growth.json');
-    let userData = allGrowthData.find(d => d.userId === userId);
-
-    // This case is handled by getSpiritualGrowth creating a template, but we keep it as a safeguard.
-    if (!userData) {
-        userData = getSpiritualGrowthTemplate(userId);
-        allGrowthData.push(userData);
-    }
-
-    const task = userData.dailyTasks.find((t: DailyTask) => t.type === taskType);
-
-    if (task && !task.isCompleted) {
-        task.isCompleted = true;
-
-        // --- Streak Multiplier Algorithm ---
-        // Bonus = min(2, 1 + streak * 0.1) -> 10% bonus per day streak, capped at 2x
-        const multiplier = Math.min(2, 1 + (userData.streak || 0) * 0.1);
-        const baseXP = taskType === 'chant' ? 108 : XP_PER_TASK;
-        const xpGain = Math.round(baseXP * multiplier);
-
-        userData.xp += xpGain;
-        await dataCache.set('spiritual_growth', allGrowthData);
-    }
-
-    // Return the latest processed data for the UI
-    return getSpiritualGrowth(userId);
+export const completeSpiritualTask = async (userId: number, taskType: TaskType, token?: string): Promise<SpiritualGrowthData> => {
+    if (!token) throw new Error('Authentication required.');
+    const response = await fetch(`/api/growth/${userId}/complete-task`, {
+        method: 'POST',
+        headers: { 'Authorization': `Bearer ${token}`, 'Content-Type': 'application/json' },
+        body: JSON.stringify({ taskType })
+    });
+    const result = await response.json();
+    if (!response.ok || !result.success) throw new Error(result.error || 'Failed to complete task.');
+    return result.data;
 };
 
 export const loginUser = async (email: string, pass: string): Promise<{ user: User }> => {
@@ -662,30 +651,24 @@ export const registerUser = async (name: string, email: string, pass: string): P
     return result.data;
 };
 
-export const loginWithProvider = async (provider: 'google' | 'facebook'): Promise<{ user: User }> => {
-    // This is a simulation
-    const mockEmail = `${provider}user@darshan.com`;
-    const users = await dataCache.get<any>('users', '/data/users.json');
-    let user = users.find(u => u.email === mockEmail);
-    if (!user) {
-        user = {
-            id: Date.now(),
-            email: mockEmail,
-            name: `${provider.charAt(0).toUpperCase() + provider.slice(1)} User`,
-            role: 'devotee',
-            passwordHash: 'social_login',
-            avatarUrl: `https://i.pravatar.cc/150?u=${mockEmail}`,
-            bio: 'A new seeker on the path of Dharma.',
-            followers: [],
-            following: []
-        };
-        users.push(user);
-        dataCache.set('users', users);
+export const loginWithGoogle = async (credential: string, mockData?: { name: string; email: string }): Promise<{ user: User; token: string }> => {
+    const body = mockData
+        ? { credential: 'mock_google_credential', mock: true, name: mockData.name, email: mockData.email }
+        : { credential };
+    const response = await fetch('/api/auth/google', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(body)
+    });
+    const result = await response.json();
+    if (!response.ok || !result.success) {
+        throw new Error(result.error || 'Google login failed');
     }
-    const { passwordHash, ...userClientData } = user;
-    const userWithToken = { ...userClientData, token: `mock-token-${Date.now()}` };
-    await logActivity('login', `User '${user.name}' logged in via ${provider}.`, userWithToken);
-    return { user: userWithToken };
+    return result.data;
+};
+
+export const loginWithProvider = async (provider: 'google' | 'facebook'): Promise<{ user: User }> => {
+    throw new Error(`${provider.charAt(0).toUpperCase() + provider.slice(1)} login will be available soon. Please use email registration.`);
 };
 
 export const updateUserProfile = async (userId: number, updates: Partial<User>, token: string): Promise<{ user: User }> => {
@@ -709,14 +692,16 @@ export const deleteUser = async (userId: number, token: string): Promise<{ messa
 };
 
 export const getLifetimeStats = async (userId: number, token: string): Promise<LifetimeStats> => {
-    const bookings = await getUserBookings(userId, token);
-    const growthData = await getSpiritualGrowth(userId);
+    const [bookings, growthData] = await Promise.all([
+        getUserBookings(userId, token),
+        getSpiritualGrowth(userId, token)
+    ]);
     const completedTasks = growthData.dailyTasks.filter(t => t.isCompleted).length;
     return {
         templesVisited: new Set(bookings.filter(b => b.type === 'darshan' || b.type === 'yatra').map(b => b.itemId)).size,
         poojasBooked: bookings.filter(b => b.type === 'pooja').length,
         sevaOffered: bookings.filter(b => b.type === 'donation').length,
-        knowledgeRead: Math.floor((growthData.xp - (completedTasks * XP_PER_TASK)) / 10) // Mock logic: XP from non-task sources
+        knowledgeRead: Math.floor((growthData.xp - (completedTasks * XP_PER_TASK)) / 10)
     };
 };
 
@@ -776,101 +761,112 @@ export const getPersonalizedFeed = async (user: User, language: Language, token:
 
 
 // --- User Preferences ---
-export const getUserPreferences = async (userId: number): Promise<UserPreferences['preferences']> => {
-    const allPrefs = await dataCache.get<UserPreferences>('user_preferences', '/data/user_preferences.json');
-    const userPrefs = allPrefs.find(p => p.userId === userId);
-    return userPrefs ? userPrefs.preferences : {};
-};
-
-export const updateUserChantImage = async (userId: number, chantId: number, imageData: string): Promise<UserPreferences> => {
-    const allPrefs = await dataCache.get<UserPreferences>('user_preferences', '/data/user_preferences.json');
-    let userPrefs = allPrefs.find(p => p.userId === userId);
-    if (!userPrefs) {
-        userPrefs = { userId, preferences: {} };
-        allPrefs.push(userPrefs);
+export const getUserPreferences = async (userId: number, token?: string): Promise<UserPreferences['preferences']> => {
+    if (!token) return {};
+    try {
+        const response = await fetch(`/api/users/preferences/${userId}`, {
+            headers: { 'Authorization': `Bearer ${token}` }
+        });
+        const result = await response.json();
+        if (!response.ok || !result.success) return {};
+        return result.data;
+    } catch {
+        return {};
     }
-    if (!userPrefs.preferences.chantImages) {
-        userPrefs.preferences.chantImages = {};
-    }
-    userPrefs.preferences.chantImages[chantId] = imageData;
-    dataCache.set('user_preferences', allPrefs);
-    return userPrefs;
 };
 
-// --- MOCK ADMIN ACTIONS ---
-const genericAddItem = async <T extends { id: number, name: string }>(key: string, path: string, itemData: Partial<T>, user: User | null, logMessage: string): Promise<{ message: string }> => {
-    const items = await dataCache.get<T>(key, path);
-    const newItem = { ...itemData, id: Date.now() } as T;
-    items.push(newItem);
-    dataCache.set(key, items);
-    await logActivity('addition', `${logMessage} added: "${itemData.name}".`, user);
-    return { message: `${logMessage} added successfully.` };
+export const updateUserChantImage = async (userId: number, chantId: number, imageData: string, token?: string): Promise<UserPreferences> => {
+    if (!token) throw new Error('Authentication required.');
+    const response = await fetch('/api/users/preferences', {
+        method: 'PUT',
+        headers: { 'Authorization': `Bearer ${token}`, 'Content-Type': 'application/json' },
+        body: JSON.stringify({ chantId, imageData })
+    });
+    const result = await response.json();
+    if (!response.ok || !result.success) throw new Error(result.error || 'Failed to update preferences.');
+    return result.data;
 };
 
-const genericUpdateItem = async <T extends { id: number, name: string }>(key: string, path: string, itemData: Partial<T> & { id: number }, user: User | null, logMessage: string): Promise<{ message: string }> => {
-    const items = await dataCache.get<T>(key, path);
-    const index = items.findIndex(i => i.id === itemData.id);
-    if (index === -1) throw new Error("Item not found");
-    items[index] = { ...items[index], ...itemData };
-    dataCache.set(key, items);
-    await logActivity('update', `${logMessage} updated: "${itemData.name}".`, user);
-    return { message: `${logMessage} updated successfully.` };
+// --- ADMIN CRUD ACTIONS (Real API) ---
+const genericApiAdd = async (entityName: string, itemData: any, token: string): Promise<{ message: string }> => {
+    const response = await fetch(`/api/admin/${entityName}`, {
+        method: 'POST',
+        headers: { 'Authorization': `Bearer ${token}`, 'Content-Type': 'application/json' },
+        body: JSON.stringify(itemData)
+    });
+    const result = await response.json();
+    if (!response.ok || !result.success) throw new Error(result.error || `Failed to add ${entityName}.`);
+    return { message: result.message || `${entityName} added successfully.` };
 };
 
-const genericDeleteItem = async <T extends { id: number }>(key: string, path: string, itemId: number, user: User | null, logMessage: string): Promise<{ message: string }> => {
-    let items = await dataCache.get<T>(key, path);
-    const itemToDelete = items.find(i => i.id === itemId);
-    if (!itemToDelete) throw new Error("Item not found to delete");
-    items = items.filter(i => i.id !== itemId);
-    dataCache.set(key, items);
-    await logActivity('deletion', `${logMessage} deleted (ID: ${itemId}).`, user);
-    return { message: `${logMessage} deleted successfully.` };
+const genericApiUpdate = async (entityName: string, itemData: any, token: string): Promise<{ message: string }> => {
+    const response = await fetch(`/api/admin/${entityName}/${itemData.id}`, {
+        method: 'PUT',
+        headers: { 'Authorization': `Bearer ${token}`, 'Content-Type': 'application/json' },
+        body: JSON.stringify(itemData)
+    });
+    const result = await response.json();
+    if (!response.ok || !result.success) throw new Error(result.error || `Failed to update ${entityName}.`);
+    return { message: result.message || `${entityName} updated successfully.` };
+};
+
+const genericApiDelete = async (entityName: string, itemId: number, token: string): Promise<{ message: string }> => {
+    const response = await fetch(`/api/admin/${entityName}/${itemId}`, {
+        method: 'DELETE',
+        headers: { 'Authorization': `Bearer ${token}` }
+    });
+    const result = await response.json();
+    if (!response.ok || !result.success) throw new Error(result.error || `Failed to delete ${entityName}.`);
+    return { message: result.message || `${entityName} deleted successfully.` };
 };
 
 // Pooja CRUD
-export const addPooja = (data: Partial<Pooja>, token: string) => genericAddItem('poojas', '/data/poojas.json', data, null, 'Pooja');
-export const updatePooja = (data: Partial<Pooja> & { id: number }, token: string) => genericUpdateItem('poojas', '/data/poojas.json', data, null, 'Pooja');
-export const deletePooja = (id: number, token: string) => genericDeleteItem('poojas', '/data/poojas.json', id, null, 'Pooja');
+export const addPooja = (data: Partial<Pooja>, token: string) => genericApiAdd('poojas', data, token);
+export const updatePooja = (data: Partial<Pooja> & { id: number }, token: string) => genericApiUpdate('poojas', data, token);
+export const deletePooja = (id: number, token: string) => genericApiDelete('poojas', id, token);
 
 // Yatra CRUD
-export const addYatra = (data: Partial<Yatra>, token: string) => genericAddItem('yatras', '/data/yatras.json', data, null, 'Yatra');
-export const updateYatra = (data: Partial<Yatra> & { id: number }, token: string) => genericUpdateItem('yatras', '/data/yatras.json', data, null, 'Yatra');
-export const deleteYatra = (id: number, token: string) => genericDeleteItem('yatras', '/data/yatras.json', id, null, 'Yatra');
+export const addYatra = (data: Partial<Yatra>, token: string) => genericApiAdd('yatras', data, token);
+export const updateYatra = (data: Partial<Yatra> & { id: number }, token: string) => genericApiUpdate('yatras', data, token);
+export const deleteYatra = (id: number, token: string) => genericApiDelete('yatras', id, token);
 
 // Book CRUD
-export const addBook = (data: Partial<Book>, token: string) => genericAddItem('books', '/data/books.json', data, null, 'Book');
-export const updateBook = (data: Partial<Book> & { id: number }, token: string) => genericUpdateItem('books', '/data/books.json', data, null, 'Book');
-export const deleteBook = (id: number, token: string) => genericDeleteItem('books', '/data/books.json', id, null, 'Book');
+export const addBook = (data: Partial<Book>, token: string) => genericApiAdd('books', data, token);
+export const updateBook = (data: Partial<Book> & { id: number }, token: string) => genericApiUpdate('books', data, token);
+export const deleteBook = (id: number, token: string) => genericApiDelete('books', id, token);
 
 // Festival CRUD
-export const addFestival = (data: Partial<Festival>, token: string) => genericAddItem('festivals', '/data/festivals.json', data, null, 'Festival');
-export const updateFestival = (data: Partial<Festival> & { id: number }, token: string) => genericUpdateItem('festivals', '/data/festivals.json', data, null, 'Festival');
-export const deleteFestival = (id: number, token: string) => genericDeleteItem('festivals', '/data/festivals.json', id, null, 'Festival');
+export const addFestival = (data: Partial<Festival>, token: string) => genericApiAdd('festivals', data, token);
+export const updateFestival = (data: Partial<Festival> & { id: number }, token: string) => genericApiUpdate('festivals', data, token);
+export const deleteFestival = (id: number, token: string) => genericApiDelete('festivals', id, token);
 
 // Event CRUD
-export const addEvent = (data: Partial<MajorEvent>, token: string) => genericAddItem('events', '/data/events.json', data, null, 'Event');
-export const updateEvent = (data: Partial<MajorEvent> & { id: number }, token: string) => genericUpdateItem('events', '/data/events.json', data, null, 'Event');
+export const addEvent = (data: Partial<MajorEvent>, token: string) => genericApiAdd('events', data, token);
+export const updateEvent = (data: Partial<MajorEvent> & { id: number }, token: string) => genericApiUpdate('events', data, token);
 export const deleteEvent = async (id: number, token: string) => {
-    // Cascade delete: remove pandits associated with this event
-    let pandits = await dataCache.get<Pandit>('pandits', '/data/pandits.json');
-    pandits = pandits.filter(p => p.eventId !== id);
-    dataCache.set('pandits', pandits);
-    return genericDeleteItem('events', '/data/events.json', id, null, 'Event');
-}
+    // Cascade delete: Also removes associated pandits on the backend
+    const response = await fetch(`/api/admin/events/${id}/cascade`, {
+        method: 'DELETE',
+        headers: { 'Authorization': `Bearer ${token}` }
+    });
+    const result = await response.json();
+    if (!response.ok || !result.success) throw new Error(result.error || 'Failed to delete event.');
+    return { message: result.message || 'Event deleted successfully.' };
+};
 
 // Pandit CRUD
-export const addPandit = (data: Partial<Pandit>, token: string) => genericAddItem('pandits', '/data/pandits.json', data, null, 'Pandit');
-export const updatePandit = (data: Partial<Pandit> & { id: number }, token: string) => genericUpdateItem('pandits', '/data/pandits.json', data, null, 'Pandit');
-export const deletePandit = (id: number, token: string) => genericDeleteItem('pandits', '/data/pandits.json', id, null, 'Pandit');
+export const addPandit = (data: Partial<Pandit>, token: string) => genericApiAdd('pandits', data, token);
+export const updatePandit = (data: Partial<Pandit> & { id: number }, token: string) => genericApiUpdate('pandits', data, token);
+export const deletePandit = (id: number, token: string) => genericApiDelete('pandits', id, token);
 export const getPanditCountForEvent = async (eventId: number): Promise<number> => {
     const pandits = await getPandits(Language.EN, eventId);
     return pandits.length;
 }
 
 // Temple Actions
-export const updateTemple = (id: number, data: Partial<Temple>, token: string) => genericUpdateItem('temples', '/data/temples.json', { ...data, id }, null, 'Temple');
-export const addTempleDirectly = (data: Partial<Temple>, token: string) => genericAddItem('temples', '/data/temples.json', data, null, 'Temple');
-export const deleteTemple = (id: number, token: string) => genericDeleteItem('temples', '/data/temples.json', id, null, 'Temple');
+export const updateTemple = (id: number, data: Partial<Temple>, token: string) => genericApiUpdate('temples', { ...data, id }, token);
+export const addTempleDirectly = (data: Partial<Temple>, token: string) => genericApiAdd('temples', data, token);
+export const deleteTemple = (id: number, token: string) => genericApiDelete('temples', id, token);
 
 // Other Admin Actions
 export const processTempleSubmission = async (templeId: number, status: 'approved' | 'rejected', token: string): Promise<{ message: string }> => {
@@ -887,21 +883,23 @@ export const processTempleSubmission = async (templeId: number, status: 'approve
 };
 
 export const updateTempleCrowdLevel = async (templeId: number, newLevel: CrowdLevel, token: string): Promise<{ message: string }> => {
-    const temples = await dataCache.get<Temple>('temples', '/data/temples.json');
-    const index = temples.findIndex(t => t.id === templeId);
-    if (index === -1) throw new Error("Temple not found");
-    temples[index].crowdLevel = newLevel;
-    dataCache.set('temples', temples);
-    await logActivity('update', `Crowd level for ${temples[index].name} set to ${newLevel}.`, null);
-    return { message: `Crowd level for ${temples[index].name} updated.` };
+    const response = await fetch(`/api/admin/temples/${templeId}/crowd`, {
+        method: 'PUT',
+        headers: { 'Authorization': `Bearer ${token}`, 'Content-Type': 'application/json' },
+        body: JSON.stringify({ crowdLevel: newLevel })
+    });
+    const result = await response.json();
+    if (!response.ok || !result.success) throw new Error(result.error || 'Failed to update crowd level.');
+    return { message: result.message || 'Crowd level updated.' };
 };
 
 export const getAdminStats = async (token: string): Promise<any> => {
     const response = await fetch('/api/admin/stats', {
         headers: { 'Authorization': `Bearer ${token}` }
     });
-    if (!response.ok) throw new Error("Failed to fetch admin stats.");
-    return response.json();
+    const result = await response.json();
+    if (!response.ok || !result.success) throw new Error(result.error || "Failed to fetch admin stats.");
+    return result.data;
 };
 
 export const updateUserRole = async (userId: number, role: Role, token: string): Promise<{ message: string }> => {
@@ -926,49 +924,96 @@ export const deleteUserByAdmin = async (userId: number, token: string): Promise<
     return response.json();
 };
 
-// Satsang / Community Hub
-export const getChatRooms = (): Promise<ChatRoom[]> => dataCache.get('chat_rooms', '/data/chat_rooms.json');
+// Satsang / Community Hub - Real API calls
+export const getChatRooms = async (): Promise<ChatRoom[]> => {
+    try {
+        const response = await fetch('/api/chats/satsang/rooms');
+        const result = await response.json();
+        if (!response.ok || !result.success) throw new Error('Failed to fetch rooms');
+        return result.data;
+    } catch {
+        // Fallback to static data if API is down
+        return dataCache.get('chat_rooms', '/data/chat_rooms.json');
+    }
+};
+
 export const getChatMessages = async (roomId: number): Promise<ChatMessage[]> => {
-    const allMessages = await dataCache.get<ChatMessage>('chat_messages', '/data/chat_messages.json');
-    return allMessages.filter(m => m.roomId === roomId);
+    try {
+        const response = await fetch(`/api/chats/satsang/rooms/${roomId}/messages`);
+        const result = await response.json();
+        if (!response.ok || !result.success) throw new Error('Failed to fetch messages');
+        return result.data;
+    } catch {
+        // Fallback: filter from static seed data
+        const allMessages = await dataCache.get<ChatMessage>('chat_messages', '/data/chat_messages.json');
+        return allMessages.filter(m => m.roomId === roomId);
+    }
+};
+
+export const getNewMessagesSince = async (roomId: number, lastId: number): Promise<ChatMessage[]> => {
+    const response = await fetch(`/api/chats/satsang/rooms/${roomId}/messages/since/${lastId}`);
+    const result = await response.json();
+    if (!response.ok || !result.success) return [];
+    return result.data;
 };
 
 export const postChatMessage = async (roomId: number, text: string, user: User): Promise<ChatMessage> => {
-    const allMessages = await dataCache.get<ChatMessage>('chat_messages', '/data/chat_messages.json');
-    const newMessage: ChatMessage = {
-        id: Date.now(),
-        roomId,
-        userId: user.id,
-        userName: user.name,
-        timestamp: new Date().toISOString(),
-        text,
-    };
-    allMessages.push(newMessage);
-    dataCache.set('chat_messages', allMessages);
-    return newMessage;
+    const response = await fetch(`/api/chats/satsang/rooms/${roomId}/messages`, {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${user.token}`,
+        },
+        body: JSON.stringify({ text }),
+    });
+    const result = await response.json();
+    if (!response.ok || !result.success) throw new Error(result.error || 'Failed to send message');
+    return result.data;
 };
 
-interface OnlineUsersMapping {
-    roomId: number;
-    userIds: number[];
+export interface OnlineUser {
+    id: number;
+    name: string;
+    avatarUrl?: string;
 }
 
-export const getOnlineUsers = async (roomId: number): Promise<User[]> => {
-    const [onlineUsersMappings, allUsers] = await Promise.all([
-        dataCache.get<OnlineUsersMapping>('online_users', '/data/online_users.json'),
-        getUsersList()
-    ]);
-    const mapping = onlineUsersMappings.find(m => m.roomId === roomId);
-    const onlineUserIds = mapping ? mapping.userIds : [];
-    return allUsers.filter(user => onlineUserIds.includes(user.id));
+export const sendPresenceHeartbeat = async (roomId: number, token: string): Promise<OnlineUser[]> => {
+    try {
+        const response = await fetch(`/api/chats/satsang/rooms/${roomId}/presence`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${token}`,
+            },
+        });
+        const result = await response.json();
+        if (!response.ok || !result.success) return [];
+        return result.data;
+    } catch {
+        return [];
+    }
+};
+
+export const leaveRoom = async (roomId: number, token: string): Promise<void> => {
+    try {
+        await fetch(`/api/chats/satsang/rooms/${roomId}/presence`, {
+            method: 'DELETE',
+            headers: { 'Authorization': `Bearer ${token}` },
+        });
+    } catch { /* ignore */ }
 };
 
 // --- Satsang Social Feed ---
 
-export const getPosts = (): Promise<Post[]> => {
-    return dataCache.get<Post>('posts', '/data/posts.json').then(posts =>
-        posts.sort((a, b) => new Date(b.timestamp).getTime() - new Date(a.timestamp).getTime())
-    );
+export const getPosts = async (): Promise<Post[]> => {
+    try {
+        const response = await fetch('/api/posts');
+        const result = await response.json();
+        if (!response.ok || !result.success) return [];
+        return result.data;
+    } catch {
+        return [];
+    }
 };
 
 export const getUserById = async (userId: number, token: string): Promise<User | undefined> => {
@@ -977,35 +1022,26 @@ export const getUserById = async (userId: number, token: string): Promise<User |
 };
 
 export const createPost = async (caption: string, imageUrl: string, user: User): Promise<{ message: string }> => {
-    const posts = await dataCache.get<Post>('posts', '/data/posts.json');
-    const newPost: Post = {
-        id: Date.now(),
-        userId: user.id,
-        imageUrl,
-        caption,
-        timestamp: new Date().toISOString(),
-        likes: [],
-        comments: [],
-    };
-    posts.unshift(newPost);
-    dataCache.set('posts', posts);
-    await logActivity('addition', `User '${user.name}' created a new post.`, user);
-    return { message: "Post created successfully!" };
+    if (!user || !user.token) throw new Error('Authentication required.');
+    const response = await fetch('/api/posts', {
+        method: 'POST',
+        headers: { 'Authorization': `Bearer ${user.token}`, 'Content-Type': 'application/json' },
+        body: JSON.stringify({ caption, imageUrl })
+    });
+    const result = await response.json();
+    if (!response.ok || !result.success) throw new Error(result.error || 'Failed to create post.');
+    return { message: result.message || 'Post created successfully!' };
 };
 
-export const toggleLikePost = async (postId: number, userId: number): Promise<{ message: string }> => {
-    const posts = await dataCache.get<Post>('posts', '/data/posts.json');
-    const postIndex = posts.findIndex(p => p.id === postId);
-    if (postIndex === -1) throw new Error("Post not found");
-
-    const liked = posts[postIndex].likes.includes(userId);
-    if (liked) {
-        posts[postIndex].likes = posts[postIndex].likes.filter(id => id !== userId);
-    } else {
-        posts[postIndex].likes.push(userId);
-    }
-    dataCache.set('posts', posts);
-    return { message: liked ? "Post unliked" : "Post liked" };
+export const toggleLikePost = async (postId: number, userId: number, token?: string): Promise<{ message: string }> => {
+    if (!token) throw new Error('Authentication required.');
+    const response = await fetch(`/api/posts/${postId}/like`, {
+        method: 'POST',
+        headers: { 'Authorization': `Bearer ${token}` }
+    });
+    const result = await response.json();
+    if (!response.ok || !result.success) throw new Error(result.error || 'Failed to toggle like.');
+    return { message: result.message || 'Done' };
 };
 
 export const toggleFollowUser = async (currentUserId: number, targetUserId: number, token: string): Promise<{ message: string }> => {
@@ -1018,18 +1054,16 @@ export const toggleFollowUser = async (currentUserId: number, targetUserId: numb
 };
 
 // Pandit Registration
-export const submitPanditRegistration = async (data: Omit<Pandit, 'id' | 'status' | 'rating'>): Promise<{ message: string }> => {
-    const pending = await dataCache.get<Pandit>('pending_pandits', '/data/pending_pandits.json');
-    const newSubmission: Pandit = {
-        ...data,
-        id: Date.now(),
-        status: 'pending',
-        rating: 0,
-    };
-    pending.push(newSubmission);
-    dataCache.set('pending_pandits', pending);
-    await logActivity('submission', `New pandit registration from ${data.name}.`, null);
-    return { message: "Your application has been submitted for review. We will contact you shortly." };
+export const submitPanditRegistration = async (data: Omit<Pandit, 'id' | 'status' | 'rating'>, token?: string): Promise<{ message: string }> => {
+    if (!token) throw new Error('Authentication required.');
+    const response = await fetch('/api/users/submit-pandit', {
+        method: 'POST',
+        headers: { 'Authorization': `Bearer ${token}`, 'Content-Type': 'application/json' },
+        body: JSON.stringify(data)
+    });
+    const result = await response.json();
+    if (!response.ok || !result.success) throw new Error(result.error || 'Failed to submit registration.');
+    return { message: result.message || 'Your application has been submitted for review. We will contact you shortly.' };
 };
 
 export const approvePandit = async (panditId: number, token: string): Promise<{ message: string }> => {

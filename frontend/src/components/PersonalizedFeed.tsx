@@ -1,4 +1,4 @@
-import React from 'react';
+﻿import React from 'react';
 import { useAuth } from '../contexts/AuthContext';
 import { usePersonalizedFeed } from '../hooks/usePersonalizedFeed';
 import { I18nContent, Language } from '../types';

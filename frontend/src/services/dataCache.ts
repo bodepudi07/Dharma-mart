@@ -1,4 +1,4 @@
-
+﻿
 export const DATA_UPDATED_EVENT = 'dharma-setu-data-updated';
 
 // In-memory cache to hold the application state.
@@ -13,7 +13,6 @@ if (localStorage.getItem('dharma-setu-cache-version') !== CURRENT_CACHE_VERSION)
     const staticKeys = ['temples', 'poojas', 'yatras', 'events', 'festivals', 'books', 'pandits'];
     staticKeys.forEach(key => localStorage.removeItem(`dharma-setu-${key}`));
     localStorage.setItem('dharma-setu-cache-version', CURRENT_CACHE_VERSION);
-    console.log('Cleared old static caches for version:', CURRENT_CACHE_VERSION);
 }
 
 
@@ -24,7 +23,12 @@ const getStaticData = async <T>(path: string): Promise<T[]> => {
         if (!response.ok) {
             throw new Error(`Failed to fetch static data: ${path} (${response.statusText})`);
         }
-        return response.json();
+        // Strip UTF-8 BOM if present
+        let text = await response.text();
+        if (text.charCodeAt(0) === 0xFEFF) {
+            text = text.slice(1);
+        }
+        return JSON.parse(text);
     } catch (error) {
         console.error(error);
         throw error;

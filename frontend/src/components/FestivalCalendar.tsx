@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useMemo } from 'react';
+﻿import React, { useState, useEffect, useMemo } from 'react';
 import { Festival, I18nContent, Language } from '../types';
 import { useToast } from '../contexts/ToastContext';
 import * as api from '../services/apiService';
@@ -76,19 +76,14 @@ export const FestivalCalendar = ({ t }: FestivalCalendarProps) => {
         try {
             const data = await api.getFestivals(Language.EN);
             const now = new Date();
-            const year = now.getFullYear();
             const processedData = data.map(f => {
                 let nextOccurrence: Date | undefined;
                 try {
-                    const dateStr = f.date.split('(')[0]?.trim() || f.date;
-                    const parsed = new Date(`${dateStr} ${year}`);
+                    const parsed = new Date(f.date);
                     if (!isNaN(parsed.getTime())) {
-                        if (parsed < now) {
-                           parsed.setFullYear(year + 1);
-                        }
                         nextOccurrence = parsed;
                     }
-                } catch(e) {/* ignore */}
+                } catch(e) { console.warn('Could not parse festival date:', f.date, e); }
                 return { ...f, nextOccurrence };
             }).sort((a,b) => (a.nextOccurrence?.getTime() || Infinity) - (b.nextOccurrence?.getTime() || Infinity));
 

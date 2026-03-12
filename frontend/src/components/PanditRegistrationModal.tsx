@@ -1,7 +1,8 @@
-
+﻿
 import React, { useState, useRef } from 'react';
 import { Icon } from './Icon';
 import { useToast } from '../contexts/ToastContext';
+import { useAuth } from '../contexts/AuthContext';
 import { I18nContent, Pandit } from '../types';
 import { useFocusTrap } from '../hooks/useFocusTrap';
 import { ImageUpload } from './ImageUpload';
@@ -22,6 +23,7 @@ export const PanditRegistrationModal = ({ onClose, t }: PanditRegistrationModalP
     const [isLoading, setIsLoading] = useState(false);
     
     const { addToast } = useToast();
+    const { currentUser } = useAuth();
     const modalRef = useRef<HTMLDivElement>(null);
     useFocusTrap(modalRef);
 
@@ -59,7 +61,7 @@ export const PanditRegistrationModal = ({ onClose, t }: PanditRegistrationModalP
                 }
             };
 
-            const result = await api.submitPanditRegistration(panditData);
+            const result = await api.submitPanditRegistration(panditData, currentUser?.token);
             addToast(result.message, 'success');
             onClose();
 

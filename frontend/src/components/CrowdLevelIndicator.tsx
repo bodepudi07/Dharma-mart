@@ -1,4 +1,4 @@
-
+﻿
 import React from 'react';
 import { CrowdLevel } from '../types';
 import { Icon } from './Icon';

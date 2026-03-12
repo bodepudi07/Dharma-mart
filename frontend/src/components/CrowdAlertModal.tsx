@@ -1,4 +1,4 @@
-
+﻿
 import React, { useState, useEffect, useRef } from 'react';
 import { I18nContent, Temple, Pooja } from '../types';
 import * as aiService from '../services/aiService';

@@ -312,6 +312,9 @@ const I18N_EN: I18nContent = {
     categoryDarsana: "Darshanas",
     categoryAgama: "Agamas",
     categoryOtherSastra: "Other Shastras",
+    categoryGuru: "Spiritual Gurus",
+    categoryAncientScience: "Ancient India & Modern Science",
+    categoryAnimatedVideos: "Animated Wisdom",
     navSatsang: "Satsang",
     satsangTitle: "Community Satsang",
     satsangDesc: "Join circles of truth, engage in meaningful discussions, and share your spiritual journey with fellow devotees.",
@@ -412,6 +415,9 @@ const I18N_HI: I18nContent = {
     sevaDesc: "Your contribution supports temple maintenance, annadanam (food offerings), and various spiritual activities like Gau Seva. Be a part of this divine service.",
     donateNow: "अभी दान करें",
     knowledgeHubTitle: "ज्ञान केंद्र",
+    categoryGuru: "आध्यात्मिक गुरु",
+    categoryAncientScience: "प्राचीन भारत और आधुनिक विज्ञान",
+    categoryAnimatedVideos: "एनिमेटेड ज्ञान",
     navChantingZone: "मंत्र जाप क्षेत्र",
     chantingZoneTitle: "मंत्र जाप क्षेत्र",
     chantingZoneForKids: "बच्चों का मंत्र जाप क्षेत्र",
@@ -526,6 +532,9 @@ const I18N_TE: I18nContent = {
     sevaDesc: "మీ సహకారం ఆలయ నిర్వహణ, అన్నదానం (ఆహార సమర్పణలు), మరియు వివిధ ఆధ్యాత్మిక కార్యకలాపాలకు మద్దతు ఇస్తుంది. ఈ దైవిక సేవలో భాగం కండి.",
     donateNow: "ఇప్పుడే విరాళం ఇవ్వండి",
     knowledgeHubTitle: "జ్ఞాన కేంద్రం",
+    categoryGuru: "ఆధ్యాత్మిక గురువులు",
+    categoryAncientScience: "ప్రాచీన భారతదేశం & ఆధునిక విజ్ఞానం",
+    categoryAnimatedVideos: "యానిమేటెడ్ జ్ఞానం",
     navChantingZone: "జప క్షేత్రం",
     chantingZoneTitle: "జప క్షేత్రం",
     chantingZoneForKids: "పిల్లల జప క్షేత్రం",
@@ -649,9 +658,9 @@ export const CHANTING_BADGES_DATA: Badge[] = [
 ];
 
 export const TESTIMONIALS_DATA: Testimonial[] = [
-    { id: 1, name: 'Rohan Sharma', location: 'Mumbai, IN', quote: 'This app has truly transformed my spiritual practice. The daily slokas and temple information are invaluable.', avatarUrl: 'https://randomuser.me/api/portraits/men/1.jpg' },
-    { id: 2, name: 'Priya Patel', location: 'London, UK', quote: 'Booking a pooja for my family back home has never been easier. Thank you for this wonderful service.', avatarUrl: 'https://randomuser.me/api/portraits/women/2.jpg' },
-    { id: 3, name: 'Aniket Verma', location: 'New York, USA', quote: 'The VR Darshan feature is breathtaking. It feels like I am right there in the temple.', avatarUrl: 'https://randomuser.me/api/portraits/men/3.jpg' }
+    { id: 1, name: 'Devotee', location: 'Mumbai, IN', quote: 'This app has truly transformed my spiritual practice. The daily slokas and temple information are invaluable.', avatarUrl: '' },
+    { id: 2, name: 'Devotee', location: 'London, UK', quote: 'Booking a pooja for my family back home has never been easier. A wonderful service for the diaspora.', avatarUrl: '' },
+    { id: 3, name: 'Devotee', location: 'New York, USA', quote: 'The live darshan feature is wonderful. It feels like I am right there in the temple.', avatarUrl: '' }
 ];
 
 export const DARSHAN_TIERS: DarshanTier[] = [
@@ -692,14 +701,100 @@ export const ACHIEVEMENTS_DATA: Achievement[] = [
     { id: 'enlightened', nameKey: 'achievement_enlightened_name', descriptionKey: 'achievement_enlightened_desc', icon: 'lotus', condition: (stats, growth) => growth.level >= 10 },
 ];
 
-const CHAKRA_SOUNDS: Record<ChakraName, string> = {
-    'Sahasrara': 'https://upload.wikimedia.org/wikipedia/commons/2/2f/Celesta_chord.ogg',
-    'Ajna': 'https://upload.wikimedia.org/wikipedia/commons/a/a0/Meditation_sound_calm.ogg',
-    'Vishuddha': 'https://upload.wikimedia.org/wikipedia/commons/e/e1/Tibetan_Singing_Bowl_-_G_Note_Gong.ogg',
-    'Anahata': 'https://upload.wikimedia.org/wikipedia/commons/9/91/Wind_chimes_sound_effect.ogg',
-    'Manipura': 'https://upload.wikimedia.org/wikipedia/commons/9/92/Sound_of_a_campfire.ogg',
-    'Swadhisthana': 'https://upload.wikimedia.org/wikipedia/commons/4/42/Creek_1.ogg',
-    'Muladhara': 'https://upload.wikimedia.org/wikipedia/commons/e/e9/Tibetan_Singing_Bowl_-_B_Note_Gong.ogg',
+// Solfeggio healing frequencies (Hz) for each chakra — used by Web Audio API
+export const CHAKRA_FREQUENCIES: Record<ChakraName, number> = {
+    'Muladhara': 396,
+    'Swadhisthana': 417,
+    'Manipura': 528,
+    'Anahata': 639,
+    'Vishuddha': 741,
+    'Ajna': 852,
+    'Sahasrara': 963,
+};
+
+// Authentic Bija (seed) mantras for each chakra
+const CHAKRA_MANTRAS: Record<ChakraName, { bija: string; sanskrit: string; chant: string }> = {
+    'Muladhara':    { bija: 'LAM',  sanskrit: 'लं',  chant: 'Laaaammmm' },
+    'Swadhisthana': { bija: 'VAM',  sanskrit: 'वं',  chant: 'Vaaaammmm' },
+    'Manipura':     { bija: 'RAM',  sanskrit: 'रं',  chant: 'Raaaammmm' },
+    'Anahata':      { bija: 'YAM',  sanskrit: 'यं',  chant: 'Yaaaammmm' },
+    'Vishuddha':    { bija: 'HAM',  sanskrit: 'हं',  chant: 'Haaaammmm' },
+    'Ajna':         { bija: 'OM',   sanskrit: 'ॐ',   chant: 'Oooommmmm' },
+    'Sahasrara':    { bija: 'AUM',  sanskrit: 'ॐ',   chant: 'Aaaa-Uuuu-Mmmm' },
+};
+
+// Rich, devotional voiceover scripts — sweet, bhakti-filled guidance
+const CHAKRA_VOICEOVERS: Record<ChakraName, string[]> = {
+    'Muladhara': [
+        'Om Shanti... Close your eyes and breathe deeply.',
+        'Feel the sacred earth beneath you... the loving embrace of Bhumi Devi, Mother Earth herself.',
+        'Your Muladhara chakra glows with the warm, divine red light of creation.',
+        'This is your root... your eternal connection to the cosmos.',
+        'Breathe in... and chant with devotion... Lam... Lam... Lam...',
+        'Feel the warmth rising... You are safe. You are grounded. You are held by the divine.',
+        'Like the great Banyan tree of Prayagraj, your roots run deep into the eternal Dharma.',
+        'With each breath, feel Bhagwan\'s love anchoring you to this sacred moment.',
+    ],
+    'Swadhisthana': [
+        'Om... Let your awareness gently rise... like the sacred waters of Maa Ganga.',
+        'The Swadhisthana chakra awakens now... glowing with the divine orange light of sunset at Varanasi.',
+        'This is the seat of creation... where Maa Saraswati\'s creative shakti flows through you.',
+        'Feel the gentle, flowing energy... like a sacred river washing away all that no longer serves you.',
+        'Chant with sweetness... Vam... Vam... Vam...',
+        'You are the divine artist... painting your life with the colors of devotion and joy.',
+        'Let creativity and compassion flow through every cell of your being.',
+        'Jai Maa Saraswati... the goddess of flowing wisdom blesses you.',
+    ],
+    'Manipura': [
+        'Om... Feel the sacred fire rising within you... the divine Agni of transformation.',
+        'Your Manipura chakra blazes with golden light... like the sacred Aarti flame at Dashashwamedh Ghat.',
+        'This is your center of power... where Surya Dev, the Sun God, resides within you.',
+        'Feel the warmth spreading... dissolving all doubt... all fear... all hesitation.',
+        'Chant with strength and devotion... Ram... Ram... Ram...',
+        'You carry the fire of a thousand suns within your soul.',
+        'Like Hanuman ji discovering his infinite power... realize the divine strength already within you.',
+        'Om Suryaya Namaha... bow to the divine light that you are.',
+    ],
+    'Anahata': [
+        'Om... Now... breathe into the most sacred space of all... your spiritual heart.',
+        'The Anahata chakra opens like a thousand-petaled lotus... glowing with emerald green divine light.',
+        'This is where Bhagwan Krishna plays his eternal flute... filling your heart with prema... unconditional love.',
+        'Feel your heart expanding... embracing all beings with compassion and tenderness.',
+        'Chant with love... Yam... Yam... Yam...',
+        'Radha and Krishna\'s divine love echoes in every heartbeat of yours.',
+        'Forgive... release... and let the nectar of devotion fill every corner of your heart.',
+        'Hare Krishna, Hare Rama... love is the highest truth... and you are love itself.',
+    ],
+    'Vishuddha': [
+        'Om... Your awareness rises to the sacred throat... the gateway of divine expression.',
+        'The Vishuddha chakra radiates celestial blue... like the infinite sky above Kailash Parvat.',
+        'This is where truth becomes sound... where your voice becomes a prayer to the divine.',
+        'Feel the vibration of cosmic sound... Nada Brahma... the universe is sound.',
+        'Chant with purity... Ham... Ham... Ham...',
+        'Speak your truth with love... let every word be a mantra... every breath a devotion.',
+        'Like the sacred Vedas that emerged from Brahma\'s lips... your voice carries divine power.',
+        'Om Namah Shivaya... let your truth ring like temple bells at dawn.',
+    ],
+    'Ajna': [
+        'Om... Gently bring your awareness to the space between your brows... the divine third eye.',
+        'The Ajna chakra awakens with deep indigo light... the eye of Lord Shiva himself.',
+        'This is the seat of intuition... where maya dissolves and divine wisdom reveals itself.',
+        'In this sacred stillness... past and future merge into the eternal present.',
+        'Chant with deep reverence... Om... Om... Om...',
+        'See with the eye that never closes... the eye of pure consciousness.',
+        'Mahadev opens his third eye not to destroy... but to illuminate the truth.',
+        'Trust your inner vision... the divine guru within you sees all... knows all.',
+    ],
+    'Sahasrara': [
+        'Om... You have arrived at the crown... the thousand-petaled lotus of pure consciousness.',
+        'The Sahasrara chakra blooms with violet and white divine light... beyond all colors... beyond all form.',
+        'This is moksha... liberation... where Atman merges with Paramatman... the individual soul returns to the Supreme.',
+        'There is no separation here... you are the universe... the universe is you.',
+        'Rest in the sacred vibration... Aum... Aum... Aum...',
+        'Like a drop of water returning to the ocean... you dissolve into infinite bliss.',
+        'Sat-Chit-Ananda... Existence, Consciousness, Bliss... this is your true nature.',
+        'Aham Brahmasmi... I am the Supreme Reality. Om Shanti, Shanti, Shanti.',
+    ],
 };
 
 export const CHAKRA_MEDITATION_DATA = CHAKRA_DATA.map(c => ({
@@ -709,9 +804,12 @@ export const CHAKRA_MEDITATION_DATA = CHAKRA_DATA.map(c => ({
     top: `${15 + (7 - c.id) * 10}%`,
     animationClass: `animate-chakra-${c.name.toLowerCase()}`,
     symbol: `/assets/chakras/${c.name.toLowerCase()}.svg`,
-    mantra: 'AUM', // Placeholder
-    voiceover: `Focus on the ${c.name} chakra.`, // Placeholder
-    audioUrl: CHAKRA_SOUNDS[c.name],
+    mantra: CHAKRA_MANTRAS[c.name].bija,
+    sanskritMantra: CHAKRA_MANTRAS[c.name].sanskrit,
+    chantText: CHAKRA_MANTRAS[c.name].chant,
+    voiceover: CHAKRA_VOICEOVERS[c.name].join(' '),
+    voiceoverLines: CHAKRA_VOICEOVERS[c.name],
+    frequency: CHAKRA_FREQUENCIES[c.name],
     themeName: c.name,
 }));
 

@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+﻿import { useState, useEffect } from 'react';
 import { FeedItem, Language } from '../types';
 import * as api from '../services/apiService';
 import { useAuth } from '../contexts/AuthContext';

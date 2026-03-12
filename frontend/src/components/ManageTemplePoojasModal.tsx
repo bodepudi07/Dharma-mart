@@ -1,8 +1,9 @@
-import React, { useState, useEffect, useRef } from 'react';
+﻿import React, { useState, useEffect, useRef } from 'react';
 import { I18nContent, Pooja, Temple, Language } from '../types';
 import * as api from '../services/apiService';
 import { useFocusTrap } from '../hooks/useFocusTrap';
 import { Icon } from './Icon';
+import { useToast } from '../contexts/ToastContext';
 
 export interface ManageTemplePoojasModalProps {
     temple: Temple;
@@ -16,6 +17,7 @@ export const ManageTemplePoojasModal = ({ temple, t, onClose, onConfirm }: Manag
     const [selectedPoojaIds, setSelectedPoojaIds] = useState<number[]>([]);
     const [isLoading, setIsLoading] = useState(true);
     const [isSaving, setIsSaving] = useState(false);
+    const { addToast } = useToast();
     
     const modalRef = useRef<HTMLDivElement>(null);
     useFocusTrap(modalRef);
@@ -34,8 +36,7 @@ export const ManageTemplePoojasModal = ({ temple, t, onClose, onConfirm }: Manag
                     setSelectedPoojaIds(associatedPoojas.map(p => p.id));
                 }
             } catch (error) {
-                // In a real app, show a toast or error message
-                console.error("Failed to load pooja data for management", error);
+                addToast('Failed to load pooja data', 'error');
             } finally {
                 if (!isCancelled) {
                     setIsLoading(false);

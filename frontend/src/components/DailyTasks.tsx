@@ -1,4 +1,4 @@
-import React from 'react';
+﻿import React from 'react';
 import { DailyTask, I18nContent, TaskType } from '../types';
 import { useModal } from '../contexts/ModalContext';
 import { useToast } from '../contexts/ToastContext';

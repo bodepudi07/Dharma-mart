@@ -1,4 +1,4 @@
-
+﻿
 import React from 'react';
 import { ActivityLogItem as ActivityLogItemType } from '../types';
 import { Icon } from './Icon';

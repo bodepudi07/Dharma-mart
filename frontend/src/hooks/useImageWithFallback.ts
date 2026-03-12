@@ -1,4 +1,4 @@
-import { useState, useEffect, useCallback } from 'react';
+﻿import { useState, useEffect, useCallback } from 'react';
 import { getItemFallbackImage, ItemImageType } from './useItemImage';
 
 type ImageStatus = 'loading' | 'loaded' | 'error';

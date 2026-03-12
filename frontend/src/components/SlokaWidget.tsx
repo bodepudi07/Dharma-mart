@@ -1,4 +1,4 @@
-// This file is repurposed to house the new "Bhakti Chanting Zone" feature for all ages.
+﻿// This file is repurposed to house the new "Bhakti Chanting Zone" feature for all ages.
 import React, { useState, useEffect, useRef, useCallback, useMemo } from 'react';
 import { I18nContent, Chant, User, Badge } from '../types';
 import { CHANTS_DATA, CHANTING_BADGES_DATA } from '../constants';
@@ -470,7 +470,7 @@ const AnimatedDeity = ({ chant, currentUser }: { chant: Chant; currentUser: User
     useEffect(() => {
         setCustomImage(null);
         if (currentUser) {
-            api.getUserPreferences(currentUser.id).then(prefs => {
+            api.getUserPreferences(currentUser.id, currentUser.token).then(prefs => {
                 if (prefs.chantImages && prefs.chantImages[chant.id]) {
                     setCustomImage(prefs.chantImages[chant.id]);
                 }
@@ -491,7 +491,7 @@ const AnimatedDeity = ({ chant, currentUser }: { chant: Chant; currentUser: User
             const reader = new FileReader();
             reader.onloadend = async () => {
                 try {
-                    await api.updateUserChantImage(currentUser.id, chant.id, reader.result as string);
+                    await api.updateUserChantImage(currentUser.id, chant.id, reader.result as string, currentUser.token);
                     setCustomImage(reader.result as string);
                     addToast(`${chant.deity} image updated.`, 'success');
                 } catch (error) {
@@ -567,7 +567,7 @@ export const ChantingZone = ({ t }: { t: I18nContent }) => {
             return;
         }
         try {
-            await api.completeSpiritualTask(currentUser.id, 'chant');
+            await api.completeSpiritualTask(currentUser.id, 'chant', currentUser.token);
             addToast(t.malaCompletedMessage, 'success');
         } catch (err) {
             if (err instanceof Error) addToast(err.message, 'error');

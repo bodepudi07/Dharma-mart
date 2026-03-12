@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+﻿import React, { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import { I18nContent, Temple, Pooja, Yatra, Book, Sloka, Testimonial, MajorEvent, Language } from '../types';
 import { useModal } from '../contexts/ModalContext';
@@ -274,7 +274,10 @@ export const Home = ({ t, language, onDarshanClick, yatraPlan, isInYatraPlan, on
                     </div>
                 )}
 
-                {/* Live Pilot Section */}
+                {/* Featured Temple Spotlight */}
+                {data.temples.length > 0 && (() => {
+                    const featured = data.temples[0];
+                    return (
                 <div className="container mx-auto px-4 py-12">
                     <div className="bg-white border border-stone-200 rounded-[2.5rem] p-8 md:p-12 overflow-hidden relative group shadow-sm">
                         <div className="absolute top-0 right-0 p-8 opacity-5 group-hover:opacity-10 transition-opacity">
@@ -284,32 +287,28 @@ export const Home = ({ t, language, onDarshanClick, yatraPlan, isInYatraPlan, on
                             <div className="flex-shrink-0 relative">
                                 <div className="absolute inset-0 bg-primary/10 blur-3xl rounded-full animate-pulse"></div>
                                 <img
-                                    src="https://upload.wikimedia.org/wikipedia/commons/thumb/e/e3/Ganesha_with_Modak.svg/512px-Ganesha_with_Modak.svg.png"
-                                    alt="Chilkur Balaji"
-                                    className="w-48 h-48 object-contain relative z-10"
+                                    src={featured.imageUrl}
+                                    alt={featured.name}
+                                    className="w-48 h-48 object-cover rounded-2xl relative z-10 shadow-lg"
                                 />
-                                <div className="absolute -bottom-2 -right-2 bg-green-500 w-6 h-6 rounded-full border-4 border-white animate-pulse"></div>
+                                <div className="absolute -bottom-2 -right-2 bg-green-500 w-6 h-6 rounded-full border-4 border-white animate-pulse" title="Active"></div>
                             </div>
                             <div className="flex-grow text-center md:text-left">
                                 <div className="flex items-center justify-center md:justify-start gap-3 mb-4">
-                                    <span className="px-3 py-1 bg-primary/10 text-primary text-[10px] font-bold tracking-widest uppercase rounded-full border border-primary/20">Live Pilot</span>
-                                    <span className="text-stone-500 text-xs font-medium">Chilkur Balaji Temple, Hyderabad</span>
+                                    <span className="px-3 py-1 bg-emerald-500/10 text-emerald-700 text-[10px] font-bold tracking-widest uppercase rounded-full border border-emerald-500/20">Featured</span>
+                                    <span className="text-stone-500 text-xs font-medium">{featured.location}</span>
                                 </div>
-                                <h2 className="text-4xl md:text-5xl font-serif font-bold text-ink mb-6">The Exam Success Kit</h2>
-                                <div className="flex items-center justify-center md:justify-start gap-4 mb-8 overflow-hidden h-8">
-                                    <div className="flex gap-4 animate-marquee whitespace-nowrap">
-                                        <span className="text-stone-500 text-sm italic">"Rohan booked Exam Kit..."</span>
-                                        <span className="text-stone-500 text-sm italic">"Priya from Bangalore booked Seva..."</span>
-                                        <span className="text-stone-500 text-sm italic">"Rahul, Bharadwaj Gotra, Vijaya Bhava..."</span>
-                                    </div>
-                                </div>
-                                <button onClick={() => navigateTo('/templeDetail/1')} className="btn-primary w-full md:w-auto">
-                                    Book Now ₹151
+                                <h2 className="text-4xl md:text-5xl font-serif font-bold text-ink mb-4">{featured.name}</h2>
+                                <p className="text-stone-500 text-sm mb-8 max-w-lg line-clamp-2">{featured.history}</p>
+                                <button onClick={() => navigateTo(`/templeDetail/${featured.id}`)} className="btn-primary w-full md:w-auto">
+                                    View Temple & Book Darshan
                                 </button>
                             </div>
                         </div>
                     </div>
                 </div>
+                    );
+                })()}
 
                 {/* 9 Pillars Bento Grid */}
                 <section id="pillars" className="container mx-auto px-4 py-24">

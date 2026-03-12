@@ -1,4 +1,4 @@
-
+﻿
 import React, { useState } from 'react';
 import { I18nContent, Language } from '../types';
 import { Icon } from './Icon';

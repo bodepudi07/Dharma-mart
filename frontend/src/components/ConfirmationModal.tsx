@@ -1,4 +1,4 @@
-
+﻿
 import React, { useRef } from 'react';
 import { Icon } from './Icon';
 import { useFocusTrap } from '../hooks/useFocusTrap';

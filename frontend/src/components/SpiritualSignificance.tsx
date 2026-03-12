@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+﻿import React, { useState } from 'react';
 import { Temple } from '../types';
 import * as aiService from '../services/aiService';
 import { Icon } from './Icon';

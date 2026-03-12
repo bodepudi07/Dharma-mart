@@ -1,4 +1,4 @@
-import React from 'react';
+﻿import React from 'react';
 import type { I18nContent } from '../types';
 import { PLACEHOLDER_IMAGE_URL } from '../constants';
 import { useImageWithFallback } from '../hooks/useImageWithFallback';

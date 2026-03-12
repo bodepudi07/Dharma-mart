@@ -1,4 +1,4 @@
-export enum Language {
+﻿export enum Language {
     EN = 'en',
     HI = 'hi',
     TE = 'te'
@@ -6,6 +6,18 @@ export enum Language {
 
 export type Role = 'devotee' | 'admin';
 export type CrowdLevel = 'Low' | 'Medium' | 'High' | 'Very High';
+
+export interface AppNotification {
+    id: string;
+    title: string;
+    message: string;
+    type: 'booking' | 'sankalpa' | 'achievement' | 'reminder' | 'system';
+    icon?: string;
+    read: boolean;
+    timestamp: string;
+    actionView?: string;
+    actionId?: string;
+}
 
 export interface Comment {
     id: number;
@@ -160,6 +172,9 @@ export interface Pandit {
     availability: PanditAvailability;
     status: 'pending' | 'verified';
     eventId?: number;
+    coordinates?: { lat: number; lng: number };
+    isRural?: boolean;
+    transportCostPerKm?: number;
 }
 
 export interface Festival {
@@ -292,6 +307,7 @@ export interface Booking {
     itemContext?: string; // e.g., Event name for pandit booking, Temple name for donation/pooja
     cost: number;
     timestamp: string;
+    status?: 'confirmed' | 'cancelled';
     bookingDate?: string;
     timeSlot?: string;
     numberOfPersons?: number;
@@ -299,6 +315,9 @@ export interface Booking {
     panditName?: string;
     address?: string;
     durationMinutes?: number;
+    cancelledAt?: string;
+    cancelReason?: string;
+    rescheduledAt?: string;
 }
 
 export interface Category {
@@ -322,26 +341,39 @@ export type View = 'home' | 'dashboard' | 'templeDetail' | 'temples' | 'poojas' 
 export interface RemoteSeva {
     id: number;
     templeId: number;
+    templeName: string;
+    templeLocation: string;
     name: string;
     description: string;
     cost: number;
+    duration: string;
+    poojaId: number;
+    category: string;
+    isRuralTemple: boolean;
+    deliverables: string[];
+    panditIds: number[];
+    imageUrl: string;
     videoUrl?: string;
     liveFeedUrl?: string;
-    category: string;
 }
 
 export interface Sankalpa {
-    id: number;
-    userId: string;
+    id: string;
     sevaId: number;
-    templeId: number;
+    userId: string;
     devoteeName: string;
-    gotra?: string;
+    gotra: string;
     rashi?: string;
     nakshatra?: string;
+    address: string;
+    pincode: string;
+    phone: string;
     date: string;
-    status: 'Pending' | 'Completed' | 'ProofUploaded';
+    panditId: number;
+    status: 'Pending' | 'Accepted' | 'InProgress' | 'Completed' | 'ProofUploaded' | 'PrasadShipped' | 'Delivered';
     proofVideoUrl?: string;
+    trackingId?: string;
+    panditNotes?: string;
 }
 export type ContentType = 'temples' | 'poojas' | 'yatras' | 'events';
 export type ModalType = 'login' | 'uploadTemple' | 'yatraDetail' | 'liveDarshan' | 'vrDarshan' | 'darshanBooking' | 'poojaBooking' | 'panditBooking' | 'donation' | 'crowdAlert' | 'panditAdmin' | 'confirmation' | 'bookAdmin' | 'eventAdmin' | 'festivalAdmin' | 'imageDetail' | 'poojaAdmin' | 'yatraAdmin' | 'userAdmin' | 'manageTemplePoojas' | 'meditation' | 'yatraBooking' | 'bookingConfirmation' | 'aiGuruChat' | 'yatraQuote' | 'userProfile' | 'yatraPlan' | 'postCreation' | 'panditRegistration' | 'task' | 'category' | 'aiShopper' | 'satvikTrace' | 'ecoInnovation' | 'panchang' | 'commandPalette';
@@ -485,6 +517,8 @@ export interface ChatRoom {
     tags?: string[];
     type?: 'public' | 'private' | 'restricted' | 'academic' | 'volunteer' | 'action' | 'local';
     isLocal?: boolean;
+    onlineCount?: number;
+    messageCount?: number;
 }
 
 export interface ChatMessage {
@@ -492,6 +526,7 @@ export interface ChatMessage {
     roomId: number;
     userId: number;
     userName: string;
+    userAvatar?: string | null;
     timestamp: string;
     text: string;
 }
@@ -515,7 +550,7 @@ export type IconName =
     | 'meditate' | 'menu' | 'microphone' | 'om' | 'pause' | 'play'
     | 'plus' | 'receipt' | 'rupee' | 'search' | 'settings' | 'shield-check' | 'shopping-bag' | 'speaker' | 'star'
     | 'stop-circle' | 'sudarshana-chakra' | 'swasthika' | 'temple' | 'trash' | 'trishul' | 'truck' | 'upload' | 'user-circle'
-    | 'user-edit' | 'users' | 'users-group' | 'volume-off' | 'volume-on' | 'x' | 'zoom-in' | 'cow' | 'check' | 'package' | 'shield' | 'box' | 'zap' | 'globe' | 'sun' | 'moon' | 'droplet' | 'heart' | 'heart-filled' | 'copy' | 'chat' | 'lock' | 'info-circle' | 'alert-circle' | 'bookmark';
+    | 'user-edit' | 'users' | 'users-group' | 'volume-off' | 'volume-on' | 'wifi' | 'wifi-off' | 'x' | 'zoom-in' | 'cow' | 'check' | 'package' | 'shield' | 'box' | 'zap' | 'globe' | 'sun' | 'moon' | 'droplet' | 'heart' | 'heart-filled' | 'copy' | 'chat' | 'lock' | 'info-circle' | 'alert-circle' | 'bookmark' | 'refresh-cw';
 
 export interface I18nContent {
     navHome: string;
@@ -876,6 +911,9 @@ export interface I18nContent {
     categoryDarsana: string;
     categoryAgama: string;
     categoryOtherSastra: string;
+    categoryGuru: string;
+    categoryAncientScience: string;
+    categoryAnimatedVideos: string;
 
     // Satsang
     navSatsang: string;

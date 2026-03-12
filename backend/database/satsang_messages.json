@@ -1,0 +1,362 @@
+[
+  {
+    "id": 1741600000000,
+    "roomId": 1,
+    "userId": 1,
+    "userName": "Arjun Sharma",
+    "userAvatar": null,
+    "timestamp": "2026-03-10T06:30:00.000Z",
+    "text": "🙏 Om Namah Shivaya! Good morning everyone. Today marks the beginning of our daily Dharma discussion series. What aspect of Sanatana Dharma has been guiding your life recently?"
+  },
+  {
+    "id": 1741600060000,
+    "roomId": 1,
+    "userId": 2,
+    "userName": "Priya Devi",
+    "userAvatar": null,
+    "timestamp": "2026-03-10T06:35:00.000Z",
+    "text": "Pranam to all! For me, it has been the concept of Nishkama Karma from the Bhagavad Gita. Doing our duty without attachment to results has brought so much peace."
+  },
+  {
+    "id": 1741600120000,
+    "roomId": 1,
+    "userId": 3,
+    "userName": "Rahul Krishnan",
+    "userAvatar": null,
+    "timestamp": "2026-03-10T06:42:00.000Z",
+    "text": "Beautiful thought, Priya! I've been reflecting on Ahimsa lately. In today's world, practicing non-violence in thoughts and words is as important as in actions."
+  },
+  {
+    "id": 1741600180000,
+    "roomId": 1,
+    "userId": 4,
+    "userName": "Meera Patel",
+    "userAvatar": null,
+    "timestamp": "2026-03-10T07:00:00.000Z",
+    "text": "Does anyone have a good recommendation for understanding the Upanishads? I want to go deeper into Vedantic philosophy."
+  },
+  {
+    "id": 1741600240000,
+    "roomId": 1,
+    "userId": 1,
+    "userName": "Arjun Sharma",
+    "userAvatar": null,
+    "timestamp": "2026-03-10T07:10:00.000Z",
+    "text": "Meera, I'd suggest starting with the Isha Upanishad - it's short but profound. Eknath Easwaran's translations are very accessible for beginners."
+  },
+  {
+    "id": 1741600300000,
+    "roomId": 1,
+    "userId": 5,
+    "userName": "Sita Ramesh",
+    "userAvatar": null,
+    "timestamp": "2026-03-10T08:15:00.000Z",
+    "text": "Hari Om! Just finished my morning puja. The energy in this group always inspires me. 🙏"
+  },
+  {
+    "id": 1741686000000,
+    "roomId": 1,
+    "userId": 2,
+    "userName": "Priya Devi",
+    "userAvatar": null,
+    "timestamp": "2026-03-11T06:00:00.000Z",
+    "text": "Good morning satsang family! Today is a blessed day. Let us share one shloka that resonates with us."
+  },
+  {
+    "id": 1741686060000,
+    "roomId": 1,
+    "userId": 3,
+    "userName": "Rahul Krishnan",
+    "userAvatar": null,
+    "timestamp": "2026-03-11T06:10:00.000Z",
+    "text": "\"Yoga karmasu kaushalam\" - Yoga is excellence in action. Chapter 2, Verse 50 of the Gita. Simple yet so powerful."
+  },
+  {
+    "id": 1741600000001,
+    "roomId": 2,
+    "userId": 3,
+    "userName": "Rahul Krishnan",
+    "userAvatar": null,
+    "timestamp": "2026-03-10T05:30:00.000Z",
+    "text": "Namaste yogis! Who else practices Surya Namaskar every morning? I've been doing 12 rounds daily for the past 6 months and the transformation is incredible."
+  },
+  {
+    "id": 1741600060001,
+    "roomId": 2,
+    "userId": 5,
+    "userName": "Sita Ramesh",
+    "userAvatar": null,
+    "timestamp": "2026-03-10T05:45:00.000Z",
+    "text": "I do 5 rounds followed by 20 minutes of Pranayama (Anulom Vilom). The breath work has helped my anxiety so much."
+  },
+  {
+    "id": 1741600120001,
+    "roomId": 2,
+    "userId": 4,
+    "userName": "Meera Patel",
+    "userAvatar": null,
+    "timestamp": "2026-03-10T06:00:00.000Z",
+    "text": "Any tips for deepening meditation practice? I can sit for about 15 minutes but my mind keeps wandering."
+  },
+  {
+    "id": 1741600180001,
+    "roomId": 2,
+    "userId": 3,
+    "userName": "Rahul Krishnan",
+    "userAvatar": null,
+    "timestamp": "2026-03-10T06:15:00.000Z",
+    "text": "Meera, that's completely normal! Try focusing on a mantra like 'So Hum' with each breath. Don't fight the thoughts, just gently return to the mantra. With practice, the gaps between thoughts will grow longer."
+  },
+  {
+    "id": 1741686000001,
+    "roomId": 2,
+    "userId": 5,
+    "userName": "Sita Ramesh",
+    "userAvatar": null,
+    "timestamp": "2026-03-11T05:00:00.000Z",
+    "text": "Morning dhyana session was so peaceful today. The pre-dawn silence (Brahma Muhurta) truly is the best time for meditation. 🧘"
+  },
+  {
+    "id": 1741600000003,
+    "roomId": 3,
+    "userId": 2,
+    "userName": "Priya Devi",
+    "userAvatar": null,
+    "timestamp": "2026-03-10T07:30:00.000Z",
+    "text": "Can someone share the Hanuman Chalisa audio link? Our family recites it every Tuesday evening and I want to teach my kids the correct pronunciation."
+  },
+  {
+    "id": 1741600060003,
+    "roomId": 3,
+    "userId": 1,
+    "userName": "Arjun Sharma",
+    "userAvatar": null,
+    "timestamp": "2026-03-10T07:45:00.000Z",
+    "text": "Check the Aarti section of the app! It has beautiful renditions. Also, Shankar Mahadevan's version on YouTube is excellent for learning."
+  },
+  {
+    "id": 1741600120003,
+    "roomId": 3,
+    "userId": 4,
+    "userName": "Meera Patel",
+    "userAvatar": null,
+    "timestamp": "2026-03-10T18:00:00.000Z",
+    "text": "Just did evening aarti with the family. There's something magical about the sound of bells and the fragrance of incense filling the home. 🪔"
+  },
+  {
+    "id": 1741600000004,
+    "roomId": 4,
+    "userId": 1,
+    "userName": "Arjun Sharma",
+    "userAvatar": null,
+    "timestamp": "2026-03-09T10:00:00.000Z",
+    "text": "Let's discuss Chapter 12 of the Bhagavad Gita - Bhakti Yoga. Krishna describes the qualities of a true devotee. Which quality do you find most challenging to cultivate?"
+  },
+  {
+    "id": 1741600060004,
+    "roomId": 4,
+    "userId": 2,
+    "userName": "Priya Devi",
+    "userAvatar": null,
+    "timestamp": "2026-03-09T10:20:00.000Z",
+    "text": "For me, it's 'anapeksha' - freedom from expectation. In daily life, we constantly have expectations from people and situations."
+  },
+  {
+    "id": 1741600120004,
+    "roomId": 4,
+    "userId": 3,
+    "userName": "Rahul Krishnan",
+    "userAvatar": null,
+    "timestamp": "2026-03-09T10:45:00.000Z",
+    "text": "I struggle with 'sama' - equanimity. Staying balanced in success and failure is probably the hardest practice."
+  },
+  {
+    "id": 1741686000004,
+    "roomId": 4,
+    "userId": 4,
+    "userName": "Meera Patel",
+    "userAvatar": null,
+    "timestamp": "2026-03-11T09:00:00.000Z",
+    "text": "Today's study: Verse 12.13-14. \"One who is not envious but is a kind friend to all living entities... such a devotee is very dear to Me.\" What a beautiful standard to aspire to!"
+  },
+  {
+    "id": 1741600000005,
+    "roomId": 5,
+    "userId": 5,
+    "userName": "Sita Ramesh",
+    "userAvatar": null,
+    "timestamp": "2026-03-10T09:00:00.000Z",
+    "text": "Our temple's weekly food distribution (Anna Daan) served 500 people last Sunday! Looking for more volunteers for this weekend. 🙏"
+  },
+  {
+    "id": 1741600060005,
+    "roomId": 5,
+    "userId": 1,
+    "userName": "Arjun Sharma",
+    "userAvatar": null,
+    "timestamp": "2026-03-10T09:30:00.000Z",
+    "text": "Count me in! Seva is the highest form of worship. Where should we report?"
+  },
+  {
+    "id": 1741600000006,
+    "roomId": 6,
+    "userId": 4,
+    "userName": "Meera Patel",
+    "userAvatar": null,
+    "timestamp": "2026-03-10T14:00:00.000Z",
+    "text": "Has anyone participated in river cleanup drives near holy rivers? I'm organizing one for Yamuna near Mathura next month."
+  },
+  {
+    "id": 1741600000007,
+    "roomId": 7,
+    "userId": 2,
+    "userName": "Priya Devi",
+    "userAvatar": null,
+    "timestamp": "2026-03-10T11:00:00.000Z",
+    "text": "Our local Shiva temple is celebrating Maha Shivaratri with an all-night program. Live bhajans, abhishekam, and prasadam. All are welcome!"
+  },
+  {
+    "id": 1741600060007,
+    "roomId": 7,
+    "userId": 5,
+    "userName": "Sita Ramesh",
+    "userAvatar": null,
+    "timestamp": "2026-03-10T11:30:00.000Z",
+    "text": "Which city? We have a similar program here in Hyderabad at Keesaragutta temple!"
+  },
+  {
+    "id": 1741600000008,
+    "roomId": 8,
+    "userId": 3,
+    "userName": "Rahul Krishnan",
+    "userAvatar": null,
+    "timestamp": "2026-03-10T16:00:00.000Z",
+    "text": "Started a Sanskrit learning group! We're starting with basic Devanagari script and simple shlokas. Anyone interested can join us every Saturday at 5 PM."
+  },
+  {
+    "id": 1741600000009,
+    "roomId": 9,
+    "userId": 1,
+    "userName": "Arjun Sharma",
+    "userAvatar": null,
+    "timestamp": "2026-03-10T15:00:00.000Z",
+    "text": "As a young Hindu, how do you balance modern life with traditional values? I find it challenging sometimes but also deeply rewarding."
+  },
+  {
+    "id": 1741600060009,
+    "roomId": 9,
+    "userId": 4,
+    "userName": "Meera Patel",
+    "userAvatar": null,
+    "timestamp": "2026-03-10T15:30:00.000Z",
+    "text": "I think the key is understanding the principles behind the traditions, not just blindly following rituals. When you understand WHY we do something, it becomes meaningful."
+  },
+  {
+    "id": 1741600000011,
+    "roomId": 11,
+    "userId": 5,
+    "userName": "Sita Ramesh",
+    "userAvatar": null,
+    "timestamp": "2026-03-10T08:00:00.000Z",
+    "text": "Sharing my Sattvic morning routine: warm lemon water → tulsi tea → light fruit breakfast → yoga. The Ayurvedic concept of eating with the sun has changed my energy levels completely!"
+  },
+  {
+    "id": 1741600060011,
+    "roomId": 11,
+    "userId": 2,
+    "userName": "Priya Devi",
+    "userAvatar": null,
+    "timestamp": "2026-03-10T08:30:00.000Z",
+    "text": "I've been making fresh golden milk (haldi doodh) every night. Turmeric, black pepper, a little jaggery - helps me sleep so well! 🥛"
+  },
+  {
+    "id": 1741600000012,
+    "roomId": 12,
+    "userId": 1,
+    "userName": "Arjun Sharma",
+    "userAvatar": null,
+    "timestamp": "2026-03-10T17:00:00.000Z",
+    "text": "Today's mantra practice: Om Gam Ganapataye Namaha - 108 times. Removes obstacles from our path. Who's joining for the evening japa session?"
+  },
+  {
+    "id": 1741600060012,
+    "roomId": 12,
+    "userId": 3,
+    "userName": "Rahul Krishnan",
+    "userAvatar": null,
+    "timestamp": "2026-03-10T17:15:00.000Z",
+    "text": "I'm in! Also been chanting Gayatri Mantra during Sandhya time. The vibration during sunset is incredibly powerful."
+  },
+  {
+    "id": 1741600000013,
+    "roomId": 13,
+    "userId": 2,
+    "userName": "Priya Devi",
+    "userAvatar": null,
+    "timestamp": "2026-03-10T19:00:00.000Z",
+    "text": "How do you introduce your children to Hindu values without making it feel forced? My 6-year-old loves the Panchatantra stories!"
+  },
+  {
+    "id": 1741600060013,
+    "roomId": 13,
+    "userId": 4,
+    "userName": "Meera Patel",
+    "userAvatar": null,
+    "timestamp": "2026-03-10T19:30:00.000Z",
+    "text": "Stories are the best way! We do bedtime Ramayana stories. My kids ask for them now. Also, involving them in puja - they love ringing the bell and offering flowers. 🌺"
+  },
+  {
+    "id": 1741600000014,
+    "roomId": 14,
+    "userId": 5,
+    "userName": "Sita Ramesh",
+    "userAvatar": null,
+    "timestamp": "2026-03-10T12:00:00.000Z",
+    "text": "Just returned from Varanasi! The Ganga Aarti at Dashashwamedh Ghat was the most spiritual experience of my life. Sharing some photos soon. 📸"
+  },
+  {
+    "id": 1741600060014,
+    "roomId": 14,
+    "userId": 1,
+    "userName": "Arjun Sharma",
+    "userAvatar": null,
+    "timestamp": "2026-03-10T12:30:00.000Z",
+    "text": "Varanasi is truly the heart of Bharatiya Sanskriti. Did you visit Kashi Vishwanath? The new corridor is breathtaking!"
+  },
+  {
+    "id": 1741600120014,
+    "roomId": 14,
+    "userId": 5,
+    "userName": "Sita Ramesh",
+    "userAvatar": null,
+    "timestamp": "2026-03-10T13:00:00.000Z",
+    "text": "Yes! The Kashi Vishwanath Dham corridor is magnificent. Also visited Sarnath where Bhagwan Buddha gave his first sermon. The peace there is beyond words."
+  },
+  {
+    "id": 1741600000015,
+    "roomId": 15,
+    "userId": 3,
+    "userName": "Rahul Krishnan",
+    "userAvatar": null,
+    "timestamp": "2026-03-10T20:00:00.000Z",
+    "text": "Topic for discussion: 'Brahman is the only reality, the world is an appearance' - Adi Shankaracharya. How do we reconcile this with our daily experiences?"
+  },
+  {
+    "id": 1741600060015,
+    "roomId": 15,
+    "userId": 1,
+    "userName": "Arjun Sharma",
+    "userAvatar": null,
+    "timestamp": "2026-03-10T20:30:00.000Z",
+    "text": "The concept of Maya doesn't mean the world is 'unreal' - it means it's not the ultimate reality. Like a dream feels real while you're in it. Vivekachudamani explains this beautifully."
+  },
+  {
+    "id": 1741600120015,
+    "roomId": 15,
+    "userId": 4,
+    "userName": "Meera Patel",
+    "userAvatar": null,
+    "timestamp": "2026-03-10T21:00:00.000Z",
+    "text": "Sri Ramana Maharshi's approach is so practical: \"Who am I?\" - self-inquiry to realize that the perceiver is Brahman itself. No need for complex philosophy, just direct experience."
+  }
+]

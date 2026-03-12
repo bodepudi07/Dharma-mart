@@ -1,4 +1,4 @@
-
+﻿
 import React from 'react';
 import type { Temple, I18nContent } from '../types';
 import { CrowdLevelIndicator } from './CrowdLevelIndicator';

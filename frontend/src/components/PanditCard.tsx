@@ -1,4 +1,4 @@
-
+﻿
 import React from 'react';
 import type { Pandit, I18nContent } from '../types';
 import { PLACEHOLDER_IMAGE_URL } from '../constants';
@@ -14,7 +14,7 @@ interface PanditCardProps {
     onDelete?: (id: number) => void;
 }
 
-export const PanditCard = ({ pandit, t, onBook, isAdmin, onEdit, onDelete }: PanditCardProps) => {
+export const PanditCard = React.memo(({ pandit, t, onBook, isAdmin, onEdit, onDelete }: PanditCardProps) => {
     const { imgSrc, status, onLoad, onError } = useImageWithFallback(pandit.imageUrl, PLACEHOLDER_IMAGE_URL, pandit.name, 'general');
 
     return (
@@ -66,4 +66,4 @@ export const PanditCard = ({ pandit, t, onBook, isAdmin, onEdit, onDelete }: Pan
             </div>
         </div>
     );
-};
+});

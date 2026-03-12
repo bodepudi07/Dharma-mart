@@ -1,4 +1,4 @@
-
+﻿
 import React, { useState, useRef, useEffect, useMemo } from 'react';
 import { I18nContent, Temple, DarshanTier, CrowdLevel, DarshanBookingDetails } from '../types';
 import { Icon } from './Icon';
@@ -58,10 +58,13 @@ export const DarshanBookingModal = ({ temple, onClose, onConfirm, t }: DarshanBo
             .then(data => {
                 setAvailability(data);
             })
+            .catch(() => {
+                addToast('Could not load temple availability. You can still proceed.', 'error');
+            })
             .finally(() => {
                 setIsAvailabilityLoading(false);
             });
-    }, [temple.id]);
+    }, [temple.id, addToast]);
 
     const handleDateSelect = (day: number) => {
         const date = new Date(currentDate.getFullYear(), currentDate.getMonth(), day);

@@ -1,0 +1,22 @@
+[
+  {
+    "name": "Mahakaleshwar Jyotirlinga",
+    "email": "venkatsai162005@gmail.com",
+    "password": "$2b$10$vfOmEHNUkbt0kMH7jw1RIu67mzpXs4H2ZulN1pDaEB06OaSPsB/dW",
+    "phone": "",
+    "role": "user",
+    "createdAt": "2026-03-11T16:26:23.970Z",
+    "id": 1
+  },
+  {
+    "name": "Test User",
+    "email": "test.google@gmail.com",
+    "password": "",
+    "phone": "",
+    "role": "user",
+    "avatarUrl": "",
+    "createdAt": "2026-03-12T08:23:21.634Z",
+    "authProvider": "google",
+    "id": 2
+  }
+]

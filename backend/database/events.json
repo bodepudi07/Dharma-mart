@@ -1,0 +1,56 @@
+﻿[
+    {
+        "id": 1,
+        "name": "Kumbh Mela",
+        "description": "The Kumbh Mela is a major pilgrimage and festival in Hinduism, and one of the largest peaceful gatherings in the world. Devotees believe that bathing in sacred rivers during this time cleanses them of all sins.",
+        "dates": "Next: 2025 at Prayagraj",
+        "location": "Prayagraj, Haridwar, Nashik, Ujjain",
+        "imageUrl": "https://upload.wikimedia.org/wikipedia/commons/2/23/Hindu_festival_celebration.jpg",
+        "crowdLevel": "Very High"
+    },
+    {
+        "id": 2,
+        "name": "Jagannath Rath Yatra",
+        "description": "An annual chariot festival where the deities of Jagannath, Balabhadra, and Subhadra are pulled on massive, elaborately decorated chariots, attracting millions of devotees.",
+        "dates": "July (Annual)",
+        "location": "Puri, Odisha",
+        "imageUrl": "https://upload.wikimedia.org/wikipedia/commons/2/23/Hindu_festival_celebration.jpg",
+        "crowdLevel": "Very High"
+    },
+    {
+        "id": 7,
+        "name": "Ganga Aarti",
+        "description": "A breathtaking daily ritual on the banks of the sacred Ganges river. Priests perform an elaborate 'aarti' with large fire lamps, chants, and incense, creating a deeply spiritual and mesmerizing atmosphere.",
+        "dates": "Daily at Sunset",
+        "location": "Varanasi & Haridwar",
+        "imageUrl": "https://upload.wikimedia.org/wikipedia/commons/2/23/Hindu_festival_celebration.jpg",
+        "crowdLevel": "High"
+    },
+    {
+        "id": 8,
+        "name": "Amarnath Yatra",
+        "description": "An annual pilgrimage to the holy Amarnath Cave in the Himalayas, a revered shrine of Lord Shiva. The journey involves a challenging trek to witness the naturally formed ice lingam.",
+        "dates": "July - August (Annual)",
+        "location": "Pahalgam, Jammu & Kashmir",
+        "imageUrl": "https://upload.wikimedia.org/wikipedia/commons/2/23/Hindu_festival_celebration.jpg",
+        "crowdLevel": "High"
+    },
+    {
+        "id": 11,
+        "name": "Sringeri Sharada Peetham Navaratri",
+        "description": "A grand ten-day celebration of Navaratri at the ancient seat of Adi Shankaracharya. Features intricate poojas, cultural performances, and discourses by the Jagadguru.",
+        "dates": "Varies (Sep - Oct)",
+        "location": "Sringeri, Karnataka",
+        "imageUrl": "https://upload.wikimedia.org/wikipedia/commons/7/74/Durga_Puja_Kolkata.jpg",
+        "crowdLevel": "High"
+    },
+    {
+        "id": 12,
+        "name": "Art of Living Mahashivratri",
+        "description": "A global event of meditation, music, and wisdom celebrating Mahashivratri at the Art of Living International Center, led by Sri Sri Ravi Shankar.",
+        "dates": "Varies (Feb - Mar)",
+        "location": "Bengaluru, Karnataka",
+        "imageUrl": "https://upload.wikimedia.org/wikipedia/commons/2/23/Hindu_festival_celebration.jpg",
+        "crowdLevel": "Very High"
+    }
+]

@@ -1,9 +1,10 @@
-
+﻿
 import React, { useState, useEffect } from 'react';
 import { I18nContent, Temple, Language } from '../types';
 import { Icon } from './Icon';
 import { motion, AnimatePresence } from 'framer-motion';
 import { getTemples } from '../services/apiService';
+import { useToast } from '../contexts/ToastContext';
 
 interface RestorationSanctuaryProps {
     t: I18nContent;
@@ -16,6 +17,7 @@ interface RestorationSanctuaryProps {
 export const RestorationSanctuary = ({ t, language, onNavigate, onDonate, openModal }: RestorationSanctuaryProps) => {
     const [restorationTemples, setRestorationTemples] = useState<Temple[]>([]);
     const [loading, setLoading] = useState(true);
+    const { addToast } = useToast();
 
     useEffect(() => {
         const loadData = async () => {
@@ -24,7 +26,7 @@ export const RestorationSanctuary = ({ t, language, onNavigate, onDonate, openMo
                 const destroyed = data.filter(temple => !!temple.isDestroyed);
                 setRestorationTemples(destroyed);
             } catch (error) {
-                console.error("Failed to load restoration temples:", error);
+                addToast('Failed to load restoration temples', 'error');
             } finally {
                 setLoading(false);
             }

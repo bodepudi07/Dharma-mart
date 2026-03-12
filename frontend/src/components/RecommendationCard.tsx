@@ -1,4 +1,4 @@
-
+﻿
 import React from 'react';
 import { FeedItem, I18nContent } from '../types';
 import { useImageWithFallback } from '../hooks/useImageWithFallback';

@@ -1,4 +1,4 @@
-
+﻿
 import React from 'react';
 import { Testimonial } from '../types';
 import { PLACEHOLDER_IMAGE_URL } from '../constants';

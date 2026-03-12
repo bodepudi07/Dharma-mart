@@ -1,4 +1,4 @@
-import React, { useRef, useEffect, useState } from 'react';
+﻿import React, { useRef, useEffect, useState } from 'react';
 import { I18nContent, Language } from '../types';
 import { useFocusTrap } from '../hooks/useFocusTrap';
 import { Icon } from './Icon';

@@ -1,4 +1,4 @@
-import React, { useRef, useState } from 'react';
+﻿import React, { useRef, useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { useFocusTrap } from '../hooks/useFocusTrap';
 import { Icon } from './Icon';

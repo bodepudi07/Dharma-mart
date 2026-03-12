@@ -2,36 +2,127 @@
     {
         "id": 1,
         "name": "Diwali",
-        "date": "Varies (Oct - Nov)",
-        "description": "The festival of lights, symbolizing the victory of light over darkness and good over evil.",
+        "date": "October 20, 2026",
+        "description": "The festival of lights, symbolizing the victory of light over darkness and good over evil. Homes are decorated with diyas and rangoli.",
         "imageUrl": "https://upload.wikimedia.org/wikipedia/commons/3/3d/Diwali_Diyas.jpg"
     },
     {
         "id": 2,
         "name": "Holi",
-        "date": "Varies (March)",
-        "description": "The festival of colors, celebrating the arrival of spring and the triumph of good over evil.",
+        "date": "March 14, 2026",
+        "description": "The festival of colors, celebrating the arrival of spring and the triumph of good over evil. People play with colors and share sweets.",
         "imageUrl": "https://upload.wikimedia.org/wikipedia/commons/7/7d/Holi_Festival_of_Colors.jpg"
     },
     {
         "id": 3,
         "name": "Navaratri",
-        "date": "Varies (Sep - Oct)",
-        "description": "A nine-night festival dedicated to the worship of the Goddess Durga in her various forms.",
+        "date": "October 1, 2026",
+        "description": "A nine-night festival dedicated to the worship of the Goddess Durga in her various forms. Includes Garba, Dandiya, and elaborate pujas.",
         "imageUrl": "https://upload.wikimedia.org/wikipedia/commons/7/74/Durga_Puja_Kolkata.jpg"
     },
     {
         "id": 4,
         "name": "Maha Shivaratri",
-        "date": "Varies (Feb - Mar)",
-        "description": "The great night of Shiva, a solemn festival marking the remembrance of overcoming darkness and ignorance.",
+        "date": "February 15, 2027",
+        "description": "The great night of Shiva, a solemn festival marking the remembrance of overcoming darkness and ignorance. Devotees fast and chant Om Namah Shivaya.",
         "imageUrl": "https://upload.wikimedia.org/wikipedia/commons/3/3f/Maha_Shivaratri_celebration.jpg"
     },
     {
         "id": 5,
         "name": "Ganesh Chaturthi",
-        "date": "Varies (Aug - Sep)",
-        "description": "A ten-day festival marking the birth of Lord Ganesha, the remover of obstacles.",
+        "date": "August 22, 2026",
+        "description": "A ten-day festival marking the birth of Lord Ganesha, the remover of obstacles. Clay idols are installed and immersed on the final day.",
+        "imageUrl": "https://upload.wikimedia.org/wikipedia/commons/2/23/Hindu_festival_celebration.jpg"
+    },
+    {
+        "id": 6,
+        "name": "Ram Navami",
+        "date": "April 6, 2026",
+        "description": "Celebrates the birth of Lord Rama, the seventh avatar of Vishnu. Devotees recite the Ramayana and visit temples.",
+        "imageUrl": "https://upload.wikimedia.org/wikipedia/commons/2/23/Hindu_festival_celebration.jpg"
+    },
+    {
+        "id": 7,
+        "name": "Janmashtami",
+        "date": "August 14, 2026",
+        "description": "Celebrates the birth of Lord Krishna, the eighth avatar of Vishnu. Marked by Dahi Handi, bhajans, and midnight celebrations.",
+        "imageUrl": "https://upload.wikimedia.org/wikipedia/commons/2/23/Hindu_festival_celebration.jpg"
+    },
+    {
+        "id": 8,
+        "name": "Makar Sankranti / Pongal",
+        "date": "January 14, 2027",
+        "description": "Marks the sun's transition into Capricorn. Celebrated as Pongal in Tamil Nadu, Uttarayan in Gujarat. Kites, bonfires, and harvest thanksgiving.",
+        "imageUrl": "https://upload.wikimedia.org/wikipedia/commons/2/23/Hindu_festival_celebration.jpg"
+    },
+    {
+        "id": 9,
+        "name": "Ugadi / Gudi Padwa",
+        "date": "March 29, 2026",
+        "description": "Hindu New Year for South and West India. Homes are cleaned and decorated, and Ugadi Pachadi (a mix of six tastes) is prepared.",
+        "imageUrl": "https://upload.wikimedia.org/wikipedia/commons/2/23/Hindu_festival_celebration.jpg"
+    },
+    {
+        "id": 10,
+        "name": "Raksha Bandhan",
+        "date": "August 11, 2026",
+        "description": "Celebrates the bond between brothers and sisters. Sisters tie a sacred thread (rakhi) on their brother's wrist.",
+        "imageUrl": "https://upload.wikimedia.org/wikipedia/commons/2/23/Hindu_festival_celebration.jpg"
+    },
+    {
+        "id": 11,
+        "name": "Dussehra / Vijayadashami",
+        "date": "October 10, 2026",
+        "description": "Marks the victory of Lord Rama over Ravana and Goddess Durga over Mahishasura. Grand effigies of Ravana are burnt across India.",
+        "imageUrl": "https://upload.wikimedia.org/wikipedia/commons/2/23/Hindu_festival_celebration.jpg"
+    },
+    {
+        "id": 12,
+        "name": "Hanuman Jayanti",
+        "date": "April 14, 2026",
+        "description": "Celebrates the birth of Lord Hanuman, the devoted servant of Lord Rama. Special prayers and Hanuman Chalisa recitation.",
+        "imageUrl": "https://upload.wikimedia.org/wikipedia/commons/2/23/Hindu_festival_celebration.jpg"
+    },
+    {
+        "id": 13,
+        "name": "Karva Chauth",
+        "date": "October 15, 2026",
+        "description": "A one-day festival where married women fast from sunrise to moonrise for the longevity of their husbands.",
+        "imageUrl": "https://upload.wikimedia.org/wikipedia/commons/2/23/Hindu_festival_celebration.jpg"
+    },
+    {
+        "id": 14,
+        "name": "Guru Purnima",
+        "date": "July 21, 2026",
+        "description": "A day to honor spiritual teachers and mentors. Falls on the full moon day (Purnima) in the month of Ashadha.",
+        "imageUrl": "https://upload.wikimedia.org/wikipedia/commons/2/23/Hindu_festival_celebration.jpg"
+    },
+    {
+        "id": 15,
+        "name": "Chhath Puja",
+        "date": "October 24, 2026",
+        "description": "An ancient Vedic festival dedicated to the Sun God. Devotees stand in water and offer prayers at sunrise and sunset.",
+        "imageUrl": "https://upload.wikimedia.org/wikipedia/commons/2/23/Hindu_festival_celebration.jpg"
+    },
+    {
+        "id": 16,
+        "name": "Vasant Panchami",
+        "date": "February 1, 2027",
+        "description": "Celebrates the arrival of spring. Devoted to Goddess Saraswati, the deity of knowledge, music, and art. People wear yellow.",
+        "imageUrl": "https://upload.wikimedia.org/wikipedia/commons/2/23/Hindu_festival_celebration.jpg"
+    },
+    {
+        "id": 17,
+        "name": "Onam",
+        "date": "September 5, 2026",
+        "description": "Kerala's harvest festival celebrating the homecoming of King Mahabali. Famous for Pookalam, boat races, and Onam Sadya feast.",
+        "imageUrl": "https://upload.wikimedia.org/wikipedia/commons/2/23/Hindu_festival_celebration.jpg"
+    },
+    {
+        "id": 18,
+        "name": "Holika Dahan",
+        "date": "March 13, 2026",
+        "description": "The night before Holi. Bonfires are lit to symbolize the burning of the demoness Holika and the triumph of devotee Prahlada.",
         "imageUrl": "https://upload.wikimedia.org/wikipedia/commons/2/23/Hindu_festival_celebration.jpg"
     }
 ]

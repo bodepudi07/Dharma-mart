@@ -1,4 +1,4 @@
-import React from 'react';
+﻿import React from 'react';
 import { Post, User, I18nContent } from '../types';
 import { useImageWithFallback } from '../hooks/useImageWithFallback';
 import { PLACEHOLDER_IMAGE_URL } from '../constants';
@@ -13,7 +13,7 @@ interface PostCardProps {
     onViewImage: (imageUrl: string, altText: string) => void;
 }
 
-export const PostCard = ({ post, author, currentUser, onToggleLike, onViewProfile, onViewImage }: PostCardProps) => {
+export const PostCard = React.memo(({ post, author, currentUser, onToggleLike, onViewProfile, onViewImage }: PostCardProps) => {
     const { imgSrc, status } = useImageWithFallback(post.imageUrl, PLACEHOLDER_IMAGE_URL, post.caption, 'general');
     const isLiked = currentUser ? post.likes.includes(currentUser.id) : false;
 
@@ -87,4 +87,4 @@ export const PostCard = ({ post, author, currentUser, onToggleLike, onViewProfil
             </footer>
         </div>
     );
-};
+});

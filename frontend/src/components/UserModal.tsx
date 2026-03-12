@@ -1,4 +1,4 @@
-import React, { useState, useRef } from 'react';
+﻿import React, { useState, useRef } from 'react';
 import { Icon } from './Icon';
 import { useToast } from '../contexts/ToastContext';
 import { User, I18nContent, Role } from '../types';

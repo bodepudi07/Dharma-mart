@@ -1,4 +1,4 @@
-import React from 'react';
+﻿import React from 'react';
 import type { Pooja, I18nContent } from '../types';
 import { useImageWithFallback } from '../hooks/useImageWithFallback';
 import { getItemFallbackImage } from '../hooks/useItemImage';
@@ -18,7 +18,7 @@ interface PoojaCardProps {
     panditCount?: number;
 }
 
-export const PoojaCard = ({ pooja, t, onBook, onViewImage, onAskGuru, isAdmin, onEdit, onDelete, panditCount }: PoojaCardProps) => {
+export const PoojaCard = React.memo(({ pooja, t, onBook, onViewImage, onAskGuru, isAdmin, onEdit, onDelete, panditCount }: PoojaCardProps) => {
     const fallbackImg = getItemFallbackImage(pooja.name, 'pooja');
     const { imgSrc, status, onLoad, onError } = useImageWithFallback(pooja.imageUrl, fallbackImg);
     const { openModal } = useModal();
@@ -126,4 +126,4 @@ export const PoojaCard = ({ pooja, t, onBook, onViewImage, onAskGuru, isAdmin, o
             </div>
         </div>
     );
-};
+});

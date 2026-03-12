@@ -1,4 +1,4 @@
-import React, { useRef, useState } from 'react';
+﻿import React, { useRef, useState } from 'react';
 import { useFocusTrap } from '../hooks/useFocusTrap';
 import { Icon } from './Icon';
 import { useToast } from '../contexts/ToastContext';

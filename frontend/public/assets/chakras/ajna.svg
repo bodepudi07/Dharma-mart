@@ -1,0 +1,15 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200" width="200" height="200">
+  <!-- 2-Petal Lotus (Third Eye Wings) -->
+  <g fill="none" stroke="#1a1a1a" stroke-width="2">
+    <ellipse cx="60" cy="100" rx="38" ry="22"/>
+    <ellipse cx="140" cy="100" rx="38" ry="22"/>
+  </g>
+  <!-- Central Circle -->
+  <circle cx="100" cy="100" r="28" fill="none" stroke="#1a1a1a" stroke-width="2.5"/>
+  <!-- Inverted Triangle (Inner Vision) -->
+  <polygon points="100,118 84,86 116,86" fill="none" stroke="#1a1a1a" stroke-width="2"/>
+  <!-- Third Eye Dot -->
+  <circle cx="100" cy="82" r="3" fill="#1a1a1a"/>
+  <!-- Bija Mantra OM -->
+  <text x="100" y="108" text-anchor="middle" font-family="serif" font-size="20" font-weight="bold" fill="#1a1a1a">ॐ</text>
+</svg>

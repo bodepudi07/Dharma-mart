@@ -1,0 +1,20 @@
+{
+  "name": "Dharma Setu",
+  "short_name": "DharmaSetu",
+  "description": "India's Phygital Spiritual Infrastructure — Temple bookings, Poojas, Yatras, Darshan & more",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#FFFDF7",
+  "theme_color": "#B45309",
+  "orientation": "any",
+  "categories": ["lifestyle", "social"],
+  "lang": "en",
+  "icons": [
+    {
+      "src": "/favicon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any"
+    }
+  ]
+}

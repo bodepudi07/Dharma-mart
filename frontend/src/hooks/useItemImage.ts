@@ -1,4 +1,4 @@
-/**
+﻿/**
  * Generates rich, unique inline SVG art for each item.
  * Completely offline - no external URLs, no CORS issues.
  */

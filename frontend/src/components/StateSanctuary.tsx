@@ -1,9 +1,10 @@
-import React, { useState, useEffect, useMemo } from 'react';
+﻿import React, { useState, useEffect, useMemo } from 'react';
 import { I18nContent, Temple, Language } from '../types';
 import { Icon } from './Icon';
 import { motion, AnimatePresence } from 'framer-motion';
 import { getTemples } from '../services/apiService';
 import { fuzzySearch, calculateDistance } from '../utils/geolocation';
+import { useToast } from '../contexts/ToastContext';
 
 interface StateSanctuaryProps {
     t: I18nContent;
@@ -12,73 +13,91 @@ interface StateSanctuaryProps {
     userLocation?: { latitude: number; longitude: number } | null;
 }
 
+interface TempleWithDistance extends Temple {
+    distance: number;
+}
+
 export const StateSanctuary = ({ t, language, onNavigate, userLocation }: StateSanctuaryProps) => {
     const [searchQuery, setSearchQuery] = useState('');
     const [allTemples, setAllTemples] = useState<Temple[]>([]);
     const [loading, setLoading] = useState(true);
-    const [detectedCity, setDetectedCity] = useState('Hyderabad');
+    const [detectedCity, setDetectedCity] = useState('');
+    const { addToast } = useToast();
 
-    // Dynamic City Detection via Reverse Geocoding
+    // Detect city name from device GPS
     useEffect(() => {
-        if (!userLocation) {
-            setDetectedCity('Hyderabad');
-            return;
-        }
-
-        const fetchCityName = async () => {
+        if (!userLocation) { setDetectedCity(''); return; }
+        const fetchCity = async () => {
             try {
                 const response = await fetch(`https://nominatim.openstreetmap.org/reverse?format=json&lat=${userLocation.latitude}&lon=${userLocation.longitude}`);
-                if (!response.ok) throw new Error('Network response was not ok');
+                if (!response.ok) throw new Error('Failed');
                 const data = await response.json();
-
-                // Prioritize the most recognizable local settlement name
-                const city = data.address.city || data.address.town || data.address.village || data.address.state_district || data.address.county || 'Your Location';
-                setDetectedCity(city);
-            } catch (error) {
-                console.error("Failed to reverse geocode:", error);
-                setDetectedCity('Your Area');
-            }
+                setDetectedCity(data.address.city || data.address.town || data.address.village || data.address.state_district || 'Your Area');
+            } catch { setDetectedCity('Your Area'); }
         };
-
-        fetchCityName();
+        fetchCity();
     }, [userLocation]);
 
+    // Load ALL temples
     useEffect(() => {
         const loadData = async () => {
-            try {
-                const data = await getTemples(language);
-                // Filter for Telangana and Hyderabad temples using the new region property
-                const telanganaData = data.filter(temple =>
-                    temple.region === 'Telangana' ||
-                    temple.location.toLowerCase().includes('telangana') ||
-                    temple.location.toLowerCase().includes('hyderabad')
-                );
-                setAllTemples(telanganaData);
-            } catch (error) {
-                console.error("Failed to load Telangana temples:", error);
-            } finally {
-                setLoading(false);
-            }
+            try { setAllTemples(await getTemples(language)); }
+            catch { addToast('Failed to load temples', 'error'); }
+            finally { setLoading(false); }
         };
         loadData();
     }, [language]);
 
-    // Improved Search Algorithm Integration
+    // Sort ALL temples by distance from device location
+    const templesByDistance = useMemo((): TempleWithDistance[] => {
+        const lat = userLocation?.latitude ?? 17.3850;
+        const lng = userLocation?.longitude ?? 78.4867;
+        return allTemples
+            .map(t => ({ ...t, distance: calculateDistance(lat, lng, t.lat, t.lng) }))
+            .sort((a, b) => a.distance - b.distance);
+    }, [allTemples, userLocation]);
+
+    // Search
     const filteredTemples = useMemo(() => {
-        if (!searchQuery) return allTemples;
-        // Search across name, location, deity, and tags
-        const results = fuzzySearch(allTemples, searchQuery, ['name', 'location', 'deity', 'tags'] as (keyof Temple)[]);
+        if (!searchQuery) return templesByDistance;
+        const results = fuzzySearch(templesByDistance, searchQuery, ['name', 'location', 'deity', 'tags'] as (keyof Temple)[]);
         return results.map(r => r.item);
-    }, [searchQuery, allTemples]);
+    }, [searchQuery, templesByDistance]);
 
-    // Dynamic Categorization with corrected IDs
-    const majorTemples = useMemo(() =>
-        allTemples.filter(temple => [152, 153, 154, 155, 500, 501, 502, 503, 504, 1142].includes(temple.id)),
-        [allTemples]);
+    // Nearest temples (within 100km) for the main section
+    const nearestTemples = useMemo(() => templesByDistance.filter(t => t.distance <= 100), [templesByDistance]);
 
-    const shivaCircuit = useMemo(() =>
-        allTemples.filter(temple => (temple.tags?.includes('shiva') || temple.deity?.toLowerCase().includes('shiva')) && ![500, 152].includes(temple.id)),
-        [allTemples]);
+    // Top temples for the featured carousel (closest 10)
+    const topTemples = useMemo(() => templesByDistance.slice(0, 10), [templesByDistance]);
+
+    // Auto-detect dominant deity among nearby temples for the circuit section
+    const deityCircuit = useMemo(() => {
+        const source = nearestTemples.length >= 3 ? nearestTemples : templesByDistance.slice(0, 20);
+        const counts: Record<string, number> = {};
+        source.forEach(t => {
+            const d = (t.deity || '').toLowerCase();
+            if (d.includes('shiva')) counts['shiva'] = (counts['shiva'] || 0) + 1;
+            else if (d.includes('vishnu') || d.includes('narasimha') || d.includes('venkateswara') || d.includes('rama')) counts['vishnu'] = (counts['vishnu'] || 0) + 1;
+            else if (d.includes('devi') || d.includes('kali') || d.includes('durga') || d.includes('parvati') || d.includes('saraswati') || d.includes('lakshmi') || d.includes('yellamma')) counts['devi'] = (counts['devi'] || 0) + 1;
+            else if (d.includes('hanuman')) counts['hanuman'] = (counts['hanuman'] || 0) + 1;
+        });
+        const dominant = Object.entries(counts).sort((a, b) => b[1] - a[1])[0];
+        const key = dominant?.[0] || 'shiva';
+        const labels: Record<string, string> = { shiva: 'Shiva', vishnu: 'Vishnu', devi: 'Shakti', hanuman: 'Hanuman' };
+        const labelsTe: Record<string, string> = { shiva: 'శివ', vishnu: 'విష్ణు', devi: 'శక్తి', hanuman: 'హనుమాన్' };
+        const topIds = new Set(topTemples.slice(0, 5).map(t => t.id));
+        const match = (d: string) => {
+            if (key === 'shiva') return d.includes('shiva');
+            if (key === 'vishnu') return d.includes('vishnu') || d.includes('narasimha') || d.includes('venkateswara') || d.includes('rama');
+            if (key === 'devi') return d.includes('devi') || d.includes('kali') || d.includes('durga') || d.includes('parvati') || d.includes('saraswati') || d.includes('lakshmi') || d.includes('yellamma');
+            if (key === 'hanuman') return d.includes('hanuman');
+            return false;
+        };
+        const temples = templesByDistance.filter(t => match((t.deity || '').toLowerCase()) && !topIds.has(t.id));
+        return { label: labels[key] || key, labelTe: labelsTe[key] || key, temples };
+    }, [templesByDistance, nearestTemples, topTemples]);
+
+    const displayCity = detectedCity || 'Your Area';
 
 
     if (loading) {
@@ -92,7 +111,7 @@ export const StateSanctuary = ({ t, language, onNavigate, userLocation }: StateS
                         <div className="h-14 w-full bg-white/5 rounded-2xl border border-white/5 animate-pulse mt-8"></div>
                     </div>
 
-                    {/* Skeleton Live Pilot Banner */}
+                    {/* Skeleton Featured Temple Banner */}
                     <div className="h-48 w-full bg-gradient-to-r from-amber-900/40 to-amber-700/20 rounded-[2rem] border border-amber-500/20 animate-pulse mt-12"></div>
 
                     {/* Skeleton Carousels */}
@@ -127,7 +146,6 @@ export const StateSanctuary = ({ t, language, onNavigate, userLocation }: StateS
             <div className="fixed inset-0 pointer-events-none z-0 overflow-hidden flex items-center justify-center opacity-30">
                 <div className="absolute w-[800px] h-[800px] bg-amber-500/10 rounded-full blur-[120px]" />
 
-                {/* Telangana Map Outline (Simplified SVG) */}
                 <motion.svg
                     viewBox="0 0 100 100"
                     className="absolute w-[600px] h-[600px] text-amber-500/10"
@@ -158,10 +176,10 @@ export const StateSanctuary = ({ t, language, onNavigate, userLocation }: StateS
                     className="text-center pt-8"
                 >
                     <h1 className="text-5xl md:text-7xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-amber-200 via-yellow-400 to-amber-200 mb-4" style={{ fontFamily: '"Playfair Display", serif' }}>
-                        The Deccan Sanctum
+                        {displayCity} Sanctum
                     </h1>
                     <p className="text-xl md:text-2xl text-blue-200 font-light tracking-wide">
-                        {language === Language.TE ? 'తెలంగాణ పుణ్యక్షేత్రాల అన్వేషణ' : 'Explore the Sacred Heart of Telangana'}
+                        {language === Language.TE ? `${displayCity} సమీపంలోని ఆలయాలను అన్వేషించండి` : `Explore Temples Near ${displayCity}`}
                     </p>
 
                     <div className="mt-8 max-w-2xl mx-auto">
@@ -174,45 +192,43 @@ export const StateSanctuary = ({ t, language, onNavigate, userLocation }: StateS
                                 value={searchQuery}
                                 onChange={(e) => setSearchQuery(e.target.value)}
                                 className="block w-full pl-12 pr-4 py-4 rounded-2xl bg-white/5 border border-white/10 text-white placeholder-blue-300/50 backdrop-blur-md focus:outline-none focus:ring-2 focus:ring-amber-400/50 focus:border-transparent transition-all shadow-[0_4px_30px_rgba(0,0,0,0.1)]"
-                                placeholder={language === Language.TE ? "దేవాలయాలు, ప్రాంతాలు వెతకండి..." : "Search temples, deities, or locations in Telangana..."}
+                                placeholder={language === Language.TE ? 'దేవాలయాలు, దేవతలు, ప్రాంతాలు వెతకండి...' : `Search temples near ${displayCity}...`}
                             />
                         </div>
                     </div>
                 </motion.div>
 
-                {/* Live Pilot Banner */}
-                {!searchQuery && (
+                {/* Featured Temple Banner — Nearest temple to you */}
+                {!searchQuery && templesByDistance.length > 0 && (() => {
+                    const featured = templesByDistance[0];
+                    return (
                     <motion.div
                         initial={{ opacity: 0, scale: 0.95 }}
                         animate={{ opacity: 1, scale: 1 }}
                         transition={{ delay: 0.1 }}
                         className="relative overflow-hidden rounded-3xl bg-gradient-to-br from-orange-600 to-red-700 shadow-[0_0_40px_rgba(234,88,12,0.3)] border border-orange-400/30 cursor-pointer"
-                        onClick={() => onNavigate('templeDetail', { templeId: 104 })}
+                        onClick={() => onNavigate('templeDetail', { templeId: featured.id })}
                     >
                         <div className="absolute top-0 right-0 -mr-16 -mt-16 w-64 h-64 bg-yellow-400/20 rounded-full blur-3xl opacity-50" />
                         <div className="px-6 py-8 sm:p-10 flex flex-col md:flex-row items-center justify-between gap-6 relative z-10">
                             <div className="flex items-center gap-4">
-                                <div className="flex-shrink-0 animate-pulse">
-                                    <Icon name="map-pin" className="h-10 w-10 text-yellow-300" />
+                                <div className="flex-shrink-0">
+                                    <Icon name="temple" className="h-10 w-10 text-yellow-300" />
                                 </div>
                                 <div>
-                                    <h3 className="text-2xl font-bold text-white flex items-center gap-3">
-                                        Chilkur Balaji <span className="text-orange-200 font-normal text-lg">(Visa Balaji)</span>
-                                    </h3>
-                                    <p className="text-orange-100 flex items-center gap-2 mt-1">
-                                        <span className="w-2 h-2 rounded-full bg-green-400 animate-ping" />
-                                        Live Protocol Active
-                                    </p>
+                                    <h3 className="text-2xl font-bold text-white">{featured.name}</h3>
+                                    <p className="text-orange-100 mt-1">{featured.location}</p>
                                 </div>
                             </div>
                             <button className="whitespace-nowrap bg-yellow-400 hover:bg-yellow-300 text-orange-900 font-bold py-4 px-8 rounded-full shadow-xl hover:shadow-yellow-400/20 transform hover:-translate-y-1 transition-all duration-300">
-                                {t.bookNow} (₹151)
+                                {t.bookNow}
                             </button>
                         </div>
                     </motion.div>
-                )}
+                    );
+                })()}
 
-                {/* Search Results / Map Integration */}
+                {/* Search Results / Sections */}
                 <AnimatePresence>
                     {searchQuery ? (
                         <motion.section
@@ -234,19 +250,23 @@ export const StateSanctuary = ({ t, language, onNavigate, userLocation }: StateS
                         </motion.section>
                     ) : (
                         <>
-                            {/* The Maha Kshetras */}
+                            {/* Closest Temples (Top 10 by proximity) */}
+                            {topTemples.length > 0 && (
                             <section>
                                 <h2 className="text-3xl font-semibold mb-6 text-amber-100 flex items-center gap-3">
-                                    <Icon name="sun" className="text-amber-400" /> {language === Language.TE ? 'మహా క్షేత్రాలు' : 'The Maha Kshetras'}
+                                    <Icon name="sun" className="text-amber-400" /> {language === Language.TE ? `${displayCity} సమీప క్షేత్రాలు` : `Temples Near ${displayCity}`}
                                 </h2>
                                 <div className="flex overflow-x-auto pb-8 -mx-4 px-4 sm:mx-0 sm:px-0 gap-6 snap-x hide-scrollbar">
-                                    {majorTemples.map(temple => (
+                                    {topTemples.map(temple => (
                                         <div key={temple.id} onClick={() => onNavigate('templeDetail', { templeId: temple.id })} className="min-w-[300px] md:min-w-[400px] flex-shrink-0 snap-center rounded-2xl bg-white/5 border border-white/10 overflow-hidden backdrop-blur-sm hover:bg-white/10 transition-colors group cursor-pointer shadow-2xl">
                                             <div className="h-48 bg-stone-800 relative overflow-hidden">
                                                 <img src={temple.imageUrl} alt={temple.name} className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700" />
                                                 <div className="absolute inset-0 bg-gradient-to-t from-black/80 to-transparent" />
-                                                <div className="absolute bottom-4 left-4">
+                                                <div className="absolute bottom-4 left-4 flex items-center gap-2">
                                                     <span className="bg-amber-500/80 backdrop-blur-md text-xs font-bold px-2 py-1 rounded text-white capitalize">{temple.tags?.[0] || 'Sanctum'}</span>
+                                                    <span className="bg-emerald-600/80 backdrop-blur-md text-xs font-bold px-2 py-1 rounded text-white">
+                                                        {temple.distance < 10 ? 'Very Close' : `${Math.round(temple.distance)} km`}
+                                                    </span>
                                                 </div>
                                             </div>
                                             <div className="p-6">
@@ -260,14 +280,16 @@ export const StateSanctuary = ({ t, language, onNavigate, userLocation }: StateS
                                     ))}
                                 </div>
                             </section>
+                            )}
 
-                            {/* The Ancient Shiva Circuit */}
+                            {/* Dynamic Deity Circuit */}
+                            {deityCircuit.temples.length > 0 && (
                             <section>
                                 <h2 className="text-3xl font-semibold mb-6 text-amber-100 flex items-center gap-3">
-                                    <Icon name="moon" className="text-blue-300" /> {language === Language.TE ? 'ప్రాచీన శివ క్షేత్రాలు' : 'The Ancient Shiva Circuit'}
+                                    <Icon name="moon" className="text-blue-300" /> {language === Language.TE ? `${deityCircuit.labelTe} క్షేత్రాలు` : `The ${deityCircuit.label} Circuit`}
                                 </h2>
                                 <div className="flex overflow-x-auto pb-8 -mx-4 px-4 sm:mx-0 sm:px-0 gap-6 snap-x hide-scrollbar">
-                                    {shivaCircuit.map(temple => (
+                                    {deityCircuit.temples.map(temple => (
                                         <div key={temple.id} onClick={() => onNavigate('templeDetail', { templeId: temple.id })} className="min-w-[280px] md:min-w-[350px] flex-shrink-0 snap-center rounded-2xl bg-white/5 border border-white/10 p-5 backdrop-blur-sm hover:bg-white/10 transition-all cursor-pointer group shadow-xl">
                                             <div className="h-40 bg-stone-800 rounded-xl mb-4 overflow-hidden">
                                                 <img src={temple.imageUrl} alt={temple.name} className="w-full h-full object-cover opacity-80 group-hover:opacity-100 transition-opacity" />
@@ -275,72 +297,52 @@ export const StateSanctuary = ({ t, language, onNavigate, userLocation }: StateS
                                             <h3 className="text-lg font-bold text-white">{temple.name}</h3>
                                             <p className="text-blue-200/70 text-sm mt-1 mb-3">{temple.location.split(',')[0]}</p>
                                             <span className="inline-block bg-white/10 text-xs text-amber-200 px-3 py-1 rounded-full border border-amber-200/30">
-                                                {temple.tags?.includes('unesco') ? 'UNESCO Heritage' : 'Kakatiya Era'}
+                                                {temple.tags?.includes('unesco') ? 'UNESCO Heritage' : temple.tags?.[0] || 'Sacred'}
                                             </span>
                                         </div>
                                     ))}
                                 </div>
                             </section>
+                            )}
 
-                            {/* Contextual City Gems (Sorted by distance to user) */}
+                            {/* Nearby Gems (within 100km) */}
                             <section>
                                 <h2 className="text-3xl font-semibold mb-6 text-amber-100 flex items-center gap-3">
-                                    <Icon name="lotus" className="text-indigo-400" /> {language === Language.TE ? `${detectedCity} వైభవం` : `${detectedCity} City Gems`}
+                                    <Icon name="lotus" className="text-indigo-400" /> {language === Language.TE ? `${displayCity} వైభవం` : `${displayCity} Nearby Gems`}
                                 </h2>
 
-                                {(() => {
-                                    const nearbyTemples = [...allTemples].map(temple => ({
-                                        ...temple,
-                                        distance: calculateDistance(
-                                            userLocation ? userLocation.latitude : 17.3850,
-                                            userLocation ? userLocation.longitude : 78.4867,
-                                            temple.lat,
-                                            temple.lng
-                                        )
-                                    }))
-                                        .filter(temple => temple.id !== 152) // Exclude duplicate/specifics if needed
-                                        // CRITICAL: Only show temples that are ACTUALLY near the user's mobile (e.g., within 75km)
-                                        .filter(temple => temple.distance <= 75)
-                                        .sort((a, b) => a.distance - b.distance)
-                                        .slice(0, 6);
-
-                                    if (nearbyTemples.length === 0) {
-                                        return (
-                                            <div className="bg-white/5 border border-white/10 rounded-2xl p-8 text-center backdrop-blur-sm">
-                                                <Icon name="map-pin" className="mx-auto h-12 w-12 text-blue-300 opacity-50 mb-3" />
-                                                <p className="text-blue-200 text-lg">We haven't discovered any major Kshetras within 75km of your current mobile location yet.</p>
-                                                <p className="text-stone-400 text-sm mt-2">Explore the Maha Kshetras or search globally to discover divine destinations.</p>
-                                            </div>
-                                        );
-                                    }
-
-                                    return (
-                                        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-                                            {nearbyTemples.map(temple => (
-                                                <div key={temple.id} onClick={() => onNavigate('templeDetail', { templeId: temple.id })} className="rounded-2xl bg-gradient-to-br from-indigo-900/30 to-blue-900/20 border border-indigo-500/20 p-6 backdrop-blur-md relative overflow-hidden group hover:border-indigo-400/50 transition-colors cursor-pointer">
-                                                    <div className="absolute right-0 top-0 w-24 h-24 bg-indigo-500/5 rounded-full blur-2xl group-hover:bg-indigo-500/10 transition-all" />
-                                                    <h3 className="text-xl font-bold text-indigo-100">{temple.name}</h3>
-                                                    <p className="text-indigo-200/60 mt-2 text-sm line-clamp-2">{temple.history}</p>
-                                                    <div className="mt-6 flex items-center justify-between">
-                                                        <div className="flex flex-col gap-1">
-                                                            <span className="text-xs text-indigo-300/80 font-mono tracking-tighter uppercase">{temple.deity}</span>
-                                                            <span className="text-[10px] text-emerald-400 font-bold tracking-wider uppercase">
-                                                                {temple.distance < 10 ? 'Very Close' : `${Math.round(temple.distance)} km away`}
-                                                            </span>
-                                                        </div>
-                                                        <Icon name="chevron-right" className="w-4 h-4 text-indigo-400 group-hover:translate-x-1 transition-transform" />
+                                {nearestTemples.length === 0 ? (
+                                    <div className="bg-white/5 border border-white/10 rounded-2xl p-8 text-center backdrop-blur-sm">
+                                        <Icon name="map-pin" className="mx-auto h-12 w-12 text-blue-300 opacity-50 mb-3" />
+                                        <p className="text-blue-200 text-lg">No major Kshetras found within 100km of your location.</p>
+                                        <p className="text-stone-400 text-sm mt-2">Explore the nearest temples above or search to discover divine destinations.</p>
+                                    </div>
+                                ) : (
+                                    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                                        {nearestTemples.slice(0, 6).map(temple => (
+                                            <div key={temple.id} onClick={() => onNavigate('templeDetail', { templeId: temple.id })} className="rounded-2xl bg-gradient-to-br from-indigo-900/30 to-blue-900/20 border border-indigo-500/20 p-6 backdrop-blur-md relative overflow-hidden group hover:border-indigo-400/50 transition-colors cursor-pointer">
+                                                <div className="absolute right-0 top-0 w-24 h-24 bg-indigo-500/5 rounded-full blur-2xl group-hover:bg-indigo-500/10 transition-all" />
+                                                <h3 className="text-xl font-bold text-indigo-100">{temple.name}</h3>
+                                                <p className="text-indigo-200/60 mt-2 text-sm line-clamp-2">{temple.history}</p>
+                                                <div className="mt-6 flex items-center justify-between">
+                                                    <div className="flex flex-col gap-1">
+                                                        <span className="text-xs text-indigo-300/80 font-mono tracking-tighter uppercase">{temple.deity}</span>
+                                                        <span className="text-[10px] text-emerald-400 font-bold tracking-wider uppercase">
+                                                            {temple.distance < 10 ? 'Very Close' : `${Math.round(temple.distance)} km away`}
+                                                        </span>
                                                     </div>
+                                                    <Icon name="chevron-right" className="w-4 h-4 text-indigo-400 group-hover:translate-x-1 transition-transform" />
                                                 </div>
-                                            ))}
-                                        </div>
-                                    );
-                                })()}
+                                            </div>
+                                        ))}
+                                    </div>
+                                )}
                             </section>
 
                             {/* Curated Trails (Local to user) */}
                             <section>
                                 <h2 className="text-3xl font-semibold mb-6 text-amber-100 flex items-center gap-3 mt-12">
-                                    <Icon name="map-pin" className="text-emerald-400" /> {language === Language.TE ? `${detectedCity} ఆధ్యాత్మిక యాత్రలు` : `Curated Trails from ${detectedCity}`}
+                                    <Icon name="map-pin" className="text-emerald-400" /> {language === Language.TE ? `${displayCity} ఆధ్యాత్మిక యాత్రలు` : `Curated Trails from ${displayCity}`}
                                 </h2>
                                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                                     <div className="rounded-2xl bg-white/5 border border-white/10 p-6 backdrop-blur-sm shadow-xl relative overflow-hidden group">
@@ -348,7 +350,7 @@ export const StateSanctuary = ({ t, language, onNavigate, userLocation }: StateS
                                         <h3 className="text-xl font-bold text-emerald-400 mb-2">Weekend Heritage Trail</h3>
                                         <p className="text-stone-300 text-sm mb-4">A perfectly optimized 2-day journey covering the highest-energy kshetras closest to your current location.</p>
                                         <div className="flex items-center gap-3 text-sm text-stone-400 font-mono bg-black/20 p-3 rounded-xl border border-white/5">
-                                            <span>Starts at {detectedCity}</span>
+                                            <span>Starts at {displayCity}</span>
                                             <Icon name="chevron-right" className="w-4 h-4" />
                                             <span>3 Temples</span>
                                             <Icon name="chevron-right" className="w-4 h-4" />
@@ -358,9 +360,9 @@ export const StateSanctuary = ({ t, language, onNavigate, userLocation }: StateS
                                     <div className="rounded-2xl bg-white/5 border border-white/10 p-6 backdrop-blur-sm shadow-xl relative overflow-hidden group">
                                         <div className="absolute inset-0 bg-gradient-to-tr from-amber-900/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity" />
                                         <h3 className="text-xl font-bold text-amber-400 mb-2">The Architecture Circuit</h3>
-                                        <p className="text-stone-300 text-sm mb-4">Explore the finest Kakatiya and Chalukya era structures within driving distance of your city.</p>
+                                        <p className="text-stone-300 text-sm mb-4">Explore the finest ancient temple architecture within driving distance of your city.</p>
                                         <div className="flex items-center gap-3 text-sm text-stone-400 font-mono bg-black/20 p-3 rounded-xl border border-white/5">
-                                            <span>Starts at {detectedCity}</span>
+                                            <span>Starts at {displayCity}</span>
                                             <Icon name="chevron-right" className="w-4 h-4" />
                                             <span>2 Temples</span>
                                             <Icon name="chevron-right" className="w-4 h-4" />
@@ -382,7 +384,7 @@ export const StateSanctuary = ({ t, language, onNavigate, userLocation }: StateS
                     <Icon name="heart" className="w-12 h-12 text-amber-500 mx-auto mb-4" />
                     <h2 className="text-2xl md:text-3xl font-bold text-white mb-4">Dharma Uddhar: Restore Our Heritage</h2>
                     <p className="text-stone-300 max-w-2xl mx-auto mb-8">
-                        Join hands to help restore forgotten 10th-century stepwells and ancient shrines around Hyderabad. Your contribution breathes life back into our history.
+                        Join hands to help restore forgotten ancient shrines near {displayCity}. Your contribution breathes life back into our history.
                     </p>
                     <button
                         onClick={() => onNavigate('restorationSanctuary')}

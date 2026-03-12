@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from 'react';
+﻿import React, { useState, useEffect, useRef } from 'react';
 import { Icon } from './Icon';
 import { PLACEHOLDER_IMAGE_URL } from '../constants';
 import { useToast } from '../contexts/ToastContext';

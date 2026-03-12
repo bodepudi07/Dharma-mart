@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+﻿import React, { useState } from 'react';
 import { I18nContent, IconName } from '../types';
 import { useToast } from '../contexts/ToastContext';
 import { Icon } from './Icon';

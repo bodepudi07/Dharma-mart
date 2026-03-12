@@ -1,4 +1,4 @@
-
+﻿
 import React, { useState, useRef, useMemo } from 'react';
 import { MajorEvent, Pandit, I18nContent } from '../types';
 import { Icon } from './Icon';

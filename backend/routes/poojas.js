@@ -1,39 +1,31 @@
-import express from 'express';
+﻿import express from 'express';
 import db from '../db.js';
+import { standardResponse, errorResponse } from '../middleware/responseHandler.js';
 
 const router = express.Router();
 
-// GET all poojas
-router.get('/', async (req, res) => {
+router.get('/', async (req, res, next) => {
     try {
         const { limit, offset } = req.query;
         const query = {};
-
         if (limit) query.limit = parseInt(limit);
         if (offset) query.offset = parseInt(offset);
-
         const poojas = await db.find('poojas.json', query);
-        res.json(poojas);
+        return standardResponse(res, 200, poojas);
     } catch (error) {
-        console.error('API Error: /poojas', error);
-        res.status(500).json({ error: 'Failed to fetch poojas' });
+        next(error);
     }
 });
 
-// GET pooja by ID
-router.get('/:id', async (req, res) => {
+router.get('/:id', async (req, res, next) => {
     try {
         const poojaId = parseInt(req.params.id);
+        if (isNaN(poojaId)) return errorResponse(res, 400, 'Invalid pooja ID');
         const pooja = await db.findOne('poojas.json', p => p.id === poojaId);
-
-        if (!pooja) {
-            return res.status(404).json({ error: 'Pooja not found' });
-        }
-
-        res.json(pooja);
+        if (!pooja) return errorResponse(res, 404, 'Pooja not found');
+        return standardResponse(res, 200, pooja);
     } catch (error) {
-        console.error('API Error: /poojas/:id', error);
-        res.status(500).json({ error: 'Failed to fetch pooja' });
+        next(error);
     }
 });
 

@@ -1,8 +1,9 @@
-
+﻿
 import React from 'react';
 import { User, I18nContent } from '../types';
 import { Icon } from './Icon';
 import { useTheme } from '../contexts/ThemeContext';
+import { NotificationBell } from './NotificationBell';
 
 export interface HeaderProps {
     currentUser: User | null;
@@ -17,6 +18,7 @@ export const Header = ({ currentUser, t, onMenuClick, onUserClick, onLoginClick 
 
     return (
         <header
+            role="banner"
             className="md:hidden flex items-center justify-between p-4 bg-paper/80 backdrop-blur-xl text-ink shadow-sm sticky top-0 z-20 border-b border-white/20 transition-all duration-500"
         >
             <button onClick={onMenuClick} className="p-2 text-stone-600 hover:text-primary transition-colors" aria-label="Open menu">
@@ -36,6 +38,7 @@ export const Header = ({ currentUser, t, onMenuClick, onUserClick, onLoginClick 
                         <Icon name="star" className="w-4 h-4 text-amber-500" />
                         <span className="text-xs font-bold text-stone-700">Lvl {currentUser.level || 1}</span>
                     </div>
+                    <NotificationBell />
                     <button onClick={onUserClick} className="p-1 relative group" aria-label="View profile">
                         <div className="absolute inset-0 bg-primary/20 rounded-full scale-0 group-hover:scale-150 transition-transform duration-500 blur-sm"></div>
                         <img

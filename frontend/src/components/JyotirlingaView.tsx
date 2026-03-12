@@ -1,10 +1,11 @@
-import React, { useState, useEffect } from 'react';
+﻿import React, { useState, useEffect } from 'react';
 import { Temple, I18nContent, Language } from '../types';
 import * as api from '../services/apiService';
 import { TempleMap } from './TempleMap';
 import { Icon } from './Icon';
 import { CardAnimator } from './CardAnimator';
 import { useImageWithFallback } from '../hooks/useImageWithFallback';
+import { useToast } from '../contexts/ToastContext';
 import { PLACEHOLDER_IMAGE_URL } from '../constants';
 
 
@@ -42,6 +43,7 @@ const JyotirlingaCard = ({ temple }: { temple: Temple }) => {
 export const JyotirlingaView = ({ t, language }: { t: I18nContent, language: Language }) => {
     const [jyotirlingas, setJyotirlingas] = useState<Temple[]>([]);
     const [isLoading, setIsLoading] = useState(true);
+    const { addToast } = useToast();
 
     useEffect(() => {
         let isCancelled = false;
@@ -54,7 +56,7 @@ export const JyotirlingaView = ({ t, language }: { t: I18nContent, language: Lan
                     setJyotirlingas(filtered);
                 }
             } catch (error) {
-                console.error("Failed to load Jyotirlingas", error);
+                addToast('Failed to load Jyotirlingas', 'error');
             } finally {
                 if (!isCancelled) {
                     setIsLoading(false);

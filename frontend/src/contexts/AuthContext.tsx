@@ -1,4 +1,4 @@
-
+﻿
 
 import React, { createContext, useState, useContext, useEffect, ReactNode } from 'react';
 import { User } from '../types';
@@ -11,6 +11,7 @@ interface AuthContextType {
   login: (email: string, pass: string, rememberMe: boolean) => Promise<void>;
   signup: (name: string, email: string, pass: string) => Promise<void>;
   loginWithProvider: (provider: 'google' | 'facebook') => Promise<void>;
+  loginWithGoogle: (credential: string, mockData?: { name: string; email: string }) => Promise<void>;
   updateUser: (updates: Partial<Pick<User, 'name' | 'avatarUrl'>>) => Promise<void>;
   deleteAccount: () => Promise<void>;
   logout: () => void;
@@ -125,6 +126,20 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
     }
   };
 
+  const loginWithGoogle = async (credential: string, mockData?: { name: string; email: string }) => {
+    setIsLoading(true);
+    try {
+      const response = await api.loginWithGoogle(credential, mockData);
+      const user = { ...response.user, token: response.token };
+      setCurrentUser(user);
+      saveUserToStorage(user, localStorage);
+    } catch (error) {
+      throw error;
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
   const updateUser = async (updates: Partial<Pick<User, 'name' | 'avatarUrl'>>) => {
     if (!currentUser?.token) throw new Error("Not authenticated");
     setIsLoading(true);
@@ -176,6 +191,7 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
     signup,
     logout,
     loginWithProvider,
+    loginWithGoogle,
     updateUser,
     deleteAccount
   };

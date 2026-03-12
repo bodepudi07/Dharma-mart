@@ -1,11 +1,10 @@
-import React, { useState, useEffect } from 'react';
+﻿import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Icon } from './Icon';
 import { useToast } from '../contexts/ToastContext';
 
 const MAX_ENERGY = 100;
-// Set to 6 hours in milliseconds, but for demo purposes, 1 hour
-const REFILL_DURATION_MS = 6 * 60 * 60 * 1000;
+const REFILL_DURATION_MS = 6 * 60 * 60 * 1000; // 6 hours
 
 export const AmritCollector = () => {
     const [energy, setEnergy] = useState(0);
