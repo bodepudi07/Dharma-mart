@@ -24,6 +24,8 @@ export class ErrorBoundary extends Component<Props, State> {
 
     public componentDidCatch(error: Error, errorInfo: ErrorInfo) {
         console.error('Uncaught error:', error, errorInfo);
+        console.error('Error message:', error.message);
+        console.error('Component stack:', errorInfo.componentStack);
     }
 
     private handleRetry = () => {
@@ -39,6 +41,11 @@ export class ErrorBoundary extends Component<Props, State> {
                     <p className="text-stone-500 mb-6 max-w-md mx-auto">
                         We encountered an unexpected issue. Please try again or return to the home page.
                     </p>
+                    {this.state.error && (
+                        <pre className="text-xs text-red-600 bg-red-50 border border-red-200 rounded p-3 max-w-xl mx-auto text-left overflow-auto mb-4 max-h-48">
+                            {this.state.error.message}
+                        </pre>
+                    )}
                     <div className="flex gap-3">
                         {this.state.errorCount < 3 && (
                             <button

@@ -1,4 +1,4 @@
-﻿export enum Language {
+export enum Language {
     EN = 'en',
     HI = 'hi',
     TE = 'te'
@@ -336,7 +336,7 @@ export interface Task {
     categoryId?: number;
 }
 
-export type View = 'home' | 'dashboard' | 'templeDetail' | 'temples' | 'poojas' | 'yatras' | 'knowledge' | 'events' | 'eventDetail' | 'profile' | 'bookReader' | 'search' | 'chantingZone' | 'settings' | 'chakraSanctuary' | 'yatraPlanner' | 'satsang' | 'savedInsights' | 'stateSanctuary' | 'restorationSanctuary' | 'restorationSubmission' | 'divyaMarga' | 'meditationZone';
+export type View = 'home' | 'dashboard' | 'templeDetail' | 'temples' | 'poojas' | 'yatras' | 'knowledge' | 'events' | 'eventDetail' | 'profile' | 'bookReader' | 'search' | 'chantingZone' | 'settings' | 'chakraSanctuary' | 'yatraPlanner' | 'satsang' | 'savedInsights' | 'stateSanctuary' | 'restorationSanctuary' | 'restorationSubmission' | 'divyaMarga' | 'meditationZone' | 'library' | 'sevaDIP';
 
 export interface RemoteSeva {
     id: number;

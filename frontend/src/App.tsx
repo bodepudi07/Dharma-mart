@@ -1,5 +1,5 @@
-﻿
-import React, { useMemo, useState, useEffect, useCallback, Suspense } from 'react';
+
+import React, { useMemo, useState, useEffect, useCallback, Suspense, useRef } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import * as api from './services/apiService';
 import { Language, DarshanBookingDetails, PoojaBookingDetails, DonationOption, Pandit, View, Temple, MajorEvent, TempleSubmissionData, Book, Festival, Pooja, Yatra, User, TaskType, YatraBookingDetails, CustomYatraBookingDetails, YatraQuoteRequest, YatraPlanItem, TravelMode, Task, YatraPlanSettings, FamilyMember, Category } from './types';
@@ -50,6 +50,8 @@ const RestorationSanctuary = React.lazy(() => import('./components/RestorationSa
 const RestorationSubmission = React.lazy(() => import('./components/RestorationSubmission').then(m => ({ default: m.RestorationSubmission })));
 const DivyaMarga = React.lazy(() => import('./components/DivyaMarga').then(m => ({ default: m.DivyaMarga })));
 const MeditationZone = React.lazy(() => import('./components/MeditationZone').then(m => ({ default: m.MeditationZone })));
+
+import { SubscreenLoader, IshtaDevataModal } from './components/SubscreenLoader';
 
 // Lazy-loaded modals (opened on demand)
 const UploadTempleModal = React.lazy(() => import('./components/UploadTempleModal').then(m => ({ default: m.UploadTempleModal })));
@@ -103,6 +105,31 @@ export const App = () => {
   const [showWelcome, setShowWelcome] = useState(() => !localStorage.getItem('dharmasetu_onboarded'));
   const { theme } = useTheme();
   const { addNotification } = useNotifications();
+
+  const [showDevataModal, setShowDevataModal] = useState(false);
+
+  // 6-second forced transition state requested by user
+  const [isTransitioning, setIsTransitioning] = useState(false);
+  const prevViewRef = useRef(view);
+
+  useEffect(() => {
+    if (view !== prevViewRef.current && view !== 'home') {
+      // Only force loader on "sub pages" as requested, skip for home if desired, 
+      // but applying to all navigation away from current view is safest.
+      setIsTransitioning(true);
+      const timer = setTimeout(() => {
+        setIsTransitioning(false);
+      }, 6000);
+      prevViewRef.current = view;
+      return () => clearTimeout(timer);
+    }
+  }, [view]);
+
+  useEffect(() => {
+    if (!showSplash && !showWelcome && localStorage.getItem('dharmasetu_ishta_devata') === null) {
+      setShowDevataModal(true);
+    }
+  }, [showSplash, showWelcome]);
 
   const [tasks, setTasks] = useState<Task[]>(() => {
     try {
@@ -678,19 +705,19 @@ export const App = () => {
             </div>
           ) : (
             <ErrorBoundary>
-              <Suspense fallback={<div className="flex justify-center items-center h-full"><Icon name="lotus" className="h-12 w-12 text-primary animate-spin" /></div>}>
-              <AnimatePresence mode="wait">
-                <motion.div
-                  key={view + (id || '')}
-                  initial={{ opacity: 0, scale: 0.98, y: 15, filter: 'blur(4px)' }}
-                  animate={{ opacity: 1, scale: 1, y: 0, filter: 'blur(0px)' }}
-                  exit={{ opacity: 0, scale: 0.98, y: -15, filter: 'blur(4px)' }}
-                  transition={{ duration: 0.4, ease: [0.22, 1, 0.36, 1] }}
-                  className="h-full"
-                >
-                  {renderView()}
-                </motion.div>
-              </AnimatePresence>
+              <Suspense fallback={<SubscreenLoader />}>
+                  <AnimatePresence mode="wait">
+                    <motion.div
+                      key={view + (id || '') + (isTransitioning ? '-loading' : '')}
+                      initial={{ opacity: 0, scale: 0.98, y: 15, filter: 'blur(4px)' }}
+                      animate={{ opacity: 1, scale: 1, y: 0, filter: 'blur(0px)' }}
+                      exit={{ opacity: 0, scale: 0.98, y: -15, filter: 'blur(4px)' }}
+                      transition={{ duration: 0.4, ease: [0.22, 1, 0.36, 1] }}
+                      className="h-full"
+                    >
+                      {isTransitioning ? <SubscreenLoader /> : renderView()}
+                    </motion.div>
+                  </AnimatePresence>
               </Suspense>
             </ErrorBoundary>
           )}
@@ -789,6 +816,11 @@ export const App = () => {
       {/* Welcome Onboarding Flow */}
       {showWelcome && !showSplash && (
         <WelcomeFlow t={t} onComplete={() => setShowWelcome(false)} onNavigate={setView} />
+      )}
+      
+      {/* Ishta Devata Selector */}
+      {showDevataModal && (
+        <IshtaDevataModal onClose={() => setShowDevataModal(false)} />
       )}
     </div>
   );
