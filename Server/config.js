@@ -1,10 +1,8 @@
+import 'dotenv/config'
 import connectDB from './db.js'
 import { app } from './app/app.js'
-import dotenv from 'dotenv'
 import rateLimit from 'express-rate-limit'
 import helmet from 'helmet'
-
-dotenv.config()
 
 // Connect to the database
 connectDB()
