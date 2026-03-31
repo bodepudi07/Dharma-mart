@@ -1,0 +1,94 @@
+name: Security - Audit & CodeQL
+
+on:
+  push:
+    branches: ['**']
+  pull_request:
+    types: [opened, synchronize, reopened, ready_for_review]
+  schedule:
+    # Run weekly on Monday at 9:00 AM UTC
+    - cron: '0 9 * * 1'
+  workflow_dispatch:
+
+concurrency:
+  group: security-${{ github.event_name }}-${{ github.ref }}
+  cancel-in-progress: true
+
+env:
+  NODE_VERSION: '18'
+
+jobs:
+  security-audit:
+    name: Security NPM Audit
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+          cache: 'npm'
+
+      - name: Install Server dependencies
+        run: npm ci
+        working-directory: Server
+
+      - name: Install Frontend dependencies
+        run: npm ci
+        working-directory: Frontend
+
+      - name: Install Admin dependencies
+        run: npm ci
+        working-directory: Admin
+
+      - name: Audit Server dependencies
+        run: npm audit --production
+        working-directory: Server
+        continue-on-error: true
+
+      - name: Audit Frontend dependencies
+        run: npm audit --production
+        working-directory: Frontend
+        continue-on-error: true
+
+      - name: Audit Admin dependencies
+        run: npm audit --production
+        working-directory: Admin
+        continue-on-error: true
+
+  codeql-analysis:
+    name: Security CodeQL Analysis
+    runs-on: ubuntu-latest
+    if: github.event_name == 'push' || github.event_name == 'pull_request'
+    permissions:
+      actions: read
+      contents: read
+      security-events: write
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Initialize CodeQL
+        uses: github/codeql-action/init@v3
+        with:
+          languages: javascript
+
+      - name: Perform CodeQL Analysis
+        uses: github/codeql-action/analyze@v3
+        with:
+          category: "/language:javascript"
+
+  dependency-review:
+    name: Security Dependency Review
+    runs-on: ubuntu-latest
+    if: github.event_name == 'pull_request'
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Dependency Review
+        uses: actions/dependency-review-action@v4
+        with:
+          fail-on-severity: high

@@ -1,0 +1,121 @@
+name: Deploy - Staging
+
+on:
+  push:
+    branches: [develop]
+  workflow_dispatch:
+
+concurrency:
+  group: deploy-staging-${{ github.ref }}
+  cancel-in-progress: true
+
+env:
+  NODE_VERSION: '18'
+
+jobs:
+  build:
+    name: Staging Build
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+          cache: 'npm'
+
+      - name: Install Frontend dependencies
+        run: npm ci
+        working-directory: Frontend
+
+      - name: Install Admin dependencies
+        run: npm ci
+        working-directory: Admin
+
+      - name: Build Frontend
+        run: npm run build
+        working-directory: Frontend
+
+      - name: Build Admin
+        run: npm run build
+        working-directory: Admin
+
+      - name: Upload Frontend build artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: frontend-build
+          path: Frontend/dist
+          retention-days: 7
+
+      - name: Upload Admin build artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: admin-build
+          path: Admin/dist
+          retention-days: 7
+
+  deploy:
+    name: Staging Deploy
+    runs-on: ubuntu-latest
+    needs: build
+    environment:
+      name: staging
+      url: https://staging.dharma-mart.com
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Download Frontend build
+        uses: actions/download-artifact@v4
+        with:
+          name: frontend-build
+          path: Frontend/dist
+
+      - name: Download Admin build
+        uses: actions/download-artifact@v4
+        with:
+          name: admin-build
+          path: Admin/dist
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+
+      - name: Install production dependencies
+        run: npm ci --production
+        working-directory: Server
+
+      # Staging deployment commands
+      - name: Deploy to Staging
+        run: |
+          echo "🚀 Deploying to staging environment..."
+          # Add your staging deployment commands here
+          # Example: Deploy to staging server
+
+      - name: Staging deployment notification
+        run: |
+          echo "✅ Staging deployment completed!"
+          echo "Staging URL: https://staging.dharma-mart.com"
+          echo "Staging Admin: https://staging-admin.dharma-mart.com"
+          echo "Staging API: https://staging-api.dharma-mart.com"
+
+  notify:
+    name: Staging Notify
+    runs-on: ubuntu-latest
+    needs: deploy
+    if: always()
+    steps:
+      - name: Notify on success
+        if: ${{ needs.deploy.result == 'success' }}
+        run: |
+          echo "✅ Staging deployment successful!"
+          # Add Slack/Discord/Email notification here
+
+      - name: Notify on failure
+        if: ${{ needs.deploy.result == 'failure' }}
+        run: |
+          echo "❌ Staging deployment failed!"
+          # Add failure notification here
