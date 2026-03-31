@@ -17,8 +17,8 @@ connectDB()
 // Security middleware
 app.use(helmet())
 app.use(rateLimit({
-  windowMs: 15 * 60 * 1000,
-  max: 100,
+  windowMs: process.env.API_RATE_LIMIT_WINDOW ? parseInt(process.env.API_RATE_LIMIT_WINDOW, 10) : 15 * 60 * 1000,
+  max: process.env.API_RATE_LIMIT_MAX ? parseInt(process.env.API_RATE_LIMIT_MAX, 10) : 100,
 }))
 
 export default app

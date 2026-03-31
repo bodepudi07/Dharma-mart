@@ -37,7 +37,7 @@ export const createCashfreeOrder = async (orderData) => {
       },
       order_meta: {
         return_url: returnUrl || `${process.env.FRONTEND_URL || 'http://localhost:5173'}/order-success?order_id={order_id}`,
-        notify_url: notifyUrl || `${process.env.API_URL || 'http://localhost:8080'}/api/payments/webhook`
+        notify_url: notifyUrl || `${process.env.API_URL || 'http://localhost:8080'}/api/orders/webhook`
       },
       order_note: orderNote
     };
