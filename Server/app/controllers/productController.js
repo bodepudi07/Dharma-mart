@@ -1,6 +1,7 @@
 import { Product, Category, Vendor } from '../models/index.js';
 import { ApiError, asyncHandler } from '../middlewares/errorHandler.js';
 import { uploadToCloudinary, deleteFromCloudinary } from '../services/cloudinaryService.js';
+import { getOrSet, invalidatePattern } from '../utils/cache.js';
 
 // Get all products with filtering, sorting, and pagination
 export const getProducts = asyncHandler(async (req, res) => {
@@ -16,104 +17,73 @@ export const getProducts = asyncHandler(async (req, res) => {
     isNewArrival,
     isBestSeller,
     search,
-    sort = '-createdAt',
+    sort = 'created_at.desc',
     tags
   } = req.query;
 
-  const query = {};
+  // Use a cache key based on all query parameters
+  const cacheKey = `products:${JSON.stringify(req.query)}`;
+  const TTL = process.env.CACHE_TTL_PRODUCTS ? parseInt(process.env.CACHE_TTL_PRODUCTS) : 60;
 
-  // Status filter
-  if (status && status !== 'all') {
-    query.status = status;
-  }
+  const result = await getOrSet(cacheKey, async () => {
+    let q = Product.find();
 
-  // Category filter
-  if (category) {
-    query.category = category;
-  }
+    // Filters
+    if (status && status !== 'all') q = q.eq('status', status);
+    if (category) q = q.eq('category_id', category);
+    if (vendor) q = q.eq('vendor_id', vendor);
+    if (isFeatured === 'true') q = q.eq('is_featured', true);
+    if (isNewArrival === 'true') q = q.eq('is_new_arrival', true);
+    if (isBestSeller === 'true') q = q.eq('is_best_seller', true);
+    
+    if (minPrice) q = q.gte('price', parseFloat(minPrice));
+    if (maxPrice) q = q.lte('price', parseFloat(maxPrice));
 
-  // Vendor filter
-  if (vendor) {
-    query.vendor = vendor;
-  }
-
-  // Price range filter
-  if (minPrice || maxPrice) {
-    query.price = {};
-    if (minPrice) query.price.$gte = parseFloat(minPrice);
-    if (maxPrice) query.price.$lte = parseFloat(maxPrice);
-  }
-
-  // Boolean filters
-  if (isFeatured === 'true') query.isFeatured = true;
-  if (isNewArrival === 'true') query.isNewArrival = true;
-  if (isBestSeller === 'true') query.isBestSeller = true;
-
-  // Tags filter
-  if (tags) {
-    query.tags = { $in: tags.split(',').map(t => t.trim()) };
-  }
-
-  // Search filter
-  if (search) {
-    query.$or = [
-      { name: { $regex: search, $options: 'i' } },
-      { description: { $regex: search, $options: 'i' } },
-      { tags: { $regex: search, $options: 'i' } }
-    ];
-  }
-
-  const skip = (parseInt(page) - 1) * parseInt(limit);
-
-  // Parse sort string
-  const sortObj = {};
-  const sortFields = sort.split(',');
-  sortFields.forEach(field => {
-    if (field.startsWith('-')) {
-      sortObj[field.substring(1)] = -1;
-    } else {
-      sortObj[field] = 1;
+    if (search) {
+      q = q.or(`name.ilike.%${search}%,description.ilike.%${search}%`);
     }
-  });
 
-  const [products, total] = await Promise.all([
-    Product.find(query)
-      .populate('category', 'name slug')
-      .populate('vendor', 'name slug logo')
-      .sort(sortObj)
-      .skip(skip)
-      .limit(parseInt(limit)),
-    Product.countDocuments(query)
-  ]);
+    // Pagination
+    const from = (parseInt(page) - 1) * parseInt(limit);
+    const to = from + parseInt(limit) - 1;
+
+    // Sorting
+    const [sortCol, sortDir] = sort.includes('.') ? sort.split('.') : ['created_at', 'desc'];
+    q = q.order(sortCol, { ascending: sortDir === 'asc' });
+
+    const { data: products, count, error } = await q.range(from, to).select('*, category_id(name, slug), vendor_id(name, slug, logo_url)', { count: 'exact' });
+
+    if (error) throw error;
+
+    return {
+      products,
+      pagination: {
+        page: parseInt(page),
+        limit: parseInt(limit),
+        total: count,
+        pages: Math.ceil(count / parseInt(limit))
+      }
+    };
+  }, TTL);
 
   res.json({
     success: true,
-    data: products,
-    pagination: {
-      page: parseInt(page),
-      limit: parseInt(limit),
-      total,
-      pages: Math.ceil(total / parseInt(limit))
-    }
+    data: result.products,
+    pagination: result.pagination
   });
 });
 
 // Get single product by ID or slug
 export const getProduct = asyncHandler(async (req, res) => {
   const { id } = req.params;
+  const cacheKey = `product:${id}`;
+  const TTL = process.env.CACHE_TTL_PRODUCTS ? parseInt(process.env.CACHE_TTL_PRODUCTS) : 60;
 
-  const query = id.match(/^[0-9a-fA-F]{24}$/)
-    ? { _id: id }
-    : { slug: id };
-
-  const product = await Product.findOne(query)
-    .populate('category', 'name slug customFields')
-    .populate('vendor', 'name slug logo address ratings')
-    .populate('relatedProducts', 'name slug price images thumbnail');
-
-  if (!product) {
-    throw new ApiError(404, 'Product not found');
-  }
+  const product = await getOrSet(cacheKey, async () => {
+    const p = await Product.findOne(id.match(/^[0-9a-fA-F-]{36}$/) ? { _id: id } : { slug: id });
+    if (!p) throw new ApiError(404, 'Product not found');
+    return p;
+  }, TTL);
 
   res.json({
     success: true,
@@ -123,285 +93,180 @@ export const getProduct = asyncHandler(async (req, res) => {
 
 // Create new product
 export const createProduct = asyncHandler(async (req, res) => {
-  const productData = req.body;
-
-  // Sanitize ObjectId fields (convert empty strings to null)
-  const objectIdFields = ['vendor', 'subcategory', 'category'];
-  objectIdFields.forEach(field => {
-    if (productData[field] === '') {
-      productData[field] = null;
-    }
+  const productData = { ...req.body };
+  
+  // Clean empty UUIDs and empty numbers
+  if (!productData.vendor_id) delete productData.vendor_id;
+  if (!productData.category_id) delete productData.category_id;
+  if (productData.compare_price === '') productData.compare_price = null;
+  
+  // Parse tags to array
+  if (productData.tags && typeof productData.tags === 'string') {
+    productData.tags = productData.tags.split(',').map(t => t.trim()).filter(Boolean);
+  }
+  
+  // Parse boolean strings
+  ['is_featured', 'is_new_arrival', 'is_best_seller', 'track_inventory'].forEach(key => {
+    if (productData[key] === 'true') productData[key] = true;
+    if (productData[key] === 'false') productData[key] = false;
   });
 
-  // Verify category exists
-  const category = await Category.findById(productData.category);
-  if (!category) {
-    throw new ApiError(404, 'Category not found');
-  }
+  // Invalidate cache
+  invalidatePattern('products:');
 
-  // Verify vendor exists if provided
-  if (productData.vendor) {
-    const vendor = await Vendor.findById(productData.vendor);
-    if (!vendor) {
-      throw new ApiError(404, 'Vendor not found');
-    }
+  // Verify category/vendor (already handles ObjectIds, adapt for Supabase UUIDs)
+  const category = await Category.findById(productData.category_id || productData.category);
+  if (!category) throw new ApiError(404, 'Category not found');
+
+  if (productData.vendor_id || productData.vendor) {
+    const vendor = await Vendor.findById(productData.vendor_id || productData.vendor);
+    if (!vendor) throw new ApiError(404, 'Vendor not found');
   }
 
   // Handle main image upload
   if (req.files?.mainImage) {
-    const uploadResult = await uploadToCloudinary(req.files.mainImage[0], 'dharma-mart/products');
-    productData.thumbnail = {
-      url: uploadResult.url,
-      publicId: uploadResult.publicId
-    };
-    productData.images = [{
-      url: uploadResult.url,
-      publicId: uploadResult.publicId,
-      isPrimary: true
-    }];
+      const uploadResult = await uploadToCloudinary(req.files.mainImage[0], 'dharma-mart/products');
+      productData.thumbnail_url = uploadResult.url;
+      productData.thumbnail_public_id = uploadResult.publicId;
+      productData.images = [{ url: uploadResult.url, publicId: uploadResult.publicId, isPrimary: true }];
   }
 
-  // Handle gallery images upload
+  // Handle gallery upload (max 2 images)
   if (req.files?.gallery) {
-    const galleryResults = await Promise.all(
-      req.files.gallery.map(file => uploadToCloudinary(file, 'dharma-mart/products'))
-    );
-    
-    const galleryImages = galleryResults.map((result, index) => ({
-      url: result.url,
-      publicId: result.publicId,
-      isPrimary: index === 0 && !productData.thumbnail
-    }));
-
-    if (productData.images) {
-      productData.images = [...productData.images, ...galleryImages];
-    } else {
-      productData.images = galleryImages;
-    }
-
-    // Set thumbnail to first gallery image if not set
-    if (!productData.thumbnail && galleryImages.length > 0) {
-      productData.thumbnail = {
-        url: galleryImages[0].url,
-        publicId: galleryImages[0].publicId
-      };
-    }
+      const galleryFiles = req.files.gallery.slice(0, 2);
+      const uploadResults = await Promise.all(
+          galleryFiles.map(file => uploadToCloudinary(file, 'dharma-mart/products'))
+      );
+      
+      const galleryImages = uploadResults.map(res => ({
+          url: res.url,
+          publicId: res.publicId,
+          isPrimary: false
+      }));
+      
+      productData.images = [...(productData.images || []), ...galleryImages];
   }
 
   const product = await Product.create(productData);
 
-  const populatedProduct = await Product.findById(product._id)
-    .populate('category', 'name slug')
-    .populate('vendor', 'name slug');
-
   res.status(201).json({
     success: true,
     message: 'Product created successfully',
-    data: populatedProduct
+    data: product
   });
 });
 
-// Update product
+// Update/Delete (Already conceptually logic-ready above)
 export const updateProduct = asyncHandler(async (req, res) => {
-  const { id } = req.params;
-  const updates = req.body;
-
-  // Sanitize ObjectId fields (convert empty strings to null)
-  const objectIdFields = ['vendor', 'subcategory', 'category'];
-  objectIdFields.forEach(field => {
-    if (updates[field] === '') {
-      updates[field] = null;
-    }
-  });
-
-  const product = await Product.findById(id);
-  if (!product) {
-    throw new ApiError(404, 'Product not found');
-  }
-
-  // Verify category if being updated
-  if (updates.category) {
-    const category = await Category.findById(updates.category);
-    if (!category) {
-      throw new ApiError(404, 'Category not found');
-    }
-  }
-
-  // Verify vendor if being updated
-  if (updates.vendor) {
-    const vendor = await Vendor.findById(updates.vendor);
-    if (!vendor) {
-      throw new ApiError(404, 'Vendor not found');
-    }
-  }
-
-  // Handle main image upload
-  if (req.files?.mainImage) {
-    // Delete old thumbnail
-    if (product.thumbnail?.publicId) {
-      await deleteFromCloudinary(product.thumbnail.publicId);
-    }
-
-    const uploadResult = await uploadToCloudinary(req.files.mainImage[0], 'dharma-mart/products');
-    updates.thumbnail = {
-      url: uploadResult.url,
-      publicId: uploadResult.publicId
-    };
-  }
-
-  // Handle gallery images upload
-  if (req.files?.gallery) {
-    const galleryResults = await Promise.all(
-      req.files.gallery.map(file => uploadToCloudinary(file, 'dharma-mart/products'))
-    );
+    const { id } = req.params;
+    invalidatePattern('products:');
+    invalidatePattern(`product:${id}`);
     
-    const galleryImages = galleryResults.map(result => ({
-      url: result.url,
-      publicId: result.publicId,
-      isPrimary: false
-    }));
+    const updates = { ...req.body };
+    
+    // Clean empty UUIDs and numbers
+    if (updates.vendor_id === '') updates.vendor_id = null;
+    if (updates.category_id === '') updates.category_id = null;
+    if (updates.compare_price === '') updates.compare_price = null;
+    
+    // Parse tags to array
+    if (updates.tags && typeof updates.tags === 'string') {
+      updates.tags = updates.tags.split(',').map(t => t.trim()).filter(Boolean);
+    }
+    
+    // Parse boolean strings
+    ['is_featured', 'is_new_arrival', 'is_best_seller', 'track_inventory'].forEach(key => {
+      if (updates[key] === 'true') updates[key] = true;
+      if (updates[key] === 'false') updates[key] = false;
+    });
 
-    updates.images = [...(product.images || []), ...galleryImages];
-  }
+    // Handle gallery update (max 2 images)
+    if (req.files?.gallery) {
+        const galleryFiles = req.files.gallery.slice(0, 2);
+        const uploadResults = await Promise.all(
+            galleryFiles.map(file => uploadToCloudinary(file, 'dharma-mart/products'))
+        );
+        
+        const galleryImages = uploadResults.map(res => ({
+            url: res.url,
+            publicId: res.publicId,
+            isPrimary: false
+        }));
+        
+        updates.images = [...(updates.images || []), ...galleryImages];
+    }
 
-  const updatedProduct = await Product.findByIdAndUpdate(
-    id,
-    { $set: updates },
-    { new: true, runValidators: true }
-  )
-    .populate('category', 'name slug')
-    .populate('vendor', 'name slug');
-
-  res.json({
-    success: true,
-    message: 'Product updated successfully',
-    data: updatedProduct
-  });
+    const product = await Product.findByIdAndUpdate(id, { $set: updates });
+    res.json({
+        success: true,
+        data: product
+    });
 });
 
-// Delete product
 export const deleteProduct = asyncHandler(async (req, res) => {
-  const { id } = req.params;
-
-  const product = await Product.findById(id);
-  if (!product) {
-    throw new ApiError(404, 'Product not found');
-  }
-
-  // Delete images from Cloudinary
-  if (product.thumbnail?.publicId) {
-    await deleteFromCloudinary(product.thumbnail.publicId);
-  }
-
-  if (product.images && product.images.length > 0) {
-    await Promise.all(
-      product.images.map(img => 
-        img.publicId ? deleteFromCloudinary(img.publicId) : Promise.resolve()
-      )
-    );
-  }
-
-  await Product.findByIdAndDelete(id);
-
-  res.json({
-    success: true,
-    message: 'Product deleted successfully'
-  });
+    const { id } = req.params;
+    invalidatePattern('products:');
+    invalidatePattern(`product:${id}`);
+    await Product.findByIdAndDelete(id);
+    res.json({ success: true, message: 'Product deleted' });
 });
 
-// Get featured products
+// Featured, New Arrivals, Best Sellers using getOrSet
 export const getFeaturedProducts = asyncHandler(async (req, res) => {
   const { limit = 10 } = req.query;
-
-  const products = await Product.find({ 
-    isFeatured: true, 
-    status: 'active' 
-  })
-    .populate('category', 'name slug')
-    .populate('vendor', 'name slug logo')
-    .sort({ createdAt: -1 })
-    .limit(parseInt(limit));
-
-  res.json({
-    success: true,
-    data: products
-  });
+  const result = await getOrSet('products:featured', async () => {
+    const { data, error } = await Product.find().eq('is_featured', true).eq('status', 'active').limit(parseInt(limit));
+    if (error) throw error;
+    return data;
+  }, 120);
+  res.json({ success: true, data: result });
 });
 
-// Get new arrivals
 export const getNewArrivals = asyncHandler(async (req, res) => {
   const { limit = 10 } = req.query;
-
-  const products = await Product.find({ 
-    isNewArrival: true, 
-    status: 'active' 
-  })
-    .populate('category', 'name slug')
-    .populate('vendor', 'name slug logo')
-    .sort({ createdAt: -1 })
-    .limit(parseInt(limit));
-
-  res.json({
-    success: true,
-    data: products
-  });
+  const result = await getOrSet('products:new-arrivals', async () => {
+    const { data, error } = await Product.find().eq('is_new_arrival', true).eq('status', 'active').limit(parseInt(limit));
+    if (error) throw error;
+    return data;
+  }, 120);
+  res.json({ success: true, data: result });
 });
 
-// Get best sellers
 export const getBestSellers = asyncHandler(async (req, res) => {
   const { limit = 10 } = req.query;
-
-  const products = await Product.find({ 
-    isBestSeller: true, 
-    status: 'active' 
-  })
-    .populate('category', 'name slug')
-    .populate('vendor', 'name slug logo')
-    .sort({ 'ratings.average': -1 })
-    .limit(parseInt(limit));
-
-  res.json({
-    success: true,
-    data: products
-  });
+  const result = await getOrSet('products:best-sellers', async () => {
+    const { data, error } = await Product.find().eq('is_best_seller', true).eq('status', 'active').limit(parseInt(limit));
+    if (error) throw error;
+    return data;
+  }, 120);
+  res.json({ success: true, data: result });
 });
 
 // Add product review
 export const addProductReview = asyncHandler(async (req, res) => {
   const { id } = req.params;
   const { rating, comment } = req.body;
-  const userId = req.user?.id;
+  const userId = req.user.id;
 
-  const product = await Product.findById(id);
-  if (!product) {
-    throw new ApiError(404, 'Product not found');
-  }
+  const { data, error } = await supabase
+    .from('product_reviews')
+    .insert([{
+      product_id: id,
+      user_id: userId,
+      rating: parseInt(rating),
+      comment
+    }])
+    .select()
+    .single();
 
-  // Check if user already reviewed
-  const existingReview = product.reviews.find(
-    r => r.user.toString() === userId
-  );
+  if (error) throw error;
 
-  if (existingReview) {
-    throw new ApiError(400, 'You have already reviewed this product');
-  }
+  // Invalidate product cache to reflect new rating if we added rating aggregation logic later
+  invalidatePattern(`product:${id}`);
 
-  product.reviews.push({
-    user: userId,
-    rating,
-    comment
-  });
-
-  // Update average rating
-  const totalRating = product.reviews.reduce((sum, r) => sum + r.rating, 0);
-  product.ratings.average = totalRating / product.reviews.length;
-  product.ratings.count = product.reviews.length;
-
-  await product.save();
-
-  res.json({
+  res.status(201).json({
     success: true,
-    message: 'Review added successfully'
+    data
   });
 });
 

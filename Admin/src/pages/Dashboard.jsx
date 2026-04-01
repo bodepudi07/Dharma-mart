@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react';
+import api from '../services/api';
 
 function Dashboard() {
   const [stats, setStats] = useState({
@@ -18,26 +19,19 @@ function Dashboard() {
 
   const fetchDashboardData = async () => {
     try {
-      const [productsRes, categoriesRes, vendorsRes, ordersRes] = await Promise.all([
-        fetch(`${import.meta.env.VITE_API_URL}/products?limit=1`),
-        fetch(`${import.meta.env.VITE_API_URL}/categories?limit=1`),
-        fetch(`${import.meta.env.VITE_API_URL}/vendors?limit=1`),
-        fetch(`${import.meta.env.VITE_API_URL}/orders?limit=5`)
-      ]);
-
       const [productsData, categoriesData, vendorsData, ordersData] = await Promise.all([
-        productsRes.json(),
-        categoriesRes.json(),
-        vendorsRes.json(),
-        ordersRes.json()
+        api.get('/products', { limit: 1 }),
+        api.get('/categories', { limit: 1 }),
+        api.get('/vendors', { limit: 1 }),
+        api.get('/orders', { limit: 5 })
       ]);
 
       setStats({
         totalProducts: productsData.pagination?.total || 0,
-        totalCategories: categoriesData.pagination?.total || 0,
-        totalVendors: vendorsData.pagination?.total || 0,
+        totalCategories: categoriesData.data?.length || 0,
+        totalVendors: vendorsData.data?.length || 0,
         totalOrders: ordersData.pagination?.total || 0,
-        totalRevenue: ordersData.data?.reduce((sum, order) => sum + (order.totalAmount || 0), 0) || 0,
+        totalRevenue: ordersData.data?.reduce((sum, order) => sum + (order.total_amount || 0), 0) || 0,
         pendingOrders: ordersData.data?.filter(order => order.status === 'pending').length || 0
       });
 
@@ -158,34 +152,24 @@ function Dashboard() {
           <table className="w-full">
             <thead className="bg-gray-50">
               <tr>
-                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                  Order #
-                </th>
-                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                  Customer
-                </th>
-                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                  Amount
-                </th>
-                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                  Status
-                </th>
-                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                  Date
-                </th>
+                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Order #</th>
+                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Customer</th>
+                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Amount</th>
+                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Status</th>
+                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Date</th>
               </tr>
             </thead>
             <tbody className="bg-white divide-y divide-gray-200">
               {recentOrders.map((order) => (
-                <tr key={order._id}>
+                <tr key={order.id}>
                   <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">
-                    {order.orderNumber}
+                    {order.order_number}
                   </td>
                   <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-                    {order.shippingAddress?.fullName || 'N/A'}
+                    {order.shipping_full_name || order.guest_email || 'N/A'}
                   </td>
                   <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
-                    ₹{order.totalAmount?.toLocaleString()}
+                    ₹{order.total_amount?.toLocaleString()}
                   </td>
                   <td className="px-6 py-4 whitespace-nowrap">
                     <span className={`px-2 inline-flex text-xs leading-5 font-semibold rounded-full ${
@@ -199,7 +183,7 @@ function Dashboard() {
                     </span>
                   </td>
                   <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-                    {new Date(order.createdAt).toLocaleDateString()}
+                    {new Date(order.created_at).toLocaleDateString()}
                   </td>
                 </tr>
               ))}

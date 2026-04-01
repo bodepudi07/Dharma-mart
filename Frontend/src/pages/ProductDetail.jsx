@@ -30,14 +30,14 @@ function ProductDetail() {
   };
 
   const handleAddToCart = async () => {
-    const result = await addToCart(product._id, quantity);
+    const result = await addToCart(product.id, quantity);
     if (result.success) {
       alert('Added to cart!');
     }
   };
 
   const handleBuyNow = async () => {
-    const result = await addToCart(product._id, quantity);
+    const result = await addToCart(product.id, quantity);
     if (result.success) {
       navigate('/checkout');
     } else {
@@ -74,7 +74,7 @@ function ProductDetail() {
     );
   }
 
-  const images = product.images && product.images.length > 0 ? product.images : [product.thumbnail];
+  const images = product.images && product.images.length > 0 ? product.images : [{ url: product.thumbnail_url }];
 
   return (
     <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
@@ -160,20 +160,20 @@ function ProductDetail() {
             <span className="text-3xl font-bold text-orange-600">
               ₹{product.price.toLocaleString()}
             </span>
-            {product.comparePrice && product.comparePrice > product.price && (
+            {product.compare_price && product.compare_price > product.price && (
               <>
                 <span className="text-lg text-gray-400 line-through ml-3">
-                  ₹{product.comparePrice.toLocaleString()}
+                  ₹{product.compare_price.toLocaleString()}
                 </span>
                 <span className="ml-2 text-sm text-red-600 font-semibold">
-                  {Math.round(((product.comparePrice - product.price) / product.comparePrice) * 100)}% OFF
+                  {Math.round(((product.compare_price - product.price) / product.compare_price) * 100)}% OFF
                 </span>
               </>
             )}
           </div>
 
-          {product.shortDescription && (
-            <p className="text-gray-600 mb-4">{product.shortDescription}</p>
+          {product.short_description && (
+            <p className="text-gray-600 mb-4">{product.short_description}</p>
           )}
 
           {product.description && (
@@ -184,11 +184,11 @@ function ProductDetail() {
           )}
 
           {/* Stock Status */}
-          {product.stock?.trackInventory && (
+          {product.track_inventory && (
             <div className="mb-4">
-              {product.stock.quantity > 0 ? (
+              {product.stock_quantity > 0 ? (
                 <p className="text-green-600 font-medium">
-                  ✓ In Stock ({product.stock.quantity} available)
+                  ✓ In Stock ({product.stock_quantity} available)
                 </p>
               ) : (
                 <p className="text-red-600 font-medium">Out of Stock</p>
@@ -197,7 +197,7 @@ function ProductDetail() {
           )}
 
           {/* Quantity Selector */}
-          {(!product.stock?.trackInventory || product.stock.quantity > 0) && (
+          {(!product.track_inventory || product.stock_quantity > 0) && (
             <div className="mb-6">
               <label className="block text-sm font-medium text-gray-700 mb-2">
                 Quantity
@@ -212,7 +212,7 @@ function ProductDetail() {
                 <span className="text-lg font-semibold w-12 text-center">{quantity}</span>
                 <button
                   onClick={() => {
-                    const maxQty = product.stock?.trackInventory ? product.stock.quantity : 99;
+                    const maxQty = product.track_inventory ? product.stock_quantity : 99;
                     setQuantity(Math.min(maxQty, quantity + 1));
                   }}
                   className="w-10 h-10 rounded-full border border-gray-300 flex items-center justify-center hover:bg-gray-50"
@@ -227,16 +227,16 @@ function ProductDetail() {
           <div className="flex flex-col sm:flex-row gap-4">
             <button
               onClick={handleAddToCart}
-              disabled={product.stock?.trackInventory && product.stock.quantity === 0}
+              disabled={product.track_inventory && product.stock_quantity === 0}
               className="flex-1 bg-white border border-orange-600 text-orange-600 py-3 px-6 rounded-lg font-semibold hover:bg-orange-50 transition-colors disabled:bg-gray-100 disabled:text-gray-400 disabled:border-gray-200 disabled:cursor-not-allowed"
             >
-              {product.stock?.trackInventory && product.stock.quantity === 0
+              {product.track_inventory && product.stock_quantity === 0
                 ? 'Out of Stock'
                 : 'Add to Cart'}
             </button>
             <button
               onClick={handleBuyNow}
-              disabled={product.stock?.trackInventory && product.stock.quantity === 0}
+              disabled={product.track_inventory && product.stock_quantity === 0}
               className="flex-1 bg-orange-600 text-white py-3 px-6 rounded-lg font-semibold hover:bg-orange-700 transition-colors shadow-lg shadow-orange-200 disabled:bg-gray-400 disabled:cursor-not-allowed"
             >
               Buy Now

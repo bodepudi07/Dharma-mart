@@ -75,8 +75,8 @@ function Home() {
             <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
               {categories.slice(0, 8).map((category) => (
                 <Link
-                  key={category._id}
-                  to={`/products?category=${category._id}`}
+                  key={category.id}
+                  to={`/products?category=${category.id}`}
                   className="group relative overflow-hidden rounded-lg shadow-lg hover:shadow-xl transition-shadow"
                 >
                   <div className="bg-gradient-to-br from-orange-100 to-red-100 p-8 text-center">
@@ -125,19 +125,19 @@ function Home() {
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
               {featuredProducts.map((product) => (
                 <Link
-                  key={product._id}
-                  to={`/products/${product._id}`}
+                  key={product.id}
+                  to={`/products/${product.id}`}
                   className="bg-white rounded-lg shadow-md overflow-hidden hover:shadow-xl transition-shadow group"
                 >
                   <div className="relative">
                     <img
-                      src={product.thumbnail?.url || product.images?.[0]?.url || '/placeholder.png'}
+                      src={product.thumbnail_url || product.images?.[0]?.url || '/placeholder.png'}
                       alt={product.name}
                       className="w-full h-48 object-cover group-hover:scale-105 transition-transform"
                     />
-                    {product.comparePrice && product.comparePrice > product.price && (
+                    {product.compare_price && product.compare_price > product.price && (
                       <span className="absolute top-2 left-2 bg-red-500 text-white text-xs px-2 py-1 rounded">
-                        {Math.round(((product.comparePrice - product.price) / product.comparePrice) * 100)}% OFF
+                        {Math.round(((product.compare_price - product.price) / product.compare_price) * 100)}% OFF
                       </span>
                     )}
                   </div>
@@ -150,9 +150,9 @@ function Home() {
                         <span className="text-xl font-bold text-orange-600">
                           ₹{product.price.toLocaleString()}
                         </span>
-                        {product.comparePrice && product.comparePrice > product.price && (
+                        {product.compare_price && product.compare_price > product.price && (
                           <span className="text-sm text-gray-400 line-through ml-2">
-                            ₹{product.comparePrice.toLocaleString()}
+                            ₹{product.compare_price.toLocaleString()}
                           </span>
                         )}
                       </div>

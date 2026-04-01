@@ -11,6 +11,7 @@ import {
   addProductReview
 } from '../controllers/productController.js';
 import { uploadProductImages } from '../middlewares/upload.js';
+import { protect, authorize } from '../middlewares/authMiddleware.js';
 
 const router = express.Router();
 
@@ -21,10 +22,10 @@ router.get('/new-arrivals', getNewArrivals);
 router.get('/best-sellers', getBestSellers);
 router.get('/:id', getProduct);
 
-// Protected routes (add authentication middleware as needed)
-router.post('/', uploadProductImages, createProduct);
-router.put('/:id', uploadProductImages, updateProduct);
-router.delete('/:id', deleteProduct);
-router.post('/:id/reviews', addProductReview);
+// Protected routes
+router.post('/', protect, authorize('admin', 'vendor'), uploadProductImages, createProduct);
+router.put('/:id', protect, authorize('admin', 'vendor'), uploadProductImages, updateProduct);
+router.delete('/:id', protect, authorize('admin'), deleteProduct);
+router.post('/:id/reviews', protect, addProductReview);
 
 export default router;

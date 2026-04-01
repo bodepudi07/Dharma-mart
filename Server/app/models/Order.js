@@ -1,269 +1,171 @@
-import mongoose from 'mongoose';
+import supabase from '../../supabase.js';
 
-const orderItemSchema = new mongoose.Schema({
-  product: {
-    type: mongoose.Schema.Types.ObjectId,
-    ref: 'Product',
-    required: true
+export const Order = {
+  /**
+   * Find orders based on criteria
+   * @param {object} criteria 
+   * @returns {object} - Supabase query
+   */
+  find: (criteria = {}) => {
+    let q = supabase
+      .from('orders')
+      .select('*, order_items(*, product_id(*)), user_id(name, email)');
+
+    if (criteria.user) q = q.eq('user_id', criteria.user);
+    if (criteria.status) q = q.eq('status', criteria.status);
+    if (criteria.payment && criteria.payment.status) q = q.eq('payment_status', criteria.payment.status);
+    if (criteria.payment && criteria.payment.cashfreeOrderId) q = q.eq('cashfree_order_id', criteria.payment.cashfreeOrderId);
+
+    return q;
   },
-  name: {
-    type: String,
-    required: true
+
+  /**
+   * Find a single order
+   * @param {object} criteria 
+   * @returns {Promise<object|null>}
+   */
+  findOne: async (criteria) => {
+    let q = supabase
+      .from('orders')
+      .select('*, order_items(*, product_id(*), vendor_id(*)), user_id(name, email)');
+
+    if (criteria._id) q = q.eq('id', criteria._id);
+    else if (criteria.orderNumber) q = q.eq('order_number', criteria.orderNumber);
+    else if (criteria['payment.cashfreeOrderId']) q = q.eq('cashfree_order_id', criteria['payment.cashfreeOrderId']);
+
+    const { data, error } = await q.single();
+
+    if (error) {
+      if (error.code === 'PGRST116') return null;
+      throw error;
+    }
+
+    // Map fields back to Mongoose-like structure if needed for controller compatibility
+    if (data && data.order_items) {
+      data.items = data.order_items.map(item => ({
+        product: item.product_id,
+        vendor: item.vendor_id,
+        name: item.name,
+        sku: item.sku,
+        quantity: item.quantity,
+        price: item.price,
+        totalPrice: item.total_price,
+        image: { url: item.image_url, publicId: item.image_public_id },
+        variant: item.variant
+      }));
+      delete data.order_items;
+    }
+
+    return data;
   },
-  sku: String,
-  quantity: {
-    type: Number,
-    required: true,
-    min: [1, 'Quantity must be at least 1']
+
+  /**
+   * Find by ID
+   * @param {string} id 
+   * @returns {Promise<object|null>}
+   */
+  findById: async (id) => {
+    return await Order.findOne({ _id: id });
   },
-  price: {
-    type: Number,
-    required: true,
-    min: [0, 'Price cannot be negative']
+
+  /**
+   * Create a new order
+   * @param {object} orderData 
+   * @returns {Promise<object>}
+   */
+  create: async (orderData) => {
+    const { items = [], shippingAddress, payment, ...rest } = orderData;
+    
+    // Map data to flat SQL structure
+    const dbOrder = {
+      order_number: rest.orderNumber,
+      user_id: rest.user,
+      guest_email: rest.guestEmail,
+      shipping_full_name: shippingAddress.fullName,
+      shipping_phone: shippingAddress.phone,
+      shipping_email: shippingAddress.email,
+      shipping_street: shippingAddress.street,
+      shipping_city: shippingAddress.city,
+      shipping_state: shippingAddress.state,
+      shipping_country: shippingAddress.country,
+      shipping_zip_code: shippingAddress.zipCode,
+      shipping_landmark: shippingAddress.landmark,
+      shipping_address_type: shippingAddress.addressType || 'home',
+      payment_method: payment.method,
+      payment_status: payment.status || 'pending',
+      payment_amount: payment.amount,
+      payment_currency: payment.currency || 'INR',
+      subtotal: rest.subtotal,
+      tax_amount: rest.taxAmount || 0,
+      shipping_cost: rest.shippingCost || 0,
+      discount_amount: rest.discount?.amount || 0,
+      total_amount: rest.totalAmount,
+      status: rest.status || 'pending',
+      customer_note: rest.notes,
+      ip_address: rest.metadata?.ipAddress,
+      user_agent: rest.metadata?.userAgent
+    };
+
+    try {
+      const { data: order, error } = await supabase
+        .from('orders')
+        .insert([dbOrder])
+        .select()
+        .single();
+
+      if (error) {
+        console.error('Database Error (Order):', error);
+        throw error;
+      }
+
+      // Insert line items
+      if (items.length > 0) {
+        const itemsToInsert = items.map(item => ({
+          order_id: order.id,
+          product_id: item.product,
+          vendor_id: item.vendor,
+          name: item.name,
+          sku: item.sku,
+          quantity: item.quantity,
+          price: item.price,
+          total_price: item.totalPrice,
+          image_url: item.image?.url,
+          image_public_id: item.image?.publicId,
+          variant: item.variant
+        }));
+
+        const { error: itemsError } = await supabase
+          .from('order_items')
+          .insert(itemsToInsert);
+        
+        if (itemsError) {
+          console.error('Database Error (Items):', itemsError);
+          // In a real app, you might want to roll back the order here
+          throw itemsError;
+        }
+      }
+
+      return await Order.findById(order.id);
+    } catch (err) {
+      console.error('Failed to create order in Supabase:', err);
+      throw err;
+    }
   },
-  totalPrice: {
-    type: Number,
-    required: true
-  },
-  image: {
-    url: String,
-    publicId: String
-  },
-  vendor: {
-    type: mongoose.Schema.Types.ObjectId,
-    ref: 'Vendor'
-  },
-  variant: {
-    name: String,
-    attributes: [{
-      name: String,
-      value: String
-    }]
+
+  /**
+   * Count documents
+   * @param {object} query 
+   * @returns {Promise<number>}
+   */
+  countDocuments: async (query = {}) => {
+    let q = supabase.from('orders').select('*', { count: 'exact', head: true });
+    if (query.user) q = q.eq('user_id', query.user);
+    if (query.status) q = q.eq('status', query.status);
+
+    const { count, error } = await q;
+    if (error) throw error;
+    return count || 0;
   }
-}, { _id: false });
-
-const shippingAddressSchema = new mongoose.Schema({
-  fullName: {
-    type: String,
-    required: true
-  },
-  phone: {
-    type: String,
-    required: true
-  },
-  email: String,
-  street: {
-    type: String,
-    required: true
-  },
-  city: {
-    type: String,
-    required: true
-  },
-  state: {
-    type: String,
-    required: true
-  },
-  country: {
-    type: String,
-    default: 'India'
-  },
-  zipCode: {
-    type: String,
-    required: true
-  },
-  landmark: String,
-  addressType: {
-    type: String,
-    enum: ['home', 'work', 'other'],
-    default: 'home'
-  }
-}, { _id: false });
-
-const paymentSchema = new mongoose.Schema({
-  method: {
-    type: String,
-    enum: ['cashfree', 'cod', 'wallet', 'upi'],
-    required: true
-  },
-  status: {
-    type: String,
-    enum: ['pending', 'processing', 'completed', 'failed', 'refunded', 'partially_refunded'],
-    default: 'pending'
-  },
-  transactionId: String,
-  cashfreeOrderId: String,
-  cashfreePaymentId: String,
-  amount: {
-    type: Number,
-    required: true
-  },
-  currency: {
-    type: String,
-    default: 'INR'
-  },
-  paidAt: Date,
-  refundAmount: Number,
-  refundReason: String,
-  refundedAt: Date,
-  paymentDetails: {
-    type: Map,
-    of: mongoose.Schema.Types.Mixed
-  }
-}, { _id: false });
-
-const orderSchema = new mongoose.Schema({
-  orderNumber: {
-    type: String,
-    unique: true,
-    required: true
-  },
-  user: {
-    type: mongoose.Schema.Types.ObjectId,
-    ref: 'User'
-  },
-  guestEmail: String,
-  items: {
-    type: [orderItemSchema],
-    required: true,
-    validate: {
-      validator: function(v) {
-        return v.length > 0;
-      },
-      message: 'Order must have at least one item'
-    }
-  },
-  shippingAddress: {
-    type: shippingAddressSchema,
-    required: true
-  },
-  billingAddress: shippingAddressSchema,
-  payment: {
-    type: paymentSchema,
-    required: true
-  },
-  subtotal: {
-    type: Number,
-    required: true,
-    min: [0, 'Subtotal cannot be negative']
-  },
-  taxAmount: {
-    type: Number,
-    default: 0
-  },
-  shippingCost: {
-    type: Number,
-    default: 0
-  },
-  discount: {
-    amount: {
-      type: Number,
-      default: 0
-    },
-    code: String,
-    type: {
-      type: String,
-      enum: ['percentage', 'fixed']
-    }
-  },
-  totalAmount: {
-    type: Number,
-    required: true,
-    min: [0, 'Total cannot be negative']
-  },
-  status: {
-    type: String,
-    enum: ['pending', 'confirmed', 'processing', 'shipped', 'delivered', 'cancelled', 'returned', 'refunded'],
-    default: 'pending'
-  },
-  statusHistory: [{
-    status: {
-      type: String,
-      required: true
-    },
-    timestamp: {
-      type: Date,
-      default: Date.now
-    },
-    note: String,
-    updatedBy: {
-      type: mongoose.Schema.Types.ObjectId,
-      ref: 'User'
-    }
-  }],
-  tracking: {
-    carrier: String,
-    trackingNumber: String,
-    trackingUrl: String,
-    estimatedDelivery: Date,
-    shippedAt: Date,
-    deliveredAt: Date
-  },
-  notes: {
-    customer: String,
-    internal: String
-  },
-  cancellation: {
-    reason: String,
-    cancelledBy: {
-      type: mongoose.Schema.Types.ObjectId,
-      ref: 'User'
-    },
-    cancelledAt: Date,
-    refundStatus: {
-      type: String,
-      enum: ['pending', 'processed', 'failed']
-    }
-  },
-  return: {
-    reason: String,
-    requestedAt: Date,
-    approvedAt: Date,
-    status: {
-      type: String,
-      enum: ['requested', 'approved', 'rejected', 'picked_up', 'received', 'refunded']
-    }
-  },
-  invoice: {
-    number: String,
-    generatedAt: Date,
-    url: String
-  },
-  notificationSent: {
-    confirmation: {
-      type: Boolean,
-      default: false
-    },
-    shipping: {
-      type: Boolean,
-      default: false
-    },
-    delivery: {
-      type: Boolean,
-      default: false
-    }
-  },
-  metadata: {
-    source: {
-      type: String,
-      enum: ['web', 'mobile', 'admin', 'api'],
-      default: 'web'
-    },
-    ipAddress: String,
-    userAgent: String
-  }
-}, {
-  timestamps: true
-});
-
-// Indexes for efficient queries
-orderSchema.index({ user: 1 });
-orderSchema.index({ status: 1 });
-orderSchema.index({ 'payment.status': 1 });
-orderSchema.index({ 'payment.cashfreeOrderId': 1 });
-orderSchema.index({ createdAt: -1 });
-orderSchema.index({ 'shippingAddress.email': 1 });
-
-const Order = mongoose.model('Order', orderSchema);
+};
 
 export default Order;

@@ -1,72 +1,109 @@
-import mongoose from 'mongoose';
+import supabase from '../../supabase.js';
 
-const categorySchema = new mongoose.Schema({
-  name: {
-    type: String,
-    required: [true, 'Category name is required'],
-    unique: true,
-    trim: true,
-    maxlength: [100, 'Category name cannot exceed 100 characters']
+export const Category = {
+  /**
+   * Find categories with potential filters
+   * @param {object} criteria 
+   * @returns {Promise<array>}
+   */
+  find: async (criteria = {}) => {
+    let q = supabase
+      .from('categories')
+      .select('*');
+
+    if (criteria.is_active !== undefined) q = q.eq('is_active', criteria.is_active);
+    if (criteria.parent_id !== undefined) q = (criteria.parent_id === null) ? q.is('parent_id', null) : q.eq('parent_id', criteria.parent_id);
+
+    const { data, error } = await q.order('sort_order', { ascending: true });
+
+    if (error) throw error;
+    return data || [];
   },
-  description: {
-    type: String,
-    trim: true,
-    maxlength: [500, 'Description cannot exceed 500 characters']
+
+  /**
+   * Find a category by ID
+   * @param {string} id 
+   * @returns {Promise<object|null>}
+   */
+  findById: async (id) => {
+    const { data, error } = await supabase
+      .from('categories')
+      .select('*')
+      .eq('id', id)
+      .single();
+
+    if (error) {
+      if (error.code === 'PGRST116') return null;
+      throw error;
+    }
+    return data;
   },
-  slug: {
-    type: String,
-    unique: true,
-    lowercase: true
+
+  /**
+   * Find a category by slug
+   * @param {string} slug 
+   * @returns {Promise<object|null>}
+   */
+  findOne: async (criteria) => {
+    let q = supabase.from('categories').select('*');
+    if (criteria.slug) q = q.eq('slug', criteria.slug);
+    if (criteria.id) q = q.eq('id', criteria.id);
+
+    const { data, error } = await q.single();
+
+    if (error) {
+      if (error.code === 'PGRST116') return null;
+      throw error;
+    }
+    return data;
   },
-  image: {
-    url: String,
-    publicId: String
+
+  /**
+   * Create a new category
+   * @param {object} categoryData 
+   * @returns {Promise<object>}
+   */
+  create: async (categoryData) => {
+    const { data, error } = await supabase
+      .from('categories')
+      .insert([categoryData])
+      .select()
+      .single();
+
+    if (error) throw error;
+    return data;
   },
-  parentCategory: {
-    type: mongoose.Schema.Types.ObjectId,
-    ref: 'Category',
-    default: null
+
+  /**
+   * Update a category
+   * @param {string} id 
+   * @param {object} updates 
+   * @returns {Promise<object>}
+   */
+  findByIdAndUpdate: async (id, { $set: updates }) => {
+    const { data, error } = await supabase
+      .from('categories')
+      .update(updates)
+      .eq('id', id)
+      .select()
+      .single();
+
+    if (error) throw error;
+    return data;
   },
-  customFields: [{
-    name: {
-      type: String,
-      required: true
-    },
-    type: {
-      type: String,
-      enum: ['text', 'number', 'boolean', 'select', 'multiselect', 'date', 'textarea'],
-      default: 'text'
-    },
-    required: {
-      type: Boolean,
-      default: false
-    },
-    options: [String],
-    defaultValue: mongoose.Schema.Types.Mixed
-  }],
-  isActive: {
-    type: Boolean,
-    default: true
-  },
-  sortOrder: {
-    type: Number,
-    default: 0
+
+  /**
+   * Delete a category
+   * @param {string} id 
+   */
+  findByIdAndDelete: async (id) => {
+    const { error } = await supabase
+      .from('categories')
+      .delete()
+      .eq('id', id);
+
+    if (error) throw error;
   }
-}, {
-  timestamps: true
-});
-
-// Generate slug before saving
-categorySchema.pre('save', async function() {
-  if (this.isModified('name')) {
-    this.slug = this.name.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/(^-|-$)/g, '');
-  }
-});
-
-// Index for efficient queries
-categorySchema.index({ parentCategory: 1 });
-categorySchema.index({ isActive: 1 });
-
-const Category = mongoose.model('Category', categorySchema);
+};
 
 export default Category;

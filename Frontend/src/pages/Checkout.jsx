@@ -1,4 +1,4 @@
-import { useState, useContext } from 'react';
+import { useState, useContext, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { CartContext } from '../context/CartContext';
 
@@ -45,7 +45,7 @@ function Checkout() {
     try {
       const orderData = {
         items: cart.items.map(item => ({
-          productId: item.product._id,
+          productId: item.product.id,
           quantity: item.quantity,
           variant: item.variant
         })),
@@ -71,7 +71,7 @@ function Checkout() {
 
       if (data.success) {
         if (paymentMethod === 'cod') {
-          navigate('/order-success', { state: { orderId: data.data.order._id, orderNumber: data.data.order.orderNumber } });
+          navigate('/order-success', { state: { orderId: data.data.order.id, orderNumber: data.data.order.order_number } });
         } else if (data.data.paymentSession) {
           // Initialize Cashfree payment
           const { paymentSessionId, orderId } = data.data.paymentSession;
@@ -105,9 +105,19 @@ function Checkout() {
 
   const { subtotal, shipping, tax, total } = calculateTotals();
 
+  useEffect(() => {
+    if (!cart.items || cart.items.length === 0) {
+      navigate('/cart');
+    }
+  }, [cart.items, navigate]);
+
   if (!cart.items || cart.items.length === 0) {
-    navigate('/cart');
-    return null;
+    return (
+      <div className="flex flex-col items-center justify-center min-h-[60vh]">
+        <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-orange-600 mb-4"></div>
+        <p className="text-gray-600">Redirecting to cart...</p>
+      </div>
+    );
   }
 
   return (
@@ -270,10 +280,10 @@ function Checkout() {
               <h2 className="text-xl font-semibold text-gray-800 mb-4">Order Items</h2>
               
               <div className="space-y-4">
-                {cart.items.map((item) => (
-                  <div key={`${item.product._id}-${item.variant?.name || 'default'}`} className="flex items-center space-x-4">
+                {cart.items.map((item, index) => (
+                  <div key={`${item.product.id}-${item.variant?.name || 'default'}-${index}`} className="flex items-center space-x-4">
                     <img
-                      src={item.product.thumbnail?.url || item.product.images?.[0]?.url || '/placeholder.png'}
+                      src={item.product.thumbnail_url || item.product.images?.[0]?.url || '/placeholder.png'}
                       alt={item.product.name}
                       className="w-16 h-16 object-cover rounded"
                     />

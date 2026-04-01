@@ -1,92 +1,125 @@
-import mongoose from 'mongoose';
+import supabase from '../../supabase.js';
 
-const cartItemSchema = new mongoose.Schema({
-  product: {
-    type: mongoose.Schema.Types.ObjectId,
-    ref: 'Product',
-    required: true
-  },
-  quantity: {
-    type: Number,
-    required: true,
-    min: [1, 'Quantity must be at least 1']
-  },
-  price: {
-    type: Number,
-    required: true
-  },
-  variant: {
-    name: String,
-    attributes: [{
-      name: String,
-      value: String
-    }]
-  },
-  addedAt: {
-    type: Date,
-    default: Date.now
-  }
-}, { _id: false });
+export const Cart = {
+  /**
+   * Find a cart by user ID or session ID
+   * @param {object} criteria 
+   * @returns {Promise<object|null>}
+   */
+  findOne: async (criteria) => {
+    let q = supabase
+      .from('carts')
+      .select('*, cart_items(*, product_id(*))');
 
-const cartSchema = new mongoose.Schema({
-  user: {
-    type: mongoose.Schema.Types.ObjectId,
-    ref: 'User',
-    index: true,
-    sparse: true
-  },
-  sessionId: {
-    type: String,
-    index: true,
-    sparse: true
-  },
-  items: {
-    type: [cartItemSchema],
-    default: []
-  },
-  subtotal: {
-    type: Number,
-    default: 0
-  },
-  totalItems: {
-    type: Number,
-    default: 0
-  },
-  coupon: {
-    code: String,
-    discountType: {
-      type: String,
-      enum: ['percentage', 'fixed']
-    },
-    discountValue: Number,
-    discountAmount: Number
-  },
-  expiresAt: {
-    type: Date,
-    default: function() {
-      return new Date(Date.now() + 30 * 24 * 60 * 60 * 1000); // 30 days
+    if (criteria.user) q = q.eq('user_id', criteria.user);
+    if (criteria.sessionId) q = q.eq('session_id', criteria.sessionId);
+    if (criteria.isActive !== undefined) q = q.eq('is_active', criteria.isActive);
+
+    const { data, error } = await q.single();
+
+    if (error) {
+      if (error.code === 'PGRST116') return null;
+      throw error;
     }
+
+    // Transform Supabase structure to match Mongoose format simplified for controller
+    if (data) {
+      data.totalItems = data.total_items;
+      if (data.cart_items) {
+        data.items = data.cart_items.map(item => ({
+          product: item.product_id,
+          quantity: item.quantity,
+          price: item.price,
+          variant: item.variant,
+          addedAt: item.added_at
+        }));
+        delete data.cart_items;
+      }
+    }
+
+    return data;
   },
-  isActive: {
-    type: Boolean,
-    default: true
+
+  /**
+   * Create a new cart
+   * @param {object} cartData 
+   * @returns {Promise<object>}
+   */
+  create: async (cartData) => {
+      const { user, sessionId, items = [] } = cartData;
+      
+      const { data: cart, error: cartError } = await supabase
+          .from('carts')
+          .insert([{ user_id: user, session_id: sessionId }])
+          .select()
+          .single();
+      
+      if (cartError) throw cartError;
+
+      if (items.length > 0) {
+          const itemsToInsert = items.map(item => ({
+              cart_id: cart.id,
+              product_id: item.product,
+              quantity: item.quantity,
+              price: item.price,
+              variant: item.variant
+          }));
+
+          await supabase.from('cart_items').insert(itemsToInsert);
+      }
+
+      return cart;
+  },
+
+  /**
+   * Update a cart using findOneAndUpdate pattern
+   */
+  findOneAndUpdate: async (criteria, { $set: updates }, { upsert = false, new: isNew = true } = {}) => {
+      let cart = await Cart.findOne(criteria);
+      
+      if (!cart && upsert) {
+          cart = await Cart.create({ ...criteria, ...updates });
+          return cart;
+      }
+      
+      if (!cart) return null;
+
+      const updates_obj = updates.$set || updates;
+      const { items, ...rest } = updates_obj;
+
+      if (rest && Object.keys(rest).length > 0) {
+          const { error } = await supabase
+              .from('carts')
+              .update(rest)
+              .eq('id', cart.id);
+          if (error) throw error;
+      }
+
+      if (items) {
+          // Clear and replace items for simplicity in migration
+          await supabase.from('cart_items').delete().eq('cart_id', cart.id);
+          
+          if (items.length > 0) {
+              const itemsToInsert = items.map(item => ({
+                  cart_id: cart.id,
+                  product_id: item.product.id || item.product,
+                  quantity: item.quantity,
+                  price: item.price,
+                  variant: item.variant
+              }));
+              await supabase.from('cart_items').insert(itemsToInsert);
+          }
+      }
+
+      return await Cart.findOne({ id: cart.id });
+  },
+
+  /**
+   * Find by ID
+   */
+  findById: async (id) => {
+      return await Cart.findOne({ id });
   }
-}, {
-  timestamps: true
-});
-
-// Calculate subtotal and total items before saving
-cartSchema.pre('save', async function() {
-  if (this.isModified('items')) {
-    this.subtotal = this.items.reduce((sum, item) => sum + (item.price * item.quantity), 0);
-    this.totalItems = this.items.reduce((sum, item) => sum + item.quantity, 0);
-  }
-});
-
-// Indexes for efficient queries
-cartSchema.index({ expiresAt: 1 }, { expireAfterSeconds: 0 });
-cartSchema.index({ isActive: 1 });
-
-const Cart = mongoose.model('Cart', cartSchema);
+};
 
 export default Cart;

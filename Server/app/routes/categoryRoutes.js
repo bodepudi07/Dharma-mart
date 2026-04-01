@@ -8,6 +8,7 @@ import {
   getCategoryTree
 } from '../controllers/categoryController.js';
 import { uploadCategoryImage } from '../middlewares/upload.js';
+import { protect, authorize } from '../middlewares/authMiddleware.js';
 
 const router = express.Router();
 
@@ -16,9 +17,9 @@ router.get('/', getCategories);
 router.get('/tree', getCategoryTree);
 router.get('/:id', getCategory);
 
-// Admin routes (add authentication middleware as needed)
-router.post('/', uploadCategoryImage, createCategory);
-router.put('/:id', uploadCategoryImage, updateCategory);
-router.delete('/:id', deleteCategory);
+// Admin routes
+router.post('/', protect, authorize('admin'), uploadCategoryImage, createCategory);
+router.put('/:id', protect, authorize('admin'), uploadCategoryImage, updateCategory);
+router.delete('/:id', protect, authorize('admin'), deleteCategory);
 
 export default router;

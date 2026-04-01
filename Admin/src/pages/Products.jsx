@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react';
+import api from '../services/api';
 
 function Products() {
   const [products, setProducts] = useState([]);
@@ -11,21 +12,19 @@ function Products() {
   const [formData, setFormData] = useState({
     name: '',
     description: '',
-    shortDescription: '',
+    short_description: '',
     price: '',
-    comparePrice: '',
-    category: '',
-    vendor: '',
+    compare_price: '',
+    category_id: '',
+    vendor_id: '',
     status: 'draft',
-    isFeatured: false,
-    isNewArrival: false,
-    isBestSeller: false,
+    is_featured: false,
+    is_new_arrival: false,
+    is_best_seller: false,
     tags: '',
-    stock: {
-      quantity: 0,
-      trackInventory: true,
-      lowStockThreshold: 10
-    }
+    stock_quantity: 0,
+    track_inventory: true,
+    low_stock_threshold: 10
   });
   const [selectedFiles, setSelectedFiles] = useState({ mainImage: null, gallery: [] });
 
@@ -37,8 +36,7 @@ function Products() {
 
   const fetchProducts = async (page = 1) => {
     try {
-      const response = await fetch(`${import.meta.env.VITE_API_URL}/products?page=${page}&limit=20&status=all`);
-      const data = await response.json();
+      const data = await api.get('/products', { page, limit: 20, status: 'all' });
       if (data.success) {
         setProducts(data.data);
         setPagination(data.pagination);
@@ -52,8 +50,7 @@ function Products() {
 
   const fetchCategories = async () => {
     try {
-      const response = await fetch(`${import.meta.env.VITE_API_URL}/categories`);
-      const data = await response.json();
+      const data = await api.get('/categories');
       if (data.success) {
         setCategories(data.data);
       }
@@ -64,8 +61,7 @@ function Products() {
 
   const fetchVendors = async () => {
     try {
-      const response = await fetch(`${import.meta.env.VITE_API_URL}/vendors?status=approved`);
-      const data = await response.json();
+      const data = await api.get('/vendors');
       if (data.success) {
         setVendors(data.data);
       }
@@ -79,18 +75,10 @@ function Products() {
     try {
       const formDataToSend = new FormData();
       
-      // Add text fields
       Object.keys(formData).forEach(key => {
-        if (key === 'stock') {
-          formDataToSend.append(key, JSON.stringify(formData[key]));
-        } else if (key === 'tags') {
-          formDataToSend.append(key, formData[key]);
-        } else {
-          formDataToSend.append(key, formData[key]);
-        }
+        formDataToSend.append(key, formData[key]);
       });
 
-      // Add files
       if (selectedFiles.mainImage) {
         formDataToSend.append('mainImage', selectedFiles.mainImage);
       }
@@ -99,17 +87,11 @@ function Products() {
       });
 
       const url = editingProduct
-        ? `${import.meta.env.VITE_API_URL}/products/${editingProduct._id}`
-        : `${import.meta.env.VITE_API_URL}/products`;
+        ? `/products/${editingProduct.id}`
+        : '/products';
 
-      const method = editingProduct ? 'PUT' : 'POST';
+      const data = await api.upload(url, formDataToSend, editingProduct ? 'PUT' : 'POST');
 
-      const response = await fetch(url, {
-        method,
-        body: formDataToSend
-      });
-
-      const data = await response.json();
       if (data.success) {
         fetchProducts(pagination.page);
         handleCloseModal();
@@ -128,21 +110,19 @@ function Products() {
     setFormData({
       name: product.name,
       description: product.description || '',
-      shortDescription: product.shortDescription || '',
+      short_description: product.short_description || '',
       price: product.price,
-      comparePrice: product.comparePrice || '',
-      category: product.category?._id || '',
-      vendor: product.vendor?._id || '',
+      compare_price: product.compare_price || '',
+      category_id: (typeof product.category_id === 'object' ? product.category_id?.id : product.category_id) || '',
+      vendor_id: (typeof product.vendor_id === 'object' ? product.vendor_id?.id : product.vendor_id) || '',
       status: product.status,
-      isFeatured: product.isFeatured,
-      isNewArrival: product.isNewArrival,
-      isBestSeller: product.isBestSeller,
-      tags: product.tags?.join(', ') || '',
-      stock: product.stock || {
-        quantity: 0,
-        trackInventory: true,
-        lowStockThreshold: 10
-      }
+      is_featured: product.is_featured,
+      is_new_arrival: product.is_new_arrival,
+      is_best_seller: product.is_best_seller,
+      tags: Array.isArray(product.tags) ? product.tags.join(', ') : (product.tags || ''),
+      stock_quantity: product.stock_quantity || 0,
+      track_inventory: product.track_inventory ?? true,
+      low_stock_threshold: product.low_stock_threshold || 10
     });
     setShowModal(true);
   };
@@ -153,11 +133,7 @@ function Products() {
     }
 
     try {
-      const response = await fetch(`${import.meta.env.VITE_API_URL}/products/${productId}`, {
-        method: 'DELETE'
-      });
-
-      const data = await response.json();
+      const data = await api.delete(`/products/${productId}`);
       if (data.success) {
         fetchProducts(pagination.page);
         alert('Product deleted successfully!');
@@ -176,23 +152,27 @@ function Products() {
     setFormData({
       name: '',
       description: '',
-      shortDescription: '',
+      short_description: '',
       price: '',
-      comparePrice: '',
-      category: '',
-      vendor: '',
+      compare_price: '',
+      category_id: '',
+      vendor_id: '',
       status: 'draft',
-      isFeatured: false,
-      isNewArrival: false,
-      isBestSeller: false,
+      is_featured: false,
+      is_new_arrival: false,
+      is_best_seller: false,
       tags: '',
-      stock: {
-        quantity: 0,
-        trackInventory: true,
-        lowStockThreshold: 10
-      }
+      stock_quantity: 0,
+      track_inventory: true,
+      low_stock_threshold: 10
     });
     setSelectedFiles({ mainImage: null, gallery: [] });
+  };
+
+  // Helper to get category/vendor name from joined data
+  const getCategoryName = (product) => {
+    if (typeof product.category_id === 'object' && product.category_id) return product.category_id.name;
+    return 'N/A';
   };
 
   if (loading) {
@@ -231,33 +211,21 @@ function Products() {
         <table className="w-full">
           <thead className="bg-gray-50">
             <tr>
-              <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                Product
-              </th>
-              <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                Category
-              </th>
-              <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                Price
-              </th>
-              <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                Stock
-              </th>
-              <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                Status
-              </th>
-              <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                Actions
-              </th>
+              <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Product</th>
+              <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Category</th>
+              <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Price</th>
+              <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Stock</th>
+              <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Status</th>
+              <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Actions</th>
             </tr>
           </thead>
           <tbody className="bg-white divide-y divide-gray-200">
             {products.map((product) => (
-              <tr key={product._id}>
+              <tr key={product.id}>
                 <td className="px-6 py-4 whitespace-nowrap">
                   <div className="flex items-center">
                     <img
-                      src={product.thumbnail?.url || '/placeholder.png'}
+                      src={product.thumbnail_url || '/placeholder.png'}
                       alt={product.name}
                       className="w-12 h-12 rounded-lg object-cover mr-4"
                     />
@@ -265,25 +233,25 @@ function Products() {
                       <div className="text-sm font-medium text-gray-900">{product.name}</div>
                       <div className="text-sm text-gray-500">SKU: {product.sku}</div>
                       <div className="flex space-x-1 mt-1">
-                        {product.isFeatured && <span className="text-xs bg-orange-100 text-orange-800 px-1 rounded">Featured</span>}
-                        {product.isNewArrival && <span className="text-xs bg-blue-100 text-blue-800 px-1 rounded">New</span>}
-                        {product.isBestSeller && <span className="text-xs bg-green-100 text-green-800 px-1 rounded">Best</span>}
+                        {product.is_featured && <span className="text-xs bg-orange-100 text-orange-800 px-1 rounded">Featured</span>}
+                        {product.is_new_arrival && <span className="text-xs bg-blue-100 text-blue-800 px-1 rounded">New</span>}
+                        {product.is_best_seller && <span className="text-xs bg-green-100 text-green-800 px-1 rounded">Best</span>}
                       </div>
                     </div>
                   </div>
                 </td>
                 <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-                  {product.category?.name || 'N/A'}
+                  {getCategoryName(product)}
                 </td>
                 <td className="px-6 py-4 whitespace-nowrap">
                   <div className="text-sm font-medium text-gray-900">₹{product.price?.toLocaleString()}</div>
-                  {product.comparePrice && product.comparePrice > product.price && (
-                    <div className="text-sm text-gray-400 line-through">₹{product.comparePrice?.toLocaleString()}</div>
+                  {product.compare_price && product.compare_price > product.price && (
+                    <div className="text-sm text-gray-400 line-through">₹{product.compare_price?.toLocaleString()}</div>
                   )}
                 </td>
                 <td className="px-6 py-4 whitespace-nowrap">
-                  <div className="text-sm text-gray-900">{product.stock?.quantity || 0}</div>
-                  {product.stock?.trackInventory && product.stock.quantity <= (product.stock.lowStockThreshold || 10) && (
+                  <div className="text-sm text-gray-900">{product.stock_quantity || 0}</div>
+                  {product.track_inventory && product.stock_quantity <= (product.low_stock_threshold || 10) && (
                     <span className="text-xs text-red-600">Low Stock</span>
                   )}
                 </td>
@@ -305,7 +273,7 @@ function Products() {
                     Edit
                   </button>
                   <button
-                    onClick={() => handleDelete(product._id)}
+                    onClick={() => handleDelete(product.id)}
                     className="text-red-600 hover:text-red-900"
                   >
                     Delete
@@ -357,9 +325,7 @@ function Products() {
                 {/* Left Column */}
                 <div className="space-y-4">
                   <div>
-                    <label className="block text-sm font-medium text-gray-700 mb-1">
-                      Name *
-                    </label>
+                    <label className="block text-sm font-medium text-gray-700 mb-1">Name *</label>
                     <input
                       type="text"
                       value={formData.name}
@@ -370,21 +336,17 @@ function Products() {
                   </div>
 
                   <div>
-                    <label className="block text-sm font-medium text-gray-700 mb-1">
-                      Short Description
-                    </label>
+                    <label className="block text-sm font-medium text-gray-700 mb-1">Short Description</label>
                     <input
                       type="text"
-                      value={formData.shortDescription}
-                      onChange={(e) => setFormData(prev => ({ ...prev, shortDescription: e.target.value }))}
+                      value={formData.short_description}
+                      onChange={(e) => setFormData(prev => ({ ...prev, short_description: e.target.value }))}
                       className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-orange-500 focus:border-transparent"
                     />
                   </div>
 
                   <div>
-                    <label className="block text-sm font-medium text-gray-700 mb-1">
-                      Description *
-                    </label>
+                    <label className="block text-sm font-medium text-gray-700 mb-1">Description *</label>
                     <textarea
                       value={formData.description}
                       onChange={(e) => setFormData(prev => ({ ...prev, description: e.target.value }))}
@@ -396,9 +358,7 @@ function Products() {
 
                   <div className="grid grid-cols-2 gap-4">
                     <div>
-                      <label className="block text-sm font-medium text-gray-700 mb-1">
-                        Price *
-                      </label>
+                      <label className="block text-sm font-medium text-gray-700 mb-1">Price *</label>
                       <input
                         type="number"
                         value={formData.price}
@@ -410,13 +370,11 @@ function Products() {
                       />
                     </div>
                     <div>
-                      <label className="block text-sm font-medium text-gray-700 mb-1">
-                        Compare Price
-                      </label>
+                      <label className="block text-sm font-medium text-gray-700 mb-1">Compare Price</label>
                       <input
                         type="number"
-                        value={formData.comparePrice}
-                        onChange={(e) => setFormData(prev => ({ ...prev, comparePrice: e.target.value }))}
+                        value={formData.compare_price}
+                        onChange={(e) => setFormData(prev => ({ ...prev, compare_price: e.target.value }))}
                         min="0"
                         step="0.01"
                         className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-orange-500 focus:border-transparent"
@@ -426,42 +384,36 @@ function Products() {
 
                   <div className="grid grid-cols-2 gap-4">
                     <div>
-                      <label className="block text-sm font-medium text-gray-700 mb-1">
-                        Category *
-                      </label>
+                      <label className="block text-sm font-medium text-gray-700 mb-1">Category *</label>
                       <select
-                        value={formData.category}
-                        onChange={(e) => setFormData(prev => ({ ...prev, category: e.target.value }))}
+                        value={formData.category_id}
+                        onChange={(e) => setFormData(prev => ({ ...prev, category_id: e.target.value }))}
                         required
                         className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-orange-500 focus:border-transparent"
                       >
                         <option value="">Select Category</option>
                         {categories.map(cat => (
-                          <option key={cat._id} value={cat._id}>{cat.name}</option>
+                          <option key={cat.id} value={cat.id}>{cat.name}</option>
                         ))}
                       </select>
                     </div>
                     <div>
-                      <label className="block text-sm font-medium text-gray-700 mb-1">
-                        Vendor
-                      </label>
+                      <label className="block text-sm font-medium text-gray-700 mb-1">Vendor</label>
                       <select
-                        value={formData.vendor}
-                        onChange={(e) => setFormData(prev => ({ ...prev, vendor: e.target.value }))}
+                        value={formData.vendor_id}
+                        onChange={(e) => setFormData(prev => ({ ...prev, vendor_id: e.target.value }))}
                         className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-orange-500 focus:border-transparent"
                       >
                         <option value="">Select Vendor</option>
                         {vendors.map(vendor => (
-                          <option key={vendor._id} value={vendor._id}>{vendor.name}</option>
+                          <option key={vendor.id} value={vendor.id}>{vendor.name}</option>
                         ))}
                       </select>
                     </div>
                   </div>
 
                   <div>
-                    <label className="block text-sm font-medium text-gray-700 mb-1">
-                      Status
-                    </label>
+                    <label className="block text-sm font-medium text-gray-700 mb-1">Status</label>
                     <select
                       value={formData.status}
                       onChange={(e) => setFormData(prev => ({ ...prev, status: e.target.value }))}
@@ -477,11 +429,8 @@ function Products() {
 
                 {/* Right Column */}
                 <div className="space-y-4">
-                  {/* Image Upload */}
                   <div>
-                    <label className="block text-sm font-medium text-gray-700 mb-1">
-                      Main Image
-                    </label>
+                    <label className="block text-sm font-medium text-gray-700 mb-1">Main Image</label>
                     <input
                       type="file"
                       accept="image/*"
@@ -492,22 +441,29 @@ function Products() {
 
                   <div>
                     <label className="block text-sm font-medium text-gray-700 mb-1">
-                      Gallery Images
+                      Gallery Images (Max 2)
                     </label>
                     <input
                       type="file"
                       accept="image/*"
                       multiple
-                      onChange={(e) => setSelectedFiles(prev => ({ ...prev, gallery: Array.from(e.target.files) }))}
-                      className="w-full px-4 py-2 border border-gray-300 rounded-lg"
+                      onChange={(e) => {
+                        const files = Array.from(e.target.files);
+                        if (files.length > 2) {
+                          alert('You can only upload a maximum of 2 gallery images.');
+                          e.target.value = '';
+                          setSelectedFiles(prev => ({ ...prev, gallery: [] }));
+                          return;
+                        }
+                        setSelectedFiles(prev => ({ ...prev, gallery: files }));
+                      }}
+                      className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-orange-500"
                     />
+                    <p className="text-xs text-gray-500 mt-1">Total limit: 1 Main + 2 Gallery</p>
                   </div>
 
-                  {/* Tags */}
                   <div>
-                    <label className="block text-sm font-medium text-gray-700 mb-1">
-                      Tags (comma separated)
-                    </label>
+                    <label className="block text-sm font-medium text-gray-700 mb-1">Tags (comma separated)</label>
                     <input
                       type="text"
                       value={formData.tags}
@@ -517,18 +473,12 @@ function Products() {
                     />
                   </div>
 
-                  {/* Stock */}
                   <div>
-                    <label className="block text-sm font-medium text-gray-700 mb-1">
-                      Stock Quantity
-                    </label>
+                    <label className="block text-sm font-medium text-gray-700 mb-1">Stock Quantity</label>
                     <input
                       type="number"
-                      value={formData.stock.quantity}
-                      onChange={(e) => setFormData(prev => ({ 
-                        ...prev, 
-                        stock: { ...prev.stock, quantity: parseInt(e.target.value) || 0 }
-                      }))}
+                      value={formData.stock_quantity}
+                      onChange={(e) => setFormData(prev => ({ ...prev, stock_quantity: parseInt(e.target.value) || 0 }))}
                       min="0"
                       className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-orange-500 focus:border-transparent"
                     />
@@ -538,55 +488,43 @@ function Products() {
                     <input
                       type="checkbox"
                       id="trackInventory"
-                      checked={formData.stock.trackInventory}
-                      onChange={(e) => setFormData(prev => ({ 
-                        ...prev, 
-                        stock: { ...prev.stock, trackInventory: e.target.checked }
-                      }))}
+                      checked={formData.track_inventory}
+                      onChange={(e) => setFormData(prev => ({ ...prev, track_inventory: e.target.checked }))}
                       className="mr-2 text-orange-600 focus:ring-orange-500"
                     />
-                    <label htmlFor="trackInventory" className="text-sm text-gray-700">
-                      Track Inventory
-                    </label>
+                    <label htmlFor="trackInventory" className="text-sm text-gray-700">Track Inventory</label>
                   </div>
 
-                  {/* Checkboxes */}
                   <div className="space-y-2">
                     <div className="flex items-center">
                       <input
                         type="checkbox"
                         id="isFeatured"
-                        checked={formData.isFeatured}
-                        onChange={(e) => setFormData(prev => ({ ...prev, isFeatured: e.target.checked }))}
+                        checked={formData.is_featured}
+                        onChange={(e) => setFormData(prev => ({ ...prev, is_featured: e.target.checked }))}
                         className="mr-2 text-orange-600 focus:ring-orange-500"
                       />
-                      <label htmlFor="isFeatured" className="text-sm text-gray-700">
-                        Featured Product
-                      </label>
+                      <label htmlFor="isFeatured" className="text-sm text-gray-700">Featured Product</label>
                     </div>
                     <div className="flex items-center">
                       <input
                         type="checkbox"
                         id="isNewArrival"
-                        checked={formData.isNewArrival}
-                        onChange={(e) => setFormData(prev => ({ ...prev, isNewArrival: e.target.checked }))}
+                        checked={formData.is_new_arrival}
+                        onChange={(e) => setFormData(prev => ({ ...prev, is_new_arrival: e.target.checked }))}
                         className="mr-2 text-orange-600 focus:ring-orange-500"
                       />
-                      <label htmlFor="isNewArrival" className="text-sm text-gray-700">
-                        New Arrival
-                      </label>
+                      <label htmlFor="isNewArrival" className="text-sm text-gray-700">New Arrival</label>
                     </div>
                     <div className="flex items-center">
                       <input
                         type="checkbox"
                         id="isBestSeller"
-                        checked={formData.isBestSeller}
-                        onChange={(e) => setFormData(prev => ({ ...prev, isBestSeller: e.target.checked }))}
+                        checked={formData.is_best_seller}
+                        onChange={(e) => setFormData(prev => ({ ...prev, is_best_seller: e.target.checked }))}
                         className="mr-2 text-orange-600 focus:ring-orange-500"
                       />
-                      <label htmlFor="isBestSeller" className="text-sm text-gray-700">
-                        Best Seller
-                      </label>
+                      <label htmlFor="isBestSeller" className="text-sm text-gray-700">Best Seller</label>
                     </div>
                   </div>
                 </div>

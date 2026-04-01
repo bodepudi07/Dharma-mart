@@ -1,152 +1,65 @@
 # Dharma Mart Architecture
 
-This document describes the architecture as currently implemented.
+This document describes the current architecture of the Dharma Mart platform.
 
 ## High-Level View
 
 ```txt
 Frontend (React/Vite)  ----\
-                            >  Server (Express API)  ----  MongoDB (Mongoose)
-Admin (React/Vite)     ----/
-                                |-- Cloudinary (media uploads)
-                                `-- Cashfree (payment order + verification)
+                            >  Server (Express API)  ----  Supabase (PostgreSQL)
+Admin (React/Vite)     ----/           |
+                                       |-- Node-Cache (In-memory caching)
+                                       |-- Cloudinary (Media uploads)
+                                       `-- Cashfree (Payments)
 ```
 
-## Applications
+## Internal Components
 
-### Frontend (`Frontend/`)
+### 1. Frontend & Admin (React + Vite)
+- **Frontend**: Customer-facing store with product browsing, cart management, and checkout.
+- **Admin**: Internal dashboard for managing categories, products, vendors, and orders.
+- Both use `Vite` for fast development and standard React patterns for state management.
 
-Customer storefront with:
+### 2. Server (Node.js + Express)
+The backend follows a modular structure:
+- **Routes**: Define the API endpoints and wire up middleware.
+- **Controllers**: Contain the business logic for each request.
+- **Models**: Thin query helpers that interface with Supabase (replacing Mongoose).
+- **Middlewares**: Handle authentication (JWT), error handling, and image uploads (Multer).
+- **Services**: Wrappers for external integrations like Cloudinary and Cashfree.
+- **Utils**: Generic helpers, including `cache.js` for performance optimization.
 
-- Product listing and filters
-- Product detail page
-- Guest cart via generated `sessionId` in localStorage
-- Checkout flow (Cashfree or COD)
-- Order success page
+### 3. Persistence & Caching
+- **Database**: Supabase provides a hosted PostgreSQL instance. Relations are strictly defined via SQL schemas.
+- **Caching**: `node-cache` is used in a "cache-aside" pattern for high-traffic read operations (Product listing, Categories). The cache is automatically invalidated when data is mutated.
 
-Routing:
+## Core Data Flow
 
-- `/`
-- `/products`
-- `/products/:id`
-- `/cart`
-- `/checkout`
-- `/order-success`
+### Request Authentication
+1. Client sends a request with a Bearer Token in the `Authorization` header.
+2. `authMiddleware.js` verifies the JWT.
+3. User data is fetched from Supabase and attached to the `req.user` object.
+4. Role-based checks (`authorize('admin')`) ensure only authorized users access certain routes.
 
-### Admin (`Admin/`)
+### Product Reading (with Caching)
+1. Controller checks the cache for a specific key (e.g., `products:list:...`).
+2. If match found (Cache Hit), returns data immediately.
+3. If no match (Cache Miss), fetches data from Supabase, updates cache, and then returns.
 
-Internal dashboard with:
+### Order Placement (Reliability)
+1. Server performs a **two-pass validation**:
+   - **Pass 1**: Checks stock levels for all items in the request.
+   - **Pass 2**: Atomically decrements stock and creates the order record in Supabase.
+2. This prevents race conditions and ensures data integrity.
 
-- Overview stats (products/categories/vendors/orders)
-- Category CRUD
-- Product CRUD
-- Vendor CRUD + approve/reject
-- Order list + status actions
+## Tech Stack Summary
 
-Routing:
-
-- `/`
-- `/categories`
-- `/products`
-- `/vendors`
-- `/orders`
-
-### Server (`Server/`)
-
-Node.js + Express API using:
-
-- `app/routes/*` for endpoint registration
-- `app/controllers/*` for business logic
-- `app/models/*` for Mongoose schemas
-- `app/services/*` for Cashfree and Cloudinary integrations
-- `app/middlewares/*` for upload and error handling
-
-Registered API modules:
-
-- `/api/categories`
-- `/api/products`
-- `/api/vendors`
-- `/api/cart`
-- `/api/orders`
-
-Global middleware:
-
-- CORS
-- Body parsers (JSON/urlencoded)
-- Helmet
-- Rate limiting
-- Not-found + error handler
-
-## Data Model Summary
-
-Collections currently defined:
-
-- `Category`
-- `Product`
-- `Vendor`
-- `Cart`
-- `Order`
-
-Relationships:
-
-- Product references Category and Vendor
-- Order items reference Product and Vendor
-- Cart items reference Product
-- Category supports parent-child hierarchy
-
-## Request/State Flow
-
-### Product Browsing
-
-1. Frontend/Admin requests `/api/products` (with filters/sort/pagination)
-2. Controller builds Mongo query
-3. Mongoose returns populated product docs
-4. Client renders list/detail
-
-### Guest Cart
-
-1. Frontend generates `sessionId` and stores in localStorage
-2. Cart endpoints use `sessionId` to find/create active cart
-3. Cart pre-save hook recalculates subtotal and total items
-4. Frontend re-renders cart summary from API response
-
-### Order Placement
-
-1. Checkout posts items and shipping details to `/api/orders`
-2. Server validates products and stock, then creates `Order`
-3. For online payments, server creates Cashfree order and returns payment session
-4. Cart is cleared after order creation
-
-## Runtime Configuration
-
-Key environment variables consumed by code:
-
-- `PORT`
-- `NODE_ENV`
-- `MONGODB_URI`
-- `CORS_ORIGINS`
-- `CLOUDINARY_CLOUD_NAME`
-- `CLOUDINARY_API_KEY`
-- `CLOUDINARY_API_SECRET`
-- `CASHFREE_APP_ID`
-- `CASHFREE_SECRET_KEY`
-- `FRONTEND_URL`
-- `API_URL`
-
-Frontend/Admin:
-
-- `VITE_API_URL`
-
-## Current Gaps and Risks
-
-- No authentication/authorization middleware on routes
-- Controllers that rely on `req.user` are partially ineffective
-- No automated tests in repository
-- Cashfree service default `notify_url` path does not match registered webhook route
-
-## Future Evolution Areas
-
-- Add auth and role-based route protection
-- Add automated tests for API and UI
-- Fix webhook URL path consistency and payment state lifecycle
-- Add observability (structured logs + error tracking + request metrics)
+| Layer | Technology |
+|---|---|
+| **Language** | JavaScript (Node.js) |
+| **Framework** | Express 5 |
+| **Database** | PostgreSQL (Supabase) |
+| **Cache** | Node-Cache |
+| **Storage** | Cloudinary |
+| **Payment** | Cashfree PG |
+| **Auth** | JWT (JSON Web Tokens) |

@@ -10,7 +10,7 @@ connectDB()
     console.log('Connected to the database')
   })
   .catch((error) => {
-    console.error('MongoDB connection failed, but server will still run')
+    console.error('Database connection failed, but server will still run')
     console.error(error.message)
   })
 

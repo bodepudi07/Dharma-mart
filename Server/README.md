@@ -1,92 +1,90 @@
 # Server (Backend API)
 
-Express + MongoDB backend for Dharma Mart.
+Node.js (Express) backend for Dharma Mart, powered by Supabase (PostgreSQL).
 
 ## Stack
 
-- Node.js (ES modules)
-- Express 5
-- Mongoose
-- Cloudinary (uploads)
-- Cashfree PG (payments)
+- **Node.js**: ES Modules
+- **Express**: Framework for handling REST API requests
+- **Database**: Supabase (PostgreSQL)
+- **Caching**: Node-Cache (In-memory)
+- **Authentication**: JWT-based with Role-Based Access Control
+- **Media**: Cloudinary (Image uploads)
+- **Payments**: Cashfree PG integration
 
 ## Scripts
 
 ```bash
-npm run dev    # nodemon server.js
-npm start      # node server.js
+npm run dev    # Start with nodemon (development)
+npm start      # Start with node (production)
+npm test       # Run automated tests (Jest)
 ```
 
 ## Environment (`Server/.env`)
+
+Required variables for development:
 
 ```env
 PORT=8080
 NODE_ENV=development
 
-MONGODB_URI=mongodb://localhost:27017/dharma-mart
+# Supabase Configuration
+SUPABASE_URL=https://your-project-id.supabase.co
+SUPABASE_SERVICE_KEY=your-service-role-key
+
+# Auth
+JWT_SECRET=your-random-secret-key
+
+# Services
 CORS_ORIGINS=http://localhost:5173,http://localhost:5174
+CLOUDINARY_CLOUD_NAME=...
+CLOUDINARY_API_KEY=...
+CLOUDINARY_API_SECRET=...
+CASHFREE_APP_ID=...
+CASHFREE_SECRET_KEY=...
 
-# Optional but needed for full feature set
-CLOUDINARY_CLOUD_NAME=
-CLOUDINARY_API_KEY=
-CLOUDINARY_API_SECRET=
-
-CASHFREE_APP_ID=
-CASHFREE_SECRET_KEY=
-
-FRONTEND_URL=http://localhost:5173
-API_URL=http://localhost:8080
+# Cache TTLs (seconds)
+CACHE_TTL_PRODUCTS=60
+CACHE_TTL_CATEGORIES=300
 ```
 
-## Run locally
+## Database Setup
 
-```bash
-cd Server
-npm install
-npm run dev
-```
+Dharma Mart uses Supabase for database persistence. 
 
-Health check:
+1. Create a [Supabase](https://supabase.com/) project.
+2. Run the initial SQL schema found in `migrations/001_initial_schema.sql` inside the Supabase SQL Editor.
+3. Add your Supabase credentials to the `.env` file.
 
-- `GET http://localhost:8080/health`
+## API Modules
 
-API root:
+- `/api/auth`: Login, Register, Profile
+- `/api/categories`: Category management (Cached)
+- `/api/products`: Product catalog with filters (Cached)
+- `/api/vendors`: Vendor management
+- `/api/cart`: Shopping cart management
+- `/api/orders`: Order placement, tracking, and management
 
-- `GET http://localhost:8080/api`
-
-## API modules
-
-- `/api/categories`
-- `/api/products`
-- `/api/vendors`
-- `/api/cart`
-- `/api/orders`
-
-## Folder structure
+## Folder Structure
 
 ```txt
 Server/
 |-- app/
-|   |-- controllers/
-|   |-- middlewares/
-|   |-- models/
-|   |-- routes/
-|   `-- services/
-|-- config.js
-|-- db.js
-`-- server.js
+|   |-- controllers/ # Request logic
+|   |-- middlewares/ # Auth, Error, Upload
+|   |-- models/      # Supabase query helpers
+|   |-- routes/      # Endpoint definitions
+|   |-- services/    # External integrations (Cashfree, Cloudinary)
+|   `-- utils/       # Cache, generic utilities
+|-- migrations/      # SQL schema files
+|-- supabase.js      # Supabase client singleton
+|-- config.js        # Server configuration & initialization
+`-- server.js        # Entry point
 ```
 
-## Notes
+## Related Docs
 
-- Auth middleware is not wired yet; routes are currently open.
-- Rate limiting and helmet are enabled globally.
-- Upload handling uses multer memory storage and Cloudinary upload.
-
-## Related docs
-
-- [Setup](../docs/SETUP.md)
-- [API](../docs/API.md)
+- [Setup Guide](../docs/SETUP.md)
 - [Architecture](../docs/ARCHITECTURE.md)
-- [Environment](../docs/ENVIRONMENT.md)
-- [Known Gaps](../docs/KNOWN_GAPS.md)
+- [API Reference](../docs/API.md)
+- [Environment Variables](../docs/ENVIRONMENT.md)

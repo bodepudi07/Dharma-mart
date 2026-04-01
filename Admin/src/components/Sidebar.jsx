@@ -1,7 +1,31 @@
-import { Link, useLocation } from 'react-router-dom';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
+import { useState, useEffect } from 'react';
 
 function Sidebar() {
   const location = useLocation();
+  const navigate = useNavigate();
+  const [adminUser, setAdminUser] = useState({ name: 'Admin User', email: 'admin@dharmamart.com' });
+
+  useEffect(() => {
+    const userStr = localStorage.getItem('adminUser');
+    if (userStr) {
+      try {
+        setAdminUser(JSON.parse(userStr));
+      } catch (err) {
+        console.error('Error parsing admin user:', err);
+      }
+    }
+  }, []);
+
+  const handleLogout = () => {
+    if (window.confirm('Are you sure you want to log out?')) {
+      localStorage.removeItem('adminToken');
+      localStorage.removeItem('adminUser');
+      // Dispatch storage event to notify App component
+      window.dispatchEvent(new Event('storage'));
+      navigate('/login');
+    }
+  };
 
   const menuItems = [
     {
@@ -52,35 +76,44 @@ function Sidebar() {
   ];
 
   return (
-    <aside className="w-64 bg-white shadow-lg">
+    <aside className="fixed inset-y-0 left-0 w-64 bg-white shadow-xl flex flex-col border-r border-gray-100 z-30">
       {/* Logo */}
-      <div className="p-6 border-b">
-        <div className="flex items-center space-x-2">
-          <div className="w-10 h-10 bg-gradient-to-br from-orange-500 to-red-600 rounded-lg flex items-center justify-center">
-            <span className="text-white font-bold text-xl">D</span>
+      <div className="p-6 border-b border-gray-50 flex-shrink-0">
+        <div className="flex items-center space-x-3">
+          <div className="w-10 h-10 bg-gradient-to-br from-orange-500 to-red-600 rounded-xl flex items-center justify-center shadow-lg shadow-orange-100">
+            <span className="text-white font-bold text-xl uppercase">
+              DM
+            </span>
           </div>
           <div>
-            <h1 className="text-xl font-bold text-gray-800">Dharma Mart</h1>
-            <p className="text-xs text-gray-500">Admin Panel</p>
+            <h1 className="text-lg font-extrabold text-gray-800 tracking-tight leading-none">Dharma Mart</h1>
+            <p className="text-[10px] text-orange-500 uppercase font-bold tracking-widest mt-1">Admin Panel</p>
           </div>
         </div>
       </div>
 
       {/* Navigation */}
-      <nav className="p-4">
-        <ul className="space-y-2">
+      <nav className="flex-grow overflow-y-auto py-6 px-4">
+        <ul className="space-y-1.5">
           {menuItems.map((item) => (
             <li key={item.path}>
               <Link
                 to={item.path}
-                className={`flex items-center space-x-3 px-4 py-3 rounded-lg transition-colors ${
+                className={`flex items-center space-x-3 px-4 py-3 rounded-xl transition-all duration-200 group ${
                   location.pathname === item.path
-                    ? 'bg-orange-100 text-orange-600'
-                    : 'text-gray-600 hover:bg-gray-100'
+                    ? 'bg-orange-50 text-orange-600 shadow-sm'
+                    : 'text-gray-500 hover:bg-gray-50 hover:text-gray-800'
                 }`}
               >
-                {item.icon}
-                <span className="font-medium">{item.name}</span>
+                <span className={`transition-colors duration-200 ${
+                  location.pathname === item.path ? 'text-orange-600' : 'text-gray-400 group-hover:text-gray-600'
+                }`}>
+                  {item.icon}
+                </span>
+                <span className="font-semibold text-sm">{item.name}</span>
+                {location.pathname === item.path && (
+                  <div className="ml-auto w-1.5 h-1.5 bg-orange-500 rounded-full"></div>
+                )}
               </Link>
             </li>
           ))}
@@ -88,17 +121,29 @@ function Sidebar() {
       </nav>
 
       {/* Footer */}
-      <div className="absolute bottom-0 left-0 right-0 p-4 border-t">
-        <div className="flex items-center space-x-3">
-          <div className="w-10 h-10 bg-gray-200 rounded-full flex items-center justify-center">
-            <svg className="w-5 h-5 text-gray-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"/>
+      <div className="p-4 border-t border-gray-50 mt-auto bg-gray-50/50">
+        <div className="bg-white p-4 rounded-2xl shadow-sm border border-gray-100">
+          <div className="flex items-center space-x-3 mb-4">
+            <div className="w-10 h-10 bg-orange-100 rounded-full flex items-center justify-center border-2 border-white shadow-sm">
+              <svg className="w-6 h-6 text-orange-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"/>
+              </svg>
+            </div>
+            <div className="flex-grow overflow-hidden">
+              <p className="text-sm font-bold text-gray-800 truncate">{adminUser.name}</p>
+              <p className="text-[10px] text-gray-400 truncate">{adminUser.email}</p>
+            </div>
+          </div>
+          
+          <button 
+            onClick={handleLogout}
+            className="w-full flex items-center justify-center space-x-2 px-4 py-2 bg-red-50 text-red-600 rounded-xl hover:bg-red-100 transition-colors font-bold text-xs"
+          >
+            <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1" />
             </svg>
-          </div>
-          <div>
-            <p className="text-sm font-medium text-gray-700">Admin User</p>
-            <p className="text-xs text-gray-500">admin@dharmamart.com</p>
-          </div>
+            <span>Log Out</span>
+          </button>
         </div>
       </div>
     </aside>

@@ -29,23 +29,24 @@ export const errorHandler = (err, req, res, next) => {
     console.error('Error:', err);
   }
 
-  // Mongoose validation error
-  if (err.name === 'ValidationError') {
-    const message = Object.values(err.errors).map(val => val.message).join(', ');
+  // Postgres/Supabase unique violation error
+  if (err.code === '23505') {
+    const detail = err.detail || '';
+    const fieldMatch = detail.match(/\((.*?)\)=\((.*?)\)/);
+    const message = fieldMatch 
+      ? `Duplicate value for field: ${fieldMatch[1]}`
+      : 'A record with this value already exists';
     error = new ApiError(400, message);
   }
 
-  // Mongoose duplicate key error
-  if (err.code === 11000) {
-    const field = Object.keys(err.keyValue)[0];
-    const message = `Duplicate value for field: ${field}`;
-    error = new ApiError(400, message);
+  // Postgres/Supabase foreign key violation
+  if (err.code === '23503') {
+    error = new ApiError(400, 'Referenced record not found');
   }
 
-  // Mongoose cast error (invalid ObjectId)
-  if (err.name === 'CastError') {
-    const message = `Invalid ${err.path}: ${err.value}`;
-    error = new ApiError(400, message);
+  // Postgres/Supabase invalid input syntax (like CastError)
+  if (err.code === '22P02') {
+    error = new ApiError(400, 'Invalid input syntax (e.g. invalid UUID format)');
   }
 
   // JWT errors

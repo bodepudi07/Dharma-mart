@@ -7,6 +7,7 @@ import productRoutes from './routes/productRoutes.js'
 import vendorRoutes from './routes/vendorRoutes.js'
 import cartRoutes from './routes/cartRoutes.js'
 import orderRoutes from './routes/orderRoutes.js'
+import authRoutes from './routes/authRoutes.js'
 
 const app = express()
 
@@ -33,6 +34,7 @@ app.use('/api/products', productRoutes)
 app.use('/api/vendors', vendorRoutes)
 app.use('/api/cart', cartRoutes)
 app.use('/api/orders', orderRoutes)
+app.use('/api/auth', authRoutes)
 
 // Welcome route
 app.get('/api', (req, res) => {

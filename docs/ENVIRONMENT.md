@@ -1,76 +1,47 @@
 # Environment Variables
 
-This file documents environment variables currently consumed by the code.
+This document lists the environment variables used across the Dharma Mart platform.
 
 ## Server (`Server/.env`)
 
-### Required
+### Database (Supabase)
+Dharma Mart has migrated from MongoDB to Supabase. These variables are now **REQUIRED**.
+- `SUPABASE_URL`: The URL for your Supabase project (e.g., `https://xyz.supabase.co`).
+- `SUPABASE_SERVICE_KEY`: The **service_role** secret key found in your Supabase project settings.
 
-- `MONGODB_URI`
-  - Used by `Server/db.js`
-  - Example: `mongodb://localhost:27017/dharma-mart`
+### Authentication
+- `JWT_SECRET`: A long, random string used to sign JSON Web Tokens. **REQUIRED** for auth.
 
-### Strongly recommended
+### Caching
+- `CACHE_TTL_PRODUCTS`: Time-to-live for product cache in seconds (Default: `60`).
+- `CACHE_TTL_CATEGORIES`: Time-to-live for category cache in seconds (Default: `300`).
 
-- `PORT`
-  - Used by `Server/server.js`
-  - Default if missing: `8080`
+### External Services
+- `CLOUDINARY_CLOUD_NAME`: Cloudinary cloud name for image uploads.
+- `CLOUDINARY_API_KEY`: Cloudinary API key.
+- `CLOUDINARY_API_SECRET`: Cloudinary API secret.
+- `CASHFREE_APP_ID`: Cashfree App ID for payments.
+- `CASHFREE_SECRET_KEY`: Cashfree Secret Key for payments.
 
-- `NODE_ENV`
-  - Used in startup/error logging behavior
-  - Typical values: `development` or `production`
+### Networking & Security
+- `PORT`: Server port (Default: `8080`).
+- `NODE_ENV`: Current environment (`development`, `production`, `test`).
+- `CORS_ORIGINS`: Comma-separated list of allowed origins (e.g., `http://localhost:5173,http://localhost:5174`).
+- `API_RATE_LIMIT_WINDOW`: Rate limiting window in milliseconds (Default: `900000` - 15m).
+- `API_RATE_LIMIT_MAX`: Max requests per window (Default: `100`).
 
-- `CORS_ORIGINS`
-  - Used by `Server/app/app.js`
-  - Comma-separated list
-  - Example: `http://localhost:5173,http://localhost:5174`
-
-### Required for image uploads
-
-- `CLOUDINARY_CLOUD_NAME`
-- `CLOUDINARY_API_KEY`
-- `CLOUDINARY_API_SECRET`
-  - Used by `Server/app/services/cloudinaryService.js`
-
-### Required for online payments
-
-- `CASHFREE_APP_ID`
-- `CASHFREE_SECRET_KEY`
-  - Used by `Server/app/services/cashfreeService.js`
-
-### URL helpers for payment redirects/webhooks
-
-- `FRONTEND_URL`
-  - Used to construct default Cashfree return URL
-  - Fallback if missing: `http://localhost:5173`
-
-- `API_URL`
-  - Used to construct default Cashfree notify URL
-  - Fallback if missing: `http://localhost:8080`
-
-### Rate Limiting
-
-- `API_RATE_LIMIT_WINDOW`
-  - Window in milliseconds
-  - Default: `900000` (15 minutes)
-
-- `API_RATE_LIMIT_MAX`
-  - Max requests per window
-  - Default: `100`
+---
 
 ## Frontend (`Frontend/.env`)
+- `VITE_API_URL`: Root URL for the Backend API (e.g., `http://localhost:8080/api`).
 
-- `VITE_API_URL`
-  - Used for all API calls
-  - Example: `http://localhost:8080/api`
+---
 
 ## Admin (`Admin/.env`)
+- `VITE_API_URL`: Root URL for the Backend API (e.g., `http://localhost:8080/api`).
 
-- `VITE_API_URL`
-  - Used for all API calls
-  - Example: `http://localhost:8080/api`
+---
 
-## Notes
-
-- Keep secrets out of git.
-- `.env.example` files are provided in each sub-directory for initialization.
+## Local Development Tips
+- Ensure each subdirectory contains its own `.env` file based on the `.env.example` provided.
+- Restart the server after changing any environment variables.

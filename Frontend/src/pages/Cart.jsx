@@ -82,17 +82,17 @@ function Cart() {
         {/* Cart Items */}
         <div className="lg:col-span-2 space-y-4">
           {cart.items.map((item) => (
-            <div key={`${item.product._id}-${item.variant?.name || 'default'}`} className="bg-white rounded-lg shadow p-6">
+            <div key={`${item.product.id}-${item.variant?.name || 'default'}`} className="bg-white rounded-lg shadow p-6">
               <div className="flex space-x-4">
-                <Link to={`/products/${item.product._id}`}>
+                <Link to={`/products/${item.product.id}`}>
                   <img
-                    src={item.product.thumbnail?.url || item.product.images?.[0]?.url || '/placeholder.png'}
+                    src={item.product.thumbnail_url || item.product.images?.[0]?.url || '/placeholder.png'}
                     alt={item.product.name}
                     className="w-24 h-24 object-cover rounded-lg"
                   />
                 </Link>
                 <div className="flex-grow">
-                  <Link to={`/products/${item.product._id}`}>
+                  <Link to={`/products/${item.product.id}`}>
                     <h3 className="text-lg font-semibold text-gray-800 hover:text-orange-600 transition-colors">
                       {item.product.name}
                     </h3>
@@ -109,14 +109,14 @@ function Cart() {
                   {/* Quantity Controls */}
                   <div className="flex items-center space-x-3 mt-3">
                     <button
-                      onClick={() => handleUpdateQuantity(item.product._id, item.quantity - 1)}
+                      onClick={() => handleUpdateQuantity(item.product.id, item.quantity - 1)}
                       className="w-8 h-8 rounded-full border border-gray-300 flex items-center justify-center hover:bg-gray-50"
                     >
                       -
                     </button>
                     <span className="font-semibold">{item.quantity}</span>
                     <button
-                      onClick={() => handleUpdateQuantity(item.product._id, item.quantity + 1)}
+                      onClick={() => handleUpdateQuantity(item.product.id, item.quantity + 1)}
                       className="w-8 h-8 rounded-full border border-gray-300 flex items-center justify-center hover:bg-gray-50"
                     >
                       +
@@ -125,7 +125,7 @@ function Cart() {
                 </div>
                 <div className="flex flex-col items-end justify-between">
                   <button
-                    onClick={() => handleRemove(item.product._id)}
+                    onClick={() => handleRemove(item.product.id)}
                     className="text-red-600 hover:text-red-700 p-1"
                   >
                     <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">

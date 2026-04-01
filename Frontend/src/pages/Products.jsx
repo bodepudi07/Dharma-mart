@@ -124,13 +124,13 @@ function Products() {
                   <span className="text-sm text-gray-600">All Categories</span>
                 </label>
                 {categories.map((cat) => (
-                  <div key={cat._id}>
+                  <div key={cat.id}>
                     <label className="flex items-center">
                       <input
                         type="radio"
                         name="category"
-                        checked={category === cat._id}
-                        onChange={() => handleFilterChange('category', cat._id)}
+                        checked={category === cat.id}
+                        onChange={() => handleFilterChange('category', cat.id)}
                         className="mr-2 text-orange-600 focus:ring-orange-500"
                       />
                       <span className="text-sm text-gray-600">{cat.name}</span>
@@ -138,12 +138,12 @@ function Products() {
                     {cat.children && cat.children.length > 0 && (
                       <div className="ml-6 mt-1 space-y-1">
                         {cat.children.map((subcat) => (
-                          <label key={subcat._id} className="flex items-center">
+                          <label key={subcat.id} className="flex items-center">
                             <input
                               type="radio"
                               name="category"
-                              checked={category === subcat._id}
-                              onChange={() => handleFilterChange('category', subcat._id)}
+                              checked={category === subcat.id}
+                              onChange={() => handleFilterChange('category', subcat.id)}
                               className="mr-2 text-orange-600 focus:ring-orange-500"
                             />
                             <span className="text-xs text-gray-500">{subcat.name}</span>
@@ -204,22 +204,22 @@ function Products() {
               <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
                 {products.map((product) => (
                   <div
-                    key={product._id}
+                    key={product.id}
                     className="bg-white rounded-lg shadow-md overflow-hidden hover:shadow-xl transition-shadow group"
                   >
-                    <Link to={`/products/${product._id}`}>
+                    <Link to={`/products/${product.id}`}>
                       <div className="relative">
                         <img
-                          src={product.thumbnail?.url || product.images?.[0]?.url || '/placeholder.png'}
+                          src={product.thumbnail_url || product.images?.[0]?.url || '/placeholder.png'}
                           alt={product.name}
                           className="w-full h-48 object-cover group-hover:scale-105 transition-transform"
                         />
-                        {product.comparePrice && product.comparePrice > product.price && (
+                        {product.compare_price && product.compare_price > product.price && (
                           <span className="absolute top-2 left-2 bg-red-500 text-white text-xs px-2 py-1 rounded">
-                            {Math.round(((product.comparePrice - product.price) / product.comparePrice) * 100)}% OFF
+                            {Math.round(((product.compare_price - product.price) / product.compare_price) * 100)}% OFF
                           </span>
                         )}
-                        {product.isFeatured && (
+                        {product.is_featured && (
                           <span className="absolute top-2 right-2 bg-orange-500 text-white text-xs px-2 py-1 rounded">
                             Featured
                           </span>
@@ -237,9 +237,9 @@ function Products() {
                             <span className="text-xl font-bold text-orange-600">
                               ₹{product.price.toLocaleString()}
                             </span>
-                            {product.comparePrice && product.comparePrice > product.price && (
+                            {product.compare_price && product.compare_price > product.price && (
                               <span className="text-sm text-gray-400 line-through ml-2">
-                                ₹{product.comparePrice.toLocaleString()}
+                                ₹{product.compare_price.toLocaleString()}
                               </span>
                             )}
                           </div>
@@ -252,18 +252,18 @@ function Products() {
                             </div>
                           )}
                         </div>
-                        {product.stock?.trackInventory && product.stock.quantity <= (product.stock.lowStockThreshold || 10) && product.stock.quantity > 0 && (
-                          <p className="text-sm text-orange-600 mb-2">Only {product.stock.quantity} left!</p>
+                        {product.track_inventory && product.stock_quantity <= (product.low_stock_threshold || 10) && product.stock_quantity > 0 && (
+                          <p className="text-sm text-orange-600 mb-2">Only {product.stock_quantity} left!</p>
                         )}
                       </div>
                     </Link>
                     <div className="px-4 pb-4">
                       <button
-                        onClick={() => handleAddToCart(product._id)}
-                        disabled={product.stock?.trackInventory && product.stock.quantity === 0}
+                        onClick={() => handleAddToCart(product.id)}
+                        disabled={product.track_inventory && product.stock_quantity === 0}
                         className="w-full bg-orange-600 text-white py-2 rounded-lg hover:bg-orange-700 transition-colors disabled:bg-gray-400 disabled:cursor-not-allowed"
                       >
-                        {product.stock?.trackInventory && product.stock.quantity === 0 ? 'Out of Stock' : 'Add to Cart'}
+                        {product.track_inventory && product.stock_quantity === 0 ? 'Out of Stock' : 'Add to Cart'}
                       </button>
                     </div>
                   </div>

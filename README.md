@@ -4,23 +4,24 @@ Dharma Mart is a monorepo e-commerce project with:
 
 - `Frontend`: customer storefront (React + Vite)
 - `Admin`: admin dashboard (React + Vite)
-- `Server`: REST API (Node.js + Express + MongoDB)
+- `Server`: REST API (Node.js + Express + Supabase [PostgreSQL])
+
+## Tech Stack
+
+- **Persistence**: Supabase (PostgreSQL)
+- **Caching**: Node-Cache (In-memory)
+- **Authentication**: JWT-based with Role-Based Access Control (RBAC)
+- **Media**: Cloudinary for images
+- **Payments**: Cashfree PG integration
 
 ## Current Status
 
-Implemented in code today:
-
-- Category, product, vendor, cart, and order APIs
-- Frontend product browsing, cart, checkout, and order success flow
-- Admin CRUD screens for categories/products/vendors and order status actions
-- Cloudinary upload support and Cashfree SDK integration
-
-Important current constraints:
-
-- No authentication middleware is wired yet (`req.user` is usually undefined)
-- No automated test suite is implemented
-- No `.env.example` file is present
-- Cashfree webhook URL generation in service code points to `/api/payments/webhook`, while the actual webhook route is `/api/orders/webhook`
+- [x] **Database Migration**: Fully migrated from MongoDB to Supabase.
+- [x] **Caching**: Implemented in-memory caching for products and categories.
+- [x] **Bug Fixes**: Out-of-stock validation on checkout is now robust (two-pass validation).
+- [x] **Security**: Admin routes are protected by JWT authentication.
+- [x] **Core Features**: Category, product, vendor, cart, and order APIs are operational.
+- [x] **Admin**: CRUD screens for all entities with secure order management.
 
 ## Project Layout
 
@@ -34,68 +35,41 @@ dharma-mart/
 
 ## Quick Start
 
-1. Install dependencies
-```bash
-cd Server && npm install
-cd ../Frontend && npm install
-cd ../Admin && npm install
-```
+1. **Install dependencies**
+   ```bash
+   cd Server && npm install
+   cd ../Frontend && npm install
+   cd ../Admin && npm install
+   ```
 
-2. Create environment files
+2. **Step-by-step Setup**
+   Please see the [Setup Guide](docs/SETUP.md) for detailed instructions on configuring Supabase and other services.
 
-- `Server/.env`
-```env
-PORT=8080
-NODE_ENV=development
-MONGODB_URI=mongodb://localhost:27017/dharma-mart
-CORS_ORIGINS=http://localhost:5173,http://localhost:5174
+3. **Running the Applications**
+   ```bash
+   # Terminal 1 (Server)
+   cd Server && npm run dev
 
-# Optional but needed for full feature set
-CLOUDINARY_CLOUD_NAME=
-CLOUDINARY_API_KEY=
-CLOUDINARY_API_SECRET=
-CASHFREE_APP_ID=
-CASHFREE_SECRET_KEY=
-FRONTEND_URL=http://localhost:5173
-API_URL=http://localhost:8080
-```
+   # Terminal 2 (Frontend)
+   cd Frontend && npm run dev
 
-- `Frontend/.env`
-```env
-VITE_API_URL=http://localhost:8080/api
-```
+   # Terminal 3 (Admin)
+   cd Admin && npm run dev
+   ```
 
-- `Admin/.env`
-```env
-VITE_API_URL=http://localhost:8080/api
-```
+4. **Access Links**
+   - Frontend: `http://localhost:5173`
+   - Admin: `http://localhost:5174`
+   - API Summary: `http://localhost:8080/api`
+   - Health Check: `http://localhost:8080/health`
 
-3. Run apps
-```bash
-# Terminal 1
-cd Server && npm run dev
+## Documentation
 
-# Terminal 2
-cd Frontend && npm run dev
-
-# Terminal 3
-cd Admin && npm run dev
-```
-
-4. Open
-
-- Frontend: `http://localhost:5173`
-- Admin: `http://localhost:5174`
-- API root: `http://localhost:8080/api`
-- Health: `http://localhost:8080/health`
-
-## Docs
-
-- [Docs index](docs/README.md)
+- [Docs Index](docs/README.md)
+- [Architecture & Tech Stack](docs/ARCHITECTURE.md)
+- [Database Schema (SQL)](Server/migrations/001_initial_schema.sql)
+- [API Reference](docs/API.md)
 - [Setup guide](docs/SETUP.md)
-- [API reference](docs/API.md)
-- [Architecture](docs/ARCHITECTURE.md)
 - [Environment variables](docs/ENVIRONMENT.md)
 - [Deployment guide](docs/DEPLOYMENT.md)
-- [Known gaps](docs/KNOWN_GAPS.md)
 - [Contributing](docs/CONTRIBUTING.md)

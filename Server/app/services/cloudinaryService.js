@@ -1,4 +1,5 @@
 import { v2 as cloudinary } from 'cloudinary';
+import sharp from 'sharp';
 import { ApiError } from '../middlewares/errorHandler.js';
 
 // Configure Cloudinary
@@ -15,9 +16,18 @@ export const uploadToCloudinary = async (file, folder = 'dharma-mart', options =
       throw new ApiError(400, 'No file provided for upload');
     }
 
+    // Compress and resize image using sharp
+    let buffer = file.buffer;
+    if (file.mimetype.startsWith('image/')) {
+        buffer = await sharp(file.buffer)
+            .resize(1200, 1200, { fit: 'inside', withoutEnlargement: true })
+            .toFormat('webp', { quality: 80 })
+            .toBuffer();
+    }
+
     // Convert buffer to base64
-    const b64 = file.buffer.toString('base64');
-    const dataURI = `data:${file.mimetype};base64,${b64}`;
+    const b64 = buffer.toString('base64');
+    const dataURI = `data:image/webp;base64,${b64}`;
 
     // Upload options
     const uploadOptions = {

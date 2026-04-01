@@ -81,7 +81,7 @@ export const uploadImage = (fieldName, maxCount = 1) => {
       storage,
       fileFilter: imageFilter,
       limits: {
-        fileSize: 5 * 1024 * 1024, // 5MB for images
+        fileSize: 10 * 1024 * 1024, // 10MB for images
         files: 1
       }
     }).single(fieldName);
@@ -100,8 +100,8 @@ export const uploadImage = (fieldName, maxCount = 1) => {
 // Product images upload (main image + gallery)
 export const uploadProductImages = uploadFields([
   { name: 'mainImage', maxCount: 1 },
-  { name: 'gallery', maxCount: 10 }
-], 5 * 1024 * 1024);
+  { name: 'gallery', maxCount: 2 }
+], 10 * 1024 * 1024);
 
 // Category image upload
 export const uploadCategoryImage = uploadSingle('image', 5 * 1024 * 1024);

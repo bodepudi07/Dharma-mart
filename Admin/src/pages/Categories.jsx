@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react';
+import api from '../services/api';
 
 function Categories() {
   const [categories, setCategories] = useState([]);
@@ -8,9 +9,8 @@ function Categories() {
   const [formData, setFormData] = useState({
     name: '',
     description: '',
-    parentCategory: '',
-    isActive: true,
-    customFields: []
+    parent_id: '',
+    is_active: true
   });
 
   useEffect(() => {
@@ -19,8 +19,7 @@ function Categories() {
 
   const fetchCategories = async () => {
     try {
-      const response = await fetch(`${import.meta.env.VITE_API_URL}/categories?includeInactive=true`);
-      const data = await response.json();
+      const data = await api.get('/categories');
       if (data.success) {
         setCategories(data.data);
       }
@@ -34,21 +33,16 @@ function Categories() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const url = editingCategory
-        ? `${import.meta.env.VITE_API_URL}/categories/${editingCategory._id}`
-        : `${import.meta.env.VITE_API_URL}/categories`;
+      const payload = { ...formData };
+      if (!payload.parent_id) delete payload.parent_id;
 
-      const method = editingCategory ? 'PUT' : 'POST';
+      let data;
+      if (editingCategory) {
+        data = await api.put(`/categories/${editingCategory.id}`, payload);
+      } else {
+        data = await api.post('/categories', payload);
+      }
 
-      const response = await fetch(url, {
-        method,
-        headers: {
-          'Content-Type': 'application/json'
-        },
-        body: JSON.stringify(formData)
-      });
-
-      const data = await response.json();
       if (data.success) {
         fetchCategories();
         handleCloseModal();
@@ -67,9 +61,8 @@ function Categories() {
     setFormData({
       name: category.name,
       description: category.description || '',
-      parentCategory: category.parentCategory?._id || '',
-      isActive: category.isActive,
-      customFields: category.customFields || []
+      parent_id: category.parent_id || '',
+      is_active: category.is_active
     });
     setShowModal(true);
   };
@@ -80,11 +73,7 @@ function Categories() {
     }
 
     try {
-      const response = await fetch(`${import.meta.env.VITE_API_URL}/categories/${categoryId}`, {
-        method: 'DELETE'
-      });
-
-      const data = await response.json();
+      const data = await api.delete(`/categories/${categoryId}`);
       if (data.success) {
         fetchCategories();
         alert('Category deleted successfully!');
@@ -103,35 +92,15 @@ function Categories() {
     setFormData({
       name: '',
       description: '',
-      parentCategory: '',
-      isActive: true,
-      customFields: []
+      parent_id: '',
+      is_active: true
     });
   };
 
-  const addCustomField = () => {
-    setFormData(prev => ({
-      ...prev,
-      customFields: [
-        ...prev.customFields,
-        { name: '', type: 'text', required: false, options: [] }
-      ]
-    }));
-  };
-
-  const updateCustomField = (index, field, value) => {
-    setFormData(prev => {
-      const newFields = [...prev.customFields];
-      newFields[index] = { ...newFields[index], [field]: value };
-      return { ...prev, customFields: newFields };
-    });
-  };
-
-  const removeCustomField = (index) => {
-    setFormData(prev => ({
-      ...prev,
-      customFields: prev.customFields.filter((_, i) => i !== index)
-    }));
+  // Helper to find parent name
+  const getParentName = (parentId) => {
+    const parent = categories.find(cat => cat.id === parentId);
+    return parent ? parent.name : 'None';
   };
 
   if (loading) {
@@ -170,29 +139,16 @@ function Categories() {
         <table className="w-full">
           <thead className="bg-gray-50">
             <tr>
-              <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                Name
-              </th>
-              <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                Description
-              </th>
-              <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                Parent
-              </th>
-              <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                Status
-              </th>
-              <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                Custom Fields
-              </th>
-              <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                Actions
-              </th>
+              <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Name</th>
+              <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Description</th>
+              <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Parent</th>
+              <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Status</th>
+              <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Actions</th>
             </tr>
           </thead>
           <tbody className="bg-white divide-y divide-gray-200">
             {categories.map((category) => (
-              <tr key={category._id}>
+              <tr key={category.id}>
                 <td className="px-6 py-4 whitespace-nowrap">
                   <div className="text-sm font-medium text-gray-900">{category.name}</div>
                   <div className="text-sm text-gray-500">Slug: {category.slug}</div>
@@ -203,17 +159,14 @@ function Categories() {
                   </div>
                 </td>
                 <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-                  {category.parentCategory?.name || 'None'}
+                  {getParentName(category.parent_id)}
                 </td>
                 <td className="px-6 py-4 whitespace-nowrap">
                   <span className={`px-2 inline-flex text-xs leading-5 font-semibold rounded-full ${
-                    category.isActive ? 'bg-green-100 text-green-800' : 'bg-red-100 text-red-800'
+                    category.is_active ? 'bg-green-100 text-green-800' : 'bg-red-100 text-red-800'
                   }`}>
-                    {category.isActive ? 'Active' : 'Inactive'}
+                    {category.is_active ? 'Active' : 'Inactive'}
                   </span>
-                </td>
-                <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-                  {category.customFields?.length || 0} fields
                 </td>
                 <td className="px-6 py-4 whitespace-nowrap text-sm font-medium">
                   <button
@@ -223,7 +176,7 @@ function Categories() {
                     Edit
                   </button>
                   <button
-                    onClick={() => handleDelete(category._id)}
+                    onClick={() => handleDelete(category.id)}
                     className="text-red-600 hover:text-red-900"
                   >
                     Delete
@@ -252,9 +205,7 @@ function Categories() {
             <form onSubmit={handleSubmit}>
               <div className="space-y-4">
                 <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-1">
-                    Name *
-                  </label>
+                  <label className="block text-sm font-medium text-gray-700 mb-1">Name *</label>
                   <input
                     type="text"
                     value={formData.name}
@@ -265,9 +216,7 @@ function Categories() {
                 </div>
 
                 <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-1">
-                    Description
-                  </label>
+                  <label className="block text-sm font-medium text-gray-700 mb-1">Description</label>
                   <textarea
                     value={formData.description}
                     onChange={(e) => setFormData(prev => ({ ...prev, description: e.target.value }))}
@@ -277,19 +226,17 @@ function Categories() {
                 </div>
 
                 <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-1">
-                    Parent Category
-                  </label>
+                  <label className="block text-sm font-medium text-gray-700 mb-1">Parent Category</label>
                   <select
-                    value={formData.parentCategory}
-                    onChange={(e) => setFormData(prev => ({ ...prev, parentCategory: e.target.value }))}
+                    value={formData.parent_id}
+                    onChange={(e) => setFormData(prev => ({ ...prev, parent_id: e.target.value }))}
                     className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-orange-500 focus:border-transparent"
                   >
                     <option value="">None (Top Level)</option>
                     {categories
-                      .filter(cat => !editingCategory || cat._id !== editingCategory._id)
+                      .filter(cat => !editingCategory || cat.id !== editingCategory.id)
                       .map(cat => (
-                        <option key={cat._id} value={cat._id}>{cat.name}</option>
+                        <option key={cat.id} value={cat.id}>{cat.name}</option>
                       ))}
                   </select>
                 </div>
@@ -298,80 +245,13 @@ function Categories() {
                   <input
                     type="checkbox"
                     id="isActive"
-                    checked={formData.isActive}
-                    onChange={(e) => setFormData(prev => ({ ...prev, isActive: e.target.checked }))}
+                    checked={formData.is_active}
+                    onChange={(e) => setFormData(prev => ({ ...prev, is_active: e.target.checked }))}
                     className="mr-2 text-orange-600 focus:ring-orange-500"
                   />
-                  <label htmlFor="isActive" className="text-sm text-gray-700">
-                    Active
-                  </label>
+                  <label htmlFor="isActive" className="text-sm text-gray-700">Active</label>
                 </div>
 
-                {/* Custom Fields */}
-                <div>
-                  <div className="flex justify-between items-center mb-2">
-                    <label className="block text-sm font-medium text-gray-700">
-                      Custom Fields
-                    </label>
-                    <button
-                      type="button"
-                      onClick={addCustomField}
-                      className="text-orange-600 hover:text-orange-700 text-sm"
-                    >
-                      + Add Field
-                    </button>
-                  </div>
-
-                  {formData.customFields.map((field, index) => (
-                    <div key={index} className="border rounded-lg p-4 mb-2">
-                      <div className="grid grid-cols-3 gap-4 mb-2">
-                        <input
-                          type="text"
-                          placeholder="Field Name"
-                          value={field.name}
-                          onChange={(e) => updateCustomField(index, 'name', e.target.value)}
-                          className="px-3 py-2 border border-gray-300 rounded"
-                        />
-                        <select
-                          value={field.type}
-                          onChange={(e) => updateCustomField(index, 'type', e.target.value)}
-                          className="px-3 py-2 border border-gray-300 rounded"
-                        >
-                          <option value="text">Text</option>
-                          <option value="number">Number</option>
-                          <option value="boolean">Boolean</option>
-                          <option value="select">Select</option>
-                          <option value="multiselect">Multi Select</option>
-                        </select>
-                        <div className="flex items-center">
-                          <input
-                            type="checkbox"
-                            checked={field.required}
-                            onChange={(e) => updateCustomField(index, 'required', e.target.checked)}
-                            className="mr-2"
-                          />
-                          <span className="text-sm">Required</span>
-                          <button
-                            type="button"
-                            onClick={() => removeCustomField(index)}
-                            className="ml-auto text-red-600 hover:text-red-700"
-                          >
-                            Remove
-                          </button>
-                        </div>
-                      </div>
-                      {(field.type === 'select' || field.type === 'multiselect') && (
-                        <input
-                          type="text"
-                          placeholder="Options (comma separated)"
-                          value={field.options?.join(', ') || ''}
-                          onChange={(e) => updateCustomField(index, 'options', e.target.value.split(',').map(o => o.trim()))}
-                          className="w-full px-3 py-2 border border-gray-300 rounded"
-                        />
-                      )}
-                    </div>
-                  ))}
-                </div>
               </div>
 
               <div className="flex justify-end space-x-4 mt-6">

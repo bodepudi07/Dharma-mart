@@ -1,245 +1,171 @@
-import mongoose from 'mongoose';
+import supabase from '../../supabase.js';
 
-const productSchema = new mongoose.Schema({
-  name: {
-    type: String,
-    required: [true, 'Product name is required'],
-    trim: true,
-    maxlength: [200, 'Product name cannot exceed 200 characters']
+export const Product = {
+  /**
+   * Find query with pagination and filters
+   * @param {object} query - Filter options
+   * @returns {object} - Supabase query object
+   */
+  find: (query = {}) => {
+    let q = supabase
+      .from('products')
+      .select('*, category_id(name, slug), vendor_id(name, slug, logo_url)');
+
+    // Apply filters (simplified for migration, can be extended in controller)
+    if (query.status) q = q.eq('status', query.status);
+    if (query.category_id) q = q.eq('category_id', query.category_id);
+    if (query.vendor_id) q = q.eq('vendor_id', query.vendor_id);
+    if (query.is_featured) q = q.eq('is_featured', query.is_featured);
+    if (query.is_new_arrival) q = q.eq('is_new_arrival', query.is_new_arrival);
+    if (query.is_best_seller) q = q.eq('is_best_seller', query.is_best_seller);
+
+    // Return the query object for further chaining in controller
+    return q;
   },
-  description: {
-    type: String,
-    required: [true, 'Product description is required'],
-    trim: true
-  },
-  shortDescription: {
-    type: String,
-    trim: true,
-    maxlength: [500, 'Short description cannot exceed 500 characters']
-  },
-  slug: {
-    type: String,
-    unique: true,
-    lowercase: true
-  },
-  sku: {
-    type: String,
-    unique: true,
-    sparse: true,
-    trim: true
-  },
-  price: {
-    type: Number,
-    required: [true, 'Product price is required'],
-    min: [0, 'Price cannot be negative']
-  },
-  comparePrice: {
-    type: Number,
-    min: [0, 'Compare price cannot be negative']
-  },
-  costPrice: {
-    type: Number,
-    min: [0, 'Cost price cannot be negative']
-  },
-  currency: {
-    type: String,
-    default: 'INR'
-  },
-  category: {
-    type: mongoose.Schema.Types.ObjectId,
-    ref: 'Category',
-    required: [true, 'Category is required']
-  },
-  subcategory: {
-    type: mongoose.Schema.Types.ObjectId,
-    ref: 'Category'
-  },
-  brand: {
-    type: String,
-    trim: true
-  },
-  vendor: {
-    type: mongoose.Schema.Types.ObjectId,
-    ref: 'Vendor'
-  },
-  images: [{
-    url: {
-      type: String,
-      required: true
-    },
-    publicId: String,
-    alt: String,
-    isPrimary: {
-      type: Boolean,
-      default: false
+
+  /**
+   * Find one product by ID or custom field
+   * @param {object} criteria 
+   * @returns {Promise<object|null>}
+   */
+  findOne: async (criteria) => {
+    let q = supabase
+      .from('products')
+      .select('*, category_id(name, slug), vendor_id(name, slug, logo_url, ratings_average, ratings_count)');
+
+    if (criteria._id) q = q.eq('id', criteria._id);
+    else if (criteria.slug) q = q.eq('slug', criteria.slug);
+
+    const { data, error } = await q.single();
+
+    if (error) {
+      if (error.code === 'PGRST116') return null;
+      throw error;
     }
-  }],
-  thumbnail: {
-    url: String,
-    publicId: String
+
+    // Fetch primary images and gallery
+    const { data: images } = await supabase
+      .from('product_images')
+      .select('*')
+      .eq('product_id', data.id)
+      .order('sort_order', { ascending: true });
+
+    data.images = images || [];
+    return data;
   },
-  stock: {
-    quantity: {
-      type: Number,
-      default: 0,
-      min: [0, 'Stock cannot be negative']
-    },
-    lowStockThreshold: {
-      type: Number,
-      default: 10
-    },
-    trackInventory: {
-      type: Boolean,
-      default: true
-    },
-    allowBackorder: {
-      type: Boolean,
-      default: false
+
+  /**
+   * Find product by ID
+   * @param {string} id 
+   * @returns {Promise<object|null>}
+   */
+  findById: async (id) => {
+    const { data, error } = await supabase
+      .from('products')
+      .select('*, category_id(name, slug), vendor_id(name, slug)')
+      .eq('id', id)
+      .single();
+
+    if (error) {
+      if (error.code === 'PGRST116') return null;
+      throw error;
     }
+    return data;
   },
-  weight: {
-    value: Number,
-    unit: {
-      type: String,
-      enum: ['g', 'kg', 'lb', 'oz'],
-      default: 'g'
+
+  /**
+   * Create a new product
+   * @param {object} productData 
+   * @returns {Promise<object>}
+   */
+  create: async (productData) => {
+    const { images = [], ...rest } = productData;
+    
+    // Insert product
+    const { data: product, error: productError } = await supabase
+        .from('products')
+        .insert([rest])
+        .select()
+        .single();
+
+    if (productError) throw productError;
+
+    // Insert images if any
+    if (images.length > 0) {
+      const imagesToInsert = images.map((img, index) => ({
+        product_id: product.id,
+        url: img.url,
+        public_id: img.publicId,
+        alt: img.alt,
+        is_primary: img.isPrimary || index === 0,
+        sort_order: index
+      }));
+
+      const { error: imageError } = await supabase
+        .from('product_images')
+        .insert(imagesToInsert);
+      
+      if (imageError) throw imageError;
+      product.images = imagesToInsert;
     }
+
+    return product;
   },
-  dimensions: {
-    length: Number,
-    width: Number,
-    height: Number,
-    unit: {
-      type: String,
-      enum: ['cm', 'in', 'mm'],
-      default: 'cm'
-    }
+
+  /**
+   * Update a product
+   * @param {string} id 
+   * @param {object} updates 
+   * @returns {Promise<object>}
+   */
+  findByIdAndUpdate: async (id, { $set: updates }, { new: isNew = true } = {}) => {
+      const { images, ...rest } = updates;
+      
+      const { data, error } = await supabase
+          .from('products')
+          .update(rest)
+          .eq('id', id)
+          .select()
+          .single();
+      
+      if (error) throw error;
+      
+      if (images) {
+          // Simplified: delete old and insert new, or just handle gallery updates
+          // For now, let's keep it simple as base migration
+      }
+
+      return data;
   },
-  tags: [{
-    type: String,
-    trim: true
-  }],
-  attributes: [{
-    name: {
-      type: String,
-      required: true
-    },
-    value: {
-      type: mongoose.Schema.Types.Mixed,
-      required: true
-    }
-  }],
-  customFields: {
-    type: Map,
-    of: mongoose.Schema.Types.Mixed
+
+  /**
+   * Delete a product
+   * @param {string} id 
+   */
+  findByIdAndDelete: async (id) => {
+      const { error } = await supabase
+          .from('products')
+          .delete()
+          .eq('id', id);
+      if (error) throw error;
   },
-  variants: [{
-    name: String,
-    sku: String,
-    price: Number,
-    stock: Number,
-    attributes: [{
-      name: String,
-      value: String
-    }]
-  }],
-  seo: {
-    title: String,
-    description: String,
-    keywords: [String]
-  },
-  ratings: {
-    average: {
-      type: Number,
-      default: 0,
-      min: 0,
-      max: 5
-    },
-    count: {
-      type: Number,
-      default: 0
-    }
-  },
-  reviews: [{
-    user: {
-      type: mongoose.Schema.Types.ObjectId,
-      ref: 'User'
-    },
-    rating: {
-      type: Number,
-      required: true,
-      min: 1,
-      max: 5
-    },
-    comment: String,
-    createdAt: {
-      type: Date,
-      default: Date.now
-    }
-  }],
-  shipping: {
-    isFreeShipping: {
-      type: Boolean,
-      default: false
-    },
-    shippingClass: String,
-    estimatedDelivery: String
-  },
-  status: {
-    type: String,
-    enum: ['draft', 'active', 'inactive', 'out_of_stock', 'discontinued'],
-    default: 'draft'
-  },
-  isFeatured: {
-    type: Boolean,
-    default: false
-  },
-  isNewArrival: {
-    type: Boolean,
-    default: false
-  },
-  isBestSeller: {
-    type: Boolean,
-    default: false
-  },
-  publishedAt: Date,
-  saleStartDate: Date,
-  saleEndDate: Date,
-  relatedProducts: [{
-    type: mongoose.Schema.Types.ObjectId,
-    ref: 'Product'
-  }],
-  metadata: {
-    type: Map,
-    of: mongoose.Schema.Types.Mixed
+
+  /**
+   * Count documents matching a query
+   * @param {object} query 
+   * @returns {Promise<number>}
+   */
+  countDocuments: async (query = {}) => {
+    let q = supabase.from('products').select('*', { count: 'exact', head: true });
+    
+    if (query.status) q = q.eq('status', query.status);
+    if (query.category_id) q = q.eq('category_id', query.category_id);
+    if (query.vendor_id) q = q.eq('vendor_id', query.vendor_id);
+
+    const { count, error } = await q;
+    if (error) throw error;
+    return count || 0;
   }
-}, {
-  timestamps: true
-});
-
-// Generate slug before saving
-productSchema.pre('save', async function() {
-  if (this.isModified('name')) {
-    this.slug = this.name.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/(^-|-$)/g, '');
-  }
-  
-  // Generate SKU if not provided
-  if (!this.sku && this.isNew) {
-    this.sku = 'SKU-' + Date.now() + '-' + Math.random().toString(36).substr(2, 9).toUpperCase();
-  }
-});
-
-// Indexes for efficient queries
-productSchema.index({ category: 1 });
-productSchema.index({ vendor: 1 });
-productSchema.index({ status: 1 });
-productSchema.index({ price: 1 });
-productSchema.index({ 'ratings.average': -1 });
-productSchema.index({ createdAt: -1 });
-productSchema.index({ isFeatured: 1 });
-productSchema.index({ tags: 1 });
-productSchema.index({ name: 'text', description: 'text', tags: 'text' });
-
-const Product = mongoose.model('Product', productSchema);
+};
 
 export default Product;

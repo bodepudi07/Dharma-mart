@@ -61,7 +61,7 @@ function OrderSuccess() {
       
       <p className="text-lg text-gray-600 mb-6">
         {order 
-          ? `Your order #${order.orderNumber} has been placed successfully.`
+          ? `Your order #${order.order_number} has been placed successfully.`
           : 'Your order has been placed successfully.'
         }
       </p>
@@ -73,16 +73,16 @@ function OrderSuccess() {
           <div className="space-y-3">
             <div className="flex justify-between">
               <span className="text-gray-600">Order Number:</span>
-              <span className="font-semibold">{order.orderNumber}</span>
+              <span className="font-semibold">{order.order_number}</span>
             </div>
             <div className="flex justify-between">
               <span className="text-gray-600">Total Amount:</span>
-              <span className="font-semibold text-orange-600">₹{order.totalAmount?.toLocaleString()}</span>
+              <span className="font-semibold text-orange-600">₹{order.total_amount?.toLocaleString()}</span>
             </div>
             <div className="flex justify-between">
               <span className="text-gray-600">Payment Method:</span>
               <span className="font-semibold capitalize">
-                {order.payment?.method === 'cod' ? 'Cash on Delivery' : 'Online Payment'}
+                {order.payment_method === 'cod' ? 'Cash on Delivery' : 'Online Payment'}
               </span>
             </div>
             <div className="flex justify-between">
@@ -97,14 +97,14 @@ function OrderSuccess() {
           </div>
 
           {/* Shipping Address */}
-          {order.shippingAddress && (
+          {order.shipping_city && (
             <div className="mt-6 pt-6 border-t">
               <h3 className="font-semibold text-gray-800 mb-2">Shipping Address</h3>
               <p className="text-gray-600">
-                {order.shippingAddress.fullName}<br />
-                {order.shippingAddress.street}<br />
-                {order.shippingAddress.city}, {order.shippingAddress.state} {order.shippingAddress.zipCode}<br />
-                {order.shippingAddress.country}
+                {order.shipping_full_name}<br />
+                {order.shipping_street}<br />
+                {order.shipping_city}, {order.shipping_state} {order.shipping_zip_code}<br />
+                {order.shipping_country}
               </p>
             </div>
           )}
@@ -117,7 +117,7 @@ function OrderSuccess() {
                 {order.items.map((item, index) => (
                   <div key={index} className="flex items-center space-x-3">
                     <img
-                      src={item.image?.url || '/placeholder.png'}
+                      src={item.image_url || item.image?.url || '/placeholder.png'}
                       alt={item.name}
                       className="w-12 h-12 object-cover rounded"
                     />

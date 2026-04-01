@@ -1,387 +1,101 @@
 # Dharma Mart API Reference
 
-This document reflects the current server implementation in `Server/app/routes` and controllers.
+This document reflects the current server implementation. All routes are prefixed with `/api`.
 
 ## Base URLs
 
-- Local API base: `http://localhost:8080/api`
-- Health check: `http://localhost:8080/health`
+- **Local API base**: `http://localhost:8080/api`
+- **Health check**: `http://localhost:8080/health`
 
-## Authentication Status
+## Authentication & Authorization
 
-There is currently no auth middleware applied on routes.
+The API uses **JWT-based authentication**. Most protected routes require a `Bearer <token>` in the `Authorization` header.
 
-- Many controllers read `req.user?.id`, but `req.user` is typically undefined.
-- Endpoints labeled as "admin" are not protected yet.
+| Role | Access Level |
+|---|---|
+| **Guest** | Browse products, categories, and manage a local cart via `sessionId`. |
+| **User** | authenticated access to personal profile and order history. |
+| **Admin** | Full access to management endpoints (CRUD categories, products, vendors, and orders). |
 
-## Common Response Shapes
+---
 
-Success:
+## Auth Endpoints (`/auth`)
 
-```json
-{
-  "success": true,
-  "data": {}
-}
-```
+### `POST /api/auth/register`
+Registers a new user.
+- **Body**: `{ name, email, password }`
+- **Response**: `{ success, data: { user, token } }`
 
-Paginated:
+### `POST /api/auth/login`
+Authenticates a user.
+- **Body**: `{ email, password }`
+- **Response**: `{ success, data: { user, token } }`
 
-```json
-{
-  "success": true,
-  "data": [],
-  "pagination": {
-    "page": 1,
-    "limit": 20,
-    "total": 100,
-    "pages": 5
-  }
-}
-```
+### `GET /api/auth/me`
+Returns the current authenticated user's profile.
+- **Header**: `Authorization: Bearer <token>`
 
-Error:
+---
 
-```json
-{
-  "success": false,
-  "message": "Error message",
-  "errors": []
-}
-```
+## Categories (`/categories`)
 
-## Health and Root
+### `GET /api/categories` [Cached]
+Returns a list of categories.
+- **Query Params**: `status` (active/inactive), `parentId`
 
-### `GET /health`
+### `POST /api/categories` [Admin Only]
+Creates a new category. Invalidates the category cache.
 
-Returns process health, timestamp, and uptime.
+---
 
-### `GET /api`
+## Products (`/products`)
 
-Returns a basic API welcome object.
+### `GET /api/products` [Cached]
+Returns a paginated list of products with filters.
+- **Query Params**: `page`, `limit`, `category`, `vendor`, `minPrice`, `maxPrice`, `search`, `sort`, `isFeatured`, `isNewArrival`, `isBestSeller`.
 
-## Categories
+### `GET /api/products/:id` [Cached]
+Returns a single product by ID or slug.
 
-### `GET /api/categories`
+### `POST /api/products` [Admin Only]
+Creates a new product. Invalidates the product cache.
 
-Query params:
+### `PUT /api/products/:id` [Admin Only]
+Updates an existing product. Invalidates the product and search cache.
 
-- `page` (default `1`)
-- `limit` (default `50`)
-- `parentOnly` (`true` or `false`)
-- `includeInactive` (`true` or `false`)
-- `search` (name search)
+### `DELETE /api/products/:id` [Admin Only]
+Deletes a product. Invalidates the product and search cache.
 
-### `GET /api/categories/tree`
+---
 
-Returns nested active categories.
-
-### `GET /api/categories/:id`
-
-`id` can be Mongo ObjectId or category slug.
-
-### `POST /api/categories`
-
-Create category. Uses multipart parser with optional file field:
-
-- `image`: category image
-
-Body fields:
-
-- `name` (required)
-- `description`
-- `parentCategory`
-- `customFields`
-- `isActive`
-- `sortOrder`
-
-### `PUT /api/categories/:id`
-
-Update category by ObjectId. Optional `image` file supported.
-
-### `DELETE /api/categories/:id`
-
-Deletes category if it has no subcategories.
-
-## Products
-
-### `GET /api/products`
-
-Query params:
-
-- `page` (default `1`)
-- `limit` (default `20`)
-- `category`
-- `vendor`
-- `minPrice`
-- `maxPrice`
-- `status` (default `active`, use `all` to disable status filter)
-- `isFeatured`
-- `isNewArrival`
-- `isBestSeller`
-- `search`
-- `sort` (example: `-createdAt`, `price`, `-price`)
-- `tags` (comma separated)
-
-### `GET /api/products/featured`
-
-Query params:
-
-- `limit` (default `10`)
-
-### `GET /api/products/new-arrivals`
-
-Query params:
-
-- `limit` (default `10`)
-
-### `GET /api/products/best-sellers`
-
-Query params:
-
-- `limit` (default `10`)
-
-### `GET /api/products/:id`
-
-`id` can be Mongo ObjectId or product slug.
-
-### `POST /api/products`
-
-Create product (multipart form-data). File fields:
-
-- `mainImage` (max 1)
-- `gallery` (max 10)
-
-Typical body fields:
-
-- `name` (required)
-- `description` (required)
-- `shortDescription`
-- `price` (required)
-- `comparePrice`
-- `category` (required)
-- `vendor`
-- `status`
-- `isFeatured`
-- `isNewArrival`
-- `isBestSeller`
-- `tags`
-- `stock`
-
-### `PUT /api/products/:id`
-
-Update product by ObjectId (same multipart format as create).
-
-### `DELETE /api/products/:id`
-
-Delete product and attempt Cloudinary cleanup.
-
-### `POST /api/products/:id/reviews`
-
-Adds review. Controller expects `req.user?.id`; without auth middleware, this endpoint is currently not reliable.
-
-## Vendors
-
-### `GET /api/vendors`
-
-Query params:
-
-- `page` (default `1`)
-- `limit` (default `20`)
-- `status` (use `all` to disable status filter)
-- `isVerified`
-- `search`
-- `sort` (default `-createdAt`)
-
-### `GET /api/vendors/:id`
-
-`id` can be Mongo ObjectId or vendor slug.
-
-### `GET /api/vendors/:id/products`
-
-`id` must be vendor ObjectId in current implementation.
-
-Query params:
-
-- `page`
-- `limit`
-- `status`
-
-### `POST /api/vendors`
-
-Create vendor (multipart form-data). Optional file fields:
-
-- `logo`
-- `banner`
-- `documents`
-
-### `PUT /api/vendors/:id`
-
-Update vendor by ObjectId (multipart form-data).
-
-### `DELETE /api/vendors/:id`
-
-Delete vendor if there are no products linked to it.
-
-### `PATCH /api/vendors/:id/approve`
-
-Sets vendor status to `approved` and `isVerified` to `true`.
-
-### `PATCH /api/vendors/:id/reject`
-
-Request body:
-
-```json
-{
-  "reason": "..."
-}
-```
-
-## Cart
-
-Cart works primarily via guest `sessionId`.
+## Cart (`/cart`)
 
 ### `GET /api/cart`
-
-Query params:
-
-- `sessionId` (required for guest flow)
+Returns the current cart for a `userId` (if authenticated) or `sessionId` (guest).
 
 ### `POST /api/cart/add`
+Adds an item to the cart. Validates stock availability before adding.
 
-```json
-{
-  "productId": "PRODUCT_ID",
-  "quantity": 1,
-  "sessionId": "SESSION_ID",
-  "variant": null
-}
-```
+---
 
-### `PUT /api/cart/update`
-
-```json
-{
-  "productId": "PRODUCT_ID",
-  "quantity": 2,
-  "sessionId": "SESSION_ID",
-  "variant": null
-}
-```
-
-### `POST /api/cart/remove`
-
-```json
-{
-  "productId": "PRODUCT_ID",
-  "sessionId": "SESSION_ID",
-  "variant": null
-}
-```
-
-### `POST /api/cart/clear`
-
-```json
-{
-  "sessionId": "SESSION_ID"
-}
-```
-
-### `POST /api/cart/coupon`
-
-Currently returns `501` with "Coupon functionality not implemented yet".
-
-## Orders
-
-### `GET /api/orders`
-
-Returns all orders with pagination (intended for admin, currently not protected).
-
-Query params:
-
-- `page` (default `1`)
-- `limit` (default `10`)
-- `status`
-- `search` (order number or guest email)
+## Orders (`/orders`)
 
 ### `POST /api/orders`
+Creates a new order. 
+- **Validation**: Performs two-pass stock validation to prevent race conditions.
+- **Payment**: Returns a Cashfree payment session if using online payment.
 
-Create order.
+### `GET /api/orders` [Admin Only]
+Lists all orders with pagination and status filters.
 
-```json
-{
-  "items": [
-    { "productId": "PRODUCT_ID", "quantity": 1, "variant": null }
-  ],
-  "shippingAddress": {
-    "fullName": "Name",
-    "phone": "9999999999",
-    "email": "name@example.com",
-    "street": "Street",
-    "city": "City",
-    "state": "State",
-    "country": "India",
-    "zipCode": "000000"
-  },
-  "paymentMethod": "cashfree",
-  "customerDetails": {
-    "email": "name@example.com",
-    "name": "Name",
-    "phone": "9999999999"
-  },
-  "sessionId": "SESSION_ID"
-}
-```
+### `PUT /api/orders/:id/status` [Admin Only]
+Updates order status and adds an entry to the status history log.
 
-Server currently applies:
+---
 
-- GST: `18%`
-- Shipping: `0` if subtotal `>= 500`, else `50`
+## Performance & Caching
 
-### `GET /api/orders/my-orders`
-
-Controller filters by `req.user?.id`. Without auth middleware, this endpoint is not currently useful.
-
-### `GET /api/orders/:id`
-
-`id` can be order ObjectId or `orderNumber`.
-
-### `PUT /api/orders/:id/status`
-
-Updates order status. Transition validation is enforced.
-
-Allowed transitions:
-
-- `pending` -> `confirmed | cancelled`
-- `confirmed` -> `processing | cancelled`
-- `processing` -> `shipped | cancelled`
-- `shipped` -> `delivered`
-- `delivered` -> `returned`
-- `returned` -> `refunded`
-
-### `POST /api/orders/:id/cancel`
-
-Cancels eligible order and restores stock.
-
-### `POST /api/orders/verify-payment`
-
-Verifies payment status using Cashfree order lookup.
-
-### `POST /api/orders/webhook`
-
-Cashfree webhook endpoint with signature verification.
-
-## Upload Limits
-
-Defined in `Server/app/middlewares/upload.js`:
-
-- Default max file size: `10MB`
-- Product and category image helpers use `5MB`
-- Allowed image types: `jpeg`, `jpg`, `png`, `gif`, `webp`
-- Allowed document types: `pdf`, `doc`, `docx`
-
-## Rate Limiting and Security
-
-- Helmet enabled
-- Rate limit enabled (`100` requests per `15` minutes)
-- CORS origin list from `CORS_ORIGINS` (comma separated), fallback to `http://localhost:5173` and `http://localhost:5174`
+Certain read-only endpoints (Products, Categories) are cached in-memory using `node-cache`.
+- **Product TTL**: 60 seconds (configurable via `CACHE_TTL_PRODUCTS`)
+- **Category TTL**: 300 seconds (configurable via `CACHE_TTL_CATEGORIES`)
+- **Invalidation**: Cache is automatically purged whenever relevant data is created, updated, or deleted.

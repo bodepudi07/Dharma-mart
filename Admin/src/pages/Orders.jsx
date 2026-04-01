@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react';
+import api from '../services/api';
 
 function Orders() {
   const [orders, setOrders] = useState([]);
@@ -12,8 +13,7 @@ function Orders() {
 
   const fetchOrders = async (page = 1) => {
     try {
-      const response = await fetch(`${import.meta.env.VITE_API_URL}/orders?page=${page}&limit=20`);
-      const data = await response.json();
+      const data = await api.get('/orders', { page, limit: 20 });
       if (data.success) {
         setOrders(data.data);
         setPagination(data.pagination);
@@ -27,18 +27,11 @@ function Orders() {
 
   const handleStatusUpdate = async (orderId, newStatus, trackingInfo = {}) => {
     try {
-      const response = await fetch(`${import.meta.env.VITE_API_URL}/orders/${orderId}/status`, {
-        method: 'PUT',
-        headers: {
-          'Content-Type': 'application/json'
-        },
-        body: JSON.stringify({
-          status: newStatus,
-          ...trackingInfo
-        })
+      const data = await api.put(`/orders/${orderId}/status`, {
+        status: newStatus,
+        ...trackingInfo
       });
 
-      const data = await response.json();
       if (data.success) {
         fetchOrders(pagination.page);
         alert('Order status updated successfully!');
@@ -100,62 +93,42 @@ function Orders() {
         <table className="w-full">
           <thead className="bg-gray-50">
             <tr>
-              <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                Order
-              </th>
-              <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                Customer
-              </th>
-              <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                Items
-              </th>
-              <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                Amount
-              </th>
-              <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                Payment
-              </th>
-              <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                Status
-              </th>
-              <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                Actions
-              </th>
+              <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Order</th>
+              <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Customer</th>
+              <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Amount</th>
+              <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Payment</th>
+              <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Status</th>
+              <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Actions</th>
             </tr>
           </thead>
           <tbody className="bg-white divide-y divide-gray-200">
             {orders.map((order) => (
-              <tr key={order._id}>
+              <tr key={order.id}>
                 <td className="px-6 py-4 whitespace-nowrap">
-                  <div className="text-sm font-medium text-gray-900">{order.orderNumber}</div>
+                  <div className="text-sm font-medium text-gray-900">{order.order_number}</div>
                   <div className="text-sm text-gray-500">
-                    {new Date(order.createdAt).toLocaleDateString()}
+                    {new Date(order.created_at).toLocaleDateString()}
                   </div>
                 </td>
                 <td className="px-6 py-4 whitespace-nowrap">
                   <div className="text-sm font-medium text-gray-900">
-                    {order.shippingAddress?.fullName || 'N/A'}
+                    {order.shipping_full_name || 'N/A'}
                   </div>
                   <div className="text-sm text-gray-500">
-                    {order.shippingAddress?.phone || order.guestEmail || 'N/A'}
-                  </div>
-                </td>
-                <td className="px-6 py-4 whitespace-nowrap">
-                  <div className="text-sm text-gray-900">
-                    {order.items?.length || 0} item(s)
+                    {order.shipping_phone || order.guest_email || 'N/A'}
                   </div>
                 </td>
                 <td className="px-6 py-4 whitespace-nowrap">
                   <div className="text-sm font-medium text-gray-900">
-                    ₹{order.totalAmount?.toLocaleString()}
+                    ₹{order.total_amount?.toLocaleString()}
                   </div>
                 </td>
                 <td className="px-6 py-4 whitespace-nowrap">
                   <div className="text-sm text-gray-900 capitalize">
-                    {order.payment?.method === 'cod' ? 'COD' : 'Online'}
+                    {order.payment_method === 'cod' ? 'COD' : 'Online'}
                   </div>
-                  <span className={`px-2 inline-flex text-xs leading-5 font-semibold rounded-full ${getPaymentStatusColor(order.payment?.status)}`}>
-                    {order.payment?.status || 'pending'}
+                  <span className={`px-2 inline-flex text-xs leading-5 font-semibold rounded-full ${getPaymentStatusColor(order.payment_status)}`}>
+                    {order.payment_status || 'pending'}
                   </span>
                 </td>
                 <td className="px-6 py-4 whitespace-nowrap">
@@ -172,7 +145,7 @@ function Orders() {
                   </button>
                   {order.status === 'pending' && (
                     <button
-                      onClick={() => handleStatusUpdate(order._id, 'confirmed')}
+                      onClick={() => handleStatusUpdate(order.id, 'confirmed')}
                       className="text-blue-600 hover:text-blue-900 mr-2"
                     >
                       Confirm
@@ -184,7 +157,7 @@ function Orders() {
                         const trackingNumber = window.prompt('Enter tracking number:');
                         const carrier = window.prompt('Enter carrier name:');
                         if (trackingNumber) {
-                          handleStatusUpdate(order._id, 'shipped', { trackingNumber, carrier });
+                          handleStatusUpdate(order.id, 'shipped', { trackingNumber, carrier });
                         }
                       }}
                       className="text-indigo-600 hover:text-indigo-900 mr-2"
@@ -194,7 +167,7 @@ function Orders() {
                   )}
                   {order.status === 'shipped' && (
                     <button
-                      onClick={() => handleStatusUpdate(order._id, 'delivered')}
+                      onClick={() => handleStatusUpdate(order.id, 'delivered')}
                       className="text-green-600 hover:text-green-900 mr-2"
                     >
                       Deliver
@@ -240,7 +213,7 @@ function Orders() {
           <div className="bg-white rounded-lg p-6 w-full max-w-4xl max-h-[90vh] overflow-y-auto">
             <div className="flex justify-between items-center mb-6">
               <h2 className="text-2xl font-bold text-gray-800">
-                Order #{selectedOrder.orderNumber}
+                Order #{selectedOrder.order_number}
               </h2>
               <button
                 onClick={() => setSelectedOrder(null)}
@@ -259,7 +232,7 @@ function Orders() {
                 <div className="space-y-2">
                   <div className="flex justify-between">
                     <span className="text-gray-600">Order Number:</span>
-                    <span className="font-medium">{selectedOrder.orderNumber}</span>
+                    <span className="font-medium">{selectedOrder.order_number}</span>
                   </div>
                   <div className="flex justify-between">
                     <span className="text-gray-600">Status:</span>
@@ -270,57 +243,38 @@ function Orders() {
                   <div className="flex justify-between">
                     <span className="text-gray-600">Payment Method:</span>
                     <span className="font-medium capitalize">
-                      {selectedOrder.payment?.method === 'cod' ? 'Cash on Delivery' : 'Online Payment'}
+                      {selectedOrder.payment_method === 'cod' ? 'Cash on Delivery' : 'Online Payment'}
                     </span>
                   </div>
                   <div className="flex justify-between">
                     <span className="text-gray-600">Payment Status:</span>
-                    <span className={`px-2 inline-flex text-xs leading-5 font-semibold rounded-full ${getPaymentStatusColor(selectedOrder.payment?.status)}`}>
-                      {selectedOrder.payment?.status || 'pending'}
+                    <span className={`px-2 inline-flex text-xs leading-5 font-semibold rounded-full ${getPaymentStatusColor(selectedOrder.payment_status)}`}>
+                      {selectedOrder.payment_status || 'pending'}
                     </span>
                   </div>
                   <div className="flex justify-between">
                     <span className="text-gray-600">Total Amount:</span>
-                    <span className="font-bold text-orange-600">₹{selectedOrder.totalAmount?.toLocaleString()}</span>
+                    <span className="font-bold text-orange-600">₹{selectedOrder.total_amount?.toLocaleString()}</span>
                   </div>
                   <div className="flex justify-between">
                     <span className="text-gray-600">Created:</span>
-                    <span className="font-medium">{new Date(selectedOrder.createdAt).toLocaleString()}</span>
+                    <span className="font-medium">{new Date(selectedOrder.created_at).toLocaleString()}</span>
                   </div>
                 </div>
-
-                {/* Tracking Info */}
-                {selectedOrder.tracking?.trackingNumber && (
-                  <div className="mt-4 pt-4 border-t">
-                    <h4 className="font-semibold text-gray-800 mb-2">Tracking Information</h4>
-                    <div className="space-y-1">
-                      <div className="flex justify-between">
-                        <span className="text-gray-600">Carrier:</span>
-                        <span className="font-medium">{selectedOrder.tracking.carrier}</span>
-                      </div>
-                      <div className="flex justify-between">
-                        <span className="text-gray-600">Tracking Number:</span>
-                        <span className="font-medium">{selectedOrder.tracking.trackingNumber}</span>
-                      </div>
-                    </div>
-                  </div>
-                )}
               </div>
 
               {/* Shipping Address */}
               <div>
                 <h3 className="text-lg font-semibold text-gray-800 mb-4">Shipping Address</h3>
-                {selectedOrder.shippingAddress && (
-                  <div className="bg-gray-50 rounded-lg p-4">
-                    <p className="font-medium">{selectedOrder.shippingAddress.fullName}</p>
-                    <p className="text-gray-600">{selectedOrder.shippingAddress.street}</p>
-                    <p className="text-gray-600">
-                      {selectedOrder.shippingAddress.city}, {selectedOrder.shippingAddress.state} {selectedOrder.shippingAddress.zipCode}
-                    </p>
-                    <p className="text-gray-600">{selectedOrder.shippingAddress.country}</p>
-                    <p className="text-gray-600 mt-2">Phone: {selectedOrder.shippingAddress.phone}</p>
-                  </div>
-                )}
+                <div className="bg-gray-50 rounded-lg p-4">
+                  <p className="font-medium">{selectedOrder.shipping_full_name}</p>
+                  <p className="text-gray-600">{selectedOrder.shipping_street}</p>
+                  <p className="text-gray-600">
+                    {selectedOrder.shipping_city}, {selectedOrder.shipping_state} {selectedOrder.shipping_zip_code}
+                  </p>
+                  <p className="text-gray-600">{selectedOrder.shipping_country}</p>
+                  <p className="text-gray-600 mt-2">Phone: {selectedOrder.shipping_phone}</p>
+                </div>
               </div>
             </div>
 
@@ -338,12 +292,12 @@ function Orders() {
                     </tr>
                   </thead>
                   <tbody className="divide-y divide-gray-200">
-                    {selectedOrder.items?.map((item, index) => (
+                    {(selectedOrder.order_items || selectedOrder.items || []).map((item, index) => (
                       <tr key={index}>
                         <td className="px-4 py-2">
                           <div className="flex items-center">
                             <img
-                              src={item.image?.url || '/placeholder.png'}
+                              src={item.image_url || item.image?.url || '/placeholder.png'}
                               alt={item.name}
                               className="w-10 h-10 rounded object-cover mr-3"
                             />
@@ -373,45 +327,25 @@ function Orders() {
                 </div>
                 <div className="flex justify-between">
                   <span className="text-gray-600">Tax (GST 18%):</span>
-                  <span>₹{selectedOrder.taxAmount?.toLocaleString()}</span>
+                  <span>₹{selectedOrder.tax_amount?.toLocaleString()}</span>
                 </div>
                 <div className="flex justify-between">
                   <span className="text-gray-600">Shipping:</span>
-                  <span>{selectedOrder.shippingCost === 0 ? 'Free' : `₹${selectedOrder.shippingCost}`}</span>
+                  <span>{selectedOrder.shipping_cost === 0 ? 'Free' : `₹${selectedOrder.shipping_cost}`}</span>
                 </div>
-                {selectedOrder.discount?.amount > 0 && (
+                {selectedOrder.discount_amount > 0 && (
                   <div className="flex justify-between text-green-600">
                     <span>Discount:</span>
-                    <span>-₹{selectedOrder.discount.amount?.toLocaleString()}</span>
+                    <span>-₹{selectedOrder.discount_amount?.toLocaleString()}</span>
                   </div>
                 )}
                 <hr />
                 <div className="flex justify-between text-lg font-bold">
                   <span>Total:</span>
-                  <span className="text-orange-600">₹{selectedOrder.totalAmount?.toLocaleString()}</span>
+                  <span className="text-orange-600">₹{selectedOrder.total_amount?.toLocaleString()}</span>
                 </div>
               </div>
             </div>
-
-            {/* Status History */}
-            {selectedOrder.statusHistory && selectedOrder.statusHistory.length > 0 && (
-              <div className="mt-6">
-                <h3 className="text-lg font-semibold text-gray-800 mb-4">Status History</h3>
-                <div className="space-y-2">
-                  {selectedOrder.statusHistory.map((history, index) => (
-                    <div key={index} className="flex items-center space-x-4 p-2 bg-gray-50 rounded">
-                      <span className={`px-2 py-1 text-xs font-semibold rounded-full ${getStatusColor(history.status)}`}>
-                        {history.status}
-                      </span>
-                      <span className="text-sm text-gray-600">
-                        {new Date(history.timestamp).toLocaleString()}
-                      </span>
-                      {history.note && <span className="text-sm text-gray-500">- {history.note}</span>}
-                    </div>
-                  ))}
-                </div>
-              </div>
-            )}
           </div>
         </div>
       )}

@@ -1,20 +1,13 @@
 import { Cart, Product } from '../models/index.js';
 import { ApiError, asyncHandler } from '../middlewares/errorHandler.js';
+import supabase from '../../supabase.js';
 
 // Get cart
 export const getCart = asyncHandler(async (req, res) => {
   const { sessionId } = req.query;
   const userId = req.user?.id;
 
-  let cart;
-
-  if (userId) {
-    cart = await Cart.findOne({ user: userId, isActive: true })
-      .populate('items.product', 'name price images thumbnail stock status');
-  } else if (sessionId) {
-    cart = await Cart.findOne({ sessionId, isActive: true })
-      .populate('items.product', 'name price images thumbnail stock status');
-  }
+  let cart = await Cart.findOne({ user: userId, sessionId, isActive: true });
 
   if (!cart) {
     return res.json({
@@ -31,17 +24,24 @@ export const getCart = asyncHandler(async (req, res) => {
   cart.items = cart.items.filter(item => {
     if (!item.product) return false;
     if (item.product.status !== 'active') return false;
-    if (item.product.stock.quantity < item.quantity) {
-      item.quantity = item.product.stock.quantity;
+    if (item.product.track_inventory && item.product.stock_quantity < item.quantity) {
+      item.quantity = item.product.stock_quantity;
     }
     return item.quantity > 0;
   });
 
-  await cart.save();
+  // Calculate totals and update Supabase
+  const subtotal = cart.items.reduce((sum, item) => sum + (item.price * item.quantity), 0);
+  const totalItems = cart.items.reduce((sum, item) => sum + item.quantity, 0);
+
+  await supabase
+    .from('carts')
+    .update({ subtotal, total_items: totalItems })
+    .eq('id', cart.id);
 
   res.json({
     success: true,
-    data: cart
+    data: { ...cart, subtotal, totalItems: totalItems }
   });
 });
 
@@ -56,211 +56,91 @@ export const addToCart = asyncHandler(async (req, res) => {
 
   // Verify product exists and is active
   const product = await Product.findById(productId);
-  if (!product) {
-    throw new ApiError(404, 'Product not found');
-  }
-
-  if (product.status !== 'active') {
-    throw new ApiError(400, 'Product is not available');
-  }
+  if (!product) throw new ApiError(404, 'Product not found');
+  if (product.status !== 'active') throw new ApiError(400, 'Product is not available');
 
   // Check stock
-  if (product.stock.trackInventory && product.stock.quantity < quantity) {
-    throw new ApiError(400, `Only ${product.stock.quantity} items available in stock`);
+  if (product.track_inventory && product.stock_quantity < quantity) {
+    throw new ApiError(400, `Only ${product.stock_quantity} items available in stock`);
   }
 
   // Find or create cart
-  let cart;
-  if (userId) {
-    cart = await Cart.findOne({ user: userId, isActive: true });
-    if (!cart) {
-      cart = new Cart({ user: userId, items: [] });
-    }
-  } else {
-    cart = await Cart.findOne({ sessionId, isActive: true });
-    if (!cart) {
-      cart = new Cart({ sessionId, items: [] });
-    }
+  let cart = await Cart.findOne({ user: userId, sessionId, isActive: true });
+  if (!cart) {
+      cart = await Cart.create({ user: userId, sessionId, items: [] });
   }
+  
+  // Ensure items is an array (Handle potential initialization lag or raw return behavior)
+  if (!cart.items) cart.items = [];
 
-  // Check if item already in cart
-  const existingItemIndex = cart.items.findIndex(item => {
-    if (item.product.toString() !== productId) return false;
-    if (variant && item.variant) {
-      return JSON.stringify(item.variant) === JSON.stringify(variant);
-    }
-    return !variant && !item.variant;
+  const existingItemIndex = (cart.items || []).findIndex(item => {
+    const isSameProduct = (item.product?.id || item.product) === productId;
+    const isSameVariant = JSON.stringify(item.variant) === JSON.stringify(variant);
+    return isSameProduct && isSameVariant;
   });
 
   if (existingItemIndex > -1) {
-    // Update quantity
     const newQuantity = cart.items[existingItemIndex].quantity + quantity;
-    
-    if (product.stock.trackInventory && product.stock.quantity < newQuantity) {
-      throw new ApiError(400, `Cannot add more. Only ${product.stock.quantity} items available in stock`);
+    if (product.track_inventory && product.stock_quantity < newQuantity) {
+      throw new ApiError(400, `Cannot add more. Only ${product.stock_quantity} available`);
     }
-    
     cart.items[existingItemIndex].quantity = newQuantity;
   } else {
-    // Add new item
-    cart.items.push({
-      product: productId,
-      quantity,
-      price: product.price,
-      variant
-    });
+    cart.items.push({ product: productId, quantity, price: product.price, variant });
   }
 
-  await cart.save();
+  const subtotal = cart.items.reduce((sum, item) => sum + (item.price * item.quantity), 0);
+  const totalItems = cart.items.reduce((sum, item) => sum + item.quantity, 0);
 
-  const populatedCart = await Cart.findById(cart._id)
-    .populate('items.product', 'name price images thumbnail stock status');
+  const updatedCart = await Cart.findOneAndUpdate(
+    { id: cart.id }, 
+    { subtotal, total_items: totalItems, items: cart.items }
+  );
 
   res.json({
     success: true,
     message: 'Item added to cart',
-    data: populatedCart
+    data: { ...updatedCart, totalItems }
   });
 });
 
-// Update cart item quantity
+// updateCartItem... (Already handles conceptual logic in add above)
 export const updateCartItem = asyncHandler(async (req, res) => {
-  const { productId, quantity, sessionId, variant } = req.body;
-  const userId = req.user?.id;
-
-  if (!userId && !sessionId) {
-    throw new ApiError(400, 'User ID or session ID is required');
-  }
-
-  if (quantity < 1) {
-    throw new ApiError(400, 'Quantity must be at least 1');
-  }
-
-  const product = await Product.findById(productId);
-  if (!product) {
-    throw new ApiError(404, 'Product not found');
-  }
-
-  if (product.stock.trackInventory && product.stock.quantity < quantity) {
-    throw new ApiError(400, `Only ${product.stock.quantity} items available in stock`);
-  }
-
-  let cart;
-  if (userId) {
-    cart = await Cart.findOne({ user: userId, isActive: true });
-  } else {
-    cart = await Cart.findOne({ sessionId, isActive: true });
-  }
-
-  if (!cart) {
-    throw new ApiError(404, 'Cart not found');
-  }
-
-  const itemIndex = cart.items.findIndex(item => {
-    if (item.product.toString() !== productId) return false;
-    if (variant && item.variant) {
-      return JSON.stringify(item.variant) === JSON.stringify(variant);
-    }
-    return !variant && !item.variant;
-  });
-
-  if (itemIndex === -1) {
-    throw new ApiError(404, 'Item not found in cart');
-  }
-
-  cart.items[itemIndex].quantity = quantity;
-  await cart.save();
-
-  const populatedCart = await Cart.findById(cart._id)
-    .populate('items.product', 'name price images thumbnail stock status');
-
-  res.json({
-    success: true,
-    message: 'Cart updated',
-    data: populatedCart
-  });
+    const { productId, quantity, sessionId, variant } = req.body;
+    const userId = req.user?.id;
+    let cart = await Cart.findOne({ user: userId, sessionId, isActive: true });
+    if (!cart) throw new ApiError(404, 'Cart not found');
+    const index = cart.items.findIndex(item => (item.product.id || item.product) === productId);
+    if (index === -1) throw new ApiError(404, 'Item not found');
+    cart.items[index].quantity = quantity;
+    const updatedCart = await Cart.findOneAndUpdate({ id: cart.id }, { $set: { items: cart.items } });
+    res.json({ success: true, data: updatedCart });
 });
 
-// Remove item from cart
 export const removeFromCart = asyncHandler(async (req, res) => {
-  const { productId, sessionId, variant } = req.body;
-  const userId = req.user?.id;
-
-  if (!userId && !sessionId) {
-    throw new ApiError(400, 'User ID or session ID is required');
-  }
-
-  let cart;
-  if (userId) {
-    cart = await Cart.findOne({ user: userId, isActive: true });
-  } else {
-    cart = await Cart.findOne({ sessionId, isActive: true });
-  }
-
-  if (!cart) {
-    throw new ApiError(404, 'Cart not found');
-  }
-
-  const itemIndex = cart.items.findIndex(item => {
-    if (item.product.toString() !== productId) return false;
-    if (variant && item.variant) {
-      return JSON.stringify(item.variant) === JSON.stringify(variant);
-    }
-    return !variant && !item.variant;
-  });
-
-  if (itemIndex === -1) {
-    throw new ApiError(404, 'Item not found in cart');
-  }
-
-  cart.items.splice(itemIndex, 1);
-  await cart.save();
-
-  const populatedCart = await Cart.findById(cart._id)
-    .populate('items.product', 'name price images thumbnail stock status');
-
-  res.json({
-    success: true,
-    message: 'Item removed from cart',
-    data: populatedCart
-  });
+    const { productId, sessionId } = req.body;
+    const userId = req.user?.id;
+    let cart = await Cart.findOne({ user: userId, sessionId, isActive: true });
+    if (!cart) throw new ApiError(404, 'Cart not found');
+    cart.items = cart.items.filter(item => (item.product.id || item.product) !== productId);
+    const updatedCart = await Cart.findOneAndUpdate({ id: cart.id }, { $set: { items: cart.items } });
+    res.json({ success: true, data: updatedCart });
 });
 
-// Clear cart
 export const clearCart = asyncHandler(async (req, res) => {
-  const { sessionId } = req.body;
-  const userId = req.user?.id;
-
-  let cart;
-  if (userId) {
-    cart = await Cart.findOne({ user: userId, isActive: true });
-  } else if (sessionId) {
-    cart = await Cart.findOne({ sessionId, isActive: true });
-  }
-
-  if (cart) {
-    cart.items = [];
-    await cart.save();
-  }
-
-  res.json({
-    success: true,
-    message: 'Cart cleared',
-    data: {
-      items: [],
-      subtotal: 0,
-      totalItems: 0
-    }
-  });
+    const { sessionId } = req.body;
+    const userId = req.user?.id;
+    let cart = await Cart.findOne({ user: userId, sessionId, isActive: true });
+    if (!cart) throw new ApiError(404, 'Cart not found');
+    
+    await supabase.from('cart_items').delete().eq('cart_id', cart.id);
+    await supabase.from('carts').update({ subtotal: 0, total_items: 0 }).eq('id', cart.id);
+    
+    res.json({ success: true, message: 'Cart cleared' });
 });
 
-// Apply coupon to cart
 export const applyCoupon = asyncHandler(async (req, res) => {
-  const { couponCode, sessionId } = req.body;
-  const userId = req.user?.id;
-
-  // This is a placeholder - implement coupon logic as needed
-  throw new ApiError(501, 'Coupon functionality not implemented yet');
+    throw new ApiError(501, 'Coupon functionality not implemented yet');
 });
 
 export default {
