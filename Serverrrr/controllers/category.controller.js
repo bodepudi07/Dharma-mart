@@ -1,12 +1,13 @@
 // controllers/category.controller.js
 
 import * as categoryService from "../services/category.service.js";
+import cache from "../utils/cache.js";
 
 //  CREATE
 export const create = async (req, res) => {
   try {
     const category = await categoryService.createCategory(req.body);
-
+    cache.flushAll(); // Clear cache after creating a new category
     res.status(201).json({
       success: true,
       data: category
@@ -22,7 +23,20 @@ export const create = async (req, res) => {
 // GET ALL
 export const getAll = async (req, res) => {
   try {
+
+    const cacheKey = JSON.stringify(req.query);
+
+    const cachedData = cache.get(cacheKey);
+    if (cachedData) {      
+      return res.status(200).json({
+        success: true,
+        data: cachedData
+      });
+    }
+
     const categories = await categoryService.getAllCategories();
+
+    cache.set(cacheKey, categories);
 
     res.status(200).json({
       success: true,
@@ -62,6 +76,8 @@ export const update = async (req, res) => {
       req.body
     );
 
+    cache.flushAll(); // Clear cache after updating a category
+
     res.status(200).json({
       success: true,
       data: category
@@ -78,6 +94,8 @@ export const update = async (req, res) => {
 export const remove = async (req, res) => {
   try {
     const result = await categoryService.deleteCategory(req.params.id);
+
+    cache.flushAll(); // Clear cache after deleting a category
 
     res.status(200).json({
       success: true,

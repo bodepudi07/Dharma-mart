@@ -2,6 +2,7 @@
 
 import * as productService from "../services/product.service.js";
 import { uploadBuffer } from "../utils/uploadToCloudinary.js";
+import cache from "../utils/cache.js";
 
 // CREATE
 export const create = async (req, res) => {
@@ -33,6 +34,8 @@ export const create = async (req, res) => {
       images
     });
 
+    cache.flushAll(); // Clear cache after creating a new product
+
     res.status(201).json({
       success: true,
       data: product
@@ -48,7 +51,20 @@ export const create = async (req, res) => {
 // GET ALL
 export const getAll = async (req, res) => {
   try {
+
+    const cacheKey = JSON.stringify(req.query);
+
+    const cachedData = cache.get(cacheKey);
+    if (cachedData) {
+      return res.status(200).json({
+        success: true,
+        ...cachedData
+      });
+    }
+
     const result = await productService.getAllProducts(req.query);
+
+    cache.set(cacheKey, result);
 
     res.status(200).json({
       success: true,
@@ -114,6 +130,8 @@ export const update = async (req, res) => {
       updateData
     );
 
+    cache.flushAll(); // Clear cache after updating a product
+
     res.status(200).json({
       success: true,
       data: product
@@ -130,6 +148,8 @@ export const update = async (req, res) => {
 export const remove = async (req, res) => {
   try {
     const result = await productService.deleteProduct(req.params.id);
+
+    cache.flushAll(); // Clear cache after deleting a product
 
     res.status(200).json({
       success: true,

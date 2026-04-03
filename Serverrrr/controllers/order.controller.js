@@ -1,10 +1,12 @@
 // controllers/order.controller.js
 import * as orderService from "../services/order.service.js";
+import cache from "../utils/cache.js";
 
 // CREATE ORDER (customer)
 export const create = async (req, res) => {
   try {
     const order = await orderService.createOrder(req.body);
+    cache.flushAll(); // Clear cache after creating a new order
 
     res.status(201).json({
       success: true,
@@ -40,7 +42,20 @@ export const getOne = async (req, res) => {
 // ADMIN: GET ALL ORDERS
 export const getAll = async (req, res) => {
   try {
+
+    const cacheKey = JSON.stringify(req.query);
+
+    const cachedData = cache.get(cacheKey);
+    if (cachedData) {
+      return res.status(200).json({
+        success: true,
+        ...cachedData
+      });
+    }
+
     const orders = await orderService.getAllOrders();
+
+    cache.set(cacheKey, { data: orders });
 
     res.status(200).json({
       success: true,
