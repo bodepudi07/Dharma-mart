@@ -45,6 +45,14 @@ app.get('/api', (req, res) => {
   })
 })
 
+// Root route
+app.get('/', (req, res) => {
+  res.status(200).json({
+    success: true,
+    message: "Server is running"
+  })
+})
+
 // 404 handler for undefined routes
 app.use(notFoundHandler)
 
