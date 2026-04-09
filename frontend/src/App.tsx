@@ -864,17 +864,19 @@ export const App = () => {
 
         {/* Global Access Gate - Must be logged in to use any feature */}
         {!currentUser && !showSplash && !showWelcome && !userLoading && (
-          <div className="fixed inset-0 z-[9999] bg-stone-950/95 backdrop-blur-xl flex flex-col items-center justify-center">
-            <div className="mb-8 text-center px-4 animate-fade-in-up">
-              <Icon name="lotus" className="w-12 h-12 text-amber-500 mx-auto mb-4" />
-              <h2 className="text-2xl font-bold text-white mb-2">Welcome to Dharma Setu</h2>
-              <p className="text-amber-200/80">Please log in or register to access the spiritual features.</p>
+          <div className="fixed inset-0 z-[9999] bg-stone-950/95 backdrop-blur-xl overflow-y-auto">
+              <div className="min-h-screen flex flex-col items-center justify-center py-12 px-4 relative z-10 w-full max-w-7xl mx-auto">
+                <div className="mb-8 text-center animate-fade-in-up">
+                  <Icon name="lotus" className="w-12 h-12 text-amber-500 mx-auto mb-4" />
+                  <h2 className="text-2xl font-bold text-white mb-2">Welcome to Dharma Setu</h2>
+                  <p className="text-amber-200/80">Please log in or register to access the spiritual features.</p>
+                </div>
+                <div className="w-full max-w-md mx-auto bg-stone-900 border border-stone-800 rounded-[2.5rem] shadow-2xl animate-fade-in-up relative" style={{ animationDelay: '0.2s' }}>
+                  <LoginModal onClose={() => {}} t={t} inline={true} />
+                </div>
+              </div>
+              <div className="fixed inset-0 pointer-events-none z-0 bg-[radial-gradient(ellipse_at_center,_var(--tw-gradient-stops))] from-amber-900/20 via-stone-950 to-stone-950"></div>
             </div>
-            <div className="w-full max-w-md bg-stone-900 border border-stone-800 rounded-3xl overflow-hidden shadow-2xl animate-fade-in-up" style={{ animationDelay: '0.2s' }}>
-              <LoginModal onClose={() => {}} t={t} inline={true} />
-            </div>
-            <div className="absolute inset-0 pointer-events-none -z-10 bg-[radial-gradient(ellipse_at_center,_var(--tw-gradient-stops))] from-amber-900/20 via-stone-950 to-stone-950"></div>
-          </div>
         )}
       </div>
     );
