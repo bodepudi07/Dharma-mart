@@ -71,7 +71,7 @@ export const getPandits = (language: Language, eventId?: number): Promise<Pandit
     });
 };
 export const getPendingTemples = async (token: string): Promise<AdminTemple[]> => {
-    const response = await fetch('/api/admin/pending-temples', {
+    const response = await fetch(`${import.meta.env.VITE_API_URL || ''}/api/admin/pending-temples`, {
         headers: { 'Authorization': `Bearer ${token}` }
     });
     const result = await response.json();
@@ -80,7 +80,7 @@ export const getPendingTemples = async (token: string): Promise<AdminTemple[]> =
 };
 
 export const getPendingPandits = async (token: string): Promise<Pandit[]> => {
-    const response = await fetch('/api/admin/pending-pandits', {
+    const response = await fetch(`${import.meta.env.VITE_API_URL || ''}/api/admin/pending-pandits`, {
         headers: { 'Authorization': `Bearer ${token}` }
     });
     const result = await response.json();
@@ -90,7 +90,7 @@ export const getPendingPandits = async (token: string): Promise<Pandit[]> => {
 
 export const getUsersList = async (token?: string): Promise<User[]> => {
     if (!token) throw new Error("Authentication token required for user listing.");
-    const response = await fetch('/api/admin/users', {
+    const response = await fetch(`${import.meta.env.VITE_API_URL || ''}/api/admin/users`, {
         headers: { 'Authorization': `Bearer ${token}` }
     });
     const result = await response.json();
@@ -99,7 +99,7 @@ export const getUsersList = async (token?: string): Promise<User[]> => {
 };
 
 export const getActivityLog = async (token: string): Promise<ActivityLogItem[]> => {
-    const response = await fetch('/api/admin/activity-log', {
+    const response = await fetch(`${import.meta.env.VITE_API_URL || ''}/api/admin/activity-log`, {
         headers: { 'Authorization': `Bearer ${token}` }
     });
     const result = await response.json();
@@ -107,7 +107,7 @@ export const getActivityLog = async (token: string): Promise<ActivityLogItem[]> 
     return result.data;
 };
 export const getBookings = async (token: string): Promise<Booking[]> => {
-    const response = await fetch('/api/admin/bookings', {
+    const response = await fetch(`${import.meta.env.VITE_API_URL || ''}/api/admin/bookings`, {
         headers: { 'Authorization': `Bearer ${token}` }
     });
     const result = await response.json();
@@ -116,7 +116,7 @@ export const getBookings = async (token: string): Promise<Booking[]> => {
 };
 
 export const getUserBookings = async (userId: number, token: string): Promise<Booking[]> => {
-    const response = await fetch(`/api/bookings/user/${userId}`, {
+    const response = await fetch(`${import.meta.env.VITE_API_URL || ''}/api/bookings/user/${userId}`, {
         headers: { 'Authorization': `Bearer ${token}` }
     });
     const result = await response.json();
@@ -125,7 +125,7 @@ export const getUserBookings = async (userId: number, token: string): Promise<Bo
 };
 
 export const cancelBooking = async (bookingId: number, token: string, reason?: string): Promise<Booking> => {
-    const response = await fetch(`/api/bookings/${bookingId}/cancel`, {
+    const response = await fetch(`${import.meta.env.VITE_API_URL || ''}/api/bookings/${bookingId}/cancel`, {
         method: 'PUT',
         headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${token}` },
         body: JSON.stringify({ reason })
@@ -136,7 +136,7 @@ export const cancelBooking = async (bookingId: number, token: string, reason?: s
 };
 
 export const rescheduleBooking = async (bookingId: number, token: string, bookingDate: string, timeSlot?: string): Promise<Booking> => {
-    const response = await fetch(`/api/bookings/${bookingId}/reschedule`, {
+    const response = await fetch(`${import.meta.env.VITE_API_URL || ''}/api/bookings/${bookingId}/reschedule`, {
         method: 'PUT',
         headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${token}` },
         body: JSON.stringify({ bookingDate, timeSlot })
@@ -151,7 +151,7 @@ export const createSankalpa = async (data: {
     sevaId: number; devoteeName: string; gotra: string; rashi?: string; nakshatra?: string;
     address: string; pincode: string; phone: string; date: string; panditId: number;
 }, token: string): Promise<Sankalpa> => {
-    const response = await fetch('/api/sankalpas', {
+    const response = await fetch(`${import.meta.env.VITE_API_URL || ''}/api/sankalpas`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${token}` },
         body: JSON.stringify(data)
@@ -162,7 +162,7 @@ export const createSankalpa = async (data: {
 };
 
 export const getUserSankalpas = async (token: string): Promise<Sankalpa[]> => {
-    const response = await fetch('/api/sankalpas/user', {
+    const response = await fetch(`${import.meta.env.VITE_API_URL || ''}/api/sankalpas/user`, {
         headers: { 'Authorization': `Bearer ${token}` }
     });
     const result = await response.json();
@@ -171,7 +171,7 @@ export const getUserSankalpas = async (token: string): Promise<Sankalpa[]> => {
 };
 
 export const getAllSankalpas = async (token: string): Promise<Sankalpa[]> => {
-    const response = await fetch('/api/sankalpas/all', {
+    const response = await fetch(`${import.meta.env.VITE_API_URL || ''}/api/sankalpas/all`, {
         headers: { 'Authorization': `Bearer ${token}` }
     });
     const result = await response.json();
@@ -183,7 +183,7 @@ export const updateSankalpaStatus = async (
     sankalpaId: string, status: string, token: string,
     extras?: { proofVideoUrl?: string; trackingId?: string; panditNotes?: string }
 ): Promise<Sankalpa> => {
-    const response = await fetch(`/api/sankalpas/${encodeURIComponent(sankalpaId)}/status`, {
+    const response = await fetch(`${import.meta.env.VITE_API_URL || ''}/api/sankalpas/${encodeURIComponent(sankalpaId)}/status`, {
         method: 'PUT',
         headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${token}` },
         body: JSON.stringify({ status, ...extras })
@@ -250,7 +250,7 @@ export const getNearbyTemples = async (templeId: number, userLat: number, userLn
 };
 
 export const verifyToken = async (token: string): Promise<User> => {
-    const response = await fetch('/api/auth/verify', {
+    const response = await fetch(`${import.meta.env.VITE_API_URL || ''}/api/auth/verify`, {
         headers: { 'Authorization': `Bearer ${token}` }
     });
 
@@ -423,7 +423,7 @@ const getSpiritualGrowthTemplate = (userId: number): SpiritualGrowthData => ({
 export const getSpiritualGrowth = async (userId: number, token?: string): Promise<SpiritualGrowthData> => {
     if (!token) return getSpiritualGrowthTemplate(userId);
     try {
-        const response = await fetch(`/api/growth/${userId}`, {
+        const response = await fetch(`${import.meta.env.VITE_API_URL || ''}/api/growth/${userId}`, {
             headers: { 'Authorization': `Bearer ${token}` }
         });
         const result = await response.json();
@@ -441,7 +441,7 @@ export const logActivity = async (
 ): Promise<void> => {
     if (!user || !user.token) return; // Can't log without auth
     try {
-        await fetch('/api/users/activity', {
+        await fetch(`${import.meta.env.VITE_API_URL || ''}/api/users/activity`, {
             method: 'POST',
             headers: { 'Authorization': `Bearer ${user.token}`, 'Content-Type': 'application/json' },
             body: JSON.stringify({ type, message })
@@ -458,7 +458,7 @@ export const bookDarshan = async (temple: Temple, details: DarshanBookingDetails
     if (!temple || !user || !token) throw new Error("Authentication and temple data required.");
     if (!details || !details.date || !details.tier) throw new Error("Invalid booking details.");
 
-    const response = await fetch('/api/bookings', {
+    const response = await fetch(`${import.meta.env.VITE_API_URL || ''}/api/bookings`, {
         method: 'POST',
         headers: { 'Authorization': `Bearer ${token}`, 'Content-Type': 'application/json' },
         body: JSON.stringify({
@@ -483,7 +483,7 @@ export const bookPooja = async (details: PoojaBookingDetails, user: User, token:
 
     const totalCost = details.pooja.cost + (details.pandit?.cost || 0);
     const durationMinutes = parseDurationToMinutes(details.pooja.duration);
-    const response = await fetch('/api/bookings', {
+    const response = await fetch(`${import.meta.env.VITE_API_URL || ''}/api/bookings`, {
         method: 'POST',
         headers: { 'Authorization': `Bearer ${token}`, 'Content-Type': 'application/json' },
         body: JSON.stringify({
@@ -507,7 +507,7 @@ export const bookYatra = async (details: YatraBookingDetails, user: User, token:
     if (!details || !details.yatra || !details.tier || details.numberOfPersons <= 0) throw new Error("Invalid yatra booking details.");
 
     const cost = details.tier.cost * details.numberOfPersons;
-    const response = await fetch('/api/bookings', {
+    const response = await fetch(`${import.meta.env.VITE_API_URL || ''}/api/bookings`, {
         method: 'POST',
         headers: { 'Authorization': `Bearer ${token}`, 'Content-Type': 'application/json' },
         body: JSON.stringify({
@@ -526,7 +526,7 @@ export const bookYatra = async (details: YatraBookingDetails, user: User, token:
 
 export const submitYatraQuoteRequest = async (details: YatraQuoteRequest, user: User): Promise<{ message: string }> => {
     if (!user || !user.token) throw new Error('Authentication required.');
-    const response = await fetch('/api/users/yatra-quote', {
+    const response = await fetch(`${import.meta.env.VITE_API_URL || ''}/api/users/yatra-quote`, {
         method: 'POST',
         headers: { 'Authorization': `Bearer ${user.token}`, 'Content-Type': 'application/json' },
         body: JSON.stringify(details)
@@ -540,7 +540,7 @@ export const bookPandit = async (pandit: Pandit, contextItem: { name: string }, 
     if (!user || !user.token) throw new Error("Authentication required to book a Pandit.");
     if (!pandit || !details || !details.date || !details.timeSlot) throw new Error("Incomplete Pandit booking details.");
 
-    const response = await fetch('/api/bookings', {
+    const response = await fetch(`${import.meta.env.VITE_API_URL || ''}/api/bookings`, {
         method: 'POST',
         headers: { 'Authorization': `Bearer ${user.token}`, 'Content-Type': 'application/json' },
         body: JSON.stringify({
@@ -563,7 +563,7 @@ export const makeDonation = async (amount: number, purpose: DonationOption, user
     if (amount < 11) throw new Error("Minimum donation amount is ₹11 for processing reasons.");
     if (!purpose) throw new Error("Invalid donation purpose.");
 
-    const response = await fetch('/api/bookings', {
+    const response = await fetch(`${import.meta.env.VITE_API_URL || ''}/api/bookings`, {
         method: 'POST',
         headers: { 'Authorization': `Bearer ${user.token}`, 'Content-Type': 'application/json' },
         body: JSON.stringify({
@@ -582,7 +582,7 @@ export const makeDonation = async (amount: number, purpose: DonationOption, user
 
 export const submitTemple = async (templeData: TempleSubmissionData, user: User): Promise<{ message: string }> => {
     if (!user || !user.token) throw new Error('Authentication required.');
-    const response = await fetch('/api/users/submit-temple', {
+    const response = await fetch(`${import.meta.env.VITE_API_URL || ''}/api/users/submit-temple`, {
         method: 'POST',
         headers: { 'Authorization': `Bearer ${user.token}`, 'Content-Type': 'application/json' },
         body: JSON.stringify(templeData)
@@ -593,7 +593,7 @@ export const submitTemple = async (templeData: TempleSubmissionData, user: User)
 };
 
 export const updatePoojaAssociationsForTemple = async (templeId: number, selectedPoojaIds: number[], token: string): Promise<{ message: string }> => {
-    const response = await fetch(`/api/admin/temples/${templeId}/pooja-associations`, {
+    const response = await fetch(`${import.meta.env.VITE_API_URL || ''}/api/admin/temples/${templeId}/pooja-associations`, {
         method: 'PUT',
         headers: { 'Authorization': `Bearer ${token}`, 'Content-Type': 'application/json' },
         body: JSON.stringify({ selectedPoojaIds })
@@ -609,7 +609,7 @@ export const checkAndResetStreak = async (userId: number, token?: string): Promi
 
 export const completeSpiritualTask = async (userId: number, taskType: TaskType, token?: string): Promise<SpiritualGrowthData> => {
     if (!token) throw new Error('Authentication required.');
-    const response = await fetch(`/api/growth/${userId}/complete-task`, {
+    const response = await fetch(`${import.meta.env.VITE_API_URL || ''}/api/growth/${userId}/complete-task`, {
         method: 'POST',
         headers: { 'Authorization': `Bearer ${token}`, 'Content-Type': 'application/json' },
         body: JSON.stringify({ taskType })
@@ -620,7 +620,7 @@ export const completeSpiritualTask = async (userId: number, taskType: TaskType, 
 };
 
 export const loginUser = async (email: string, pass: string): Promise<{ user: User }> => {
-    const response = await fetch('/api/auth/login', {
+    const response = await fetch(`${import.meta.env.VITE_API_URL || ''}/api/auth/login`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ email, password: pass })
@@ -636,7 +636,7 @@ export const loginUser = async (email: string, pass: string): Promise<{ user: Us
 };
 
 export const registerUser = async (name: string, email: string, pass: string): Promise<{ user: User }> => {
-    const response = await fetch('/api/auth/register', {
+    const response = await fetch(`${import.meta.env.VITE_API_URL || ''}/api/auth/register`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ name, email, password: pass })
@@ -655,7 +655,7 @@ export const loginWithGoogle = async (credential: string, mockData?: { name: str
     const body = mockData
         ? { credential: 'mock_google_credential', mock: true, name: mockData.name, email: mockData.email }
         : { credential };
-    const response = await fetch('/api/auth/google', {
+    const response = await fetch(`${import.meta.env.VITE_API_URL || ''}/api/auth/google`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(body)
@@ -672,7 +672,7 @@ export const loginWithProvider = async (provider: 'google' | 'facebook'): Promis
 };
 
 export const updateUserProfile = async (userId: number, updates: Partial<User>, token: string): Promise<{ user: User }> => {
-    const response = await fetch('/api/users/profile', {
+    const response = await fetch(`${import.meta.env.VITE_API_URL || ''}/api/users/profile`, {
         method: 'PUT',
         headers: { 'Authorization': `Bearer ${token}`, 'Content-Type': 'application/json' },
         body: JSON.stringify(updates)
@@ -683,7 +683,7 @@ export const updateUserProfile = async (userId: number, updates: Partial<User>, 
 };
 
 export const deleteUser = async (userId: number, token: string): Promise<{ message: string }> => {
-    const response = await fetch(`/api/users/${userId}`, {
+    const response = await fetch(`${import.meta.env.VITE_API_URL || ''}/api/users/${userId}`, {
         method: 'DELETE',
         headers: { 'Authorization': `Bearer ${token}` }
     });
@@ -764,7 +764,7 @@ export const getPersonalizedFeed = async (user: User, language: Language, token:
 export const getUserPreferences = async (userId: number, token?: string): Promise<UserPreferences['preferences']> => {
     if (!token) return {};
     try {
-        const response = await fetch(`/api/users/preferences/${userId}`, {
+        const response = await fetch(`${import.meta.env.VITE_API_URL || ''}/api/users/preferences/${userId}`, {
             headers: { 'Authorization': `Bearer ${token}` }
         });
         const result = await response.json();
@@ -777,7 +777,7 @@ export const getUserPreferences = async (userId: number, token?: string): Promis
 
 export const updateUserChantImage = async (userId: number, chantId: number, imageData: string, token?: string): Promise<UserPreferences> => {
     if (!token) throw new Error('Authentication required.');
-    const response = await fetch('/api/users/preferences', {
+    const response = await fetch(`${import.meta.env.VITE_API_URL || ''}/api/users/preferences`, {
         method: 'PUT',
         headers: { 'Authorization': `Bearer ${token}`, 'Content-Type': 'application/json' },
         body: JSON.stringify({ chantId, imageData })
@@ -789,7 +789,7 @@ export const updateUserChantImage = async (userId: number, chantId: number, imag
 
 // --- ADMIN CRUD ACTIONS (Real API) ---
 const genericApiAdd = async (entityName: string, itemData: any, token: string): Promise<{ message: string }> => {
-    const response = await fetch(`/api/admin/${entityName}`, {
+    const response = await fetch(`${import.meta.env.VITE_API_URL || ''}/api/admin/${entityName}`, {
         method: 'POST',
         headers: { 'Authorization': `Bearer ${token}`, 'Content-Type': 'application/json' },
         body: JSON.stringify(itemData)
@@ -800,7 +800,7 @@ const genericApiAdd = async (entityName: string, itemData: any, token: string): 
 };
 
 const genericApiUpdate = async (entityName: string, itemData: any, token: string): Promise<{ message: string }> => {
-    const response = await fetch(`/api/admin/${entityName}/${itemData.id}`, {
+    const response = await fetch(`${import.meta.env.VITE_API_URL || ''}/api/admin/${entityName}/${itemData.id}`, {
         method: 'PUT',
         headers: { 'Authorization': `Bearer ${token}`, 'Content-Type': 'application/json' },
         body: JSON.stringify(itemData)
@@ -811,7 +811,7 @@ const genericApiUpdate = async (entityName: string, itemData: any, token: string
 };
 
 const genericApiDelete = async (entityName: string, itemId: number, token: string): Promise<{ message: string }> => {
-    const response = await fetch(`/api/admin/${entityName}/${itemId}`, {
+    const response = await fetch(`${import.meta.env.VITE_API_URL || ''}/api/admin/${entityName}/${itemId}`, {
         method: 'DELETE',
         headers: { 'Authorization': `Bearer ${token}` }
     });
@@ -845,7 +845,7 @@ export const addEvent = (data: Partial<MajorEvent>, token: string) => genericApi
 export const updateEvent = (data: Partial<MajorEvent> & { id: number }, token: string) => genericApiUpdate('events', data, token);
 export const deleteEvent = async (id: number, token: string) => {
     // Cascade delete: Also removes associated pandits on the backend
-    const response = await fetch(`/api/admin/events/${id}/cascade`, {
+    const response = await fetch(`${import.meta.env.VITE_API_URL || ''}/api/admin/events/${id}/cascade`, {
         method: 'DELETE',
         headers: { 'Authorization': `Bearer ${token}` }
     });
@@ -870,7 +870,7 @@ export const deleteTemple = (id: number, token: string) => genericApiDelete('tem
 
 // Other Admin Actions
 export const processTempleSubmission = async (templeId: number, status: 'approved' | 'rejected', token: string): Promise<{ message: string }> => {
-    const response = await fetch('/api/admin/process-temple', {
+    const response = await fetch(`${import.meta.env.VITE_API_URL || ''}/api/admin/process-temple`, {
         method: 'POST',
         headers: {
             'Authorization': `Bearer ${token}`,
@@ -883,7 +883,7 @@ export const processTempleSubmission = async (templeId: number, status: 'approve
 };
 
 export const updateTempleCrowdLevel = async (templeId: number, newLevel: CrowdLevel, token: string): Promise<{ message: string }> => {
-    const response = await fetch(`/api/admin/temples/${templeId}/crowd`, {
+    const response = await fetch(`${import.meta.env.VITE_API_URL || ''}/api/admin/temples/${templeId}/crowd`, {
         method: 'PUT',
         headers: { 'Authorization': `Bearer ${token}`, 'Content-Type': 'application/json' },
         body: JSON.stringify({ crowdLevel: newLevel })
@@ -894,7 +894,7 @@ export const updateTempleCrowdLevel = async (templeId: number, newLevel: CrowdLe
 };
 
 export const getAdminStats = async (token: string): Promise<any> => {
-    const response = await fetch('/api/admin/stats', {
+    const response = await fetch(`${import.meta.env.VITE_API_URL || ''}/api/admin/stats`, {
         headers: { 'Authorization': `Bearer ${token}` }
     });
     const result = await response.json();
@@ -903,7 +903,7 @@ export const getAdminStats = async (token: string): Promise<any> => {
 };
 
 export const updateUserRole = async (userId: number, role: Role, token: string): Promise<{ message: string }> => {
-    const response = await fetch(`/api/admin/users/${userId}/role`, {
+    const response = await fetch(`${import.meta.env.VITE_API_URL || ''}/api/admin/users/${userId}/role`, {
         method: 'PUT',
         headers: {
             'Authorization': `Bearer ${token}`,
@@ -916,7 +916,7 @@ export const updateUserRole = async (userId: number, role: Role, token: string):
 };
 
 export const deleteUserByAdmin = async (userId: number, token: string): Promise<{ message: string }> => {
-    const response = await fetch(`/api/admin/users/${userId}`, {
+    const response = await fetch(`${import.meta.env.VITE_API_URL || ''}/api/admin/users/${userId}`, {
         method: 'DELETE',
         headers: { 'Authorization': `Bearer ${token}` }
     });
@@ -927,7 +927,7 @@ export const deleteUserByAdmin = async (userId: number, token: string): Promise<
 // Satsang / Community Hub - Real API calls
 export const getChatRooms = async (): Promise<ChatRoom[]> => {
     try {
-        const response = await fetch('/api/chats/satsang/rooms');
+        const response = await fetch(`${import.meta.env.VITE_API_URL || ''}/api/chats/satsang/rooms`);
         const result = await response.json();
         if (!response.ok || !result.success) throw new Error('Failed to fetch rooms');
         return result.data;
@@ -939,7 +939,7 @@ export const getChatRooms = async (): Promise<ChatRoom[]> => {
 
 export const getChatMessages = async (roomId: number): Promise<ChatMessage[]> => {
     try {
-        const response = await fetch(`/api/chats/satsang/rooms/${roomId}/messages`);
+        const response = await fetch(`${import.meta.env.VITE_API_URL || ''}/api/chats/satsang/rooms/${roomId}/messages`);
         const result = await response.json();
         if (!response.ok || !result.success) throw new Error('Failed to fetch messages');
         return result.data;
@@ -951,14 +951,14 @@ export const getChatMessages = async (roomId: number): Promise<ChatMessage[]> =>
 };
 
 export const getNewMessagesSince = async (roomId: number, lastId: number): Promise<ChatMessage[]> => {
-    const response = await fetch(`/api/chats/satsang/rooms/${roomId}/messages/since/${lastId}`);
+    const response = await fetch(`${import.meta.env.VITE_API_URL || ''}/api/chats/satsang/rooms/${roomId}/messages/since/${lastId}`);
     const result = await response.json();
     if (!response.ok || !result.success) return [];
     return result.data;
 };
 
 export const postChatMessage = async (roomId: number, text: string, user: User): Promise<ChatMessage> => {
-    const response = await fetch(`/api/chats/satsang/rooms/${roomId}/messages`, {
+    const response = await fetch(`${import.meta.env.VITE_API_URL || ''}/api/chats/satsang/rooms/${roomId}/messages`, {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json',
@@ -979,7 +979,7 @@ export interface OnlineUser {
 
 export const sendPresenceHeartbeat = async (roomId: number, token: string): Promise<OnlineUser[]> => {
     try {
-        const response = await fetch(`/api/chats/satsang/rooms/${roomId}/presence`, {
+        const response = await fetch(`${import.meta.env.VITE_API_URL || ''}/api/chats/satsang/rooms/${roomId}/presence`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
@@ -996,7 +996,7 @@ export const sendPresenceHeartbeat = async (roomId: number, token: string): Prom
 
 export const leaveRoom = async (roomId: number, token: string): Promise<void> => {
     try {
-        await fetch(`/api/chats/satsang/rooms/${roomId}/presence`, {
+        await fetch(`${import.meta.env.VITE_API_URL || ''}/api/chats/satsang/rooms/${roomId}/presence`, {
             method: 'DELETE',
             headers: { 'Authorization': `Bearer ${token}` },
         });
@@ -1007,7 +1007,7 @@ export const leaveRoom = async (roomId: number, token: string): Promise<void> =>
 
 export const getPosts = async (): Promise<Post[]> => {
     try {
-        const response = await fetch('/api/posts');
+        const response = await fetch(`${import.meta.env.VITE_API_URL || ''}/api/posts`);
         const result = await response.json();
         if (!response.ok || !result.success) return [];
         return result.data;
@@ -1023,7 +1023,7 @@ export const getUserById = async (userId: number, token: string): Promise<User |
 
 export const createPost = async (caption: string, imageUrl: string, user: User): Promise<{ message: string }> => {
     if (!user || !user.token) throw new Error('Authentication required.');
-    const response = await fetch('/api/posts', {
+    const response = await fetch(`${import.meta.env.VITE_API_URL || ''}/api/posts`, {
         method: 'POST',
         headers: { 'Authorization': `Bearer ${user.token}`, 'Content-Type': 'application/json' },
         body: JSON.stringify({ caption, imageUrl })
@@ -1035,7 +1035,7 @@ export const createPost = async (caption: string, imageUrl: string, user: User):
 
 export const toggleLikePost = async (postId: number, userId: number, token?: string): Promise<{ message: string }> => {
     if (!token) throw new Error('Authentication required.');
-    const response = await fetch(`/api/posts/${postId}/like`, {
+    const response = await fetch(`${import.meta.env.VITE_API_URL || ''}/api/posts/${postId}/like`, {
         method: 'POST',
         headers: { 'Authorization': `Bearer ${token}` }
     });
@@ -1045,7 +1045,7 @@ export const toggleLikePost = async (postId: number, userId: number, token?: str
 };
 
 export const toggleFollowUser = async (currentUserId: number, targetUserId: number, token: string): Promise<{ message: string }> => {
-    const response = await fetch(`/api/users/follow/${targetUserId}`, {
+    const response = await fetch(`${import.meta.env.VITE_API_URL || ''}/api/users/follow/${targetUserId}`, {
         method: 'POST',
         headers: { 'Authorization': `Bearer ${token}` }
     });
@@ -1056,7 +1056,7 @@ export const toggleFollowUser = async (currentUserId: number, targetUserId: numb
 // Pandit Registration
 export const submitPanditRegistration = async (data: Omit<Pandit, 'id' | 'status' | 'rating'>, token?: string): Promise<{ message: string }> => {
     if (!token) throw new Error('Authentication required.');
-    const response = await fetch('/api/users/submit-pandit', {
+    const response = await fetch(`${import.meta.env.VITE_API_URL || ''}/api/users/submit-pandit`, {
         method: 'POST',
         headers: { 'Authorization': `Bearer ${token}`, 'Content-Type': 'application/json' },
         body: JSON.stringify(data)
@@ -1067,7 +1067,7 @@ export const submitPanditRegistration = async (data: Omit<Pandit, 'id' | 'status
 };
 
 export const approvePandit = async (panditId: number, token: string): Promise<{ message: string }> => {
-    const response = await fetch(`/api/admin/approve-pandit/${panditId}`, {
+    const response = await fetch(`${import.meta.env.VITE_API_URL || ''}/api/admin/approve-pandit/${panditId}`, {
         method: 'POST',
         headers: { 'Authorization': `Bearer ${token}` }
     });
@@ -1078,7 +1078,7 @@ export const approvePandit = async (panditId: number, token: string): Promise<{ 
 // --- Chat History & Bookmarks ---
 
 export const getChatHistory = async (userId: number, token: string): Promise<any[]> => {
-    const response = await fetch(`/api/chats/history/${userId}`, {
+    const response = await fetch(`${import.meta.env.VITE_API_URL || ''}/api/chats/history/${userId}`, {
         headers: { 'Authorization': `Bearer ${token}` }
     });
     if (!response.ok) return [];
@@ -1086,7 +1086,7 @@ export const getChatHistory = async (userId: number, token: string): Promise<any
 };
 
 export const saveChatHistory = async (messages: any[], token: string): Promise<void> => {
-    await fetch('/api/chats/history', {
+    await fetch(`${import.meta.env.VITE_API_URL || ''}/api/chats/history`, {
         method: 'POST',
         headers: {
             'Authorization': `Bearer ${token}`,
@@ -1097,7 +1097,7 @@ export const saveChatHistory = async (messages: any[], token: string): Promise<v
 };
 
 export const getBookmarks = async (userId: number, token: string): Promise<any[]> => {
-    const response = await fetch(`/api/chats/bookmarks/${userId}`, {
+    const response = await fetch(`${import.meta.env.VITE_API_URL || ''}/api/chats/bookmarks/${userId}`, {
         headers: { 'Authorization': `Bearer ${token}` }
     });
     if (!response.ok) return [];
@@ -1106,7 +1106,7 @@ export const getBookmarks = async (userId: number, token: string): Promise<any[]
 };
 
 export const saveBookmark = async (text: string, context: string, token: string): Promise<any> => {
-    const response = await fetch('/api/chats/bookmarks', {
+    const response = await fetch(`${import.meta.env.VITE_API_URL || ''}/api/chats/bookmarks`, {
         method: 'POST',
         headers: {
             'Authorization': `Bearer ${token}`,
@@ -1120,14 +1120,14 @@ export const saveBookmark = async (text: string, context: string, token: string)
 };
 
 export const deleteBookmark = async (id: number, token: string): Promise<void> => {
-    await fetch(`/api/chats/bookmarks/${id}`, {
+    await fetch(`${import.meta.env.VITE_API_URL || ''}/api/chats/bookmarks/${id}`, {
         method: 'DELETE',
         headers: { 'Authorization': `Bearer ${token}` }
     });
 };
 
 export const rejectPandit = async (panditId: number, token: string): Promise<{ message: string }> => {
-    const response = await fetch(`/api/admin/reject-pandit/${panditId}`, {
+    const response = await fetch(`${import.meta.env.VITE_API_URL || ''}/api/admin/reject-pandit/${panditId}`, {
         method: 'POST',
         headers: { 'Authorization': `Bearer ${token}` }
     });
