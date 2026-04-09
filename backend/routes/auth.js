@@ -1,4 +1,4 @@
-﻿import express from 'express';
+import express from 'express';
 import bcrypt from 'bcryptjs';
 import jwt from 'jsonwebtoken';
 import joi from 'joi';
@@ -98,7 +98,10 @@ router.post('/google', validateRequest(googleSchema), async (req, res, next) => 
         let payload;
 
         if (mock && credential === 'mock_google_credential') {
-            // Mock mode for local development
+            // Mock mode for local development only - NEVER allow in production
+            if (process.env.NODE_ENV === 'production') {
+                return errorResponse(res, 403, 'Mock authentication is disabled in production.');
+            }
             payload = { email: mockEmail, name: mockName, picture: '' };
         } else {
             const clientId = process.env.GOOGLE_CLIENT_ID;

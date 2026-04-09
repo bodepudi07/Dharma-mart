@@ -18,5 +18,16 @@
     "createdAt": "2026-03-12T08:23:21.634Z",
     "authProvider": "google",
     "id": 2
+  },
+  {
+    "name": "venkat",
+    "email": "skylord9078@gmail.com",
+    "password": "",
+    "phone": "",
+    "role": "user",
+    "avatarUrl": "",
+    "createdAt": "2026-03-20T07:39:11.596Z",
+    "authProvider": "google",
+    "id": 3
   }
 ]

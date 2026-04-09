@@ -1,4 +1,4 @@
-﻿// FIX: This file was corrupted. It has been cleaned and all necessary constants have been added and exported.
+// FIX: This file was corrupted. It has been cleaned and all necessary constants have been added and exported.
 import { Sloka, Language, I18nContent, Testimonial, DarshanTier, DonationOption, Chant, ChakraTheme, Achievement, ChakraName, Badge } from './types';
 
 // In a real app, these would be in separate files like 'i18n/en.ts'
@@ -12,6 +12,7 @@ const I18N_EN: I18nContent = {
     navEvents: "Events",
     navDashboard: "Dashboard",
     navSeva: "Seva (Donate)",
+    navMart: "Dharma Mart",
     navSettings: "Settings",
     bookingHistory: "Booking History",
     noBookings: "You have no bookings yet.",
@@ -384,6 +385,7 @@ const I18N_HI: I18nContent = {
     navEvents: "आयोजन",
     navDashboard: "डैशबोर्ड",
     navSeva: "सेवा (दान)",
+    navMart: "धर्म मार्ट",
     navSettings: "सेटिंग्स",
     heroTitle: "धर्म सेतु",
     heroSubtitle: "प्राचीन मंदिरों, पवित्र ज्ञान और आध्यात्मिक अनुभवों का आपका डिजिटल प्रवेश द्वार।",
@@ -501,6 +503,7 @@ const I18N_TE: I18nContent = {
     navEvents: "కార్యక్రమాలు",
     navDashboard: "డాష్‌బోర్డ్",
     navSeva: "సేవ (విరాళం)",
+    navMart: "ధర్మ మార్ట్",
     navSettings: "సెట్టింగ్‌లు",
     heroTitle: "ధర్మ సేతు",
     heroSubtitle: "ప్రాచీన దేవాలయాలు, పవిత్ర జ్ఞానం మరియు ఆధ్యాత్మిక అనుభవాలకు మీ డిజిటల్ గేట్‌వే.",

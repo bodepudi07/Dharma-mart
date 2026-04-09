@@ -1,4 +1,4 @@
-﻿import React from 'react';
+import React from 'react';
 import { ShoppingRecommendation, Pooja, I18nContent } from '../types';
 import { useImageWithFallback } from '../hooks/useImageWithFallback';
 import { PLACEHOLDER_IMAGE_URL } from '../constants';
@@ -37,7 +37,7 @@ export const ProductRecommendationCard = ({ recommendation, allPoojas, t, onBook
         if (onBuyItem) {
             onBuyItem();
         } else {
-            openModal('aiShopper');
+            window.location.hash = '/mart';
         }
     };
 
@@ -95,7 +95,6 @@ export const ProductRecommendationCard = ({ recommendation, allPoojas, t, onBook
                 <img 
                     src={imgSrc} 
                     alt={recommendation.itemName} 
-                    
                     onLoad={onLoad}
                     onError={onError} 
                     className={`w-full h-full object-contain p-2 transition-opacity duration-300 ${status === 'loaded' ? 'opacity-100' : 'opacity-0'}`}

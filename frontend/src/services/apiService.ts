@@ -1,4 +1,4 @@
-﻿import { Temple, Pooja, Yatra, User, AdminTemple, Book, NearbyTemple, Testimonial, ActivityLogItem, Booking, DarshanTier, MajorEvent, Pandit, DonationOption, BookContent, CrowdLevel, Festival, TempleSubmissionData, SearchResults, Role, DarshanBookingDetails, PoojaBookingDetails, SpiritualGrowthData, LifetimeStats, DailyTask, TaskType, FeedItem, UserPreferences, YatraTier, YatraBookingDetails, Language, CustomYatraBookingDetails, YatraQuoteRequest, ChatRoom, ChatMessage, SearchFilters, Post, RemoteSeva, Sankalpa } from '../types';
+import { Temple, Pooja, Yatra, User, AdminTemple, Book, NearbyTemple, Testimonial, ActivityLogItem, Booking, DarshanTier, MajorEvent, Pandit, DonationOption, BookContent, CrowdLevel, Festival, TempleSubmissionData, SearchResults, Role, DarshanBookingDetails, PoojaBookingDetails, SpiritualGrowthData, LifetimeStats, DailyTask, TaskType, FeedItem, UserPreferences, YatraTier, YatraBookingDetails, Language, CustomYatraBookingDetails, YatraQuoteRequest, ChatRoom, ChatMessage, SearchFilters, Post, RemoteSeva, Sankalpa } from '../types';
 import { TESTIMONIALS_DATA } from '../constants';
 import { calculateDistance, fuzzySearch } from '../utils/geolocation';
 import { dataCache, DATA_UPDATED_EVENT } from './dataCache';
@@ -1101,7 +1101,8 @@ export const getBookmarks = async (userId: number, token: string): Promise<any[]
         headers: { 'Authorization': `Bearer ${token}` }
     });
     if (!response.ok) return [];
-    return response.json();
+    const result = await response.json();
+    return result.data || [];
 };
 
 export const saveBookmark = async (text: string, context: string, token: string): Promise<any> => {
@@ -1114,7 +1115,8 @@ export const saveBookmark = async (text: string, context: string, token: string)
         body: JSON.stringify({ text, context })
     });
     if (!response.ok) throw new Error("Failed to save bookmark.");
-    return response.json();
+    const result = await response.json();
+    return result.data;
 };
 
 export const deleteBookmark = async (id: number, token: string): Promise<void> => {

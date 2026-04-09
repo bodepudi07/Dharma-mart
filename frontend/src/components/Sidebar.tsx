@@ -1,4 +1,4 @@
-﻿
+
 
 
 
@@ -136,6 +136,14 @@ const SearchInput = ({ t, onSearch }: { t: I18nContent; onSearch: (query: string
 
 export const Sidebar = ({ currentLang, setLang, t, onLoginClick, onSetView, currentView, currentUser, logout, onSevaClick, isOpen, setIsOpen }: SidebarProps) => {
 
+    const [punya, setPunya] = useState(() => parseInt(localStorage.getItem('dd-punya-balance') || '0', 10));
+
+    useEffect(() => {
+        const handleUpdate = () => setPunya(parseInt(localStorage.getItem('dd-punya-balance') || '0', 10));
+        window.addEventListener('punyaUpdated', handleUpdate);
+        return () => window.removeEventListener('punyaUpdated', handleUpdate);
+    }, []);
+
     const handleLinkClick = (view: View, id?: string | number) => {
         onSetView(view, id);
         setIsOpen(false); // Close sidebar on navigation
@@ -154,6 +162,7 @@ export const Sidebar = ({ currentLang, setLang, t, onLoginClick, onSetView, curr
         { view: 'restorationSanctuary', label: 'Dharma Uddhar', icon: 'heart-hand' },
         { view: 'divyaMarga', label: 'Divya Marga', icon: 'video' },
         { view: 'satsang', label: t.navSatsang, icon: 'users' },
+        { view: 'mart', label: t.navMart, icon: 'shopping-bag' },
     ];
 
     return (
@@ -239,9 +248,10 @@ export const Sidebar = ({ currentLang, setLang, t, onLoginClick, onSetView, curr
                             </div>
                             <div className="overflow-hidden flex-1">
                                 <p className="font-semibold text-sm truncate text-ink">{currentUser.name}</p>
-                                <div className="flex items-center gap-2 text-xs text-stone-500 mt-0.5">
-                                    <span className="flex items-center gap-1"><Icon name="star" className="w-3 h-3 text-amber-500" /> Lvl {currentUser.level || 1}</span>
-                                    <span className="flex items-center gap-1"><Icon name="flame" className="w-3 h-3 text-orange-500" /> {currentUser.currentStreak || 0}</span>
+                                <div className="flex items-center gap-2 text-xs text-stone-500 mt-0.5 whitespace-nowrap overflow-x-auto overflow-y-hidden hide-scrollbar scroll-smooth w-full">
+                                    <span title="Punya Balance" className="flex items-center gap-1 bg-amber-50 px-1 py-0.5 rounded"><Icon name="sun" className="w-3 h-3 text-amber-500" /> {punya}</span>
+                                    <span title="Level" className="flex items-center gap-1 bg-blue-50 px-1 py-0.5 rounded"><Icon name="star" className="w-3 h-3 text-blue-500" /> {currentUser.level || 1}</span>
+                                    <span title="Daily Streak" className="flex items-center gap-1 bg-orange-50 px-1 py-0.5 rounded"><Icon name="flame" className="w-3 h-3 text-orange-500" /> {currentUser.currentStreak || 0}</span>
                                 </div>
                             </div>
                         </button>

@@ -1,4 +1,4 @@
-﻿import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import { I18nContent, Temple, Pooja, Yatra, Book, Sloka, Testimonial, MajorEvent, Language } from '../types';
 import { useModal } from '../contexts/ModalContext';
@@ -11,6 +11,7 @@ import { Icon } from './Icon';
 // Components
 import { Section } from './Section';
 import { SlokaOfTheDay } from './SlokaOfTheDay';
+import { PanchangWidget } from './PanchangWidget';
 import { TempleCard } from './TempleCard';
 import { PoojaCard } from './PoojaCard';
 import { YatraCard } from './YatraCard';
@@ -97,7 +98,7 @@ export const Home = ({ t, language, onDarshanClick, yatraPlan, isInYatraPlan, on
             <section className="relative min-h-[105vh] flex items-center justify-center text-white overflow-hidden bg-ink pt-20">
                 {/* Deep Cosmic Background Layer */}
                 <div className="absolute inset-0 z-0">
-                    <div className="absolute inset-0 hero-bg-image bg-cover bg-center opacity-40 mix-blend-luminosity"></div>
+                    <div className="absolute inset-0 bg-[url('/images/hero_bg_4k.png')] bg-cover bg-center opacity-70 mix-blend-luminosity"></div>
                     <div className="absolute inset-0 bg-gradient-to-b from-ink/90 via-ink/60 to-ink z-10"></div>
                     <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,_var(--tw-gradient-stops))] from-primary/20 via-transparent to-transparent opacity-60 z-10 animate-pulse"></div>
                 </div>
@@ -138,7 +139,7 @@ export const Home = ({ t, language, onDarshanClick, yatraPlan, isInYatraPlan, on
                         </motion.div>
 
                         <h1 className="text-5xl md:text-7xl lg:text-8xl font-serif font-bold text-white mb-6 leading-[1.1]">
-                            <span className="block drop-shadow-[0_0_15px_rgba(255,255,255,0.3)]">
+                            <span className="block drop-shadow-[0_0_35px_rgba(255,255,255,0.6)]">
                                 {t.heroTitle.split(' ').map((word: string, i: number) => (
                                     <motion.span
                                         key={i}
@@ -156,7 +157,7 @@ export const Home = ({ t, language, onDarshanClick, yatraPlan, isInYatraPlan, on
                             <motion.span
                                 variants={{ hidden: { opacity: 0, scale: 0.9 }, visible: { opacity: 1, scale: 1 } }}
                                 transition={{ duration: 1, delay: 0.8 }}
-                                className="block text-transparent bg-clip-text bg-gradient-to-r from-primary via-yellow-400 to-secondary animate-neon-text mt-2 text-4xl md:text-6xl"
+                                className="block text-transparent bg-clip-text bg-gradient-to-r from-primary via-yellow-400 to-secondary animate-neon-text mt-2 text-5xl md:text-7xl drop-shadow-[0_0_20px_rgba(234,88,12,0.8)]"
                             >
                                 {t.appSlogan}
                             </motion.span>
@@ -232,6 +233,11 @@ export const Home = ({ t, language, onDarshanClick, yatraPlan, isInYatraPlan, on
                         <SlokaOfTheDay sloka={dailySloka} t={t} />
                     </div>
                 )}
+
+                {/* Daily Panchang Section */}
+                <div className="container mx-auto px-4 mb-12 animate-fade-in-up" style={{ animationDelay: '0.3s' }}>
+                    <PanchangWidget />
+                </div>
 
                 {/* Daily Dharma Quest - Stickiness & Gamification */}
                 {currentUser && (

@@ -14,24 +14,24 @@ interface DeityTheme {
 }
 
 export const DEITY_THEMES: DeityTheme[] = [
-  { name: 'Venkateswara', devanagari: 'वेंकटेश्वर', emoji: '🏛️', imageUrl: 'https://upload.wikimedia.org/wikipedia/commons/thumb/8/87/Tirupati_Balaji.jpg/800px-Tirupati_Balaji.jpg', background: '#EDE0F5', accent: '#6B21A8', header: '#6B21A8', mandala: '#F4A0C0' },
-  { name: 'Ram', devanagari: 'राम', emoji: '🏹', imageUrl: 'https://upload.wikimedia.org/wikipedia/commons/thumb/8/8a/Rama_by_Raja_Ravi_Varma.jpg/800px-Rama_by_Raja_Ravi_Varma.jpg', background: '#FFF3E0', accent: '#B45309', header: '#92400E', mandala: '#F59E0B' },
-  { name: 'Krishna', devanagari: 'कृष्ण', emoji: '🪈', imageUrl: 'https://upload.wikimedia.org/wikipedia/commons/3/36/Krishna_with_flute_and_cow_%281890s%29.jpg', background: '#E8F4FD', accent: '#1D4ED8', header: '#1E40AF', mandala: '#FCD34D' },
-  { name: 'Shiva', devanagari: 'शिव', emoji: '🔱', imageUrl: 'https://upload.wikimedia.org/wikipedia/commons/thumb/7/77/Shiva_by_Raja_Ravi_Varma.jpg/800px-Shiva_by_Raja_Ravi_Varma.jpg', background: '#F0FDF4', accent: '#374151', header: '#1F2937', mandala: '#E5E7EB' },
-  { name: 'Durga', devanagari: 'दुर्गा', emoji: '🌺', imageUrl: 'https://upload.wikimedia.org/wikipedia/commons/thumb/3/30/Durga_mahisasuramardini.jpg/800px-Durga_mahisasuramardini.jpg', background: '#FFF1F2', accent: '#BE123C', header: '#9F1239', mandala: '#FB923C' },
-  { name: 'Ganesh', devanagari: 'गणेश', emoji: '🐘', imageUrl: 'https://upload.wikimedia.org/wikipedia/commons/thumb/1/1c/Ganesha_by_Raja_Ravi_Varma.jpg/800px-Ganesha_by_Raja_Ravi_Varma.jpg', background: '#FFFBEB', accent: '#D97706', header: '#92400E', mandala: '#EF4444' },
-  { name: 'Hanuman', devanagari: 'हनुमान', emoji: '🌅', imageUrl: 'https://upload.wikimedia.org/wikipedia/commons/thumb/2/23/Hanuman_carrying_Sanjeevani_mountain.jpg/800px-Hanuman_carrying_Sanjeevani_mountain.jpg', background: '#FFF7ED', accent: '#EA580C', header: '#C2410C', mandala: '#FB923C' },
-  { name: 'Lakshmi', devanagari: 'लक्ष्मी', emoji: '🪷', imageUrl: 'https://upload.wikimedia.org/wikipedia/commons/thumb/9/93/Lakshmi_by_Raja_Ravi_Varma.jpg/800px-Lakshmi_by_Raja_Ravi_Varma.jpg', background: '#FDFCE4', accent: '#A16207', header: '#854D0E', mandala: '#F472B6' },
-  { name: 'Saraswati', devanagari: 'सरस्वती', emoji: '🎵', imageUrl: 'https://upload.wikimedia.org/wikipedia/commons/thumb/a/aa/Saraswati_by_Raja_Ravi_Varma.jpg/800px-Saraswati_by_Raja_Ravi_Varma.jpg', background: '#EFF6FF', accent: '#1D4ED8', header: '#1E3A8A', mandala: '#F8FAFC' },
-  { name: 'Kali', devanagari: 'काली', emoji: '⚡', imageUrl: 'https://upload.wikimedia.org/wikipedia/commons/thumb/e/e0/Kali_by_Raja_Ravi_Varma.jpg/800px-Kali_by_Raja_Ravi_Varma.jpg', background: '#1C0A2E', accent: '#7C3AED', header: '#4C1D95', mandala: '#DC2626' },
-  { name: 'Murugan', devanagari: 'मुरुगन', emoji: '🌟', imageUrl: 'https://upload.wikimedia.org/wikipedia/commons/thumb/3/32/Kartikeya_by_Raja_Ravi_Varma.jpg/800px-Kartikeya_by_Raja_Ravi_Varma.jpg', background: '#FFF1F2', accent: '#BE185D', header: '#9D174D', mandala: '#F59E0B' },
-  { name: 'Ayyappa', devanagari: 'अय्यप्पा', emoji: '🌿', imageUrl: 'https://upload.wikimedia.org/wikipedia/commons/thumb/a/af/Ayyappan_painting.jpg/800px-Ayyappan_painting.jpg', background: '#F0FDF4', accent: '#065F46', header: '#064E3B', mandala: '#D97706' },
-  { name: 'Jagannath', devanagari: 'जगन्नाथ', emoji: '🌊', imageUrl: 'https://upload.wikimedia.org/wikipedia/commons/thumb/8/8d/Jagannath_Balabhadra_Subhadra.jpg/800px-Jagannath_Balabhadra_Subhadra.jpg', background: '#FEF9C3', accent: '#CA8A04', header: '#A16207', mandala: '#3B82F6' },
-  { name: 'Narsimha', devanagari: 'नृसिंह', emoji: '🦁', imageUrl: 'https://upload.wikimedia.org/wikipedia/commons/thumb/3/36/Narasimha_with_Lakshmi.jpg/800px-Narasimha_with_Lakshmi.jpg', background: '#FFF7ED', accent: '#C2410C', header: '#9A3412', mandala: '#F59E0B' },
-  { name: 'Radha', devanagari: 'राधा', emoji: '💛', imageUrl: 'https://upload.wikimedia.org/wikipedia/commons/thumb/f/f6/Radha_by_Raja_Ravi_Varma.jpg/800px-Radha_by_Raja_Ravi_Varma.jpg', background: '#FDF2F8', accent: '#DB2777', header: '#9D174D', mandala: '#FCD34D' },
-  { name: 'Dattatreya', devanagari: 'दत्तात्रेय', emoji: '🔯', imageUrl: 'https://upload.wikimedia.org/wikipedia/commons/thumb/5/5f/Dattatreya_by_Raja_Ravi_Varma.jpg/800px-Dattatreya_by_Raja_Ravi_Varma.jpg', background: '#F5F3FF', accent: '#7C3AED', header: '#4C1D95', mandala: '#F97316' },
-  { name: 'Subramanya', devanagari: 'सुब्रह्मण्य', emoji: '✨', imageUrl: 'https://upload.wikimedia.org/wikipedia/commons/thumb/3/32/Kartikeya_by_Raja_Ravi_Varma.jpg/800px-Kartikeya_by_Raja_Ravi_Varma.jpg', background: '#FFF1F2', accent: '#BE185D', header: '#881337', mandala: '#F59E0B' },
-  { name: 'Adi Shankaracharya', devanagari: 'आदि शंकराचार्य', emoji: '🕉️', imageUrl: 'https://upload.wikimedia.org/wikipedia/commons/thumb/0/00/Adi_Shankara_with_Disciples.jpg/800px-Adi_Shankara_with_Disciples.jpg', background: '#F5F3FF', accent: '#5B21B6', header: '#4C1D95', mandala: '#F97316' },
+  { name: 'Venkateswara', devanagari: 'वेंकटेश्वर', emoji: '🏛️', imageUrl: '/images/deities/deity_venkateswara.png', background: '#EDE0F5', accent: '#6B21A8', header: '#6B21A8', mandala: '#F4A0C0' },
+  { name: 'Ram', devanagari: 'राम', emoji: '🏹', imageUrl: '/images/deities/deity_ram.png', background: '#FFF3E0', accent: '#B45309', header: '#92400E', mandala: '#F59E0B' },
+  { name: 'Krishna', devanagari: 'कृष्ण', emoji: '🪈', imageUrl: '/images/deities/deity_krishna.png', background: '#E8F4FD', accent: '#1D4ED8', header: '#1E40AF', mandala: '#FCD34D' },
+  { name: 'Shiva', devanagari: 'शिव', emoji: '🔱', imageUrl: '/images/deities/deity_shiva.png', background: '#F0FDF4', accent: '#374151', header: '#1F2937', mandala: '#E5E7EB' },
+  { name: 'Durga', devanagari: 'दुर्गा', emoji: '🌺', imageUrl: '/images/deities/deity_durga.png', background: '#FFF1F2', accent: '#BE123C', header: '#9F1239', mandala: '#FB923C' },
+  { name: 'Ganesh', devanagari: 'गणेश', emoji: '🐘', imageUrl: '/images/deities/deity_ganesh.png', background: '#FFFBEB', accent: '#D97706', header: '#92400E', mandala: '#EF4444' },
+  { name: 'Hanuman', devanagari: 'हनुमान', emoji: '🌅', imageUrl: '/images/deities/deity_hanuman.png', background: '#FFF7ED', accent: '#EA580C', header: '#C2410C', mandala: '#FB923C' },
+  { name: 'Lakshmi', devanagari: 'लक्ष्मी', emoji: '🪷', imageUrl: '/images/deities/deity_lakshmi.png', background: '#FDFCE4', accent: '#A16207', header: '#854D0E', mandala: '#F472B6' },
+  { name: 'Saraswati', devanagari: 'सरस्वती', emoji: '🎵', imageUrl: '/images/deities/deity_saraswati.png', background: '#EFF6FF', accent: '#1D4ED8', header: '#1E3A8A', mandala: '#F8FAFC' },
+  { name: 'Kali', devanagari: 'काली', emoji: '⚡', imageUrl: '/images/deities/deity_kali.png', background: '#1C0A2E', accent: '#7C3AED', header: '#4C1D95', mandala: '#DC2626' },
+  { name: 'Murugan', devanagari: 'मुरुगन', emoji: '🌟', imageUrl: '/images/deities/deity_murugan.png', background: '#FFF1F2', accent: '#BE185D', header: '#9D174D', mandala: '#F59E0B' },
+  { name: 'Ayyappa', devanagari: 'अय्यप्पा', emoji: '🌿', imageUrl: '/images/deities/deity_ayyappa.png', background: '#F0FDF4', accent: '#065F46', header: '#064E3B', mandala: '#D97706' },
+  { name: 'Jagannath', devanagari: 'जगन्नाथ', emoji: '🌊', imageUrl: '/images/deities/deity_jagannath.png', background: '#FEF9C3', accent: '#CA8A04', header: '#A16207', mandala: '#3B82F6' },
+  { name: 'Narsimha', devanagari: 'नृसिंह', emoji: '🦁', imageUrl: '/images/deities/deity_narsimha.png', background: '#FFF7ED', accent: '#C2410C', header: '#9A3412', mandala: '#F59E0B' },
+  { name: 'Radha', devanagari: 'राधा', emoji: '💛', imageUrl: '/images/deities/deity_radha.png', background: '#FDF2F8', accent: '#DB2777', header: '#9D174D', mandala: '#FCD34D' },
+  { name: 'Dattatreya', devanagari: 'दत्तात्रेय', emoji: '🔯', imageUrl: '/images/deities/deity_dattatreya.png', background: '#F5F3FF', accent: '#7C3AED', header: '#4C1D95', mandala: '#F97316' },
+  { name: 'Subramanya', devanagari: 'सुब्रह्मण्य', emoji: '✨', imageUrl: '/images/deities/deity_murugan.png', background: '#FFF1F2', accent: '#BE185D', header: '#881337', mandala: '#F59E0B' },
+  { name: 'Adi Shankaracharya', devanagari: 'आदि शंकराचार्य', emoji: '🕉️', imageUrl: '/images/deities/deity_adi_shankaracharya.png', background: '#F5F3FF', accent: '#5B21B6', header: '#4C1D95', mandala: '#F97316' },
 ];
 
 export const DEITY_FACTS: Record<string, string[]> = {
@@ -165,7 +165,7 @@ export const SubscreenLoader = () => {
           <div style={{ 
             width: 140, height: 140, borderRadius: '50%', overflow: 'hidden', 
             border: `6px solid ${deity.accent}40`, boxShadow: `0 0 30px ${deity.accent}60`,
-            margin: '0 auto', background: '#fff'
+            margin: '0 auto', background: '#fff', flexShrink: 0, display: 'flex', alignItems: 'center', justifyContent: 'center'
           }}>
              <img src={deity.imageUrl} alt={deity.name} style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
           </div>
@@ -286,7 +286,7 @@ export const IshtaDevataModal = ({ onClose }: { onClose: () => void }) => {
                       boxShadow: '0 2px 4px rgba(0,0,0,0.2)'
                     }}>Jagadguru</span>
                   )}
-                  <div style={{ width: 64, height: 64, borderRadius: '50%', overflow: 'hidden', border: `3px solid ${isSelected ? d.accent : 'transparent'}` }}>
+                  <div style={{ width: 64, height: 64, borderRadius: '50%', overflow: 'hidden', border: `3px solid ${isSelected ? d.accent : 'transparent'}`, flexShrink: 0, display: 'flex', alignItems: 'center', justifyContent: 'center', background: '#fff' }}>
                      <img src={d.imageUrl} alt={d.name} style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
                   </div>
                   <span style={{ fontSize: 14, fontWeight: 'bold', color: '#2E1A0A', textAlign: 'center', lineHeight: 1.1 }}>{d.name}</span>

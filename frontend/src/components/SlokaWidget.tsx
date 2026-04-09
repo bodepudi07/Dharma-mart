@@ -1,4 +1,4 @@
-﻿// This file is repurposed to house the new "Bhakti Chanting Zone" feature for all ages.
+// This file is repurposed to house the new "Bhakti Chanting Zone" feature for all ages.
 import React, { useState, useEffect, useRef, useCallback, useMemo } from 'react';
 import { I18nContent, Chant, User, Badge } from '../types';
 import { CHANTS_DATA, CHANTING_BADGES_DATA } from '../constants';
@@ -279,6 +279,11 @@ const JapaMala = ({ chant, onComplete, t }: { chant: Chant; onComplete: () => vo
     const [isListening, setIsListening] = useState(false);
     const recognitionRef = useRef<any>(null);
 
+    // Gamification Punya Balance (Stored locally for offline mode)
+    const [punyaBalance, setPunyaBalance] = useState(() => {
+        try { const s = localStorage.getItem('dd-punya-balance'); return s ? parseInt(s, 10) : 0; } catch { return 0; }
+    });
+
     useEffect(() => {
         audioRef.current = new Audio("https://actions.google.com/sounds/v1/switches/switch_1.ogg");
         audioRef.current.volume = 0.5;
@@ -351,7 +356,7 @@ const JapaMala = ({ chant, onComplete, t }: { chant: Chant; onComplete: () => vo
         setIsListening(!isListening);
     };
 
-    const handleBeadPress = () => {
+    const handleBeadPress = useCallback(() => {
         setJapaCount(count => {
             if (count < targetCount) {
                 beadRef.current?.classList.add('bead-press-anim');
@@ -360,17 +365,41 @@ const JapaMala = ({ chant, onComplete, t }: { chant: Chant; onComplete: () => vo
                     audioRef.current.currentTime = 0;
                     audioRef.current.play().catch(e => console.error("Bead sound failed:", e));
                 }
+                // Haptic feedback
+                if (window.navigator && window.navigator.vibrate) {
+                    window.navigator.vibrate(15);
+                }
                 return count + 1;
             }
             return count;
         });
-    };
+    }, [targetCount]);
+
+    useEffect(() => {
+        const handleKeyDown = (e: KeyboardEvent) => {
+            if (e.code === 'Space' && japaCount < targetCount) {
+                e.preventDefault();
+                handleBeadPress();
+            }
+        };
+        window.addEventListener('keydown', handleKeyDown);
+        return () => window.removeEventListener('keydown', handleKeyDown);
+    }, [handleBeadPress, japaCount, targetCount]);
 
     const handleComplete = () => {
         if (japaCount >= targetCount) {
             onComplete();
             setJapaCount(0);
             setIsListening(false);
+            
+            // Gamification Reward Let's say 1 bead = 1 Punya
+            const earnedPunya = targetCount;
+            const newPunya = punyaBalance + earnedPunya;
+            setPunyaBalance(newPunya);
+            localStorage.setItem('dd-punya-balance', String(newPunya));
+            window.dispatchEvent(new Event('punyaUpdated'));
+            
+            addToast(`✨ Japa Mala Completed! Earned +${earnedPunya} Punya. (Total: ${newPunya})`, 'success');
         }
     };
 
@@ -403,35 +432,47 @@ const JapaMala = ({ chant, onComplete, t }: { chant: Chant; onComplete: () => vo
                 </select>
             </div>
 
-            <div className="relative w-56 h-56 md:w-80 md:h-80 flex items-center justify-center">
+            <div className="relative w-72 h-72 md:w-96 md:h-96 flex items-center justify-center -translate-y-4">
                 {/* Outer Glow Ring */}
-                <div className="absolute inset-0 bg-amber-500/20 rounded-full blur-2xl animate-pulse"></div>
+                <div className="absolute inset-0 bg-amber-500/10 rounded-full blur-2xl animate-pulse"></div>
 
-                {/* SVG Progress Circle */}
-                <svg className="absolute w-full h-full drop-shadow-[0_0_20px_rgba(245,158,11,0.5)] z-10" viewBox="0 0 100 100">
-                    <circle className="text-white/5" strokeWidth="2" stroke="currentColor" fill="transparent" r="48" cx="50" cy="50" />
-                    <circle
-                        className="text-amber-400 transition-all duration-300 ease-out"
-                        strokeWidth="3"
-                        strokeDasharray={2 * Math.PI * 48}
-                        strokeDashoffset={(2 * Math.PI * 48) * (1 - japaCount / targetCount)}
-                        strokeLinecap="round"
-                        stroke="currentColor"
-                        fill="transparent"
-                        r="48"
-                        cx="50"
-                        cy="50"
-                        style={{ transform: 'rotate(-90deg)', transformOrigin: '50% 50%' }}
-                    />
-                </svg>
+                {/* 108 Physical 3D Beads Mala */}
+                {Array.from({ length: 108 }).map((_, i) => {
+                    const radius = window.innerWidth < 768 ? 130 : 170;
+                    const angle = (i / 108) * 360 - 90;
+                    const radians = (angle * Math.PI) / 180;
+                    const x = Math.cos(radians) * radius;
+                    const y = Math.sin(radians) * radius;
+                    
+                    // Determine how many beads should light up based on japaCount % 108
+                    const currentRoundBeads = japaCount % 108;
+                    const isPassed = japaCount > 0 && (currentRoundBeads === 0 || i < currentRoundBeads);
+                    
+                    // Meru Bead (the top 108th bead)
+                    const isMeru = i === 0;
+
+                    return (
+                        <div 
+                            key={i}
+                            className={`absolute rounded-full transition-all duration-300 ${isPassed ? 'bg-amber-400 shadow-[0_0_12px_rgba(245,158,11,1)] z-10 scale-125' : 'bg-stone-700 shadow-inner'}`}
+                            style={{
+                                width: isMeru ? '14px' : '8px',
+                                height: isMeru ? '14px' : '8px',
+                                transform: `translate(${x}px, ${y}px)`,
+                            }}
+                        />
+                    );
+                })}
 
                 {/* Main Japa Button */}
-                <button ref={beadRef} onClick={handleBeadPress} className="relative z-20 w-40 h-40 md:w-56 md:h-56 rounded-full bg-gradient-to-br from-amber-600 via-amber-500 to-orange-600 shadow-[inset_0_-10px_20px_rgba(0,0,0,0.5),0_0_30px_rgba(245,158,11,0.5)] flex flex-col items-center justify-center text-amber-50 focus:outline-none transition-all hover:brightness-110 group border-4 border-amber-300/30">
+                <button ref={beadRef} onClick={handleBeadPress} className="relative z-20 w-32 h-32 md:w-48 md:h-48 rounded-full bg-gradient-to-br from-amber-600 via-amber-500 to-orange-600 shadow-[inset_0_-10px_20px_rgba(0,0,0,0.5),0_0_30px_rgba(245,158,11,0.5)] flex flex-col items-center justify-center text-amber-50 focus:outline-none transition-all hover:brightness-110 group border-4 border-amber-300/30">
                     <div className="absolute inset-0 bg-white/20 rounded-full blur-[2px] backdrop-blur-sm shadow-[inset_0_5px_15px_rgba(255,255,255,0.4)] mix-blend-overlay"></div>
-                    <span className="font-serif font-bold text-6xl md:text-8xl drop-shadow-lg relative z-10 group-hover:scale-105 transition-transform">{japaCount}</span>
-                    <span className="text-sm font-medium tracking-widest text-amber-200/80 relative z-10 mt-1 uppercase">/ {targetCount}</span>
+                    <span className="font-serif font-bold text-5xl md:text-7xl drop-shadow-lg relative z-10 group-hover:scale-105 transition-transform">{japaCount}</span>
+                    <span className="text-xs font-medium tracking-widest text-amber-200/80 relative z-10 mt-1 uppercase">/ {targetCount}</span>
                 </button>
             </div>
+            
+            <p className="text-stone-500 text-sm mt-2 mb-2">Tap bead or press <kbd className="bg-stone-800 px-2 py-1 rounded text-stone-300 font-mono text-xs border border-stone-700">Spacebar</kbd></p>
 
             <p className="text-stone-400 mt-8 font-light tracking-wide">{t.japaMalaProgress}</p>
 

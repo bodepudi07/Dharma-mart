@@ -1,4 +1,4 @@
-﻿import express from 'express';
+import express from 'express';
 import joi from 'joi';
 import db from '../db.js';
 import { authenticate } from './middleware/auth.js';
@@ -29,8 +29,20 @@ const yatraQuoteSchema = joi.object({
     message: joi.string().allow('', null),
 }).unknown(true);
 
+const updateProfileSchema = joi.object({
+    name: joi.string().trim().min(1).max(100),
+    phone: joi.string().allow('', null),
+    avatarUrl: joi.string().uri().allow('', null),
+    bio: joi.string().max(500).allow('', null),
+}).unknown(true);
+
+const activitySchema = joi.object({
+    type: joi.string().trim().max(50).allow('', null),
+    message: joi.string().trim().min(1).max(500).required(),
+});
+
 // Update user profile
-router.put('/profile', authenticate, async (req, res, next) => {
+router.put('/profile', authenticate, validateRequest(updateProfileSchema), async (req, res, next) => {
     const updates = req.body;
     try {
         const { role, passwordHash, password, id, ...safeUpdates } = updates;
@@ -210,7 +222,7 @@ router.post('/yatra-quote', authenticate, validateRequest(yatraQuoteSchema), asy
 });
 
 // POST log activity
-router.post('/activity', authenticate, async (req, res, next) => {
+router.post('/activity', authenticate, validateRequest(activitySchema), async (req, res, next) => {
     const { type, message } = req.body;
     try {
         await db.insert('activity_log.json', {

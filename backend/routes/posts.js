@@ -1,9 +1,16 @@
 import express from 'express';
+import joi from 'joi';
 import db from '../db.js';
 import { authenticate } from './middleware/auth.js';
 import { standardResponse, errorResponse } from '../middleware/responseHandler.js';
+import { validateRequest } from '../middleware/validator.js';
 
 const router = express.Router();
+
+const createPostSchema = joi.object({
+    caption: joi.string().trim().min(1).max(2000).required(),
+    imageUrl: joi.string().uri().allow('', null),
+});
 
 // GET all posts (sorted by newest first)
 router.get('/', async (req, res, next) => {
@@ -17,9 +24,8 @@ router.get('/', async (req, res, next) => {
 });
 
 // POST create a new post
-router.post('/', authenticate, async (req, res, next) => {
+router.post('/', authenticate, validateRequest(createPostSchema), async (req, res, next) => {
     const { caption, imageUrl } = req.body;
-    if (!caption) return errorResponse(res, 400, 'Caption is required');
 
     try {
         const newPost = {

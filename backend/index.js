@@ -1,4 +1,4 @@
-﻿// Import required modules
+// Import required modules
 import dotenv from 'dotenv';
 import express from 'express';
 import cors from 'cors';
@@ -6,8 +6,10 @@ import path from 'path';
 import { fileURLToPath } from 'url';
 import { dirname } from 'path';
 import helmet from 'helmet';
+import compression from 'compression';
 import rateLimit from 'express-rate-limit';
 import { errorResponse } from './middleware/responseHandler.js';
+import logger from './logger.js';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
@@ -37,7 +39,7 @@ const isProduction = process.env.NODE_ENV === 'production';
 
 // Validate critical environment variables at startup
 if (!process.env.JWT_SECRET) {
-    console.error('FATAL: JWT_SECRET environment variable is not set. Auth will not work.');
+    logger.error('FATAL: JWT_SECRET environment variable is not set. Auth will not work.');
     if (isProduction) process.exit(1);
 }
 
@@ -50,10 +52,13 @@ app.use(helmet({
     crossOriginEmbedderPolicy: false,
 }));
 
+// Compression — gzip/brotli for all responses
+app.use(compression());
+
 // CORS Configuration - restrict in production
 const allowedOrigins = isProduction
     ? [process.env.FRONTEND_URL || 'https://dharmasetu.com'].filter(Boolean)
-    : ['http://localhost:3000', 'http://localhost:4173', 'http://127.0.0.1:3000'];
+    : ['http://localhost:3000', 'http://localhost:5173', 'http://localhost:4173', 'http://127.0.0.1:3000', 'http://127.0.0.1:5173'];
 
 app.use(cors({
     origin: (origin, callback) => {
@@ -88,7 +93,7 @@ app.use('/api/', limiter);
 if (!isProduction) {
     app.use((req, _res, next) => {
         if (req.path.startsWith('/api/')) {
-            console.log(`[${new Date().toISOString()}] ${req.method} ${req.path}`);
+            logger.debug({ method: req.method, path: req.path }, 'API request');
         }
         next();
     });
@@ -119,7 +124,7 @@ app.use('/data', (req, res, next) => {
     if (!fileName.endsWith('.json') && !fileName.endsWith('.jpg') && !fileName.endsWith('.png')) {
         // Allow images, but if it's something else, check carefully.
     } else if (fileName.endsWith('.json') && !publicFiles.includes(baseName)) {
-        console.warn(`Blocked unauthorized access to static data file: ${fileName}`);
+        logger.warn({ file: fileName }, 'Blocked unauthorized access to static data file');
         return res.status(403).json({ error: 'Access to this resource is restricted' });
     }
 
@@ -174,8 +179,8 @@ app.use('/api/{*splat}', (_req, res) => {
 
 // Error handling middleware
 app.use((err, req, res, next) => {
-    console.error(`[ERROR] ${req.method} ${req.path}:`, err.message);
-    if (!isProduction) console.error(err.stack);
+    logger.error({ method: req.method, path: req.path, err: err.message }, 'Request error');
+    if (!isProduction) logger.debug(err.stack);
 
     const status = err.status || err.statusCode || 500;
     const message = isProduction && status === 500
@@ -187,21 +192,21 @@ app.use((err, req, res, next) => {
 
 // Start server
 const server = app.listen(PORT, () => {
-    console.log(`\n🔱 Dharma Setu Server running on port ${PORT}`);
-    console.log(`   Mode: ${isProduction ? 'PRODUCTION' : 'DEVELOPMENT'}`);
-    console.log(`   API:  http://localhost:${PORT}/api\n`);
+    logger.info(`\n🔱 Dharma Setu Server running on port ${PORT}`);
+    logger.info(`   Mode: ${isProduction ? 'PRODUCTION' : 'DEVELOPMENT'}`);
+    logger.info(`   API:  http://localhost:${PORT}/api\n`);
 });
 
 // Graceful shutdown
 const shutdown = (signal) => {
-    console.log(`\n${signal} received. Shutting down gracefully...`);
+    logger.info(`${signal} received. Shutting down gracefully...`);
     server.close(() => {
-        console.log('Server closed.');
+        logger.info('Server closed.');
         process.exit(0);
     });
     // Force close after 10s
     setTimeout(() => {
-        console.error('Forced shutdown after timeout.');
+        logger.error('Forced shutdown after timeout.');
         process.exit(1);
     }, 10000);
 };

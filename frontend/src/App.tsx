@@ -50,8 +50,10 @@ const RestorationSanctuary = React.lazy(() => import('./components/RestorationSa
 const RestorationSubmission = React.lazy(() => import('./components/RestorationSubmission').then(m => ({ default: m.RestorationSubmission })));
 const DivyaMarga = React.lazy(() => import('./components/DivyaMarga').then(m => ({ default: m.DivyaMarga })));
 const MeditationZone = React.lazy(() => import('./components/MeditationZone').then(m => ({ default: m.MeditationZone })));
+const DharmaMart = React.lazy(() => import('./components/DharmaMart').then(m => ({ default: m.DharmaMart })));
 
 import { SubscreenLoader, IshtaDevataModal } from './components/SubscreenLoader';
+import { QRShareModal } from './components/QRShareModal';
 
 // Lazy-loaded modals (opened on demand)
 const UploadTempleModal = React.lazy(() => import('./components/UploadTempleModal').then(m => ({ default: m.UploadTempleModal })));
@@ -107,6 +109,7 @@ export const App = () => {
   const { addNotification } = useNotifications();
 
   const [showDevataModal, setShowDevataModal] = useState(false);
+  const [showQRShare, setShowQRShare] = useState(false);
 
   // 6-second forced transition state requested by user
   const [isTransitioning, setIsTransitioning] = useState(false);
@@ -221,19 +224,35 @@ export const App = () => {
 
   useEffect(() => {
     const interval = setInterval(() => {
-      const now = new Date().getTime();
-      const dueTasks = tasks.filter(r => new Date(r.dateTime).getTime() <= now);
-
-      if (dueTasks.length > 0 && notificationPermission === 'granted') {
-        dueTasks.forEach(task => {
-          new Notification(`Task Due: ${task.itemName}`, {
-            body: task.note || `It's time for your scheduled event.`,
-            icon: '/favicon.svg',
-            tag: String(task.id) // Use a tag to prevent duplicate notifications if checker runs fast
-          });
+      try {
+        const now = new Date().getTime();
+        const dueTasks = tasks.filter(r => {
+          try {
+            const taskTime = new Date(r.dateTime).getTime();
+            return !isNaN(taskTime) && taskTime <= now;
+          } catch {
+            return false;
+          }
         });
-        // Remove triggered tasks
-        setTasks(currentTasks => currentTasks.filter(r => !dueTasks.some(due => due.id === r.id)));
+
+        if (dueTasks.length > 0 && notificationPermission === 'granted') {
+          dueTasks.forEach(task => {
+            try {
+              const taskName = task.itemName || 'Scheduled Task';
+              new Notification(`Task Due: ${taskName}`, {
+                body: task.note || `It's time for your scheduled event.`,
+                icon: '/favicon.svg',
+                tag: String(task.id) // Use a tag to prevent duplicate notifications if checker runs fast
+              });
+            } catch (error) {
+              console.error('Failed to create notification:', error);
+            }
+          });
+          // Remove triggered tasks
+          setTasks(currentTasks => currentTasks.filter(r => !dueTasks.some(due => due.id === r.id)));
+        }
+      } catch (error) {
+        console.error('Error in task notification interval:', error);
       }
     }, 30000); // Check every 30 seconds
 
@@ -279,7 +298,8 @@ export const App = () => {
         priority: item.priority || 'Medium',
       }));
 
-    } catch {
+    } catch (error) {
+      console.error('Failed to load yatra plan from localStorage:', error);
       return [];
     }
   });
@@ -294,7 +314,9 @@ export const App = () => {
         }
         return parsed;
       }
-    } catch { }
+    } catch (error) {
+      console.error('Failed to load yatra settings from localStorage:', error);
+    }
     return {
       numberOfPersons: 1,
       familyMembers: [],
@@ -651,6 +673,8 @@ export const App = () => {
         return <DivyaMarga t={t} language={language} onNavigate={setView} openModal={openModal} />;
       case 'meditationZone':
         return <MeditationZone t={t} />;
+      case 'mart':
+        return <DharmaMart t={t} language={language} />;
       default:
         return <Home t={t} language={language} onDarshanClick={handleDarshanClick} {...yatraPlanProps} />;
     }
@@ -692,6 +716,8 @@ export const App = () => {
 
       <div className="relative z-1 flex-1 flex flex-col h-screen overflow-hidden">
         <Header
+          currentLang={language}
+          setLang={setLanguage}
           currentUser={currentUser}
           t={t}
           onMenuClick={() => setIsSidebarOpen(true)}
@@ -789,6 +815,19 @@ export const App = () => {
 
       {currentUser && <AmritCollector />}
       <FloatingDock />
+
+      {/* QR Share / Present Button */}
+      {view !== 'satsang' && (
+        <button
+          onClick={() => setShowQRShare(true)}
+          className="fixed bottom-24 left-6 z-[60] w-14 h-14 bg-gradient-to-br from-stone-800 to-stone-900 text-white rounded-2xl shadow-[0_0_20px_rgba(0,0,0,0.3)] flex items-center justify-center transform hover:scale-110 transition-all duration-300 animate-fade-in-up hover:shadow-[0_0_25px_rgba(0,0,0,0.5)] border border-stone-600/30 group"
+          aria-label="Share via QR Code"
+          style={{ animationDelay: '0.6s' }}
+        >
+          <Icon name="qr-code" className="w-7 h-7 group-hover:scale-110 transition-transform" />
+        </button>
+      )}
+      <QRShareModal isOpen={showQRShare} onClose={() => setShowQRShare(false)} />
 
       {/* Daily Panchang Floating Button */}
       {view !== 'satsang' && (

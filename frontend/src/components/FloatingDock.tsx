@@ -1,4 +1,4 @@
-﻿import React from 'react';
+import React from 'react';
 import { motion } from 'framer-motion';
 import { Icon } from './Icon';
 import { useModal } from '../contexts/ModalContext';
@@ -15,7 +15,7 @@ export const FloatingDock = () => {
     const items = [
         { icon: 'home', label: 'Home', action: () => navigate('home') },
         { icon: 'temple', label: 'Temples', action: () => navigate('temples') },
-        { icon: 'shopping-bag', label: 'Mart', action: () => openModal('aiShopper') },
+        { icon: 'shopping-bag', label: 'Mart', action: () => navigate('mart') },
         { icon: 'user-circle', label: 'Profile', action: () => {
             if (currentUser) {
                 navigate('settings');

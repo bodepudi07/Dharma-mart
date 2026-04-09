@@ -41,7 +41,9 @@ class Database {
 
         try {
             const filePath = this._resolveCollectionPath(collection);
-            const data = await fs.readFile(filePath, 'utf8');
+            const raw = await fs.readFile(filePath, 'utf8');
+            // Strip UTF-8 BOM if present
+            const data = raw.charCodeAt(0) === 0xFEFF ? raw.slice(1) : raw;
             const parsedData = JSON.parse(data);
             this.memoryCache.set(collection, parsedData);
             return parsedData;
@@ -77,7 +79,9 @@ class Database {
             } catch (error) {
                 console.error(`DB Write Error [${collection}]:`, error.message);
                 // Clean up temp file if it exists
-                try { await fs.unlink(tempPath); } catch { }
+                try { await fs.unlink(tempPath); } catch (cleanupError) {
+                    console.error(`Failed to clean up temp file [${collection}]:`, cleanupError.message);
+                }
                 return false;
             }
         });

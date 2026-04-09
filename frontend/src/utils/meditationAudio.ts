@@ -176,8 +176,12 @@ export class MeditationAudioEngine {
 
         // Clean up after fade
         this.fadeTimeout = setTimeout(() => {
-            this.oscillators.forEach(o => { try { o.stop(); } catch { } });
-            this.lfoOscillators.forEach(o => { try { o.stop(); } catch { } });
+            this.oscillators.forEach(o => { try { o.stop(); } catch (e) {
+                if (process.env.NODE_ENV === 'development') console.warn('Error stopping oscillator:', e);
+            }})
+            this.lfoOscillators.forEach(o => { try { o.stop(); } catch (e) {
+                if (process.env.NODE_ENV === 'development') console.warn('Error stopping LFO:', e);
+            }});
             this.oscillators = [];
             this.lfoOscillators = [];
             this.gains = [];
@@ -378,8 +382,12 @@ export class MeditationAudioEngine {
         nodes.gains[0]?.gain.linearRampToValueAtTime(0, now + 1);
 
         setTimeout(() => {
-            nodes.oscillators.forEach(o => { try { o.stop(); } catch { } });
-            if (nodes.noiseSource) { try { nodes.noiseSource.stop(); } catch { } }
+            nodes.oscillators.forEach(o => { try { o.stop(); } catch (e) {
+                if (process.env.NODE_ENV === 'development') console.warn('Error stopping ambient oscillator:', e);
+            }});
+            if (nodes.noiseSource) { try { nodes.noiseSource.stop(); } catch (e) {
+                if (process.env.NODE_ENV === 'development') console.warn('Error stopping noise source:', e);
+            }}
             if ((nodes as any)._interval) clearInterval((nodes as any)._interval);
             this.ambientNodes.delete(id);
         }, 1200);

@@ -1,4 +1,4 @@
-﻿import { Sloka, Temple, Book, User, Pooja, Language } from "../types";
+import { Sloka, Temple, Book, User, Pooja, Language } from "../types";
 import { SLOKA_DATA } from '../constants';
 
 // ============================================================================
@@ -155,26 +155,21 @@ const isDharmaRelated = (text: string): boolean => {
     return dharmaKeywords.some(k => lower.includes(k));
 };
 
-// Find best matching topic from knowledge base
-const findBestTopicMatch = (query: string, topics: KnowledgeTopic[]): KnowledgeTopic | null => {
-    const lower = query.toLowerCase();
-    let bestMatch: KnowledgeTopic | null = null;
-    let bestScore = 0;
-
-    for (const topic of topics) {
+const findTopTopicsMatch = (query: string, topics: KnowledgeTopic[], limit: number = 2): KnowledgeTopic[] => {
+    const lower = normalize(query);
+    const scoredTopics = topics.map(topic => {
         let score = 0;
         for (const keyword of topic.keywords) {
             if (lower.includes(keyword.toLowerCase())) {
                 score += keyword.length;
+            } else if (levenshteinDistance(lower, keyword.toLowerCase()) <= 1) { // Fuzzy matching for typos
+                score += keyword.length - 1;
             }
         }
-        if (score > bestScore) {
-            bestScore = score;
-            bestMatch = topic;
-        }
-    }
+        return { topic, score };
+    }).filter(item => item.score > 0);
 
-    return bestScore > 0 ? bestMatch : null;
+    return scoredTopics.sort((a, b) => b.score - a.score).slice(0, limit).map(item => item.topic);
 };
 
 const pickRandom = <T>(arr: T[]): T => arr[Math.floor(Math.random() * arr.length)];
@@ -679,10 +674,10 @@ const simulateStreaming = async (
 // Main response generator
 const generateLocalResponse = async (
     query: string,
-    context?: { temple?: Temple; book?: Book; pooja?: Pooja; pillar?: any }
+    context?: { temple?: Temple; book?: Book; pooja?: Pooja; pillar?: any; language?: Language }
 ): Promise<string> => {
     const [kb, poojaCatalog] = await Promise.all([loadKnowledgeBase(), loadPoojaCatalog()]);
-    const responseLocale = detectResponseLocale(query);
+    const responseLocale = context?.language || detectResponseLocale(query);
 
     // Contextual responses
     if (context?.temple) return buildTempleResponse(context.temple);
@@ -733,10 +728,17 @@ const generateLocalResponse = async (
         return buildSpellingCoachResponse(query, responseLocale);
     }
 
-    // Topic match
-    const topic = findBestTopicMatch(query, kb.topics);
-    if (topic) {
-        return pickRandom(topic.responses);
+    // Topic match (upgraded to multi-topic matching)
+    const matchedTopics = findTopTopicsMatch(query, kb.topics);
+    if (matchedTopics.length > 0) {
+        if (matchedTopics.length === 1) {
+            return pickRandom(matchedTopics[0].responses);
+        } else {
+            // Combine wisdom from 2 topics
+            const resp1 = pickRandom(matchedTopics[0].responses);
+            const resp2 = pickRandom(matchedTopics[1].responses).replace(/^\*\*[^*]+\*\*\n*/, ''); // Strip title from second
+            return `${resp1}\n\nFurthermore, consider this related wisdom:\n\n${resp2}`;
+        }
     }
 
     // Pillar context
@@ -785,10 +787,10 @@ export const explainScripture = async (topic: string): Promise<string> => {
     }
 
     // Try topic matching
-    const match = findBestTopicMatch(topic, kb.topics);
-    if (match) {
+    const matchedTopics = findTopTopicsMatch(topic, kb.topics, 1);
+    if (matchedTopics.length > 0) {
         // Strip markdown for cleaner explanation format
-        return pickRandom(match.responses).replace(/\*\*/g, '').replace(/\*/g, '');
+        return pickRandom(matchedTopics[0].responses).replace(/\*\*/g, '').replace(/\*/g, '');
     }
 
     return `${topic} is an important aspect of Sanatana Dharma's vast spiritual heritage. It represents part of the ancient wisdom tradition that has guided seekers for thousands of years. The study and contemplation of such subjects deepens our understanding of Dharma and brings us closer to spiritual realization. Explore our Knowledge Hub for detailed texts and readings on this topic.`;
@@ -834,7 +836,7 @@ export const generateSpiritualSignificance = async (temple: Temple): Promise<str
 export const streamDevaGptResponse = async (
     query: string,
     _history: { role: 'user' | 'model'; parts: { text: string }[] }[],
-    context: { temple?: Temple; book?: Book; pooja?: Pooja; pillar?: any; user?: User | null; userBookings?: any[] },
+    context: { temple?: Temple; book?: Book; pooja?: Pooja; pillar?: any; user?: User | null; userBookings?: any[]; language?: Language },
     onChunk: (chunk: string) => void,
     onComplete: () => void
 ) => {
