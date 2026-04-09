@@ -13,7 +13,10 @@ const app = express()
 
 // Middleware
 app.use(cors({
-  origin: process.env.CORS_ORIGINS ? process.env.CORS_ORIGINS.split(',') : ['http://localhost:5173', 'http://localhost:5174'],
+  origin: function (origin, callback) {
+    // Allow all origins to prevent proxy/Cloudflare blocking
+    callback(null, true);
+  },
   credentials: true
 }))
 app.use(bodyParser.json({ limit: '10mb' }))
