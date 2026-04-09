@@ -741,7 +741,7 @@ export const App = () => {
                       transition={{ duration: 0.4, ease: [0.22, 1, 0.36, 1] }}
                       className="h-full"
                     >
-                      {isTransitioning ? <SubscreenLoader /> : renderView()}
+                        {isTransitioning ? <SubscreenLoader /> : (!currentUser ? <div className="absolute inset-0 z-[100] bg-black/80 backdrop-blur-md flex items-center justify-center min-h-screen"><LoginModal onClose={() => {}} t={t} /></div> : renderView())}
                     </motion.div>
                   </AnimatePresence>
               </Suspense>
