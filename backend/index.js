@@ -156,18 +156,18 @@ app.use('/api/growth', growthRoute);
 app.use('/api/posts', postsRoute);
 app.use('/api/sankalpas', sankalpasRoute);
 
-// Serve frontend build (for production)
-if (isProduction) {
-    const distPath = path.join(__dirname, '../dist');
-    app.use(express.static(distPath, { maxAge: '7d' }));
-    // SPA fallback - serve index.html for all non-API routes
-    app.get('{*splat}', (req, res, next) => {
-        if (req.path.startsWith('/api/') || req.path.startsWith('/data/')) {
-            return next();
-        }
-        res.sendFile(path.join(distPath, 'index.html'));
-    });
-}
+// Frontend is now hosted on Cloudflare Pages, backend operates as an API server only.
+// if (isProduction) {
+//     const distPath = path.join(__dirname, '../dist');
+//     app.use(express.static(distPath, { maxAge: '7d' }));
+//     // SPA fallback - serve index.html for all non-API routes
+//     app.get('{*splat}', (req, res, next) => {
+//         if (req.path.startsWith('/api/') || req.path.startsWith('/data/')) {
+//             return next();
+//         }
+//         res.sendFile(path.join(distPath, 'index.html'));
+//     });
+// }
 
 // 404 handler for unknown API routes
 app.use('/api/{*splat}', (_req, res) => {
