@@ -24,9 +24,10 @@ declare global {
 interface LoginModalProps {
     onClose: () => void;
     t: I18nContent;
+    inline?: boolean;
 }
 
-export const LoginModal = ({ onClose, t }: LoginModalProps) => {
+export const LoginModal = ({ onClose, t, inline = false }: LoginModalProps) => {
     const [isSignUp, setIsSignUp] = useState(false);
     const [name, setName] = useState('');
     const [email, setEmail] = useState('');
@@ -153,17 +154,13 @@ export const LoginModal = ({ onClose, t }: LoginModalProps) => {
         setPassword('');
     }
 
-    return (
-        <div
-            className="fixed inset-0 bg-black/80 backdrop-blur-md z-50 flex items-center justify-center p-4 animate-fade-in"
-            onClick={onClose}
-        >
+    const modalContent = (
             <div
                 ref={modalRef}
                 role="dialog"
                 aria-modal="true"
                 aria-labelledby="login-modal-title"
-                className="bg-white/95 backdrop-blur-xl rounded-[2.5rem] shadow-[0_20px_50px_-12px_rgba(0,0,0,0.5)] border border-white/20 w-full max-w-md p-8 relative transform transition-all duration-500 overflow-hidden"
+                className={`bg-white/95 backdrop-blur-xl ${inline ? "rounded-none shadow-none border-0" : "rounded-[2.5rem] shadow-[0_20px_50px_-12px_rgba(0,0,0,0.5)] border border-white/20"} w-full max-w-md p-8 relative transform transition-all duration-500 overflow-hidden`}
                 onClick={(e) => e.stopPropagation()}
             >
                 {/* Background ambient glow */}
@@ -171,12 +168,14 @@ export const LoginModal = ({ onClose, t }: LoginModalProps) => {
                 <div className="absolute bottom-0 right-0 w-48 h-48 bg-secondary/15 rounded-full blur-[50px] pointer-events-none mix-blend-multiply"></div>
 
                 {/* Inner glowing edge */}
-                <div className="absolute inset-0 rounded-[2.5rem] border-[2px] border-primary/10 pointer-events-none mix-blend-overlay"></div>
-                <button
-                    onClick={onClose}
-                    aria-label="Close"
-                    className="absolute top-4 right-4 text-text-muted hover:text-primary transition-colors text-2xl font-bold"
-                >&times;</button>
+                {!inline && <div className="absolute inset-0 rounded-[2.5rem] border-[2px] border-primary/10 pointer-events-none mix-blend-overlay"></div>}
+                {!inline && (
+                    <button
+                        onClick={onClose}
+                        aria-label="Close"
+                        className="absolute top-4 right-4 text-text-muted hover:text-primary transition-colors text-2xl font-bold"
+                    >&times;</button>
+                )}
                 <div className="text-center mb-8 relative z-10">
                     <div className="relative inline-block mb-4">
                         <Icon name="cosmic-logo" className="h-14 w-14 text-primary relative z-10 animate-slow-spin" />
@@ -293,6 +292,16 @@ export const LoginModal = ({ onClose, t }: LoginModalProps) => {
                     </button>
                 </div>
             </div>
+        );
+
+    if (inline) return modalContent;
+
+    return (
+        <div
+            className="fixed inset-0 bg-black/80 backdrop-blur-md z-50 flex items-center justify-center p-4 animate-fade-in"
+            onClick={onClose}
+        >
+            {modalContent}
         </div>
     );
 };

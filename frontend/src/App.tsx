@@ -871,7 +871,7 @@ export const App = () => {
               <p className="text-amber-200/80">Please log in or register to access the spiritual features.</p>
             </div>
             <div className="w-full max-w-md bg-stone-900 border border-stone-800 rounded-3xl overflow-hidden shadow-2xl animate-fade-in-up" style={{ animationDelay: '0.2s' }}>
-              <LoginModal onClose={() => {}} t={t} />
+              <LoginModal onClose={() => {}} t={t} inline={true} />
             </div>
             <div className="absolute inset-0 pointer-events-none -z-10 bg-[radial-gradient(ellipse_at_center,_var(--tw-gradient-stops))] from-amber-900/20 via-stone-950 to-stone-950"></div>
           </div>
