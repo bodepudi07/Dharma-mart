@@ -864,7 +864,7 @@ export const App = () => {
 
         {/* Global Access Gate - Must be logged in to use any feature */}
         {!currentUser && !showSplash && !showWelcome && !userLoading && (
-          <div className="fixed inset-0 z-[9999] bg-stone-950/95 backdrop-blur-xl overflow-y-auto">
+          <div className="fixed inset-0 z-[90] bg-stone-950/95 backdrop-blur-xl overflow-y-auto">
               <div className="min-h-screen flex flex-col items-center justify-center py-12 px-4 relative z-10 w-full max-w-7xl mx-auto">
                 <div className="mb-8 text-center animate-fade-in-up">
                   <Icon name="lotus" className="w-12 h-12 text-amber-500 mx-auto mb-4" />
