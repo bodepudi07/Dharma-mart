@@ -1,0 +1,26 @@
+{
+  "title": "Bhikṣu Gītā",
+  "chapters": [
+    {
+      "chapter": 1,
+      "title": "The Song of the Mendicant",
+      "verses": [
+        {
+          "verse": 1,
+          "sanskrit": "नायं जनो मे सुखदुःखहेतुर्न देवतात्मा गृहकर्मदोषैः ।\nमनो गुणान्वै सृजते तदेतत् तदेव बन्धं कुरुते विमोक्षम् ॥",
+          "translation": "These people are not the cause of my happiness or distress, nor are the devas or the body, nor the faults of household life. It is the mind that creates attachments to the gunas — and the mind alone causes bondage and liberation."
+        },
+        {
+          "verse": 2,
+          "sanskrit": "सहसा मां विमुञ्चन्तु लोका वामानुभाषताम् ।\nसर्वत्र समदर्शित्वं कृत्वा तिष्ठामि निश्चलः ॥",
+          "translation": "Let the world suddenly abandon me or speak ill of me. Having developed equal vision towards all, I stand unmoved."
+        },
+        {
+          "verse": 3,
+          "sanskrit": "एतां स आस्थाय परात्मनिष्ठां अध्यासितां पूर्वतमैर्महर्षिभिः ।\nअहं तरिष्यामि दुरन्तपारं तमो मुकुन्दाङ्घ्रिनिषेवयैव ॥",
+          "translation": "By following this path of devotion to the Supreme Self, practiced by the ancient sages, I shall cross the insurmountable ocean of darkness — simply by serving the feet of Mukunda."
+        }
+      ]
+    }
+  ]
+}

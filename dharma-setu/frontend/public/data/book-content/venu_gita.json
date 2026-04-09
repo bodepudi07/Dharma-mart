@@ -1,0 +1,26 @@
+{
+  "title": "Veṇu Gīta",
+  "chapters": [
+    {
+      "chapter": 1,
+      "title": "The Song of Krishna's Flute",
+      "verses": [
+        {
+          "verse": 1,
+          "sanskrit": "इति वेणुरवं राजन् सर्वभूतमनोहरम् ।\nश्रुत्वा व्रजस्त्रियो गोपीः कृष्णस्याकृष्टमानसाः ॥",
+          "translation": "Thus, O King, hearing the enchanting sound of Krishna's flute that captivates the minds of all beings, the gopis of Vraja were drawn to Krishna."
+        },
+        {
+          "verse": 2,
+          "sanskrit": "बर्हापीडं नटवरवपुः कर्णयोः कर्णिकारं ।\nबिभ्रद् वासः कनककपिशं वैजयन्तीं च मालाम् ॥",
+          "translation": "With a peacock feather adorning His head, dressed as the best of dancers, with karnikara flowers on His ears, wearing golden-hued garments and the Vaijayanti garland."
+        },
+        {
+          "verse": 3,
+          "sanskrit": "रन्ध्रान्  वेणोरधरसुधयाऽपूरयन् गोपवृन्दैः ।\nवृन्दारण्यं स्वपदरमणं प्राविशद् गीतकीर्तिः ॥",
+          "translation": "Filling the holes of the flute with the nectar of His lips, surrounded by cowherd boys, He entered Vrindavana, the land beautified by His footprints, His glories being sung."
+        }
+      ]
+    }
+  ]
+}

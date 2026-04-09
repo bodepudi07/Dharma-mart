@@ -1,0 +1,1458 @@
+[
+  {
+    "id": 14,
+    "name": "అక్షరధామ్ ఆలయం",
+    "location": "ఢిల్లీ",
+    "history": "ఒక ఆధునిక నిర్మాణ అద్భుతమైన అక్షరధామ్, హిందూ మరియు భారతీయ సంస్కృతి, ఆధ్యాత్మికత మరియు నిర్మాణాన్ని ప్రదర్శించడానికి అంకితం చేయబడిన ఆధ్యాత్మిక-సాంస్కృతిక ప్రాంగణం.",
+    "imageUrl": "https://images.unsplash.com/photo-1596489366576-90040ed1a93e?q=80&w=2670&auto=format&fit=crop",
+    "lat": 28.6127,
+    "lng": 77.2773,
+    "crowdLevel": "Very High",
+    "darshanTimings": "ఉదయం 10:00 - సాయంత్రం 6:30",
+    "deity": "స్వామినారాయణ్",
+    "tags": [
+      "modern",
+      "cultural",
+      "krishna",
+      "vishnu",
+      "vaishnava"
+    ],
+    "estimatedCost": 1500,
+    "estimatedDays": 1,
+    "featuredOrder": 20
+  },
+  {
+    "id": 126,
+    "name": "Ambaji Temple (తెలుగు)",
+    "location": "Ambaji, Gujarat",
+    "history": "One of the 18 Maha Shakti Peeths, this sacred temple is where the heart of Goddess Sati is believed to have fallen. The temple is unique as there is no idol; the main object of worship is the sacred Shree Visa Yantra. It's a major pilgrimage center in Gujarat.",
+    "imageUrl": "https://upload.wikimedia.org/wikipedia/commons/6/6b/Brihadeeswarar_Temple_Thanjavur.jpg",
+    "lat": 24.331,
+    "lng": 72.853,
+    "crowdLevel": "Very High",
+    "darshanTimings": "7:30 AM - 9:15 PM",
+    "deity": "Goddess Sati (Amba)",
+    "tags": [
+      "shakti peeth",
+      "maha shakti peeth",
+      "shakta"
+    ],
+    "estimatedCost": 2500,
+    "estimatedDays": 1,
+    "featuredOrder": 35
+  },
+  {
+    "id": 142,
+    "name": "Amarnath Cave Temple (తెలుగు)",
+    "location": "Anantnag, Jammu and Kashmir",
+    "history": "One of the most revered Hindu shrines, the Amarnath Cave is dedicated to Lord Shiva. The cave, situated at an altitude of 3,888m, houses an ice stalagmite that waxes and wanes with the moon's phases, and is considered a 'swayambhu' lingam of Shiva.",
+    "imageUrl": "https://upload.wikimedia.org/wikipedia/commons/6/6b/Brihadeeswarar_Temple_Thanjavur.jpg",
+    "lat": 34.2155,
+    "lng": 75.5037,
+    "crowdLevel": "High",
+    "darshanTimings": "Seasonal (July-August)",
+    "deity": "Lord Shiva",
+    "tags": [
+      "cave",
+      "pilgrimage",
+      "shiva"
+    ],
+    "estimatedCost": 7000,
+    "estimatedDays": 4,
+    "featuredOrder": 15
+  },
+  {
+    "id": 133,
+    "name": "Arunachaleswarar Temple (తెలుగు)",
+    "location": "Tiruvannamalai, Tamil Nadu",
+    "history": "Representing the element of Fire (Agni Lingam), this grand temple is at the base of the Arunachala hill, considered a manifestation of Shiva. It is a major center for the Shaiva sect and is famous for its massive gopurams and the Karthigai Deepam festival.",
+    "imageUrl": "https://upload.wikimedia.org/wikipedia/commons/6/6b/Brihadeeswarar_Temple_Thanjavur.jpg",
+    "lat": 12.2319,
+    "lng": 79.0677,
+    "crowdLevel": "High",
+    "darshanTimings": "5:30 AM - 12:30 PM, 4:00 PM - 9:30 PM",
+    "deity": "Lord Shiva",
+    "tags": [
+      "panchabhoota",
+      "shiva"
+    ],
+    "estimatedCost": 2200,
+    "estimatedDays": 1,
+    "circuitOrder": {
+      "panchabhoota": 3
+    },
+    "featuredOrder": 28
+  },
+  {
+    "id": 13,
+    "name": "Badrinath Temple (తెలుగు)",
+    "location": "Badrinath, Uttarakhand",
+    "history": "Located on the banks of the Alaknanda River in Uttarakhand, Badrinath Temple is a sacred abode of Lord Vishnu. It is a key site in both the Char Dham and Chota Char Dham pilgrimages. The temple is dedicated to Vishnu's dual form of Badrinarayan, and the main idol is a black Saligram stone believed to be self-manifested.",
+    "imageUrl": "https://upload.wikimedia.org/wikipedia/commons/6/6b/Brihadeeswarar_Temple_Thanjavur.jpg",
+    "lat": 30.7433,
+    "lng": 79.4938,
+    "crowdLevel": "High",
+    "darshanTimings": "4:30 AM - 9 PM (Seasonal: Apr-Nov)",
+    "deity": "Lord Vishnu",
+    "tags": [
+      "char dham",
+      "himalayan char dham",
+      "vishnu",
+      "vaishnava"
+    ],
+    "estimatedCost": 4500,
+    "estimatedDays": 3,
+    "circuitOrder": {
+      "char_dham": 4,
+      "himalayan_char_dham": 4
+    },
+    "featuredOrder": 6
+  },
+  {
+    "id": 6,
+    "name": "Bhimashankar Temple (తెలుగు)",
+    "location": "Bhimashankar, Maharashtra",
+    "history": "Located in the Sahyadri hills, this Jyotirlinga shrine is the source of the river Bhima. The temple is built in the Nagara style of architecture and is surrounded by a rich wildlife sanctuary. The legend associated with this temple is of Shiva slaying the demon Tripurasura.",
+    "imageUrl": "https://upload.wikimedia.org/wikipedia/commons/6/6b/Brihadeeswarar_Temple_Thanjavur.jpg",
+    "lat": 19.071,
+    "lng": 73.5358,
+    "crowdLevel": "Medium",
+    "darshanTimings": "4:30 AM - 9:30 PM",
+    "deity": "Lord Shiva",
+    "tags": [
+      "jyotirlinga",
+      "shiva"
+    ],
+    "estimatedCost": 1800,
+    "estimatedDays": 1,
+    "circuitOrder": {
+      "jyotirlinga": 6
+    },
+    "featuredOrder": 10
+  },
+  {
+    "id": 110,
+    "name": "Brihadeeswarar Temple (తెలుగు)",
+    "location": "Thanjapur, Tamil Nadu",
+    "history": "Also known as the Big Temple, this stunning example of Dravidian architecture was built by Raja Raja Chola I. Dedicated to Lord Shiva, it is a UNESCO World Heritage Site, famed for its massive vimana (tower) and the monolithic Nandi.",
+    "imageUrl": "https://upload.wikimedia.org/wikipedia/commons/6/6b/Brihadeeswarar_Temple_Thanjavur.jpg",
+    "lat": 10.7828,
+    "lng": 79.1318,
+    "crowdLevel": "High",
+    "darshanTimings": "6 AM - 12:30 PM, 4 PM - 8:30 PM",
+    "deity": "Lord Shiva",
+    "tags": [
+      "unesco",
+      "chola",
+      "shiva"
+    ],
+    "estimatedCost": 2000,
+    "estimatedDays": 1,
+    "featuredOrder": 40
+  },
+  {
+    "id": 132,
+    "name": "Chandranath Temple (తెలుగు)",
+    "location": "Sitakunda, Bangladesh",
+    "history": "One of the 18 Maha Shakti Peeths, located on top of the Chandranath hill. This is the sacred site where the right arm of Goddess Sati is believed to have fallen. It is a prominent pilgrimage site in Bangladesh.",
+    "imageUrl": "https://upload.wikimedia.org/wikipedia/commons/6/6b/Brihadeeswarar_Temple_Thanjavur.jpg",
+    "lat": 22.653,
+    "lng": 91.688,
+    "crowdLevel": "Medium",
+    "darshanTimings": "6 AM - 6 PM",
+    "deity": "Goddess Sati (Bhavani)",
+    "tags": [
+      "shakti peeth",
+      "maha shakti peeth",
+      "shakta"
+    ],
+    "estimatedCost": 9000,
+    "estimatedDays": 4,
+    "featuredOrder": 46
+  },
+  {
+    "id": 111,
+    "name": "Dwaraka Pitha (తెలుగు)",
+    "location": "Dwarka, Gujarat",
+    "history": "The western Matha, also known as the Sharada Peetham. It is one of the four cardinal peethams established by Adi Shankaracharya, with the motto 'Tat Tvam Asi' from the Samaveda.",
+    "imageUrl": "https://upload.wikimedia.org/wikipedia/commons/6/6b/Brihadeeswarar_Temple_Thanjavur.jpg",
+    "lat": 22.2415,
+    "lng": 68.9734,
+    "crowdLevel": "Medium",
+    "darshanTimings": "7 AM - 12 PM, 5 PM - 8 PM",
+    "deity": "Adi Shankaracharya",
+    "tags": [
+      "shankar mutt",
+      "other_major"
+    ],
+    "estimatedCost": 2000,
+    "estimatedDays": 1,
+    "featuredOrder": 32
+  },
+  {
+    "id": 15,
+    "name": "Dwarkadhish Temple (తెలుగు)",
+    "location": "Dwarka, Gujarat",
+    "history": "The Dwarkadhish temple, also known as the Jagat Mandir, is dedicated to Lord Krishna. It is one of the four main pilgrimage sites of the Char Dham. The temple's main shrine is a five-storied structure supported by 72 pillars, believed to be over 2,200 years old. It is situated at the confluence of the Gomti river and the Arabian Sea.",
+    "imageUrl": "https://upload.wikimedia.org/wikipedia/commons/6/6b/Brihadeeswarar_Temple_Thanjavur.jpg",
+    "lat": 22.2375,
+    "lng": 68.9675,
+    "crowdLevel": "High",
+    "darshanTimings": "6:30 AM - 1 PM, 5 PM - 9:30 PM",
+    "deity": "Lord Krishna",
+    "tags": [
+      "char dham",
+      "krishna",
+      "vishnu",
+      "vaishnava"
+    ],
+    "estimatedCost": 2500,
+    "estimatedDays": 1,
+    "circuitOrder": {
+      "char_dham": 3
+    },
+    "featuredOrder": 5
+  },
+  {
+    "id": 135,
+    "name": "Ekambareswarar Temple (తెలుగు)",
+    "location": "Kanchipuram, Tamil Nadu",
+    "history": "Representing the element of Earth (Prithvi Lingam), this ancient temple is one of Kanchipuram's most famous landmarks. The Lingam here is believed to be self-manifested (Swayambhu) and is made of sand. The temple has a mango tree said to be 3,500 years old.",
+    "imageUrl": "https://upload.wikimedia.org/wikipedia/commons/6/6b/Brihadeeswarar_Temple_Thanjavur.jpg",
+    "lat": 12.8476,
+    "lng": 79.7027,
+    "crowdLevel": "High",
+    "darshanTimings": "6:00 AM - 12:30 PM, 4:00 PM - 8:30 PM",
+    "deity": "Lord Shiva",
+    "tags": [
+      "panchabhoota",
+      "shiva"
+    ],
+    "estimatedCost": 1800,
+    "estimatedDays": 1,
+    "circuitOrder": {
+      "panchabhoota": 1
+    },
+    "featuredOrder": 26
+  },
+  {
+    "id": 139,
+    "name": "Gangotri Temple (తెలుగు)",
+    "location": "Uttarkashi, Uttarakhand",
+    "history": "The sacred origin of the River Ganges, this temple is dedicated to Goddess Ganga. It is the second pilgrimage site in the Himalayan Char Dham Yatra. The original temple was built by the Gorkha general Amar Singh Thapa in the early 18th century.",
+    "imageUrl": "https://upload.wikimedia.org/wikipedia/commons/6/6b/Brihadeeswarar_Temple_Thanjavur.jpg",
+    "lat": 30.9946,
+    "lng": 78.9405,
+    "crowdLevel": "High",
+    "darshanTimings": "6:15 AM - 2 PM, 3 PM - 9:30 PM (Seasonal: Apr-Nov)",
+    "deity": "Goddess Ganga",
+    "tags": [
+      "himalayan char dham",
+      "shakta"
+    ],
+    "estimatedCost": 4000,
+    "estimatedDays": 2,
+    "circuitOrder": {
+      "himalayan_char_dham": 2
+    },
+    "featuredOrder": 18
+  },
+  {
+    "id": 109,
+    "name": "Golden Temple (Harmandir Sahib) (తెలుగు)",
+    "location": "Amritsar, Punjab",
+    "history": "The holiest Gurdwara and the most important pilgrimage site of Sikhism. It is an open house of worship for all people, from all walks of life and faiths. The temple is surrounded by a sacred pool (sarovar) and has a stunning golden dome.",
+    "imageUrl": "https://upload.wikimedia.org/wikipedia/commons/2/2b/Golden_Temple_India.jpg",
+    "lat": 31.62,
+    "lng": 74.8765,
+    "crowdLevel": "Very High",
+    "darshanTimings": "3 AM - 10 PM",
+    "deity": "Guru Granth Sahib",
+    "tags": [
+      "sikh",
+      "pilgrimage",
+      "other_major"
+    ],
+    "estimatedCost": 1800,
+    "estimatedDays": 1,
+    "featuredOrder": 42
+  },
+  {
+    "id": 112,
+    "name": "Govardhan Math (తెలుగు)",
+    "location": "Puri, Odisha",
+    "history": "The eastern Matha established by Adi Shankaracharya. It is associated with the Rigveda and the Mahavakya 'Prajnanam Brahma'. The deity is Jagannath (a form of Vishnu).",
+    "imageUrl": "https://upload.wikimedia.org/wikipedia/commons/6/6b/Brihadeeswarar_Temple_Thanjavur.jpg",
+    "lat": 19.809,
+    "lng": 85.83,
+    "crowdLevel": "Medium",
+    "darshanTimings": "8 AM - 12 PM, 4 PM - 7 PM",
+    "deity": "Adi Shankaracharya",
+    "tags": [
+      "shankar mutt",
+      "other_major"
+    ],
+    "estimatedCost": 2000,
+    "estimatedDays": 1,
+    "featuredOrder": 31
+  },
+  {
+    "id": 12,
+    "name": "Grishneshwar Temple (తెలుగు)",
+    "location": "Aurangabad, Maharashtra",
+    "history": "The Grishneshwar temple is the last of the twelve Jyotirlingas. It is located near the UNESCO World Heritage site of Ellora Caves. The temple was destroyed and rebuilt several times, with the current structure being restored in the 18th century by Ahilyabai Holkar.",
+    "imageUrl": "https://upload.wikimedia.org/wikipedia/commons/6/6b/Brihadeeswarar_Temple_Thanjavur.jpg",
+    "lat": 20.0381,
+    "lng": 75.1669,
+    "crowdLevel": "Medium",
+    "darshanTimings": "5:30 AM - 9:30 PM",
+    "deity": "Lord Shiva",
+    "tags": [
+      "jyotirlinga",
+      "shiva"
+    ],
+    "estimatedCost": 1700,
+    "estimatedDays": 1,
+    "circuitOrder": {
+      "jyotirlinga": 12
+    },
+    "featuredOrder": 14
+  },
+  {
+    "id": 113,
+    "name": "Guruvayur Temple (తెలుగు)",
+    "location": "Guruvayur, Kerala",
+    "history": "A famous Krishna temple, often referred to as 'Bhuloka Vaikunta' (the holy abode of Vishnu on Earth). The central icon is a four-armed standing Krishna carrying the Panchajanya (conch), the Sudarshana Chakra (discus), the Kaumodaki (mace) and a lotus.",
+    "imageUrl": "https://upload.wikimedia.org/wikipedia/commons/6/6b/Brihadeeswarar_Temple_Thanjavur.jpg",
+    "lat": 10.5946,
+    "lng": 76.0396,
+    "crowdLevel": "Very High",
+    "darshanTimings": "3 AM - 1:30 PM, 4:30 PM - 9:15 PM",
+    "deity": "Lord Krishna (Guruvayurappan)",
+    "tags": [
+      "krishna",
+      "kerala",
+      "vishnu",
+      "vaishnava"
+    ],
+    "estimatedCost": 2200,
+    "estimatedDays": 1,
+    "featuredOrder": 21
+  },
+  {
+    "id": 19,
+    "name": "Harsiddhi Mata Temple (తెలుగు)",
+    "location": "Ujjain, Madhya Pradesh",
+    "history": "One of the 18 Maha Shakti Peeths, Harsiddhi Temple is where the elbow of Goddess Sati is said to have fallen. The temple is famous for its two towering deep-stambhas (lamp pillars) that are lit with hundreds of lamps during Navaratri, creating a spectacular sight.",
+    "imageUrl": "https://upload.wikimedia.org/wikipedia/commons/6/6b/Brihadeeswarar_Temple_Thanjavur.jpg",
+    "lat": 23.18,
+    "lng": 75.765,
+    "crowdLevel": "Medium",
+    "darshanTimings": "6 AM - 10 PM",
+    "deity": "Goddess Sati (Mahakali)",
+    "tags": [
+      "shakti peeth",
+      "maha shakti peeth",
+      "shakta"
+    ],
+    "estimatedCost": 1200,
+    "estimatedDays": 1,
+    "featuredOrder": 36
+  },
+  {
+    "id": 105,
+    "name": "Hinglaj Mata Temple (తెలుగు)",
+    "location": "Balochistan, Pakistan",
+    "history": "One of the most significant Shakti Peeths, located in a mountain cave on the banks of the Hingol River. It is where Sati's head (Brahmarandhra) is believed to have fallen. It is a revered pilgrimage site for Hindus in Pakistan and beyond.",
+    "imageUrl": "https://upload.wikimedia.org/wikipedia/commons/6/6b/Brihadeeswarar_Temple_Thanjavur.jpg",
+    "lat": 25.5147,
+    "lng": 65.5161,
+    "crowdLevel": "Medium",
+    "darshanTimings": "Open 24 Hours",
+    "deity": "Goddess Sati (Kottari)",
+    "tags": [
+      "shakti peeth",
+      "shakta"
+    ],
+    "estimatedCost": 15000,
+    "estimatedDays": 5,
+    "featuredOrder": 45
+  },
+  {
+    "id": 141,
+    "name": "Jagannath Temple, Puri (తెలుగు)",
+    "location": "Puri, Odisha",
+    "history": "A monumental temple in Puri, dedicated to Lord Jagannath (a form of Vishnu), along with his siblings Balabhadra and Subhadra. It is one of the Char Dham pilgrimage sites. The temple is famous for its annual Ratha Yatra, or chariot festival. The main idols are uniquely carved from neem wood and are ceremoniously replaced every twelve or nineteen years.",
+    "imageUrl": "https://upload.wikimedia.org/wikipedia/commons/1/17/Puri_Jagannath_Temple.jpg",
+    "lat": 19.8048,
+    "lng": 85.8182,
+    "crowdLevel": "Very High",
+    "darshanTimings": "5:30 AM - 10 PM",
+    "deity": "Lord Jagannath (Vishnu)",
+    "tags": [
+      "char dham",
+      "krishna",
+      "vishnu",
+      "vaishnava"
+    ],
+    "estimatedCost": 3000,
+    "estimatedDays": 2,
+    "circuitOrder": {
+      "char_dham": 1
+    },
+    "featuredOrder": 3
+  },
+  {
+    "id": 134,
+    "name": "Jambukeshwarar Temple (తెలుగు)",
+    "location": "Thiruvanaikaval, Tamil Nadu",
+    "history": "This temple represents the element of Water (Appu Lingam). The sanctum sanctorum has an underground water stream that perpetually surrounds the Lingam. It is one of the 275 Paadal Petra Sthalams, where the Nayanars have sung praises of the Lord.",
+    "imageUrl": "https://upload.wikimedia.org/wikipedia/commons/6/6b/Brihadeeswarar_Temple_Thanjavur.jpg",
+    "lat": 10.8534,
+    "lng": 78.7054,
+    "crowdLevel": "Medium",
+    "darshanTimings": "6:00 AM - 1:00 PM, 4:00 PM - 9:30 PM",
+    "deity": "Lord Shiva",
+    "tags": [
+      "panchabhoota",
+      "shiva"
+    ],
+    "estimatedCost": 2100,
+    "estimatedDays": 1,
+    "circuitOrder": {
+      "panchabhoota": 2
+    },
+    "featuredOrder": 27
+  },
+  {
+    "id": 123,
+    "name": "Jogulamba Temple (తెలుగు)",
+    "location": "Alampur, Telangana",
+    "history": "One of the 18 Maha Shakti Peeths, this is the sacred site where the upper teeth of Goddess Sati are believed to have fallen. The Goddess Jogulamba is a fierce form of Shakti and is depicted seated on a corpse. The temple is part of the Navabrahma temples complex.",
+    "imageUrl": "https://upload.wikimedia.org/wikipedia/commons/6/6b/Brihadeeswarar_Temple_Thanjavur.jpg",
+    "lat": 15.869,
+    "lng": 78.136,
+    "crowdLevel": "High",
+    "darshanTimings": "7 AM - 1 PM, 2 PM - 8:30 PM",
+    "deity": "Goddess Sati (Jogulamba)",
+    "tags": [
+      "shakti peeth",
+      "maha shakti peeth",
+      "shakta"
+    ],
+    "estimatedCost": 2800,
+    "estimatedDays": 2,
+    "featuredOrder": 37
+  },
+  {
+    "id": 114,
+    "name": "Jyotirmath (తెలుగు)",
+    "location": "Joshimath, Uttarakhand",
+    "history": "The northern Matha, established by Adi Shankaracharya. It is associated with the Atharvaveda and the Mahavakya 'Ayam Atma Brahma'. The temple houses the deity of Badrinarayan and is a significant pilgrimage center in the Himalayas.",
+    "imageUrl": "https://upload.wikimedia.org/wikipedia/commons/6/6b/Brihadeeswarar_Temple_Thanjavur.jpg",
+    "lat": 30.5517,
+    "lng": 79.5657,
+    "crowdLevel": "Medium",
+    "darshanTimings": "6 AM - 8 PM",
+    "deity": "Adi Shankaracharya",
+    "tags": [
+      "shankar mutt",
+      "other_major"
+    ],
+    "estimatedCost": 3500,
+    "estimatedDays": 2,
+    "featuredOrder": 33
+  },
+  {
+    "id": 107,
+    "name": "Jwala Ji Temple (తెలుగు)",
+    "location": "Kangra, Himachal Pradesh",
+    "history": "A powerful Maha Shakti Peeth where Sati's tongue is said to have fallen. The temple is unique as it does not house an idol, but instead, eternal flames that burn from fissures in the rock, representing the Goddess's fiery form.",
+    "imageUrl": "https://upload.wikimedia.org/wikipedia/commons/6/6b/Brihadeeswarar_Temple_Thanjavur.jpg",
+    "lat": 31.8741,
+    "lng": 76.3243,
+    "crowdLevel": "High",
+    "darshanTimings": "5 AM - 10 PM",
+    "deity": "Goddess Jwalamukhi",
+    "tags": [
+      "shakti peeth",
+      "maha shakti peeth",
+      "shakta"
+    ],
+    "estimatedCost": 2500,
+    "estimatedDays": 2,
+    "featuredOrder": 38
+  },
+  {
+    "id": 108,
+    "name": "Kalighat Kali Temple (తెలుగు)",
+    "location": "Kolkata, West Bengal",
+    "history": "One of the 18 Maha Shakti Peeths in India, where the toes of Sati's right foot are said to have fallen. The temple is a major pilgrimage site for devotees of Goddess Kali, the fierce form of Shakti.",
+    "imageUrl": "https://upload.wikimedia.org/wikipedia/commons/6/6b/Brihadeeswarar_Temple_Thanjavur.jpg",
+    "lat": 22.5204,
+    "lng": 88.3414,
+    "crowdLevel": "Very High",
+    "darshanTimings": "5 AM - 2 PM, 5 PM - 10:30 PM",
+    "deity": "Goddess Kali",
+    "tags": [
+      "shakti peeth",
+      "maha shakti peeth",
+      "shakta"
+    ],
+    "estimatedCost": 2000,
+    "estimatedDays": 1,
+    "featuredOrder": 39
+  },
+  {
+    "id": 122,
+    "name": "Kamakshi Amman Temple (తెలుగు)",
+    "location": "Kanchipuram, Tamil Nadu",
+    "history": "A famous Hindu temple dedicated to Kamakshi, one of the forms of the goddess Parvati. The Temple is believed to be one of the three most sacred places of Shakti worship in India.",
+    "imageUrl": "https://upload.wikimedia.org/wikipedia/commons/6/6b/Brihadeeswarar_Temple_Thanjavur.jpg",
+    "lat": 12.8407,
+    "lng": 79.7032,
+    "crowdLevel": "High",
+    "darshanTimings": "5:30 AM - 12:30 PM, 4:00 PM - 9:00 PM",
+    "deity": "Goddess Kamakshi (Parvati)",
+    "tags": [
+      "shakti peeth",
+      "shakta"
+    ],
+    "estimatedCost": 1800,
+    "estimatedDays": 1,
+    "featuredOrder": 41
+  },
+  {
+    "id": 106,
+    "name": "Kamakhya Temple (తెలుగు)",
+    "location": "Guwahati, Assam",
+    "history": "A major Shakti Peeth, this temple is dedicated to the Goddess Kamakhya. It is one of the oldest of the 51 Shakti Peeths. The temple is unique as it worships the yoni (vulva) of the Goddess, symbolized by a rock with a natural spring flowing over it.",
+    "imageUrl": "https://upload.wikimedia.org/wikipedia/commons/6/6b/Brihadeeswarar_Temple_Thanjavur.jpg",
+    "lat": 26.1661,
+    "lng": 91.7055,
+    "crowdLevel": "Very High",
+    "darshanTimings": "8 AM - 1 PM, 2:30 PM - 5:30 PM",
+    "deity": "Goddess Sati (Kamakhya)",
+    "tags": [
+      "shakti peeth",
+      "shakta"
+    ],
+    "estimatedCost": 3500,
+    "estimatedDays": 2,
+    "featuredOrder": 19
+  },
+  {
+    "id": 125,
+    "name": "Kanchi Kamakoti Peetham (తెలుగు)",
+    "location": "Kanchipuram, Tamil Nadu",
+    "history": "One of the five Pancha Bootha Sthalams, established by Adi Shankaracharya. This Mutt is dedicated to the Advaita Vedanta tradition and has had an unbroken lineage of pontiffs.",
+    "imageUrl": "https://upload.wikimedia.org/wikipedia/commons/6/6b/Brihadeeswarar_Temple_Thanjavur.jpg",
+    "lat": 12.839,
+    "lng": 79.703,
+    "crowdLevel": "Medium",
+    "darshanTimings": "8 AM - 12 PM, 4 PM - 8 PM",
+    "deity": "Adi Shankaracharya",
+    "tags": [
+      "shankar mutt",
+      "other_major"
+    ],
+    "estimatedCost": 1800,
+    "estimatedDays": 1,
+    "featuredOrder": 34
+  },
+  {
+    "id": 4,
+    "name": "Kashi Vishwanath Temple (తెలుగు)",
+    "location": "Varanasi, Uttar Pradesh",
+    "history": "The Kashi Vishwanath Temple, located on the western bank of the holy Ganga in Varanasi, is a cornerstone of Hindu spirituality. As one of the twelve Jyotirlingas, it is an exceptionally powerful site dedicated to Lord Shiva, known here as Vishvanatha, the 'Ruler of the Universe'. The temple complex has been rebuilt multiple times through history, with the current structure dating back to the 18th century, featuring its famous gold-plated spires.",
+    "imageUrl": "https://upload.wikimedia.org/wikipedia/commons/2/29/Kashi_Vishwanath_Temple_Banaras.jpg",
+    "lat": 25.3109,
+    "lng": 83.0104,
+    "crowdLevel": "Very High",
+    "darshanTimings": "3 AM - 11 PM",
+    "deity": "Lord Shiva",
+    "tags": [
+      "jyotirlinga",
+      "shakti peeth",
+      "shiva",
+      "shakta"
+    ],
+    "estimatedCost": 1500,
+    "estimatedDays": 2,
+    "circuitOrder": {
+      "jyotirlinga": 9
+    },
+    "featuredOrder": 3
+  },
+  {
+    "id": 10,
+    "name": "Kedarnath Temple (తెలుగు)",
+    "location": "Kedarnath, Uttarakhand",
+    "history": "Nestled in the Garhwal Himalayas, Kedarnath is one of the most revered Jyotirlingas and a part of the Chota Char Dham Yatra. The temple is believed to have been built by the Pandavas and revived by Adi Shankaracharya. It is accessible only for six months a year due to extreme weather conditions.",
+    "imageUrl": "https://upload.wikimedia.org/wikipedia/commons/2/29/Kashi_Vishwanath_Temple_Banaras.jpg",
+    "lat": 30.7352,
+    "lng": 79.0669,
+    "crowdLevel": "Very High",
+    "darshanTimings": "4 AM - 9 PM (Seasonal: Apr-Nov)",
+    "deity": "Lord Shiva",
+    "tags": [
+      "jyotirlinga",
+      "himalayan char dham",
+      "shiva"
+    ],
+    "estimatedCost": 5500,
+    "estimatedDays": 4,
+    "circuitOrder": {
+      "jyotirlinga": 11,
+      "himalayan_char_dham": 3
+    },
+    "featuredOrder": 8
+  },
+  {
+    "id": 127,
+    "name": "Konark Sun Temple (తెలుగు)",
+    "location": "Konark, Odisha",
+    "history": "A 13th-century CE sun temple, attributed to king Narasimhadeva I. It is a monumental representation of the sun god Surya's chariot; its 24 wheels are decorated with symbolic designs and it is led by a team of six horses. A UNESCO World Heritage site.",
+    "imageUrl": "https://upload.wikimedia.org/wikipedia/commons/6/6b/Brihadeeswarar_Temple_Thanjavur.jpg",
+    "lat": 19.8876,
+    "lng": 86.0945,
+    "crowdLevel": "High",
+    "darshanTimings": "6 AM - 8 PM",
+    "deity": "Surya (Sun God)",
+    "tags": [
+      "unesco",
+      "other_major"
+    ],
+    "estimatedCost": 2200,
+    "estimatedDays": 1,
+    "featuredOrder": 43
+  },
+  {
+    "id": 115,
+    "name": "Krishna Janmabhoomi (తెలుగు)",
+    "location": "Mathura, Uttar Pradesh",
+    "history": "The site is believed to be the birthplace of Lord Krishna. The temple complex includes the Keshavdeva temple, the Garbha Griha shrine and the Bhagavata Bhavan. It's a highly revered pilgrimage site for Vaishnavas.",
+    "imageUrl": "https://upload.wikimedia.org/wikipedia/commons/6/6b/Brihadeeswarar_Temple_Thanjavur.jpg",
+    "lat": 27.483,
+    "lng": 77.683,
+    "crowdLevel": "Very High",
+    "darshanTimings": "5 AM - 12 PM, 4 PM - 9:30 PM",
+    "deity": "Lord Krishna",
+    "tags": [
+      "krishna",
+      "vishnu",
+      "vaishnava"
+    ],
+    "estimatedCost": 1500,
+    "estimatedDays": 1,
+    "featuredOrder": 22
+  },
+  {
+    "id": 1,
+    "name": "తిరుమల శ్రీ వేంకటేశ్వరస్వామి వారి దేవస్థానం",
+    "location": "తిరుపతి, ఆంధ్రప్రదేశ్",
+    "history": "శ్రీ వేంకటేశ్వర స్వామి దేవాలయం భారతదేశంలోని ఆంధ్రప్రదేశ్‌లోని తిరుపతి జిల్లా తిరుపతి వద్ద తిరుమల కొండలలో ఉన్న ఒక ప్రసిద్ధ హిందూ దేవాలయం. ఇది కలియుగంలోని కష్టాల నుండి మానవాళిని రక్షించడానికి ఉద్భవించిన విష్ణు రూపమైన వేంకటేశ్వరునికి అంకితం చేయబడింది.",
+    "imageUrl": "https://upload.wikimedia.org/wikipedia/commons/6/6b/Brihadeeswarar_Temple_Thanjavur.jpg",
+    "lat": 23.1813,
+    "lng": 75.7663,
+    "crowdLevel": "Very High",
+    "darshanTimings": "ఉదయం 3:00 - ఉదయం 1:30",
+    "deity": "శ్రీ వేంకటేశ్వర స్వామి",
+    "tags": [
+      "jyotirlinga",
+      "shakti peeth",
+      "shiva",
+      "shakta"
+    ],
+    "estimatedCost": 1200,
+    "estimatedDays": 1,
+    "circuitOrder": {
+      "jyotirlinga": 3
+    },
+    "featuredOrder": 1
+  },
+  {
+    "id": 7,
+    "name": "Mallikarjuna Temple (తెలుగు)",
+    "location": "Srisailam, Andhra Pradesh",
+    "history": "Situated on the banks of the Krishna River, Mallikarjuna is unique as it is both a Jyotirlinga and a Shakti Peeth. Lord Shiva is worshipped as Mallikarjuna, and his consort Goddess Parvati is revered as Brahmaramba. The temple is located on a hill in the dense Nallamala Forest.",
+    "imageUrl": "https://upload.wikimedia.org/wikipedia/commons/6/6b/Brihadeeswarar_Temple_Thanjavur.jpg",
+    "lat": 16.074,
+    "lng": 78.868,
+    "crowdLevel": "High",
+    "darshanTimings": "4:30 AM - 10 PM",
+    "deity": "Lord Shiva & Goddess Parvati",
+    "tags": [
+      "jyotirlinga",
+      "shakti peeth",
+      "shiva",
+      "shakta"
+    ],
+    "estimatedCost": 3000,
+    "estimatedDays": 2,
+    "circuitOrder": {
+      "jyotirlinga": 2
+    },
+    "featuredOrder": 7
+  },
+  {
+    "id": 116,
+    "name": "Meenakshi Amman Temple (తెలుగు)",
+    "location": "Madurai, Tamil Nadu",
+    "history": "An historic Hindu temple located on the southern bank of the Vaigai River in Madurai. It is dedicated to Parvati, known as Meenakshi, and her consort, Shiva, here named Sundareswarar. The temple is famed for its 14 gopurams (gateway towers), painted with bright colors and intricate carvings.",
+    "imageUrl": "https://upload.wikimedia.org/wikipedia/commons/2/25/Madurai_Meenakshi_Amman_Temple_South_Tower.jpg",
+    "lat": 9.919,
+    "lng": 78.119,
+    "crowdLevel": "Very High",
+    "darshanTimings": "5 AM - 12:30 PM, 4 PM - 10 PM",
+    "deity": "Goddess Meenakshi (Parvati) & Lord Sundareswarar (Shiva)",
+    "tags": [
+      "shiva",
+      "shakta"
+    ],
+    "estimatedCost": 2000,
+    "estimatedDays": 1,
+    "featuredOrder": 23
+  },
+  {
+    "id": 9,
+    "name": "Nageshwar Temple (తెలుగు)",
+    "location": "Dwarka, Gujarat",
+    "history": "Nageshwar Temple is one of the 12 Jyotirlinga shrines mentioned in the Shiva Purana. The temple houses the Nageshwar Jyotirlinga, which is believed to protect devotees from all types of poisons. A large 25-meter tall statue of a seated Lord Shiva is a major attraction of the temple complex.",
+    "imageUrl": "https://upload.wikimedia.org/wikipedia/commons/6/6b/Brihadeeswarar_Temple_Thanjavur.jpg",
+    "lat": 22.3358,
+    "lng": 69.085,
+    "crowdLevel": "Medium",
+    "darshanTimings": "6 AM - 12:30 PM, 5 PM - 9:30 PM",
+    "deity": "Lord Shiva",
+    "tags": [
+      "jyotirlinga",
+      "shiva"
+    ],
+    "estimatedCost": 2500,
+    "estimatedDays": 1,
+    "circuitOrder": {
+      "jyotirlinga": 10
+    },
+    "featuredOrder": 13
+  },
+  {
+    "id": 5,
+    "name": "Omkareshwar Temple (తెలుగు)",
+    "location": "Khandwa, Madhya Pradesh",
+    "history": "Located on an island called Mandhata in the Narmada river, the shape of the island is said to be like the Hindu 'ॐ' symbol. This Jyotirlinga shrine is split, with Omkareshwar on one side of the island and Mamleshwar on the other bank of the Narmada.",
+    "imageUrl": "https://upload.wikimedia.org/wikipedia/commons/6/6b/Brihadeeswarar_Temple_Thanjavur.jpg",
+    "lat": 22.2476,
+    "lng": 76.148,
+    "crowdLevel": "High",
+    "darshanTimings": "5 AM - 9:30 PM",
+    "deity": "Lord Shiva",
+    "tags": [
+      "jyotirlinga",
+      "shiva"
+    ],
+    "estimatedCost": 1500,
+    "estimatedDays": 1,
+    "circuitOrder": {
+      "jyotirlinga": 4
+    },
+    "featuredOrder": 9
+  },
+  {
+    "id": 117,
+    "name": "Padmanabhaswamy Temple (తెలుగు)",
+    "location": "Thiruvananthapuram, Kerala",
+    "history": "A magnificent temple with a blend of Chera and Dravidian styles of architecture. It is dedicated to Lord Vishnu, who is enshrined in the 'Anantha Shayanam' posture, the eternal yogic sleep on the serpent Adisheshan. The temple is famous for the vast treasures discovered in its subterranean vaults.",
+    "imageUrl": "https://upload.wikimedia.org/wikipedia/commons/6/6b/Brihadeeswarar_Temple_Thanjavur.jpg",
+    "lat": 8.483,
+    "lng": 76.943,
+    "crowdLevel": "High",
+    "darshanTimings": "3:30 AM - 12 PM, 5 PM - 8:30 PM (Timings vary)",
+    "deity": "Lord Vishnu",
+    "tags": [
+      "vishnu",
+      "kerala",
+      "vaishnava"
+    ],
+    "estimatedCost": 2200,
+    "estimatedDays": 1,
+    "featuredOrder": 24
+  },
+  {
+    "id": 124,
+    "name": "Pashupatinath Temple (తెలుగు)",
+    "location": "Kathmandu, Nepal",
+    "history": "One of the 18 Maha Shakti Peeths, where the knees of Goddess Sati fell. It's a sprawling complex of temples, ashrams, images and inscriptions raised over the centuries along the banks of the sacred Bagmati river. A UNESCO World Heritage Site.",
+    "imageUrl": "https://upload.wikimedia.org/wikipedia/commons/6/6b/Brihadeeswarar_Temple_Thanjavur.jpg",
+    "lat": 27.71,
+    "lng": 85.348,
+    "crowdLevel": "High",
+    "darshanTimings": "4 AM - 9 PM",
+    "deity": "Goddess Sati (Guhyeshwari) & Lord Shiva",
+    "tags": [
+      "shakti peeth",
+      "maha shakti peeth",
+      "unesco",
+      "shakta",
+      "shiva"
+    ],
+    "estimatedCost": 6000,
+    "estimatedDays": 3,
+    "featuredOrder": 44
+  },
+  {
+    "id": 118,
+    "name": "Prem Mandir (తెలుగు)",
+    "location": "Vrindavan, Uttar Pradesh",
+    "history": "A modern spiritual complex dedicated to Radha Krishna and Sita Ram. Established by Jagadguru Kripalu Parishat, this temple is an architectural marvel made of Italian marble, showcasing the life of Krishna through intricate carvings and dioramas.",
+    "imageUrl": "https://upload.wikimedia.org/wikipedia/commons/6/6b/Brihadeeswarar_Temple_Thanjavur.jpg",
+    "lat": 27.561,
+    "lng": 77.67,
+    "crowdLevel": "Very High",
+    "darshanTimings": "8:30 AM - 12 PM, 4:30 PM - 8:30 PM",
+    "deity": "Radha Krishna, Sita Ram",
+    "tags": [
+      "krishna",
+      "vishnu",
+      "modern",
+      "vaishnava"
+    ],
+    "estimatedCost": 1600,
+    "estimatedDays": 1,
+    "featuredOrder": 25
+  },
+  {
+    "id": 120,
+    "name": "Ramanathaswamy Temple (తెలుగు)",
+    "location": "Rameswaram, Tamil Nadu",
+    "history": "This temple is significant as Lord Rama is believed to have prayed to Lord Shiva here to absolve any sins he might have committed during his war against the demon-king Ravana in Sri Lanka. It is a key site in the Char Dham pilgrimage. The temple is famous for its magnificent corridors, which are the longest among all Hindu temples in India.",
+    "imageUrl": "https://upload.wikimedia.org/wikipedia/commons/6/6b/Brihadeeswarar_Temple_Thanjavur.jpg",
+    "lat": 9.2881,
+    "lng": 79.3174,
+    "crowdLevel": "Very High",
+    "darshanTimings": "5 AM - 1 PM, 3 PM - 9 PM",
+    "deity": "Lord Shiva",
+    "tags": [
+      "char dham",
+      "jyotirlinga",
+      "shiva"
+    ],
+    "circuitOrder": {
+      "char_dham": 2,
+      "jyotirlinga": 8
+    },
+    "estimatedCost": 2800,
+    "estimatedDays": 2,
+    "featuredOrder": 4
+  },
+  {
+    "id": 11,
+    "name": "Rameswaram Temple (తెలుగు)",
+    "location": "Rameswaram, Tamil Nadu",
+    "history": "Located on Rameswaram island, this Jyotirlinga is closely associated with the Ramayana. It is believed that Lord Rama worshipped Shiva here to atone for the sin of killing Ravana, a Brahmin. The temple is renowned for its magnificent corridors and 22 holy water tanks (tirthas).",
+    "imageUrl": "https://upload.wikimedia.org/wikipedia/commons/6/6b/Brihadeeswarar_Temple_Thanjavur.jpg",
+    "lat": 9.2881,
+    "lng": 79.3174,
+    "crowdLevel": "Very High",
+    "darshanTimings": "5 AM - 1 PM, 3 PM - 9 PM",
+    "deity": "Lord Shiva",
+    "tags": [
+      "jyotirlinga",
+      "char dham",
+      "shiva"
+    ],
+    "estimatedCost": 2800,
+    "estimatedDays": 2,
+    "circuitOrder": {
+      "jyotirlinga": 8
+    },
+    "featuredOrder": 12
+  },
+  {
+    "id": 128,
+    "name": "Ranakpur Jain Temple (తెలుగు)",
+    "location": "Ranakpur, Rajasthan",
+    "history": "A stunning temple dedicated to Tirthankara Rishabhanatha. It is one of the most important pilgrimage sites of Jainism. The temple is known for its intricate carvings and 1,444 marble pillars, each carved differently.",
+    "imageUrl": "https://upload.wikimedia.org/wikipedia/commons/6/6b/Brihadeeswarar_Temple_Thanjavur.jpg",
+    "lat": 25.115,
+    "lng": 73.468,
+    "crowdLevel": "Medium",
+    "darshanTimings": "12 PM - 5 PM for tourists",
+    "deity": "Adinath (Rishabhanatha)",
+    "tags": [
+      "jain",
+      "other_major"
+    ],
+    "estimatedCost": 2500,
+    "estimatedDays": 1,
+    "featuredOrder": 48
+  },
+  {
+    "id": 119,
+    "name": "Shankari Devi Temple (తెలుగు)",
+    "location": "Trincomalee, Sri Lanka",
+    "history": "One of the 18 Maha Shakti Peeths, located in the port city of Trincomalee. The original temple was destroyed by the Portuguese in the 17th century, but it has since been restored. It is where the groin of Sati is believed to have fallen.",
+    "imageUrl": "https://upload.wikimedia.org/wikipedia/commons/6/6b/Brihadeeswarar_Temple_Thanjavur.jpg",
+    "lat": 8.5833,
+    "lng": 81.2333,
+    "crowdLevel": "Medium",
+    "darshanTimings": "6 AM - 7 PM",
+    "deity": "Goddess Sati (Shankari)",
+    "tags": [
+      "shakti peeth",
+      "maha shakti peeth",
+      "shakta"
+    ],
+    "estimatedCost": 12000,
+    "estimatedDays": 5,
+    "featuredOrder": 47
+  },
+  {
+    "id": 2,
+    "name": "కాశీ విశ్వనాథ్ టెంపుల్",
+    "location": "వారణాసి, ఉత్తర ప్రదేశ్",
+    "history": "వారణాసిలోని పవిత్ర గంగా నది పశ్చిమ ఒడ్డున ఉన్న కాశీ విశ్వనాథ్ ఆలయం హిందూ ఆధ్యాత్మికతకు మూలస్థంభం. ఇక్కడ ప్రతిష్ఠించబడిన జ్యోతిర్లింగం శివుని పరమ రూపం.",
+    "imageUrl": "https://upload.wikimedia.org/wikipedia/commons/2/29/Kashi_Vishwanath_Temple_Banaras.jpg",
+    "lat": 20.888,
+    "lng": 70.4013,
+    "crowdLevel": "Very High",
+    "darshanTimings": "నిరంతరం",
+    "deity": "శివుడు",
+    "tags": [
+      "jyotirlinga",
+      "shiva"
+    ],
+    "estimatedCost": 2500,
+    "estimatedDays": 1,
+    "circuitOrder": {
+      "jyotirlinga": 1
+    },
+    "featuredOrder": 2
+  },
+  {
+    "id": 136,
+    "name": "Srikalahasti Temple (తెలుగు)",
+    "location": "Srikalahasti, Andhra Pradesh",
+    "history": "Representing the element of Air (Vayu Lingam), this temple is famous for its Vayu linga, which is one of the Panchabhoota Sthalams. An interesting feature is a lamp inside the inner sanctum that constantly flickers despite the lack of air movement.",
+    "imageUrl": "https://upload.wikimedia.org/wikipedia/commons/6/6b/Brihadeeswarar_Temple_Thanjavur.jpg",
+    "lat": 13.759,
+    "lng": 79.697,
+    "crowdLevel": "High",
+    "darshanTimings": "6:00 AM - 9:00 PM",
+    "deity": "Lord Shiva",
+    "tags": [
+      "panchabhoota",
+      "shiva"
+    ],
+    "estimatedCost": 2600,
+    "estimatedDays": 1,
+    "circuitOrder": {
+      "panchabhoota": 4
+    },
+    "featuredOrder": 29
+  },
+  {
+    "id": 137,
+    "name": "Thillai Nataraja Temple, Chidambaram (తెలుగు)",
+    "location": "Chidambaram, Tamil Nadu",
+    "history": "Representing the element of Ether/Sky (Akasha Lingam), this temple is dedicated to Shiva as the cosmic dancer, Nataraja. The sanctum is unique, representing the 'Chidambara Rahasyam' (Secret of Chidambaram), which signifies formless worship.",
+    "imageUrl": "https://upload.wikimedia.org/wikipedia/commons/6/6b/Brihadeeswarar_Temple_Thanjavur.jpg",
+    "lat": 11.399,
+    "lng": 79.695,
+    "crowdLevel": "High",
+    "darshanTimings": "6:00 AM - 12:30 PM, 4:30 PM - 10:00 PM",
+    "deity": "Lord Shiva (Nataraja)",
+    "tags": [
+      "panchabhoota",
+      "shiva"
+    ],
+    "estimatedCost": 2300,
+    "estimatedDays": 1,
+    "circuitOrder": {
+      "panchabhoota": 5
+    },
+    "featuredOrder": 30
+  },
+  {
+    "id": 8,
+    "name": "Trimbakeshwar Temple (తెలుగు)",
+    "location": "Trimbak, Maharashtra",
+    "history": "Located at the source of the Godavari river, Trimbakeshwar is unique because its Jyotirlinga has three faces embodying Lord Brahma, Lord Vishnu, and Lord Shiva. The linga is in a depression on the floor of the sanctum and is constantly bathed by water flowing from the Godavari.",
+    "imageUrl": "https://upload.wikimedia.org/wikipedia/commons/6/6b/Brihadeeswarar_Temple_Thanjavur.jpg",
+    "lat": 19.9348,
+    "lng": 73.5325,
+    "crowdLevel": "Very High",
+    "darshanTimings": "5:30 AM - 9 PM",
+    "deity": "Lord Shiva, Brahma, Vishnu",
+    "tags": [
+      "jyotirlinga",
+      "shiva"
+    ],
+    "estimatedCost": 1800,
+    "estimatedDays": 1,
+    "circuitOrder": {
+      "jyotirlinga": 7
+    },
+    "featuredOrder": 11
+  },
+  {
+    "id": 129,
+    "name": "Vaishno Devi Temple (తెలుగు)",
+    "location": "Katra, Jammu and Kashmir",
+    "history": "A temple dedicated to the Hindu Goddess, located in the Trikuta Mountains. The shrine is located in a cave and the Goddess is symbolized in the form of three natural rock formations, the Pindies. It is one of the most visited pilgrimage sites in India.",
+    "imageUrl": "https://upload.wikimedia.org/wikipedia/commons/6/6b/Brihadeeswarar_Temple_Thanjavur.jpg",
+    "lat": 33.029,
+    "lng": 74.948,
+    "crowdLevel": "Very High",
+    "darshanTimings": "Open 24 Hours",
+    "deity": "Goddess Vaishno Devi",
+    "tags": [
+      "shakti peeth",
+      "cave",
+      "shakta"
+    ],
+    "estimatedCost": 3500,
+    "estimatedDays": 3,
+    "featuredOrder": 16
+  },
+  {
+    "id": 3,
+    "name": "Vaidyanath Temple (తెలుగు)",
+    "location": "Deoghar, Jharkhand",
+    "history": "Vaidyanath Jyotirlinga temple, also known as Baba Baidyanath Dham, is one of the twelve Jyotirlingas. It is also a Shakti Peeth, where the heart of Sati fell, making it a place of dual reverence. Devotees carry water from the Ganges to offer to the lingam, a pilgrimage known as the Kanwar Yatra.",
+    "imageUrl": "https://upload.wikimedia.org/wikipedia/commons/6/6b/Brihadeeswarar_Temple_Thanjavur.jpg",
+    "lat": 24.4925,
+    "lng": 86.6967,
+    "crowdLevel": "Very High",
+    "darshanTimings": "4 AM - 9 PM",
+    "deity": "Lord Shiva",
+    "tags": [
+      "jyotirlinga",
+      "shakti peeth",
+      "shiva",
+      "shakta"
+    ],
+    "estimatedCost": 2200,
+    "estimatedDays": 2,
+    "circuitOrder": {
+      "jyotirlinga": 5
+    },
+    "featuredOrder": 10
+  },
+  {
+    "id": 130,
+    "name": "Vindhyachal Temple (తెలుగు)",
+    "location": "Mirzapur, Uttar Pradesh",
+    "history": "Vindhyavasini Devi Temple is a major Hindu pilgrimage site, considered a Shakti Peeth. The goddess is worshipped in the form of Vindhyavasini, who is believed to be the instant bestower of benediction.",
+    "imageUrl": "https://upload.wikimedia.org/wikipedia/commons/6/6b/Brihadeeswarar_Temple_Thanjavur.jpg",
+    "lat": 25.166,
+    "lng": 82.502,
+    "crowdLevel": "High",
+    "darshanTimings": "5 AM - 9:30 PM",
+    "deity": "Goddess Yogamaya (Vindhyavasini)",
+    "tags": [
+      "shakti peeth",
+      "shakta"
+    ],
+    "estimatedCost": 1800,
+    "estimatedDays": 1,
+    "featuredOrder": 49
+  },
+  {
+    "id": 140,
+    "name": "Yamunotri Temple (తెలుగు)",
+    "location": "Uttarkashi, Uttarakhand",
+    "history": "Situated in the western region of Garhwal Himalayas, this temple is dedicated to the Goddess Yamuna and marks the source of the Yamuna River. It is the first pilgrimage stop in the Himalayan Char Dham circuit.",
+    "imageUrl": "https://upload.wikimedia.org/wikipedia/commons/6/6b/Brihadeeswarar_Temple_Thanjavur.jpg",
+    "lat": 31.013,
+    "lng": 78.459,
+    "crowdLevel": "High",
+    "darshanTimings": "6 AM - 8 PM (Seasonal: Apr-Nov)",
+    "deity": "Goddess Yamuna",
+    "tags": [
+      "himalayan char dham",
+      "shakta"
+    ],
+    "estimatedCost": 4000,
+    "estimatedDays": 2,
+    "circuitOrder": {
+      "himalayan_char_dham": 1
+    },
+    "featuredOrder": 17
+  },
+  {
+    "id": 151,
+    "name": "శ్రీ కాళహస్తి దేవస్థానం",
+    "location": "శ్రీకాళహస్తి, ఆంధ్రప్రదేశ్",
+    "history": "దక్షిణ కైలాసంగా పిలువబడే శ్రీకాళహస్తి దేవస్థానం దక్షిణ భారతదేశంలోని అత్యంత ప్రసిద్ధ శివాలయాలలో ఒకటి. ఇది వాయు లింగానికి ప్రసిద్ధి చెందింది. తిరుపతిని సందర్శించే వారికి ఇది అద్భుతమైన అనుభూతిని ఇస్తుంది.",
+    "imageUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/c/ca/Srikalahasti_temple.jpg/1024px-Srikalahasti_temple.jpg",
+    "lat": 13.7505,
+    "lng": 79.697,
+    "crowdLevel": "Medium",
+    "darshanTimings": "ఉదయం 6:00 - రాత్రి 9:00",
+    "deity": "శివుడు",
+    "tags": [
+      "shiva",
+      "jyotirlinga_alternative",
+      "vayu_linga"
+    ],
+    "estimatedCost": 500,
+    "estimatedDays": 1
+  },
+  {
+    "id": 152,
+    "name": "యాదగిరిగుట్ట దేవస్థానం",
+    "location": "యాదాద్రి భువనగిరి, తెలంగాణ",
+    "history": "యాదాద్రిగా ప్రసిద్ధి చెందిన శ్రీ లక్ష్మీ నరసింహ స్వామి దేవాలయం, నరసింహ స్వామికి అంకితం చేయబడిన అత్యంత పవిత్రమైన గుహాలయం.",
+    "imageUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/8/86/Yadagirigutta_Temple.jpg/800px-Yadagirigutta_Temple.jpg",
+    "lat": 17.5873,
+    "lng": 78.9379,
+    "crowdLevel": "High",
+    "darshanTimings": "ఉదయం 4:00 - రాత్రి 9:30",
+    "deity": "లక్ష్మీ నరసింహ స్వామి",
+    "tags": [
+      "vishnu",
+      "narasimha",
+      "renovated"
+    ],
+    "estimatedCost": 400,
+    "estimatedDays": 1
+  },
+  {
+    "id": 153,
+    "name": "భద్రాచలం దేవస్థానం",
+    "location": "భద్రాచలం, తెలంగాణ",
+    "history": "గోదావరి నది ఒడ్డున ఉన్న శ్రీ సీతా రామచంద్రస్వామి ఆలయం భారతదేశంలోని అత్యంత ముఖ్యమైన రామాలయాలలో ఒకటి. ప్రశాంతమైన నదీతీర వాతావరణం అద్భుతమైన ఆధ్యాత్మిక అనుభూతిని అందిస్తుంది.",
+    "imageUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/4/4c/Bhadrachalam_Temple.jpg/800px-Bhadrachalam_Temple.jpg",
+    "lat": 17.6689,
+    "lng": 80.8936,
+    "crowdLevel": "Low",
+    "darshanTimings": "ఉదయం 4:30 - రాత్రి 8:30",
+    "deity": "సీతా రామచంద్రస్వామి",
+    "tags": [
+      "rama",
+      "river",
+      "peaceful"
+    ],
+    "estimatedCost": 300,
+    "estimatedDays": 1
+  },
+  {
+    "id": 154,
+    "name": "జ్ఞాన సరస్వతీ దేవస్థానం, బాసర",
+    "location": "బాసర, తెలంగాణ",
+    "region": "Telangana",
+    "history": "జ్ఞానం, సంగీతం మరియు కళలకు అధిదేవత అయిన సరస్వతీ దేవికి అంకితం చేయబడిన అతికొద్ది దేవాలయాలలో ఒకటి. అక్షరాభ్యాసం చేయడానికి ఇది సరైన ప్రదేశం.",
+    "imageUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/7/70/Basar_Saraswathi_Temple.jpg/800px-Basar_Saraswathi_Temple.jpg",
+    "lat": 18.8833,
+    "lng": 77.95,
+    "crowdLevel": "Medium",
+    "darshanTimings": "ఉదయం 4:00 - రాత్రి 8:00",
+    "deity": "సరస్వతీ దేవి",
+    "tags": [
+      "saraswati",
+      "knowledge",
+      "aksharabhyasam"
+    ],
+    "estimatedCost": 200,
+    "estimatedDays": 1
+  },
+  {
+    "id": 155,
+    "name": "కర్మన్‌ఘాట్ హనుమాన్ దేవాలయం",
+    "location": "హైదరాబాద్, తెలంగాణ",
+    "region": "Telangana",
+    "history": "సా.శ. 12వ శతాబ్దంలో నిర్మించబడిన ఈ చారిత్రక ఆలయం హైదరాబాద్ నడిబొడ్డున అసాధారణమైన ప్రశాంతతను మరియు ఆధ్యాత్మిక శక్తిని అందిస్తుంది.",
+    "imageUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/e/e0/Karmanghat_Hanuman_Temple.jpg/800px-Karmanghat_Hanuman_Temple.jpg",
+    "lat": 17.3486,
+    "lng": 78.5342,
+    "crowdLevel": "Medium",
+    "darshanTimings": "ఉదయం 6:00 - ఉదయం 12:00, సాయంత్రం 4:00 - రాత్రి 8:00",
+    "deity": "హనుమంతుడు",
+    "tags": [
+      "hanuman",
+      "historical",
+      "city"
+    ],
+    "estimatedCost": 100,
+    "estimatedDays": 1
+  },
+  {
+    "id": 156,
+    "name": "అన్నవరం సత్యనారాయణ స్వామి దేవస్థానం",
+    "location": "అన్నవరం, ఆంధ్రప్రదేశ్",
+    "history": "రత్నగిరి కొండపై ఉన్న ఈ ఆలయం శ్రీ వీర వేంకట సత్యనారాయణ స్వామికి అంకితం చేయబడింది.",
+    "imageUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/1/1d/Annavaram_Temple_View.jpg/800px-Annavaram_Temple_View.jpg",
+    "lat": 17.2833,
+    "lng": 82.3833,
+    "crowdLevel": "High",
+    "darshanTimings": "ఉదయం 6:00 - రాత్రి 9:00",
+    "deity": "సత్యనారాయణ స్వామి",
+    "tags": [
+      "vishnu",
+      "hill",
+      "satyanarayana_vrata"
+    ],
+    "estimatedCost": 500,
+    "estimatedDays": 1
+  },
+  {
+    "id": 157,
+    "name": "సింహాచలం దేవస్థానం",
+    "location": "విశాఖపట్నం, ఆంధ్రప్రదేశ్",
+    "history": "వరాహ లక్ష్మీ నరసింహ దేవాలయం సింహాచలం కొండపై ఉన్న ఒక అద్భుతమైన 11వ శతాబ్దపు మందిరం. స్వామివారు సంవత్సరం పొడవునా చందనం లేపనంతో కప్పబడి ఉంటారు.",
+    "imageUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/9/91/Simhachalam_Temple.jpg/800px-Simhachalam_Temple.jpg",
+    "lat": 17.7665,
+    "lng": 83.2505,
+    "crowdLevel": "Medium",
+    "darshanTimings": "ఉదయం 4:00 - రాత్రి 9:00",
+    "deity": "వరాహ లక్ష్మీ నరసింహ",
+    "tags": [
+      "vishnu",
+      "narasimha",
+      "hill"
+    ],
+    "estimatedCost": 350,
+    "estimatedDays": 1
+  },
+  {
+    "id": 500,
+    "name": "వేములవాడ రాజరాజేశ్వర స్వామి దేవాలయం",
+    "location": "వేములవాడ, తెలంగాణ",
+    "region": "Telangana",
+    "history": " 'దక్షిణ కాశీ'గా పిలువబడే ఈ పురాతన శివాలయం, భక్తులు మొక్కుబడిగా కోడెను కట్టే (కోడె మొక్కు) విలక్షణమైన సంప్రదాయానికి ప్రసిద్ధి చెందింది. ఇది చాళుక్యుల గొప్ప నిర్మాణ వారసత్వాన్ని ప్రతిబింబించే ఒక ముఖ్యమైన పుణ్యక్షేత్రం.",
+    "imageUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/c/c5/Vemulawada_Temple.jpg/800px-Vemulawada_Temple.jpg",
+    "lat": 18.4633,
+    "lng": 78.8711,
+    "crowdLevel": "High",
+    "darshanTimings": "ఉదయం 4:00 - రాత్రి 9:00",
+    "deity": "శ్రీ రాజరాజేశ్వర స్వామి",
+    "tags": [
+      "shiva",
+      "chalukya",
+      "historical",
+      "telangana"
+    ],
+    "estimatedCost": 500,
+    "estimatedDays": 1
+  },
+  {
+    "id": 501,
+    "name": "రామప్ప దేవాలయం",
+    "location": "పాలంపేట, తెలంగాణ",
+    "region": "Telangana",
+    "history": "యునెస్కో ప్రపంచ వారసత్వ ప్రదేశమైన రామప్ప దేవాలయం కాకతీయ యుగపు నిర్మాణ అద్భుతం. దీని శిల్పి రామప్ప పేరు మీదుగా పిలువబడే ఈ ఆలయం, 'నీటిపై తేలే ఇటుకలు', సున్నితమైన శిల్పకళ మరియు ప్రతి కోణం నుండి మిమ్మల్ని చూస్తున్నట్లుగా అనిపించే భారీ నంది విగ్రహానికి ప్రసిద్ధి చెందింది.",
+    "imageUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/a/a2/Ramappa_Temple_Main.jpg/800px-Ramappa_Temple_Main.jpg",
+    "lat": 18.2614,
+    "lng": 79.9431,
+    "crowdLevel": "Medium",
+    "darshanTimings": "ఉదయం 6:00 - సాయంత్రం 6:00",
+    "deity": "రామలింగేశ్వర స్వామి",
+    "tags": [
+      "shiva",
+      "unesco",
+      "kakatiya",
+      "heritage",
+      "telangana"
+    ],
+    "estimatedCost": 600,
+    "estimatedDays": 1
+  },
+  {
+    "id": 502,
+    "name": "వేయి స్తంభాల గుడి",
+    "location": "హన్మకొండ, తెలంగాణ",
+    "region": "Telangana",
+    "history": "క్రీ.శ. 1163లో రుద్రదేవ మహారాజు నిర్మించిన ఈ ఆలయం కాకతీయ నిర్మాణ శైలికి అద్భుత నిదర్శనం. శివుడు, విష్ణువు మరియు సూర్యునికి అంకితం చేయబడిన (త్రికూటాలయం) ఈ ఆలయంలో అద్భుతమైన శిల్పకళతో కూడిన స్తంభాలు మరియు భారీ ఏకశిలా నంది ఉన్నాయి.",
+    "imageUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/2/23/Thousand_Pillar_Temple_Hanamkonda.jpg/800px-Thousand_Pillar_Temple_Hanamkonda.jpg",
+    "lat": 18.0163,
+    "lng": 79.5786,
+    "crowdLevel": "Medium",
+    "darshanTimings": "ఉదయం 6:00 - రాత్రి 8:00",
+    "deity": "శివుడు, విష్ణువు, సూర్యుడు",
+    "tags": [
+      "shiva",
+      "vishnu",
+      "surya",
+      "kakatiya",
+      "historical",
+      "telangana"
+    ],
+    "estimatedCost": 300,
+    "estimatedDays": 1
+  },
+  {
+    "id": 503,
+    "name": "కీసరగుట్ట దేవాలయం",
+    "location": "కీసర, తెలంగాణ",
+    "region": "Telangana",
+    "history": "శ్రీ రామలింగేశ్వర స్వామి ఆలయం ఒక కొండపై ఉంది, దీనిని శ్రీరాముడు స్థాపించాడని నమ్ముతారు. ఆలయం చుట్టూ వేలాది శివలింగాలు ఉన్నాయి, ఇది హైదరాబాద్ సమీపంలోని ఒక ప్రత్యేకమైన ఆధ్యాత్మిక ప్రదేశం.",
+    "imageUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/e/e4/Keesaragutta_Temple_Entrance.jpg/800px-Keesaragutta_Temple_Entrance.jpg",
+    "lat": 17.5255,
+    "lng": 78.6758,
+    "crowdLevel": "High",
+    "darshanTimings": "ఉదయం 6:00 - రాత్రి 7:30",
+    "deity": "రామలింగేశ్వర స్వామి",
+    "tags": [
+      "shiva",
+      "rama",
+      "hilltop",
+      "telangana"
+    ],
+    "estimatedCost": 400,
+    "estimatedDays": 1
+  },
+  {
+    "id": 504,
+    "name": "బిర్లా మందిరం",
+    "location": "హైదరాబాద్, తెలంగాణ",
+    "region": "Telangana",
+    "history": "280 అడుగుల ఎత్తైన నౌబత్ పహాడ్ కొండపై నిర్మించబడిన ఈ అద్భుతమైన తెల్లని పాలరాతి ఆలయం వేంకటేశ్వర స్వామికి అంకితం చేయబడింది. ఇది దక్షిణ భారత మరియు రాజస్థానీ నిర్మాణ శైలుల కలయికతో నగరం మరియు హుస్సేన్ సాగర్ సరస్సుల మనోహరమైన దృశ్యాన్ని అందిస్తుంది.",
+    "imageUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/4/4b/Birla_Mandir_Hyderabad_Main.jpg/800px-Birla_Mandir_Hyderabad_Main.jpg",
+    "lat": 17.4062,
+    "lng": 78.4691,
+    "crowdLevel": "Very High",
+    "darshanTimings": "ఉదయం 7:00 - మధ్యాహ్నం 12:00, మధ్యాహ్నం 3:00 - రాత్రి 9:00",
+    "deity": "వేంకటేశ్వర స్వామి",
+    "tags": [
+      "vishnu",
+      "marble",
+      "city-gem",
+      "hilltop",
+      "telangana"
+    ],
+    "estimatedCost": 200,
+    "estimatedDays": 0.5
+  },
+  {
+    "id": 505,
+    "name": "జగన్నాథ దేవాలయం, హైదరాబాద్",
+    "location": "బంజారాహిల్స్, హైదరాబాద్, తెలంగాణ",
+    "region": "Telangana",
+    "history": "ఎర్ర ఇసుక రాయితో నిర్మించబడిన ఈ ఆధునిక నిర్మాణ అద్భుతం, పూరీ జగన్నాథ ఆలయానికి ప్రతిరూపం. ఇది అద్భుతమైన శిల్పకళకు మరియు ప్రతి సంవత్సరం వేలాది మంది భక్తులను ఆకర్షించే వార్షిక రథయాత్రకు ప్రసిద్ధి చెందింది.",
+    "imageUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/c/cd/Jagannath_Temple_Hyderabad.jpg/800px-Jagannath_Temple_Hyderabad.jpg",
+    "lat": 17.419,
+    "lng": 78.435,
+    "crowdLevel": "High",
+    "darshanTimings": "ఉదయం 6:00 - మధ్యాహ్నం 12:00, సాయంత్రం 5:00 - రాత్రి 9:00",
+    "deity": "జగన్నాథ స్వామి",
+    "tags": [
+      "vishnu",
+      "jagannath",
+      "city-gem",
+      "telangana"
+    ],
+    "estimatedCost": 200,
+    "estimatedDays": 0.5
+  },
+  {
+    "id": 506,
+    "name": "బల్కంపేట ఎల్లమ్మ దేవాలయం",
+    "location": "బల్కంపేట, హైదరాబాద్, తెలంగాణ",
+    "region": "Telangana",
+    "history": "హైదరాబాద్‌లోని పురాతన మరియు అత్యంత ప్రజాదరణ పొందిన దేవాలయాలలో ఒకటి, ఇది ఎల్లమ్మ తల్లికి (కాళికా దేవి రూపం) అంకితం చేయబడింది. ఇక్కడి విగ్రహం భూమట్టానికి 10 అడుగుల కింద నీటి బుగ్గలో ఉండటం విశేషం.",
+    "imageUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/3/3a/Balkampet_Yellamma_Temple.jpg/800px-Balkampet_Yellamma_Temple.jpg",
+    "lat": 17.4475,
+    "lng": 78.4485,
+    "crowdLevel": "Very High",
+    "darshanTimings": "ఉదయం 6:00 - మధ్యాహ్నం 1:00, మధ్యాహ్నం 3:00 - రాత్రి 8:30",
+    "deity": "ఎల్లమ్మ తల్లి",
+    "tags": [
+      "shakta",
+      "kali",
+      "city-gem",
+      "ancient",
+      "telangana"
+    ],
+    "estimatedCost": 150,
+    "estimatedDays": 0.5
+  },
+  {
+    "id": 600,
+    "name": "పురాతన శివాలయం (విస్మరించబడినది)",
+    "location": "వరంగల్ రూరల్, తెలంగాణ",
+    "history": "10వ శతాబ్దపు కాకతీయ కాలం నాటి ఆలయం శిధిలావస్థలో కనుగొనబడింది. దీనికి పునర్నిర్మాణం అవసరం.",
+    "imageUrl": "https://images.unsplash.com/photo-1548013146-72479768bbaa?auto=format&fit=crop&q=80&w=800",
+    "lat": 17.9689,
+    "lng": 79.5941,
+    "crowdLevel": "Low",
+    "darshanTimings": "సూర్యోదయం నుండి సూర్యాస్తమయం వరకు",
+    "deity": "శివుడు",
+    "tags": [
+      "restoration",
+      "kakatiya",
+      "shiva"
+    ],
+    "region": "Telangana",
+    "isDestroyed": true,
+    "restorationProgress": 15,
+    "restorationGoal": 500000,
+    "restorationReceived": 75000,
+    "restorationBricks": 2000,
+    "costPerBrick": 250,
+    "sevaCategories": [
+      "గో సేవ",
+      "రిమోట్"
+    ],
+    "estimatedCost": 0,
+    "estimatedDays": 0
+  },
+  {
+    "id": 601,
+    "name": "మరుగున పడిన విష్ణువు కోనేరు",
+    "location": "నల్గొండ, తెలంగాణ",
+    "history": "విష్ణువు అవతారాలతో అలంకరించబడిన పురాతన కోనేరు, ప్రస్తుతం పూడికతో నిండి ఉంది.",
+    "imageUrl": "https://images.unsplash.com/photo-1590050752117-23a9d7fc2ee2?auto=format&fit=crop&q=80&w=800",
+    "lat": 17.0575,
+    "lng": 79.2684,
+    "crowdLevel": "Low",
+    "darshanTimings": "ఎల్లప్పుడూ తెరిచి ఉంటుంది",
+    "deity": "విష్ణువు",
+    "tags": [
+      "restoration",
+      "stepwell",
+      "heritage"
+    ],
+    "region": "Telangana",
+    "isDestroyed": true,
+    "restorationProgress": 5,
+    "restorationGoal": 1200000,
+    "restorationReceived": 60000,
+    "estimatedDays": 0
+  },
+  {
+    "id": 1400,
+    "name": "డిచ్‌పల్లి రామాలయం",
+    "location": "నిజామాబాద్, తెలంగాణ",
+    "region": "Telangana",
+    "history": "ఇందూరు ఖజురహోగా పిలువబడే ఈ 14వ శతాబ్దపు ఆలయం సంక్లిష్టమైన కాకతీయ వాస్తుశిల్పం మరియు రాతి చెక్కడాలకు ప్రసిద్ధి చెందింది.",
+    "imageUrl": "https://upload.wikimedia.org/wikipedia/commons/e/e0/Sri_Rama_Temple%2C_Dichpally%2C_Nizamabad_District.jpg",
+    "lat": 18.6657,
+    "lng": 78.1633,
+    "crowdLevel": "Medium",
+    "darshanTimings": "ఉదయం 06:00 - రాత్రి 08:00",
+    "deity": "శ్రీ రాముడు",
+    "tags": [
+      "rama",
+      "kakatiya",
+      "architecture"
+    ]
+  },
+  {
+    "id": 1401,
+    "name": "శ్రీ నీలకంఠేశ్వర దేవాలయం",
+    "location": "నిజామాబాద్, తెలంగాణ",
+    "region": "Telangana",
+    "history": "శాతవాహన రాజు శాతకర్ణి నిర్మించిన చారిత్రాత్మకమైన 500 ఏళ్ల నాటి శివాలయం, స్థానికులచే పూజించబడుతుంది.",
+    "imageUrl": "https://images.unsplash.com/photo-1590050752117-23a9d7fc2ee2?auto=format&fit=crop&q=80&w=800",
+    "lat": 18.6738,
+    "lng": 78.0932,
+    "crowdLevel": "High",
+    "darshanTimings": "ఉదయం 05:00 - రాత్రి 09:00",
+    "deity": "శివుడు",
+    "tags": [
+      "shiva",
+      "historical"
+    ]
+  }
+]

@@ -1,0 +1,42 @@
+[
+  {
+    "code": "5B5ED4",
+    "email": "test@dharmasetu.com",
+    "createdAt": "2026-03-31T16:45:59.364Z",
+    "activatedAt": "2026-03-31T16:46:34.260Z",
+    "expiresAt": "2026-04-01T00:46:34.260Z",
+    "isUsed": true,
+    "isBlacklisted": false,
+    "id": 1
+  },
+  {
+    "code": "02568B",
+    "email": "access@dharmasetu.com",
+    "createdAt": "2026-04-01T16:25:50.869Z",
+    "activatedAt": null,
+    "expiresAt": null,
+    "isUsed": false,
+    "isBlacklisted": false,
+    "id": 2
+  },
+  {
+    "code": "9DBBF4",
+    "email": "access@dharmasetu.com",
+    "createdAt": "2026-04-01T16:26:26.009Z",
+    "activatedAt": "2026-04-01T16:26:36.373Z",
+    "expiresAt": "2026-04-02T00:26:36.373Z",
+    "isUsed": true,
+    "isBlacklisted": false,
+    "id": 3
+  },
+  {
+    "code": "74B0AA",
+    "email": "bodepuditejasai@gmail.com",
+    "createdAt": "2026-04-01T16:35:16.697Z",
+    "activatedAt": "2026-04-01T16:35:30.408Z",
+    "expiresAt": "2026-04-02T00:35:30.408Z",
+    "isUsed": true,
+    "isBlacklisted": false,
+    "id": 4
+  }
+]

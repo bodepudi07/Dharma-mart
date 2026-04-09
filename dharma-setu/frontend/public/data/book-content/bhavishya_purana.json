@@ -1,0 +1,26 @@
+{
+  "title": "Bhavishya Purāṇa",
+  "chapters": [
+    {
+      "chapter": 1,
+      "title": "Prophecies and the Future",
+      "verses": [
+        {
+          "verse": 1,
+          "sanskrit": "सूर्यदेवो जगन्नाथः प्रकाशयति भूमिकाम् ।\nभविष्ये काले धर्मस्य ग्लानिर्भविष्यति ॥",
+          "translation": "The Sun God, Lord of the world, illuminates all realms. In the future age, there will be a decline of dharma."
+        },
+        {
+          "verse": 2,
+          "sanskrit": "कलौ कल्मषचित्तानां पापद्रव्योपजीविनाम् ।\nनामसंकीर्तनं विष्णोर्मोक्षद्वारं सनातनम् ॥",
+          "translation": "In the age of Kali, for those whose minds are contaminated by sin and who subsist on sinful means, the chanting of Vishnu's holy names is the eternal doorway to liberation."
+        },
+        {
+          "verse": 3,
+          "sanskrit": "प्रजापतिर्वाक्यमिदं बभाषे सर्वलोकहितकाम्यया ।\nसत्ययुगे तपो ज्ञानं त्रेतायां यज्ञकर्मणि ।\nद्वापरे पूजनं दानं कलौ नामस्मरणं हरेः ॥",
+          "translation": "Prajapati spoke these words for the welfare of all: In Satya Yuga, the path is austerity and knowledge. In Treta Yuga, sacrifice and rituals. In Dvapara Yuga, worship and charity. In Kali Yuga, the remembrance of Hari's name."
+        }
+      ]
+    }
+  ]
+}

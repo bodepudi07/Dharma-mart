@@ -1,0 +1,42 @@
+{
+  "title": "Agni Purāṇa",
+  "chapters": [
+    {
+      "chapter": 1,
+      "title": "The Glory of Agni — The Cosmic Fire",
+      "verses": [
+        {
+          "verse": 1,
+          "sanskrit": "अग्निर्देवो द्विजातीनां मुनीनां हृदि देवताम् ।\nप्रतिमास्वल्पबुद्धीनां सर्वत्र समदर्शिनाम् ॥",
+          "translation": "Agni (fire) is the deity of the twice-born; for the sages, God resides in the heart. For those of limited understanding, God is in images. But for the wise, God is seen equally everywhere."
+        },
+        {
+          "verse": 2,
+          "sanskrit": "धर्मशास्त्रं समग्रमेव परमार्थं प्रकाशयत् ।\nअग्निपुराणे सर्वं विद्यानां संग्रहो मतः ॥",
+          "translation": "The Agni Purana illuminates the entire science of dharma and the supreme truth. It is regarded as a compendium of all branches of knowledge."
+        },
+        {
+          "verse": 3,
+          "sanskrit": "अग्निरूवाच ।\nसर्वलोकहितार्थाय वक्ष्यामि ज्ञानमुत्तमम् ।\nधर्मं च अर्थं च कामं च मोक्षं चैव चतुर्विधम् ॥",
+          "translation": "Agni said: For the welfare of all the worlds, I shall speak the highest knowledge — covering dharma, artha, kama, and moksha, the four goals of life."
+        }
+      ]
+    },
+    {
+      "chapter": 2,
+      "title": "The Avatars of Vishnu",
+      "verses": [
+        {
+          "verse": 1,
+          "sanskrit": "मत्स्यः कूर्मो वराहश्च नारसिंहो वामनस्तथा ।\nरामो रामश्च कृष्णश्च बुद्धः कल्किश्च ते दश ॥",
+          "translation": "Matsya, Kurma, Varaha, Narasimha, Vamana, Parashurama, Rama, Krishna, Buddha, and Kalki — these are the ten avatars."
+        },
+        {
+          "verse": 2,
+          "sanskrit": "एतेषां दशावताराणां कथा लोकहितावहाः ।\nश्रद्धया शृणुयाद्यस्तु सर्वपापैः प्रमुच्यते ॥",
+          "translation": "The stories of these ten avatars are beneficial to the world. Whoever hears them with faith is freed from all sins."
+        }
+      ]
+    }
+  ]
+}

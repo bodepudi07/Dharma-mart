@@ -1,0 +1,704 @@
+[
+  {
+    "id": 101,
+    "name": "Pandit Veda Sharma",
+    "location": "Ujjain, Madhya Pradesh",
+    "specialization": "Vedic Rituals & Shanti Poojas",
+    "specialties": [
+      "Rudra Abhishek",
+      "Maha Mrityunjaya Jaap",
+      "Navagraha Shanti Pooja"
+    ],
+    "services": [
+      "Offline",
+      "Online"
+    ],
+    "experience": 25,
+    "rating": 4.9,
+    "cost": 7500,
+    "imageUrl": "",
+    "status": "verified",
+    "availability": {
+      "days": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6
+      ],
+      "hours": [
+        {
+          "start": "07:00",
+          "end": "19:00"
+        }
+      ],
+      "offDates": [
+        "2024-11-01"
+      ]
+    },
+    "coordinates": {
+      "lat": 23.1765,
+      "lng": 75.7885
+    },
+    "isRural": true,
+    "transportCostPerKm": 8
+  },
+  {
+    "id": 102,
+    "name": "Acharya Gyaneshwar Mishra",
+    "location": "Varanasi, Uttar Pradesh",
+    "specialization": "Jyotish & Katha",
+    "specialties": [
+      "Satyanarayan Pooja",
+      "Durga Saptashati Path"
+    ],
+    "services": [
+      "Online"
+    ],
+    "experience": 30,
+    "rating": 4.8,
+    "cost": 5100,
+    "imageUrl": "",
+    "status": "verified",
+    "availability": {
+      "days": [
+        0,
+        1,
+        6
+      ],
+      "hours": [
+        {
+          "start": "10:00",
+          "end": "19:00"
+        }
+      ],
+      "offDates": []
+    },
+    "coordinates": {
+      "lat": 25.3176,
+      "lng": 82.9739
+    },
+    "isRural": true,
+    "transportCostPerKm": 8
+  },
+  {
+    "id": 103,
+    "name": "Shastri Narayan Patil",
+    "location": "Pune, Maharashtra",
+    "specialization": "Griha Pravesh & Vastu Shastra",
+    "specialties": [
+      "Griha Pravesh Pooja",
+      "Ganesha Homa"
+    ],
+    "services": [
+      "Offline"
+    ],
+    "experience": 20,
+    "rating": 4.7,
+    "cost": 6000,
+    "imageUrl": "",
+    "status": "verified",
+    "availability": {
+      "days": [
+        0,
+        1,
+        2,
+        4,
+        5,
+        6
+      ],
+      "hours": [
+        {
+          "start": "08:00",
+          "end": "12:00"
+        },
+        {
+          "start": "16:00",
+          "end": "20:00"
+        }
+      ],
+      "offDates": []
+    },
+    "coordinates": {
+      "lat": 18.5204,
+      "lng": 73.8567
+    },
+    "isRural": false,
+    "transportCostPerKm": 15
+  },
+  {
+    "id": 202,
+    "name": "Upadhyaya Gopal Panda",
+    "location": "Bengaluru, Karnataka",
+    "specialization": "Corporate & Online Poojas",
+    "specialties": [
+      "Lakshmi Kubera Pooja",
+      "Saraswati Vandana",
+      "Ganesha Homa"
+    ],
+    "services": [
+      "Online"
+    ],
+    "experience": 15,
+    "rating": 4.8,
+    "cost": 7100,
+    "imageUrl": "",
+    "status": "verified",
+    "availability": {
+      "days": [
+        2,
+        3,
+        4,
+        5,
+        6
+      ],
+      "hours": [
+        {
+          "start": "09:00",
+          "end": "18:00"
+        }
+      ],
+      "offDates": [
+        "2024-12-25"
+      ]
+    },
+    "coordinates": {
+      "lat": 12.9716,
+      "lng": 77.5946
+    },
+    "isRural": false,
+    "transportCostPerKm": 14
+  },
+  {
+    "id": 104,
+    "name": "Pandit Ratnesh Jha",
+    "location": "Delhi",
+    "specialization": "Night-time Rituals & Homas",
+    "specialties": [
+      "Maha Mrityunjaya Jaap",
+      "Ganesha Homa"
+    ],
+    "services": [
+      "Offline",
+      "Online"
+    ],
+    "experience": 18,
+    "rating": 4.9,
+    "cost": 8500,
+    "imageUrl": "",
+    "status": "verified",
+    "availability": {
+      "days": [
+        1,
+        2,
+        3,
+        4,
+        5
+      ],
+      "hours": [
+        {
+          "start": "22:00",
+          "end": "04:00"
+        }
+      ],
+      "offDates": []
+    },
+    "coordinates": {
+      "lat": 28.6139,
+      "lng": 77.209
+    },
+    "isRural": false,
+    "transportCostPerKm": 16
+  },
+  {
+    "id": 201,
+    "name": "Pandit Suresh Dikshit",
+    "location": "Haridwar, Uttarakhand",
+    "specialization": "Vedic Homas & Yagnas",
+    "specialties": [
+      "Gayatri Havan",
+      "Chandi Path / Durga Saptashati Havan",
+      "Akhand Ramayan Path",
+      "Rudrabhishek with Laghu Rudra"
+    ],
+    "services": [
+      "Offline",
+      "Online"
+    ],
+    "experience": 35,
+    "rating": 4.9,
+    "cost": 9000,
+    "imageUrl": "",
+    "status": "verified",
+    "availability": {
+      "days": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6
+      ],
+      "hours": [
+        {
+          "start": "05:00",
+          "end": "20:00"
+        }
+      ],
+      "offDates": []
+    },
+    "coordinates": {
+      "lat": 29.9457,
+      "lng": 78.1642
+    },
+    "isRural": true,
+    "transportCostPerKm": 9
+  },
+  {
+    "id": 203,
+    "name": "Acharya Lakshman Shastri",
+    "location": "Jaipur, Rajasthan",
+    "specialization": "Jyotish Shastra & Graha Shanti",
+    "specialties": [
+      "Kaal Sarp Dosh Nivaran Pooja",
+      "Mangal Dosh Shanti Pooja",
+      "Shani Shanti Pooja",
+      "Navagraha Shanti Pooja"
+    ],
+    "services": [
+      "Online",
+      "Offline"
+    ],
+    "experience": 22,
+    "rating": 4.8,
+    "cost": 5500,
+    "imageUrl": "",
+    "status": "verified",
+    "availability": {
+      "days": [
+        0,
+        1,
+        2,
+        3,
+        5,
+        6
+      ],
+      "hours": [
+        {
+          "start": "09:00",
+          "end": "18:00"
+        }
+      ],
+      "offDates": []
+    },
+    "coordinates": {
+      "lat": 26.9124,
+      "lng": 75.7873
+    },
+    "isRural": false,
+    "transportCostPerKm": 12
+  },
+  {
+    "id": 204,
+    "name": "Pandit Rameshwar Upadhyay",
+    "location": "Allahabad (Prayagraj), Uttar Pradesh",
+    "specialization": "Pitru Karma & Tarpan Vidhi",
+    "specialties": [
+      "Pitru Dosh Nivaran Pooja",
+      "Satyanarayan Pooja",
+      "Namakarana (Naming Ceremony)",
+      "Annaprashana (First Rice Feeding)"
+    ],
+    "services": [
+      "Offline"
+    ],
+    "experience": 28,
+    "rating": 4.7,
+    "cost": 4500,
+    "imageUrl": "",
+    "status": "verified",
+    "availability": {
+      "days": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5
+      ],
+      "hours": [
+        {
+          "start": "06:00",
+          "end": "17:00"
+        }
+      ],
+      "offDates": []
+    },
+    "coordinates": {
+      "lat": 25.4358,
+      "lng": 81.8463
+    },
+    "isRural": true,
+    "transportCostPerKm": 7
+  },
+  {
+    "id": 205,
+    "name": "Shastri Venkatesh Iyer",
+    "location": "Chennai, Tamil Nadu",
+    "specialization": "South Indian Vedic Rituals (Agama)",
+    "specialties": [
+      "Rudra Abhishek",
+      "Sudarshana Homa",
+      "Lakshmi Kubera Pooja",
+      "Gayatri Havan"
+    ],
+    "services": [
+      "Offline",
+      "Online"
+    ],
+    "experience": 18,
+    "rating": 4.8,
+    "cost": 6500,
+    "imageUrl": "",
+    "status": "verified",
+    "availability": {
+      "days": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6
+      ],
+      "hours": [
+        {
+          "start": "06:00",
+          "end": "12:00"
+        },
+        {
+          "start": "16:00",
+          "end": "20:00"
+        }
+      ],
+      "offDates": []
+    },
+    "coordinates": {
+      "lat": 13.0827,
+      "lng": 80.2707
+    },
+    "isRural": false,
+    "transportCostPerKm": 15
+  },
+  {
+    "id": 206,
+    "name": "Pandit Devendra Joshi",
+    "location": "Nashik, Maharashtra",
+    "specialization": "Vivah & Samskar Ceremonies",
+    "specialties": [
+      "Vivah Samskara (Marriage Ceremony)",
+      "Griha Pravesh Pooja",
+      "Vastu Shanti Pooja",
+      "Bhoomi Pooja (Ground-breaking Ceremony)"
+    ],
+    "services": [
+      "Offline"
+    ],
+    "experience": 30,
+    "rating": 4.9,
+    "cost": 8000,
+    "imageUrl": "",
+    "status": "verified",
+    "availability": {
+      "days": [
+        0,
+        2,
+        3,
+        4,
+        5,
+        6
+      ],
+      "hours": [
+        {
+          "start": "07:00",
+          "end": "19:00"
+        }
+      ],
+      "offDates": []
+    },
+    "coordinates": {
+      "lat": 19.9975,
+      "lng": 73.7898
+    },
+    "isRural": true,
+    "transportCostPerKm": 10
+  },
+  {
+    "id": 207,
+    "name": "Acharya Pradeep Pandey",
+    "location": "Lucknow, Uttar Pradesh",
+    "specialization": "Hanuman Upasana & Sunderkand",
+    "specialties": [
+      "Sunderkand Path",
+      "Maha Mrityunjaya Jaap",
+      "Ayushya Homa (For Longevity)"
+    ],
+    "services": [
+      "Online",
+      "Offline"
+    ],
+    "experience": 15,
+    "rating": 4.6,
+    "cost": 3500,
+    "imageUrl": "",
+    "status": "verified",
+    "availability": {
+      "days": [
+        0,
+        2,
+        3,
+        4,
+        6
+      ],
+      "hours": [
+        {
+          "start": "08:00",
+          "end": "20:00"
+        }
+      ],
+      "offDates": []
+    },
+    "coordinates": {
+      "lat": 26.8467,
+      "lng": 80.9462
+    },
+    "isRural": false,
+    "transportCostPerKm": 12
+  },
+  {
+    "id": 208,
+    "name": "Purohit Keshav Bhatt",
+    "location": "Ahmedabad, Gujarat",
+    "specialization": "Navagraha & Dosh Shanti",
+    "specialties": [
+      "Navagraha Shanti Pooja",
+      "Kaal Sarp Dosh Nivaran Pooja",
+      "Vahana Pooja (Vehicle Pooja)",
+      "Ganesha Homa"
+    ],
+    "services": [
+      "Offline",
+      "Online"
+    ],
+    "experience": 20,
+    "rating": 4.7,
+    "cost": 5000,
+    "imageUrl": "",
+    "status": "verified",
+    "availability": {
+      "days": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6
+      ],
+      "hours": [
+        {
+          "start": "07:00",
+          "end": "18:00"
+        }
+      ],
+      "offDates": []
+    },
+    "coordinates": {
+      "lat": 23.0225,
+      "lng": 72.5714
+    },
+    "isRural": false,
+    "transportCostPerKm": 14
+  },
+  {
+    "id": 209,
+    "name": "Pandit Satyanarayana Sarma",
+    "location": "Hyderabad, Telangana",
+    "specialization": "Telugu Vedic Traditions & Homas",
+    "specialties": [
+      "Satyanarayan Pooja",
+      "Sudarshana Homa",
+      "Lakshmi Kubera Pooja",
+      "Mahalakshmi Vrat Pooja",
+      "Swayamvara Parvati Vrat"
+    ],
+    "services": [
+      "Offline",
+      "Online"
+    ],
+    "experience": 24,
+    "rating": 4.9,
+    "cost": 7000,
+    "imageUrl": "",
+    "status": "verified",
+    "availability": {
+      "days": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6
+      ],
+      "hours": [
+        {
+          "start": "06:00",
+          "end": "12:00"
+        },
+        {
+          "start": "17:00",
+          "end": "21:00"
+        }
+      ],
+      "offDates": []
+    },
+    "coordinates": {
+      "lat": 17.385,
+      "lng": 78.4867
+    },
+    "isRural": false,
+    "transportCostPerKm": 14
+  },
+  {
+    "id": 210,
+    "name": "Acharya Madhav Goswami",
+    "location": "Vrindavan, Uttar Pradesh",
+    "specialization": "Bhakti Marg & Krishna Upasana",
+    "specialties": [
+      "Satyanarayan Pooja",
+      "Sunderkand Path",
+      "Akhand Ramayan Path"
+    ],
+    "services": [
+      "Online"
+    ],
+    "experience": 40,
+    "rating": 5,
+    "cost": 11000,
+    "imageUrl": "",
+    "status": "verified",
+    "availability": {
+      "days": [
+        0,
+        1,
+        3,
+        5
+      ],
+      "hours": [
+        {
+          "start": "10:00",
+          "end": "16:00"
+        }
+      ],
+      "offDates": []
+    },
+    "coordinates": {
+      "lat": 27.5792,
+      "lng": 77.6985
+    },
+    "isRural": true,
+    "transportCostPerKm": 7
+  },
+  {
+    "id": 211,
+    "name": "Purohit Shankar Hegde",
+    "location": "Mangalore, Karnataka",
+    "specialization": "Tulu & Kannada Vedic Rituals",
+    "specialties": [
+      "Saraswati Vandana",
+      "Ganesha Homa",
+      "Bhoomi Pooja (Ground-breaking Ceremony)",
+      "Namakarana (Naming Ceremony)"
+    ],
+    "services": [
+      "Offline"
+    ],
+    "experience": 16,
+    "rating": 4.6,
+    "cost": 4000,
+    "imageUrl": "",
+    "status": "verified",
+    "availability": {
+      "days": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5
+      ],
+      "hours": [
+        {
+          "start": "06:30",
+          "end": "18:30"
+        }
+      ],
+      "offDates": []
+    },
+    "coordinates": {
+      "lat": 12.9141,
+      "lng": 74.856
+    },
+    "isRural": true,
+    "transportCostPerKm": 9
+  },
+  {
+    "id": 212,
+    "name": "Pandit Anand Tripathi",
+    "location": "Bhopal, Madhya Pradesh",
+    "specialization": "Durga Upasana & Shakti Poojas",
+    "specialties": [
+      "Durga Saptashati Path",
+      "Chandi Path / Durga Saptashati Havan",
+      "Swayamvara Parvati Vrat",
+      "Mahalakshmi Vrat Pooja"
+    ],
+    "services": [
+      "Offline",
+      "Online"
+    ],
+    "experience": 19,
+    "rating": 4.8,
+    "cost": 6000,
+    "imageUrl": "",
+    "status": "verified",
+    "availability": {
+      "days": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6
+      ],
+      "hours": [
+        {
+          "start": "08:00",
+          "end": "19:00"
+        }
+      ],
+      "offDates": []
+    },
+    "coordinates": {
+      "lat": 23.2599,
+      "lng": 77.4126
+    },
+    "isRural": false,
+    "transportCostPerKm": 12
+  }
+]

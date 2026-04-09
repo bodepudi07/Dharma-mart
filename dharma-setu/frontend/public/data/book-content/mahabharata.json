@@ -1,0 +1,170 @@
+{
+  "title": "The Mahabharata",
+  "chapters": [
+    {
+      "chapter": 1,
+      "title": "Adi Parva — The Book of the Beginning",
+      "verses": [
+        {
+          "verse": 1,
+          "sanskrit": "नारायणं नमस्कृत्य नरं चैव नरोत्तमम् ।\nदेवीं सरस्वतीं चैव ततो जयमुदीरयेत् ॥",
+          "translation": "Having bowed to Narayana and Nara, the best of men, and also to the goddess Sarasvati, one should then recite the Jaya (Mahabharata)."
+        },
+        {
+          "verse": 2,
+          "sanskrit": "यद्भागवतं ज्ञानं विज्ञानसमन्वितम् ।\nव्यासदेवकृतं भारतं सर्वशास्त्रेषु पूज्यते ॥",
+          "translation": "The Bharata, composed by Vyasadeva, endowed with divine knowledge and wisdom, is revered among all scriptures."
+        },
+        {
+          "verse": 3,
+          "sanskrit": "धर्मे चार्थे च कामे च मोक्षे च भरतर्षभ ।\nयदिहास्ति तदन्यत्र यन्नेहास्ति न तत्क्वचित् ॥",
+          "translation": "In matters of dharma, artha (wealth), kama (desire), and moksha (liberation) — whatever is found here may be found elsewhere, but what is not found here is found nowhere."
+        }
+      ]
+    },
+    {
+      "chapter": 2,
+      "title": "Sabha Parva — The Book of the Assembly Hall",
+      "verses": [
+        {
+          "verse": 1,
+          "sanskrit": "ततो द्यूतमयं क्रीडां शकुनिर्मायया करोत् ।\nपाण्डवानां श्रियं राज्यं यां चापि द्रौपदीमपि ॥",
+          "translation": "Then Shakuni, through deception, arranged the game of dice, by which the Pandavas lost their wealth, kingdom, and even Draupadi."
+        },
+        {
+          "verse": 2,
+          "sanskrit": "सभामध्ये द्रौपद्याः वस्त्रापहरणं कृतम् ।\nकृष्णाय शरणं गत्वा रक्षितासौ महात्मना ॥",
+          "translation": "In the midst of the assembly, the disrobing of Draupadi was attempted. Taking refuge in Krishna, she was protected by the great soul."
+        }
+      ]
+    },
+    {
+      "chapter": 3,
+      "title": "Vana Parva — The Book of the Forest",
+      "verses": [
+        {
+          "verse": 1,
+          "sanskrit": "ततो वनवासं प्राप्ताः पाण्डवाः सत्यविक्रमाः ।\nद्वादश वर्षाणि वने वासं चक्रुर्महावनेषु ॥",
+          "translation": "Then the Pandavas, of true valor, having been sent to exile, spent twelve years dwelling in the great forests."
+        },
+        {
+          "verse": 2,
+          "sanskrit": "युधिष्ठिरो धर्मराजो नलोपाख्यानमश्रृणोत् ।\nधर्मं च ज्ञानमैश्वर्यं सत्यं चैव यथारथम् ॥",
+          "translation": "Yudhishthira, the righteous king, heard the Nala episode and learned about dharma, knowledge, divine power, and truth in their true form."
+        }
+      ]
+    },
+    {
+      "chapter": 4,
+      "title": "Virata Parva — The Book of Virata",
+      "verses": [
+        {
+          "verse": 1,
+          "sanskrit": "ततो विराटनगरे अज्ञातवासं चक्रिरे ।\nपाण्डवाः सर्वे राजन् छद्मनाऽवनिपालयन् ॥",
+          "translation": "Then in the city of Virata, all the Pandavas lived incognito, O King, guarding their identities in disguise."
+        }
+      ]
+    },
+    {
+      "chapter": 5,
+      "title": "Udyoga Parva — The Book of Effort",
+      "verses": [
+        {
+          "verse": 1,
+          "sanskrit": "तत्र कृष्णो महाबाहुर्दूतो धर्मसुतस्य ह ।\nगत्वा कौरवसभायां शान्तिं प्रायाचत ॥",
+          "translation": "There, the mighty-armed Krishna, as the envoy of the son of Dharma (Yudhishthira), went to the Kaurava assembly and sought peace."
+        },
+        {
+          "verse": 2,
+          "sanskrit": "विदुरो वाक्यमब्रवीत् धृतराष्ट्रं महीपतिम् ।\nपाण्डवैः सह सन्धिं कुरु राजन् युद्धं मा कराः ॥",
+          "translation": "Vidura spoke these words to King Dhritarashtra: 'O King, make peace with the Pandavas. Do not wage war.'"
+        }
+      ]
+    },
+    {
+      "chapter": 6,
+      "title": "Bhishma Parva — The Book of Bhishma",
+      "verses": [
+        {
+          "verse": 1,
+          "sanskrit": "धर्मक्षेत्रे कुरुक्षेत्रे समवेता युयुत्सवः ।\nमामकाः पाण्डवाश्चैव किमकुर्वत सञ्जय ॥",
+          "translation": "Dhritarashtra said: O Sanjaya, after my sons and the sons of Pandu assembled in the holy field of Kurukshetra, desiring to fight, what did they do?"
+        },
+        {
+          "verse": 2,
+          "sanskrit": "कर्मण्येवाधिकारस्ते मा फलेषु कदाचन ।\nमा कर्मफलहेतुर्भूर्मा ते सङ्गोऽस्त्वकर्मणि ॥",
+          "translation": "You have a right to perform your prescribed duty, but you are not entitled to the fruits of action. Never consider yourself the cause of the results, and never be attached to inaction."
+        },
+        {
+          "verse": 3,
+          "sanskrit": "यदा यदा हि धर्मस्य ग्लानिर्भवति भारत ।\nअभ्युत्थानमधर्मस्य तदात्मानं सृजाम्यहम् ॥",
+          "translation": "Whenever and wherever there is a decline in dharma, O descendant of Bharata, and a predominant rise of adharma — at that time I manifest Myself."
+        },
+        {
+          "verse": 4,
+          "sanskrit": "परित्राणाय साधूनां विनाशाय च दुष्कृताम् ।\nधर्मसंस्थापनार्थाय सम्भवामि युगे युगे ॥",
+          "translation": "To deliver the pious and to annihilate the miscreants, as well as to reestablish the principles of dharma, I advent Myself millennium after millennium."
+        }
+      ]
+    },
+    {
+      "chapter": 7,
+      "title": "Drona Parva — The Book of Drona",
+      "verses": [
+        {
+          "verse": 1,
+          "sanskrit": "अश्वत्थामा हतः इति कुञ्जरः ।\nयुधिष्ठिरो धर्मराजो वम्शः तस्य न मृषा ॥",
+          "translation": "Ashwatthama is dead — the elephant. Yudhishthira, the king of dharma, uttered these words, and his chariot that always floated above the ground descended."
+        }
+      ]
+    },
+    {
+      "chapter": 8,
+      "title": "Karna Parva — The Book of Karna",
+      "verses": [
+        {
+          "verse": 1,
+          "sanskrit": "कर्णो महारथो वीरः सूतपुत्रो महाबलः ।\nदानवीरः सदा दाता कवचकुण्डलधारकः ॥",
+          "translation": "Karna, the great warrior, heroic and mighty, son of the charioteer, ever generous, who gave away even his natural armor and earrings."
+        },
+        {
+          "verse": 2,
+          "sanskrit": "अर्जुनेन हतः कर्णः कुरुक्षेत्रे महाहवे ।\nमित्रद्रोही न कर्णोऽभूत् दैवे कर्मविपर्ययः ॥",
+          "translation": "Karna was slain by Arjuna in the great battle of Kurukshetra. Karna was no traitor to friendship — it was the reversal of fate and karma."
+        }
+      ]
+    },
+    {
+      "chapter": 9,
+      "title": "Shalya Parva — The Book of Shalya",
+      "verses": [
+        {
+          "verse": 1,
+          "sanskrit": "शल्यं हत्वा महाराजं भीमसेनो महाबलः ।\nदुर्योधनं गदायुद्धे जघान कुरुनन्दनम् ॥",
+          "translation": "The mighty Bhimasena slew King Shalya, and in a mace duel, destroyed Duryodhana, the joy of the Kuru dynasty."
+        }
+      ]
+    },
+    {
+      "chapter": 10,
+      "title": "Shanti Parva — The Book of Peace",
+      "verses": [
+        {
+          "verse": 1,
+          "sanskrit": "शरशय्यागतो भीष्मो युधिष्ठिरमुवाच ह ।\nधर्मं चार्थं च कामं च मोक्षं चैव चतुर्विधम् ॥",
+          "translation": "Bhishma, lying on his bed of arrows, spoke to Yudhishthira about the four goals of life: dharma, artha, kama, and moksha."
+        },
+        {
+          "verse": 2,
+          "sanskrit": "अहिंसा परमो धर्मस्तथाहिंसा परं तपः ।\nअहिंसा परमं दानम् अहिंसा परमं फलम् ॥",
+          "translation": "Non-violence is the highest dharma. Non-violence is the highest penance. Non-violence is the greatest charity. Non-violence is the supreme fruit."
+        },
+        {
+          "verse": 3,
+          "sanskrit": "सत्यमेव जयते नानृतं सत्येन पन्था विततो देवयानः ।\nयेनाक्रमन्त्यृषयो ह्याप्तकामा यत्र तत्सत्यस्य परमं निधानम् ॥",
+          "translation": "Truth alone triumphs, not falsehood. Through truth, the divine path is laid out, by which the sages, whose desires have been fulfilled, reach the supreme abode of Truth."
+        }
+      ]
+    }
+  ]
+}

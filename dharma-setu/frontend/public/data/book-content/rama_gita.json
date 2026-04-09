@@ -1,0 +1,42 @@
+{
+  "title": "Rāma Gītā",
+  "chapters": [
+    {
+      "chapter": 1,
+      "title": "Rama's Teachings to Lakshmana on Knowledge",
+      "verses": [
+        {
+          "verse": 1,
+          "sanskrit": "अहमात्मा सदा शुद्धः सर्वभूतगुहाशयः ।\nसर्वव्यापी च सर्वज्ञः सर्वभूतेषु संस्थितः ॥",
+          "translation": "I am the Self, ever pure, dwelling in the cave of the hearts of all beings — all-pervading, all-knowing, established in all creatures."
+        },
+        {
+          "verse": 2,
+          "sanskrit": "ज्ञानेन तु तदज्ञानं येषां नाशितमात्मनः ।\nतेषामादित्यवज् ज्ञानं प्रकाशयति तत्परम् ॥",
+          "translation": "But for those whose ignorance is destroyed by the knowledge of the Self, their knowledge, like the sun, illuminates that Supreme Truth."
+        },
+        {
+          "verse": 3,
+          "sanskrit": "धर्मं चरत मा पापं सत्यं वद प्रियं वद ।\nदैवं चिन्तय नित्यं त्वं मा अधर्मं समाचर ॥",
+          "translation": "Practice dharma, do not commit sin. Speak truth, speak what is pleasant. Always contemplate the divine. Never practice unrighteousness."
+        }
+      ]
+    },
+    {
+      "chapter": 2,
+      "title": "The Path of Liberation",
+      "verses": [
+        {
+          "verse": 1,
+          "sanskrit": "सर्वभूतस्थमात्मानं सर्वभूतानि चात्मनि ।\nईक्षते योगयुक्तात्मा सर्वत्र समदर्शनः ॥",
+          "translation": "One whose self is established in yoga sees the Self in all beings and all beings in the Self, seeing equally everywhere."
+        },
+        {
+          "verse": 2,
+          "sanskrit": "न हि कल्याणकृत्कश्चिद् दुर्गतिं तात गच्छति ।\nधर्मात्मा सततं शुद्धः मोक्षमाप्नोति शाश्वतम् ॥",
+          "translation": "Never does one who does good, O son, come to grief. The righteous soul, ever pure, attains eternal liberation."
+        }
+      ]
+    }
+  ]
+}

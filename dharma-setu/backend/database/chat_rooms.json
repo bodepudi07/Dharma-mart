@@ -1,0 +1,157 @@
+[
+  {
+    "id": 1,
+    "name": "satsang_general_dharma_name",
+    "description": "satsang_general_dharma_desc",
+    "icon": "om",
+    "membersCount": 15420,
+    "lastActive": "Just now",
+    "category": "General",
+    "tags": ["Dharma", "Community", "Discussions"],
+    "type": "public"
+  },
+  {
+    "id": 2,
+    "name": "satsang_yoga_meditation_name",
+    "description": "satsang_yoga_meditation_desc",
+    "icon": "meditate",
+    "membersCount": 8345,
+    "lastActive": "2 mins ago",
+    "category": "Practice",
+    "tags": ["Yoga", "Dhyana", "Wellness"],
+    "type": "restricted"
+  },
+  {
+    "id": 3,
+    "name": "satsang_bhakti_sangeet_name",
+    "description": "satsang_bhakti_sangeet_desc",
+    "icon": "speaker",
+    "membersCount": 12050,
+    "lastActive": "1 hr ago",
+    "category": "Devotion",
+    "tags": ["Bhajans", "Kirtan", "Music"],
+    "type": "public"
+  },
+  {
+    "id": 4,
+    "name": "satsang_scripture_study_name",
+    "description": "satsang_scripture_study_desc",
+    "icon": "book-open",
+    "membersCount": 5600,
+    "lastActive": "Active now",
+    "category": "Knowledge",
+    "tags": ["Vedas", "Upanishads", "Gita"],
+    "type": "academic"
+  },
+  {
+    "id": 5,
+    "name": "satsang_gau_seva_name",
+    "description": "satsang_gau_seva_desc",
+    "icon": "heart-hand",
+    "membersCount": 4200,
+    "lastActive": "5 hrs ago",
+    "category": "Seva",
+    "tags": ["Gau Mata", "Charity", "Karma Yoga"],
+    "type": "volunteer"
+  },
+  {
+    "id": 6,
+    "name": "satsang_temple_rebuilding_name",
+    "description": "satsang_temple_rebuilding_desc",
+    "icon": "temple",
+    "membersCount": 9800,
+    "lastActive": "15 mins ago",
+    "category": "Action",
+    "tags": ["Heritage", "Restoration", "Dharma Raksha"],
+    "type": "action"
+  },
+  {
+    "id": 7,
+    "name": "Local: Chilkur Balaji Devotees",
+    "description": "A group for devotees of the Visa Balaji temple in Hyderabad. Discuss timings, crowds, and share experiences.",
+    "icon": "temple",
+    "membersCount": 3500,
+    "lastActive": "Just now",
+    "category": "Local",
+    "tags": ["Hyderabad", "Balaji", "Meetups"],
+    "type": "local",
+    "isLocal": true
+  },
+  {
+    "id": 8,
+    "name": "Sanskrit Learning Circle",
+    "description": "Practice conversational Sanskrit, ask grammar questions, and share learning resources.",
+    "icon": "book-open",
+    "membersCount": 2100,
+    "lastActive": "30 mins ago",
+    "category": "Knowledge",
+    "tags": ["Sanskrit", "Language", "Study"],
+    "type": "academic"
+  },
+  {
+    "id": 9,
+    "name": "Youth Dharma Connect",
+    "description": "A safe space for teenagers and young adults to discuss modern challenges through the lens of Sanatana Dharma.",
+    "icon": "users-group",
+    "membersCount": 6700,
+    "lastActive": "Active now",
+    "category": "Youth",
+    "tags": ["Youth", "Modern Life", "Support"],
+    "type": "public"
+  },
+  {
+    "id": 11,
+    "name": "Ayurveda & Sattvic Living",
+    "description": "Share Ayurvedic recipes, daily routines (Dinacharya), and tips for a balanced, Sattvic lifestyle.",
+    "icon": "lotus",
+    "membersCount": 5400,
+    "lastActive": "10 mins ago",
+    "category": "Practice",
+    "tags": ["Ayurveda", "Health", "Sattvic"],
+    "type": "public"
+  },
+  {
+    "id": 12,
+    "name": "Mantra & Stotra Sadhana",
+    "description": "Dedicated space for mantra practitioners. Share experiences, correct pronunciations, and daily sadhana progress.",
+    "icon": "om",
+    "membersCount": 9200,
+    "lastActive": "Just now",
+    "category": "Practice",
+    "tags": ["Mantra", "Sadhana", "Stotra"],
+    "type": "restricted"
+  },
+  {
+    "id": 13,
+    "name": "Dharmic Parenting",
+    "description": "Raise children with Dharmic values. Share stories, Sanskar techniques, and creative ways to teach spirituality to kids.",
+    "icon": "heart",
+    "membersCount": 4100,
+    "lastActive": "1 hr ago",
+    "category": "Family",
+    "tags": ["Parenting", "Sanskar", "Children"],
+    "type": "public"
+  },
+  {
+    "id": 14,
+    "name": "Pilgrimage Stories",
+    "description": "Share your Yatra experiences, darshan moments, travel tips, and divine encounters from sacred journeys across Bharat.",
+    "icon": "compass",
+    "membersCount": 6300,
+    "lastActive": "20 mins ago",
+    "category": "General",
+    "tags": ["Yatra", "Travel", "Teerth"],
+    "type": "public"
+  },
+  {
+    "id": 15,
+    "name": "Vedanta & Advaita Discussion",
+    "description": "For advanced seekers exploring non-dual philosophy. Discuss teachings of Shankaracharya, Ramana Maharshi, and more.",
+    "icon": "flame",
+    "membersCount": 3200,
+    "lastActive": "45 mins ago",
+    "category": "Knowledge",
+    "tags": ["Vedanta", "Advaita", "Philosophy"],
+    "type": "academic"
+  }
+]

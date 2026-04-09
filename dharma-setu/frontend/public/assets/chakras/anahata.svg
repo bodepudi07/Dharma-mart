@@ -1,0 +1,22 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200" width="200" height="200">
+  <!-- 12-Petal Lotus -->
+  <g fill="none" stroke="#1a1a1a" stroke-width="1.5">
+    <ellipse cx="100" cy="58" rx="14" ry="34" />
+    <ellipse cx="100" cy="58" rx="14" ry="34" transform="rotate(30,100,100)"/>
+    <ellipse cx="100" cy="58" rx="14" ry="34" transform="rotate(60,100,100)"/>
+    <ellipse cx="100" cy="58" rx="14" ry="34" transform="rotate(90,100,100)"/>
+    <ellipse cx="100" cy="58" rx="14" ry="34" transform="rotate(120,100,100)"/>
+    <ellipse cx="100" cy="58" rx="14" ry="34" transform="rotate(150,100,100)"/>
+    <ellipse cx="100" cy="58" rx="14" ry="34" transform="rotate(180,100,100)"/>
+    <ellipse cx="100" cy="58" rx="14" ry="34" transform="rotate(210,100,100)"/>
+    <ellipse cx="100" cy="58" rx="14" ry="34" transform="rotate(240,100,100)"/>
+    <ellipse cx="100" cy="58" rx="14" ry="34" transform="rotate(270,100,100)"/>
+    <ellipse cx="100" cy="58" rx="14" ry="34" transform="rotate(300,100,100)"/>
+    <ellipse cx="100" cy="58" rx="14" ry="34" transform="rotate(330,100,100)"/>
+  </g>
+  <!-- Star of David / Shatkona (Air Element) -->
+  <polygon points="100,72 125,115 75,115" fill="none" stroke="#1a1a1a" stroke-width="2.5"/>
+  <polygon points="100,128 75,85 125,85" fill="none" stroke="#1a1a1a" stroke-width="2.5"/>
+  <!-- Bija Mantra YAM -->
+  <text x="100" y="108" text-anchor="middle" font-family="serif" font-size="20" font-weight="bold" fill="#1a1a1a">यं</text>
+</svg>

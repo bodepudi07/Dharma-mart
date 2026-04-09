@@ -1,0 +1,42 @@
+{
+  "title": "Garuḍa Purāṇa",
+  "chapters": [
+    {
+      "chapter": 1,
+      "title": "The Nature of Death and the Afterlife",
+      "verses": [
+        {
+          "verse": 1,
+          "sanskrit": "गरुडो विष्णुवाहनः पप्रच्छ भगवन्तं हरिम् ।\nमृत्युकालेषु जीवानां गतिं वद महाप्रभो ॥",
+          "translation": "Garuda, the vehicle of Vishnu, asked the Lord Hari: 'O great Lord, please tell me about the fate of beings at the time of death.'"
+        },
+        {
+          "verse": 2,
+          "sanskrit": "श्रीभगवानुवाच ।\nधर्मात्मानः सुकृतिनः स्वर्गलोकं व्रजन्ति ते ।\nपापिनो नरकं यान्ति कर्मभूमिर्हि मानुषी ॥",
+          "translation": "The Supreme Lord said: Righteous souls who have done good deeds go to the heavenly realms. Sinners go to the hellish realms. The human world is the field of karma."
+        },
+        {
+          "verse": 3,
+          "sanskrit": "दानं प्रचारः शीलं च मन्त्रो जपस्तथैव च ।\nएतानि पञ्च पापानां नाशकानि महान्ति च ॥",
+          "translation": "Charity, good conduct, virtue, mantra, and japa — these five are the great destroyers of sins."
+        }
+      ]
+    },
+    {
+      "chapter": 2,
+      "title": "The Importance of Funeral Rites",
+      "verses": [
+        {
+          "verse": 1,
+          "sanskrit": "श्राद्धं कर्तव्यमनृणतापनिवृत्तये ।\nपितॄणां तृप्तिदं नित्यं कर्तव्यं विधिपूर्वकम् ॥",
+          "translation": "Shraddha (funeral rites) should be performed for the release from ancestral debts. They should always be done according to prescribed rites to satisfy the forefathers."
+        },
+        {
+          "verse": 2,
+          "sanskrit": "गोदानं तिलदानं च स्वर्णदानं जलं तथा ।\nअन्नदानं परं दानं सर्वपापप्रणाशनम् ॥",
+          "translation": "Donation of cows, sesame seeds, gold, and water — and the supreme donation is food donation, which destroys all sins."
+        }
+      ]
+    }
+  ]
+}

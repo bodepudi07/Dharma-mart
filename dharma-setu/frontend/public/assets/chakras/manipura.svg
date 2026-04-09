@@ -1,0 +1,19 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200" width="200" height="200">
+  <!-- 10-Petal Lotus -->
+  <g fill="none" stroke="#1a1a1a" stroke-width="1.5">
+    <ellipse cx="100" cy="58" rx="15" ry="34" />
+    <ellipse cx="100" cy="58" rx="15" ry="34" transform="rotate(36,100,100)"/>
+    <ellipse cx="100" cy="58" rx="15" ry="34" transform="rotate(72,100,100)"/>
+    <ellipse cx="100" cy="58" rx="15" ry="34" transform="rotate(108,100,100)"/>
+    <ellipse cx="100" cy="58" rx="15" ry="34" transform="rotate(144,100,100)"/>
+    <ellipse cx="100" cy="58" rx="15" ry="34" transform="rotate(180,100,100)"/>
+    <ellipse cx="100" cy="58" rx="15" ry="34" transform="rotate(216,100,100)"/>
+    <ellipse cx="100" cy="58" rx="15" ry="34" transform="rotate(252,100,100)"/>
+    <ellipse cx="100" cy="58" rx="15" ry="34" transform="rotate(288,100,100)"/>
+    <ellipse cx="100" cy="58" rx="15" ry="34" transform="rotate(324,100,100)"/>
+  </g>
+  <!-- Downward Triangle (Fire Element) -->
+  <polygon points="100,125 72,80 128,80" fill="none" stroke="#1a1a1a" stroke-width="2.5"/>
+  <!-- Bija Mantra RAM -->
+  <text x="100" y="108" text-anchor="middle" font-family="serif" font-size="20" font-weight="bold" fill="#1a1a1a">रं</text>
+</svg>

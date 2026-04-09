@@ -1,0 +1,157 @@
+{
+  "title": "The Ramayana",
+  "chapters": [
+    {
+      "chapter": 1,
+      "title": "Bala Kanda — The Boyhood",
+      "verses": [
+        {
+          "verse": 1,
+          "sanskrit": "तपःस्वाध्यायनिरतं तपस्वी वाग्विदां वरम् ।\nनारदं परिपप्रच्छ वाल्मीकिर्मुनिपुङ्गवम् ॥",
+          "translation": "The ascetic Valmiki, ever devoted to penance and study, asked the celestial sage Narada, foremost among the eloquent and best among sages."
+        },
+        {
+          "verse": 2,
+          "sanskrit": "को न्वस्मिन् साम्प्रतं लोके गुणवान् कश्च वीर्यवान् ।\nधर्मज्ञश्च कृतज्ञश्च सत्यवाक्यो दृढव्रतः ॥",
+          "translation": "Who in this world today is virtuous? Who is valiant? Who is righteous, grateful, truthful, and firm in his vows?"
+        },
+        {
+          "verse": 3,
+          "sanskrit": "चारित्रेण च को युक्तः सर्वभूतेषु को हितः ।\nविद्वान् कः कश्च समर्थश्च कश्चैकप्रियदर्शनः ॥",
+          "translation": "Who is endowed with good character? Who is well-disposed to all beings? Who is learned and capable, and who is ever pleasant to behold?"
+        },
+        {
+          "verse": 4,
+          "sanskrit": "इक्ष्वाकुवंशप्रभवो रामो नाम जनैः श्रुतः ।\nनियतात्मा महावीर्यो द्युतिमान् धृतिमान् वशी ॥",
+          "translation": "Born in the Ikshvaku dynasty, known to the people as Rama — self-controlled, mighty in valor, radiant, steadfast, and master of his senses."
+        },
+        {
+          "verse": 5,
+          "sanskrit": "विश्वामित्रस्तदा वाक्यमश्रृण्वन् राघवो वचः ।\nवैदेहीं च महाभागो लक्ष्मणं च महाबलम् ॥",
+          "translation": "Then the illustrious Rama heard the words of Sage Vishvamitra, and accompanied by the blessed Sita and the mighty Lakshmana, set forth on the great journey."
+        }
+      ]
+    },
+    {
+      "chapter": 2,
+      "title": "Ayodhya Kanda — The Book of Ayodhya",
+      "verses": [
+        {
+          "verse": 1,
+          "sanskrit": "ततः पुरुषशार्दूलः सत्यसन्धो जितेन्द्रियः ।\nरामो दाशरथिः श्रीमान् नयति स्म महावशी ॥",
+          "translation": "Then the tiger among men, the truthful, self-controlled, glorious Rama, son of Dasharatha, the great master of his senses, departed for the forest."
+        },
+        {
+          "verse": 2,
+          "sanskrit": "रामः प्रव्राजितो वनम् भरतो राज्यमाप्नुयात् ।\nइत्येवं दूषिता राज्ञी कैकेयी प्रविवेश ह ॥",
+          "translation": "That Rama should be exiled to the forest and Bharata should obtain the kingdom — thus poisoned, Queen Kaikeyi entered the chamber of wrath."
+        },
+        {
+          "verse": 3,
+          "sanskrit": "पितुर्वचनमाज्ञाय रामो वनमगच्छत ।\nसीता लक्ष्मणसहिता धर्मं पालयतः सदा ॥",
+          "translation": "Obeying his father's command, Rama went to the forest, accompanied by Sita and Lakshmana, ever upholding dharma."
+        }
+      ]
+    },
+    {
+      "chapter": 3,
+      "title": "Aranya Kanda — The Forest Book",
+      "verses": [
+        {
+          "verse": 1,
+          "sanskrit": "प्रविश्य तु महारण्यं रामो राजीवलोचनः ।\nविराधं राक्षसं घोरं जजान सहलक्ष्मणः ॥",
+          "translation": "Entering the great forest, the lotus-eyed Rama, together with Lakshmana, slew the fierce demon Viradha."
+        },
+        {
+          "verse": 2,
+          "sanskrit": "खरदूषणमुख्यांश्च राक्षसान् चतुर्दश सहस्राणि ।\nजघान रणमूर्धनि रामो दशरथात्मजः ॥",
+          "translation": "Rama, son of Dasharatha, slew Khara, Dushana, and their chief warriors — fourteen thousand demons — in the forefront of battle."
+        },
+        {
+          "verse": 3,
+          "sanskrit": "मारीचं मृगरूपेण रावणो जानकीं हरत् ।\nगृध्रराजं च जटायुं हत्वा सीतां ससार ह ॥",
+          "translation": "Using Maricha in the form of a golden deer as a trick, Ravana abducted Janaki (Sita). After slaying the vulture king Jatayu, he carried Sita away."
+        }
+      ]
+    },
+    {
+      "chapter": 4,
+      "title": "Kishkindha Kanda — The Kingdom of Monkeys",
+      "verses": [
+        {
+          "verse": 1,
+          "sanskrit": "ततो वानरराजेन सुग्रीवेण समागतः ।\nसख्यं च कृतवान् रामो वालिनं चैव जघ्नवान् ॥",
+          "translation": "Then Rama met Sugriva, the king of the monkeys, formed an alliance of friendship, and slew Vali."
+        },
+        {
+          "verse": 2,
+          "sanskrit": "सुग्रीवः सहितो रामं सीताम्न्वेषणमादिशत् ।\nहनुमान् वायुपुत्रश्च सागरं लङ्घयत्ततः ॥",
+          "translation": "Sugriva, allied with Rama, ordered the search for Sita. Then Hanuman, the son of the Wind God, leapt across the ocean."
+        }
+      ]
+    },
+    {
+      "chapter": 5,
+      "title": "Sundara Kanda — The Beautiful Chapter",
+      "verses": [
+        {
+          "verse": 1,
+          "sanskrit": "ततो रावणनीतायाः सीतायाः शत्रुकर्षणः ।\nइयेष पदमन्विच्छन् पवनात्मजसत्तमः ॥",
+          "translation": "Then the most excellent son of the Wind God, the tormentor of enemies, set out to find the trail of Sita, who had been carried away by Ravana."
+        },
+        {
+          "verse": 2,
+          "sanskrit": "स सागरमनाधृष्यं शतयोजनमायतम् ।\nअतिक्रम्य महातेजा हनुमान् मारुतात्मजः ॥",
+          "translation": "The mighty Hanuman, son of the Wind God, crossed the impassable ocean stretching a hundred yojanas wide."
+        },
+        {
+          "verse": 3,
+          "sanskrit": "लङ्कायां दृष्ट्वा वैदेहीं ध्यायन्तीं राममव्ययम् ।\nसम्प्रत्ययमुपागम्य सूचयामास मैथिलीम् ॥",
+          "translation": "In Lanka, he found Vaidehi (Sita) meditating on the imperishable Rama. Gaining her trust, he identified himself to the princess of Mithila."
+        },
+        {
+          "verse": 4,
+          "sanskrit": "अशोकवनिकायां तां दृष्ट्वा रामप्रियां प्रभुः ।\nमुद्रिकां राघवस्यैव सम्प्रदर्श्य ततः कपिः ॥",
+          "translation": "In the Ashoka grove, the lord of monkeys found Rama's beloved and showed her the signet ring of Raghava."
+        }
+      ]
+    },
+    {
+      "chapter": 6,
+      "title": "Yuddha Kanda — The Battle",
+      "verses": [
+        {
+          "verse": 1,
+          "sanskrit": "ततो युद्धे महाघोरे रामरावणयोर्भवत् ।\nदेवासुरसमं युद्धमद्भुतं लोकसाक्षिकम् ॥",
+          "translation": "Then a great and terrible battle occurred between Rama and Ravana — a marvelous war rivaling the battles of gods and demons, witnessed by the world."
+        },
+        {
+          "verse": 2,
+          "sanskrit": "रावणं निहत्य रामो लब्ध्वा सीतां यशस्विनीम् ।\nपुष्पकेण विमानेन ननन्द सहलक्ष्मणः ॥",
+          "translation": "Having slain Ravana and won back the glorious Sita, Rama, together with Lakshmana, rejoiced in the Pushpaka aerial chariot."
+        },
+        {
+          "verse": 3,
+          "sanskrit": "अयोध्यां प्राप्य राजानम् अभिषिच्य यथाविधि ।\nराज्यं कारयामास लोकानां हितकाम्यया ॥",
+          "translation": "Returning to Ayodhya and being consecrated as king according to the sacred rites, Rama ruled the kingdom for the welfare of all beings."
+        }
+      ]
+    },
+    {
+      "chapter": 7,
+      "title": "Uttara Kanda — The Final Book",
+      "verses": [
+        {
+          "verse": 1,
+          "sanskrit": "रामराज्ये जगत् सर्वं सुखिनः सर्वे जनाः ।\nधर्मपालनतत्पराः सर्वे सत्यपरायणाः ॥",
+          "translation": "In the reign of Rama, the entire world was happy, all people were devoted to upholding dharma and committed to truth."
+        },
+        {
+          "verse": 2,
+          "sanskrit": "नालोक्यते जनपदे रोगिणो वा कृशः क्वचित् ।\nन च स्मर्यते दुःखं राज्ये रामस्य धीमतः ॥",
+          "translation": "In the kingdom, there were no sick or emaciated people to be seen anywhere, and sorrow was unknown in the realm of the wise Rama."
+        }
+      ]
+    }
+  ]
+}
