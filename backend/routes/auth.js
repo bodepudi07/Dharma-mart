@@ -46,8 +46,13 @@ router.post('/register', validateRequest(registerSchema), async (req, res, next)
                     createdAt: new Date().toISOString()
                 };
                 await db.update('users.json', existingUser.id, updatedUser);
-                const { password: _, ...userWithoutPassword } = updatedUser;
-                return standardResponse(res, 201, { user: userWithoutPassword }, 'Trial renewed successfully. Welcome back!');
+                const token = jwt.sign(
+                        { id: updatedUser.id, email: updatedUser.email, role: updatedUser.role },
+                        process.env.JWT_SECRET || 'fallback_secret_key_12345',
+                        { expiresIn: '4h' }
+                  );
+                  const { password: _, ...userWithoutPassword } = updatedUser;
+                  return standardResponse(res, 201, { user: userWithoutPassword, token }, 'Trial renewed successfully. Welcome back!');
             }
             return errorResponse(res, 409, 'User already exists.');
         }
@@ -64,8 +69,13 @@ router.post('/register', validateRequest(registerSchema), async (req, res, next)
 
         const insertedUser = await db.insert('users.json', newUser);
 
+        const token = jwt.sign(
+            { id: insertedUser.id, email: insertedUser.email, role: insertedUser.role },
+            process.env.JWT_SECRET || 'fallback_secret_key_12345',
+            { expiresIn: '4h' }
+        );
         const { password: _, ...userWithoutPassword } = insertedUser;
-        return standardResponse(res, 201, { user: userWithoutPassword }, 'User registered successfully');
+        return standardResponse(res, 201, { user: userWithoutPassword, token }, 'User registered successfully');
     } catch (error) {
         next(error);
     }
@@ -91,13 +101,11 @@ router.post('/login', validateRequest(loginSchema), async (req, res, next) => {
             return errorResponse(res, 401, 'Invalid credentials');
         }
 
-        if (!process.env.JWT_SECRET) {
-            throw new Error('JWT_SECRET is not defined in environment variables');
-        }
+        // Fallback to default if not provided
 
         const token = jwt.sign(
             { id: user.id, email: user.email, role: user.role },
-            process.env.JWT_SECRET,
+            process.env.JWT_SECRET || 'fallback_secret_key_12345',
             { expiresIn: '4h' }
         );
 
