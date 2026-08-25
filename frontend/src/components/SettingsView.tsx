@@ -1,4 +1,4 @@
-﻿import React, { useState, useMemo } from 'react';
+import React, { useState, useMemo } from 'react';
 import { User, I18nContent, Language, Task, Category } from '../types';
 import { useAuth } from '../contexts/AuthContext';
 import { useToast } from '../contexts/ToastContext';
@@ -41,7 +41,7 @@ const SettingsCard = ({ title, icon, children, actionButton }: { title: string, 
 export const SettingsView = ({ user, t, currentLang, setLang, tasks, deleteTask, categories, addCategory, updateCategory, deleteCategory, notificationPermission, requestNotificationPermission }: SettingsViewProps) => {
     const { updateUser, logout, deleteAccount, isLoading } = useAuth();
     const { addToast } = useToast();
-    const { theme, setTheme } = useTheme();
+    const { theme, setTheme, ishtaDevata, setIshtaDevata, atmosphereMode, setAtmosphereMode, festivalMode, setFestivalMode } = useTheme();
     const { openModal, closeModal } = useModal();
     const [name, setName] = useState(user.name);
     const [avatarUrl, setAvatarUrl] = useState(user.avatarUrl || '');
@@ -158,13 +158,62 @@ export const SettingsView = ({ user, t, currentLang, setLang, tasks, deleteTask,
                     {/* Column 2 */}
                     <div className="space-y-8">
                         <SettingsCard title={t.appearanceSettings} icon={<Icon name="chakra" className="w-7 h-7 text-primary" />}>
-                            <div className="grid grid-cols-3 gap-3">
-                                {CHAKRA_DATA.map(chakra => (
-                                    <button key={chakra.id} onClick={() => setTheme(chakra.name)} className={`p-3 rounded-lg text-center transition-all ${theme.id === chakra.id ? 'ring-2 ring-offset-2 ring-primary' : ''}`}>
-                                        <div className="w-10 h-10 rounded-full mx-auto mb-1" style={{ backgroundColor: chakra.color }}></div>
-                                        <span className="text-xs font-semibold">{chakra.name}</span>
-                                    </button>
-                                ))}
+                            <div className="space-y-6">
+                                <div>
+                                    <label className="block text-sm font-bold text-primary mb-2">Chakra Theme</label>
+                                    <div className="grid grid-cols-3 gap-2">
+                                        {CHAKRA_DATA.map(chakra => (
+                                            <button key={chakra.id} onClick={() => setTheme(chakra.name)} className={`p-2 rounded-lg text-center transition-all border border-stone-200/50 hover:bg-stone-50 ${theme.id === chakra.id ? 'ring-2 ring-offset-1 ring-primary border-transparent' : ''}`}>
+                                                <div className="w-6 h-6 rounded-full mx-auto mb-1" style={{ backgroundColor: chakra.color }}></div>
+                                                <span className="text-[10px] font-semibold">{chakra.name}</span>
+                                            </button>
+                                        ))}
+                                    </div>
+                                </div>
+
+                                <div className="border-t border-stone-100 pt-4 space-y-4">
+                                    <div>
+                                        <label htmlFor="ishtaDevata" className="block text-sm font-bold text-primary mb-1">Ishta Devata</label>
+                                        <select 
+                                            id="ishtaDevata"
+                                            value={ishtaDevata}
+                                            onChange={(e) => setIshtaDevata(e.target.value)}
+                                            className="w-full p-2 rounded-lg border-2 border-stone-200 bg-white text-sm"
+                                        >
+                                            {['Shiva', 'Krishna', 'Ram', 'Vishnu', 'Hanuman', 'Lakshmi', 'Durga', 'Saraswati', 'Ganesh', 'Murugan', 'Ayyappa'].map(devata => (
+                                                <option key={devata} value={devata}>{devata}</option>
+                                            ))}
+                                        </select>
+                                    </div>
+
+                                    <div>
+                                        <label htmlFor="atmosphere" className="block text-sm font-bold text-primary mb-1">Atmosphere (Time of Day)</label>
+                                        <select 
+                                            id="atmosphere"
+                                            value={atmosphereMode}
+                                            onChange={(e) => setAtmosphereMode(e.target.value as any)}
+                                            className="w-full p-2 rounded-lg border-2 border-stone-200 bg-white text-sm"
+                                        >
+                                            {['Automatic', 'Dawn', 'Morning', 'Day', 'Sunset', 'Night'].map(mode => (
+                                                <option key={mode} value={mode}>{mode}</option>
+                                            ))}
+                                        </select>
+                                    </div>
+
+                                    <div>
+                                        <label htmlFor="festival" className="block text-sm font-bold text-primary mb-1">Festival Theme Override</label>
+                                        <select 
+                                            id="festival"
+                                            value={festivalMode}
+                                            onChange={(e) => setFestivalMode(e.target.value as any)}
+                                            className="w-full p-2 rounded-lg border-2 border-stone-200 bg-white text-sm"
+                                        >
+                                            {['None', 'Diwali', 'Mahashivaratri', 'Janmashtami', 'Rama Navami', 'Hanuman Jayanti', 'Navaratri'].map(fest => (
+                                                <option key={fest} value={fest}>{fest === 'None' ? 'No Active Festival' : fest}</option>
+                                            ))}
+                                        </select>
+                                    </div>
+                                </div>
                             </div>
                         </SettingsCard>
 

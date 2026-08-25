@@ -1,4 +1,4 @@
-﻿import React, { useRef } from 'react';
+import React, { useRef } from 'react';
 import { I18nContent, Temple, Book, Pooja } from '../types';
 import { AIGuru } from './AIGuru';
 import { useFocusTrap } from '../hooks/useFocusTrap';
@@ -43,10 +43,7 @@ export const AIGuruModal = ({ onClose, t, temple, book, pooja, pillar }: AIGuruM
 
 
     const handleBuyItem = () => {
-        onClose();
-        setTimeout(() => {
-            openModal('aiShopper');
-        }, 100);
+        window.location.hash = '/mart';
     };
 
     return (

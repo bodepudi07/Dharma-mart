@@ -1,6 +1,7 @@
-﻿
+
 import React from 'react';
-import { User, I18nContent } from '../types';
+import { User, I18nContent, Language } from '../types';
+import { LanguageSwitcher } from './LanguageSwitcher';
 import { Icon } from './Icon';
 import { useTheme } from '../contexts/ThemeContext';
 import { NotificationBell } from './NotificationBell';
@@ -8,13 +9,22 @@ import { NotificationBell } from './NotificationBell';
 export interface HeaderProps {
     currentUser: User | null;
     t: I18nContent;
+    currentLang: Language;
+    setLang: (lang: Language) => void;
     onMenuClick: () => void;
     onUserClick: () => void;
     onLoginClick: () => void;
 }
 
-export const Header = ({ currentUser, t, onMenuClick, onUserClick, onLoginClick }: HeaderProps) => {
+export const Header = ({ currentUser, t, currentLang, setLang, onMenuClick, onUserClick, onLoginClick }: HeaderProps) => {
     const { theme } = useTheme();
+    const [punya, setPunya] = React.useState(() => parseInt(localStorage.getItem('dd-punya-balance') || '0', 10));
+
+    React.useEffect(() => {
+        const handleUpdate = () => setPunya(parseInt(localStorage.getItem('dd-punya-balance') || '0', 10));
+        window.addEventListener('punyaUpdated', handleUpdate);
+        return () => window.removeEventListener('punyaUpdated', handleUpdate);
+    }, []);
 
     return (
         <header
@@ -26,17 +36,33 @@ export const Header = ({ currentUser, t, onMenuClick, onUserClick, onLoginClick 
             </button>
             <div className="flex items-center gap-2 relative">
                 <div className="absolute inset-0 bg-primary/20 blur-lg rounded-full animate-pulse pointer-events-none"></div>
-                <Icon name="cosmic-logo" className="w-6 h-6 text-primary relative z-10 animate-slow-spin" />
-                <span className="font-serif font-bold text-lg text-transparent bg-clip-text bg-gradient-to-r from-primary to-secondary drop-shadow-sm tracking-tight relative z-10">{t.heroTitle}</span>
+                <Icon name="cosmic-logo" className="w-6 h-6 text-primary relative z-10 animate-slow-spin hidden sm:block" />
+                <span className="font-serif font-bold text-lg text-transparent bg-clip-text bg-gradient-to-r from-primary to-secondary drop-shadow-sm tracking-tight relative z-10 hidden sm:block">{t.heroTitle}</span>
             </div>
+            
+            <div className="hidden md:flex flex-1 mx-4 justify-end">
+                 {/* Desktop header space if needed */}
+            </div>
+
+            <div className="flex items-center gap-3">
+                <LanguageSwitcher currentLang={currentLang} setLang={setLang} />
             {currentUser ? (
                 <div className="flex items-center gap-3">
                     <div className="hidden sm:flex items-center gap-2 bg-stone-100 px-3 py-1.5 rounded-full border border-stone-200 shadow-inner">
-                        <Icon name="flame" className="w-4 h-4 text-orange-500" />
-                        <span className="text-xs font-bold text-stone-700">{currentUser.currentStreak || 0}</span>
+                        <span title="Punya Balance" className="flex items-center gap-1">
+                            <Icon name="sun" className="w-4 h-4 text-amber-500" />
+                            <span className="text-xs font-bold text-stone-700">{punya}</span>
+                        </span>
                         <div className="w-px h-4 bg-stone-300 mx-1"></div>
-                        <Icon name="star" className="w-4 h-4 text-amber-500" />
-                        <span className="text-xs font-bold text-stone-700">Lvl {currentUser.level || 1}</span>
+                        <span title="Daily Streak" className="flex items-center gap-1">
+                            <Icon name="flame" className="w-4 h-4 text-orange-500" />
+                            <span className="text-xs font-bold text-stone-700">{currentUser.currentStreak || 0}</span>
+                        </span>
+                        <div className="w-px h-4 bg-stone-300 mx-1"></div>
+                        <span title="Level" className="flex items-center gap-1">
+                            <Icon name="star" className="w-4 h-4 text-amber-500" />
+                            <span className="text-xs font-bold text-stone-700">Lvl {currentUser.level || 1}</span>
+                        </span>
                     </div>
                     <NotificationBell />
                     <button onClick={onUserClick} className="p-1 relative group" aria-label="View profile">
@@ -55,6 +81,7 @@ export const Header = ({ currentUser, t, onMenuClick, onUserClick, onLoginClick 
                     <span className="relative z-10">{t.login}</span>
                 </button>
             )}
+            </div>
         </header>
     );
 };

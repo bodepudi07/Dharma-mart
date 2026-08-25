@@ -1,4 +1,4 @@
-﻿// Import required modules
+// Import required modules
 import dotenv from 'dotenv';
 import express from 'express';
 import cors from 'cors';
@@ -30,6 +30,17 @@ import growthRoute from './routes/growth.js';
 import postsRoute from './routes/posts.js';
 import sankalpasRoute from './routes/sankalpas.js';
 
+// Dharma Mart routes
+import martPujasRoute from './routes/mart-pujas.js';
+import martPanditsRoute from './routes/mart-pandits.js';
+import martBookingsRoute from './routes/mart-bookings.js';
+import martProductsRoute from './routes/mart-products.js';
+import martCategoriesRoute from './routes/mart-categories.js';
+import martVendorsRoute from './routes/mart-vendors.js';
+import martReviewsRoute from './routes/mart-reviews.js';
+import martWishlistRoute from './routes/mart-wishlist.js';
+import martOrdersRoute from './routes/mart-orders.js';
+
 // Create express app
 const app = express();
 const PORT = process.env.PORT || 5000;
@@ -53,19 +64,26 @@ app.use(helmet({
 // CORS Configuration - restrict in production
 const allowedOrigins = isProduction
     ? [process.env.FRONTEND_URL || 'https://dharmasetu.com'].filter(Boolean)
-    : ['http://localhost:3000', 'http://localhost:4173', 'http://127.0.0.1:3000'];
+    : [
+        'http://localhost:3000',
+        'http://localhost:3001',
+        'http://localhost:4173',
+        'http://127.0.0.1:3000',
+        'http://127.0.0.1:3001',
+        'http://127.0.0.1:4173'
+    ];
 
 app.use(cors({
     origin: (origin, callback) => {
-        // Allow requests with no origin (mobile apps, Postman, server-to-server)
-        if (!origin || allowedOrigins.includes(origin)) {
+        // Allow requests with no origin (mobile apps, Postman, server-to-server) or localhost origins in dev
+        if (!origin || allowedOrigins.includes(origin) || (!isProduction && /^http:\/\/(localhost|127\.0\.0\.1):\d+$/.test(origin))) {
             callback(null, true);
         } else {
             callback(new Error('Not allowed by CORS'));
         }
     },
     credentials: true,
-    methods: ['GET', 'POST', 'PUT', 'DELETE', 'PATCH'],
+    methods: ['GET', 'POST', 'PUT', 'DELETE', 'PATCH', 'OPTIONS'],
     allowedHeaders: ['Content-Type', 'Authorization', 'X-AI-Session-ID', 'X-Session-ID'],
 }));
 
@@ -153,6 +171,17 @@ app.use('/api/chats', chatsRoute);
 app.use('/api/growth', growthRoute);
 app.use('/api/posts', postsRoute);
 app.use('/api/sankalpas', sankalpasRoute);
+
+// Dharma Mart API Routes
+app.use('/api/mart/pujas', martPujasRoute);
+app.use('/api/mart/pandits', martPanditsRoute);
+app.use('/api/mart/bookings', martBookingsRoute);
+app.use('/api/mart/products', martProductsRoute);
+app.use('/api/mart/categories', martCategoriesRoute);
+app.use('/api/mart/vendors', martVendorsRoute);
+app.use('/api/mart/reviews', martReviewsRoute);
+app.use('/api/mart/wishlist', martWishlistRoute);
+app.use('/api/mart/orders', martOrdersRoute);
 
 // Serve frontend build (for production)
 if (isProduction) {

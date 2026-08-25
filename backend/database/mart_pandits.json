@@ -1,0 +1,539 @@
+[
+  {
+    "id": 1,
+    "name": "Pandit Raghunath Sharma",
+    "photo": "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=300",
+    "title": "Senior Vedic Pandit",
+    "bio": "With over 25 years of experience in performing Vedic rituals, Pandit Raghunath Sharma is a renowned scholar of Sanskrit and Vedic traditions. Trained at Kashi Vidyapeeth, he specializes in elaborate Homams and Abhishekams.",
+    "languages": [
+      "Hindi",
+      "Sanskrit",
+      "Telugu",
+      "English"
+    ],
+    "experience": 25,
+    "location": "Hyderabad",
+    "serviceArea": [
+      "Hyderabad",
+      "Secunderabad",
+      "Rangareddy"
+    ],
+    "specializations": [
+      "Rudrabhishekam",
+      "Homams",
+      "Griha Pravesh",
+      "Navagraha Shanti"
+    ],
+    "sampradaya": "Smarta",
+    "tradition": "north-indian",
+    "pujaIds": [
+      1,
+      2,
+      3,
+      4,
+      5,
+      7,
+      10,
+      12,
+      15
+    ],
+    "hourlyRate": 1500,
+    "rating": 4.9,
+    "reviewCount": 187,
+    "completedPujas": 1250,
+    "verified": true,
+    "senior": true,
+    "availability": {
+      "monday": true,
+      "tuesday": true,
+      "wednesday": true,
+      "thursday": true,
+      "friday": true,
+      "saturday": true,
+      "sunday": true
+    },
+    "status": "active",
+    "joinedAt": "2024-01-01T00:00:00.000Z"
+  },
+  {
+    "id": 2,
+    "name": "Pandit Venkata Subrahmanyam",
+    "photo": "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=300",
+    "title": "Vedic Scholar & Purohit",
+    "bio": "A third-generation Vedic priest from a traditional Telugu Brahmin family. Pandit Venkata Subrahmanyam is known for his precise Sanskrit pronunciation and deep knowledge of Telugu traditions including Varalakshmi Vratam and Satyanarayan Puja.",
+    "languages": [
+      "Telugu",
+      "Sanskrit",
+      "Hindi",
+      "English"
+    ],
+    "experience": 18,
+    "location": "Hyderabad",
+    "serviceArea": [
+      "Hyderabad",
+      "Secunderabad",
+      "Medchal",
+      "Shamshabad"
+    ],
+    "specializations": [
+      "Satyanarayan Vratam",
+      "Varalakshmi Vratam",
+      "Seemantham",
+      "Aksharabhyasam"
+    ],
+    "sampradaya": "Vaishnava",
+    "tradition": "telugu",
+    "pujaIds": [
+      1,
+      2,
+      3,
+      5,
+      6,
+      8,
+      9,
+      13,
+      14
+    ],
+    "hourlyRate": 1200,
+    "rating": 4.8,
+    "reviewCount": 145,
+    "completedPujas": 890,
+    "verified": true,
+    "senior": true,
+    "availability": {
+      "monday": true,
+      "tuesday": true,
+      "wednesday": true,
+      "thursday": true,
+      "friday": true,
+      "saturday": true,
+      "sunday": true
+    },
+    "status": "active",
+    "joinedAt": "2024-03-15T00:00:00.000Z"
+  },
+  {
+    "id": 3,
+    "name": "Pandit Sundaresan Iyer",
+    "photo": "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=300",
+    "title": "Tamil Vedic Purohit",
+    "bio": "Pandit Sundaresan hails from a traditional Tamil Iyer family and trained at the Kanchi Kamakoti Peetham. He is an expert in Tamil Brahmin traditions, Agama procedures, and specializes in temple-style rituals at home.",
+    "languages": [
+      "Tamil",
+      "Sanskrit",
+      "English"
+    ],
+    "experience": 15,
+    "location": "Chennai",
+    "serviceArea": [
+      "Chennai",
+      "Tambaram",
+      "Chengalpattu"
+    ],
+    "specializations": [
+      "Varalakshmi Vratam",
+      "Navratri Golu",
+      "Aksharabhyasam",
+      "Seemantham"
+    ],
+    "sampradaya": "Smarta",
+    "tradition": "tamil",
+    "pujaIds": [
+      1,
+      2,
+      3,
+      6,
+      9,
+      10,
+      13,
+      14
+    ],
+    "hourlyRate": 1000,
+    "rating": 4.7,
+    "reviewCount": 98,
+    "completedPujas": 560,
+    "verified": true,
+    "senior": false,
+    "availability": {
+      "monday": true,
+      "tuesday": true,
+      "wednesday": false,
+      "thursday": true,
+      "friday": true,
+      "saturday": true,
+      "sunday": true
+    },
+    "status": "active",
+    "joinedAt": "2024-06-01T00:00:00.000Z"
+  },
+  {
+    "id": 4,
+    "name": "Pandit Ganesh Bhat",
+    "photo": "https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?w=300",
+    "title": "Kannada Vedic Priest",
+    "bio": "Born in Udupi, Karnataka, Pandit Ganesh Bhat carries the rich tradition of Madhwa Vaishnava rituals. Expert in both Smartha and Madhwa procedures, he brings authenticity and devotion to every ceremony.",
+    "languages": [
+      "Kannada",
+      "Sanskrit",
+      "Hindi",
+      "English"
+    ],
+    "experience": 12,
+    "location": "Bangalore",
+    "serviceArea": [
+      "Bangalore",
+      "Mysore"
+    ],
+    "specializations": [
+      "Satyanarayan Puja",
+      "Griha Pravesh",
+      "Ganesh Chaturthi",
+      "Ayush Homam"
+    ],
+    "sampradaya": "Madhwa",
+    "tradition": "kannada",
+    "pujaIds": [
+      1,
+      2,
+      3,
+      4,
+      5,
+      9,
+      12
+    ],
+    "hourlyRate": 1100,
+    "rating": 4.8,
+    "reviewCount": 76,
+    "completedPujas": 430,
+    "verified": true,
+    "senior": false,
+    "availability": {
+      "monday": true,
+      "tuesday": true,
+      "wednesday": true,
+      "thursday": true,
+      "friday": true,
+      "saturday": true,
+      "sunday": false
+    },
+    "status": "active",
+    "joinedAt": "2024-08-01T00:00:00.000Z"
+  },
+  {
+    "id": 5,
+    "name": "Pandit Devendra Joshi",
+    "photo": "https://images.unsplash.com/photo-1560250097-0b93528c311a?w=300",
+    "title": "Maharashtrian Vedic Pandit",
+    "bio": "A Pune-based Vedic pandit with expertise in Marathi traditions and Deshastha Rigvedi procedures. Known for clear explanations of ritual significance in Marathi and Hindi, making the puja meaningful for every family.",
+    "languages": [
+      "Marathi",
+      "Hindi",
+      "Sanskrit",
+      "English"
+    ],
+    "experience": 20,
+    "location": "Pune",
+    "serviceArea": [
+      "Pune",
+      "Mumbai",
+      "Thane"
+    ],
+    "specializations": [
+      "Ganesh Chaturthi",
+      "Satyanarayan Puja",
+      "Griha Pravesh",
+      "Navratri"
+    ],
+    "sampradaya": "Smarta",
+    "tradition": "marathi",
+    "pujaIds": [
+      1,
+      2,
+      3,
+      5,
+      10,
+      11,
+      15
+    ],
+    "hourlyRate": 1300,
+    "rating": 4.9,
+    "reviewCount": 112,
+    "completedPujas": 780,
+    "verified": true,
+    "senior": true,
+    "availability": {
+      "monday": true,
+      "tuesday": true,
+      "wednesday": true,
+      "thursday": true,
+      "friday": true,
+      "saturday": true,
+      "sunday": true
+    },
+    "status": "active",
+    "joinedAt": "2024-02-15T00:00:00.000Z"
+  },
+  {
+    "id": 6,
+    "name": "Pandit Aditya Trivedi",
+    "photo": "https://images.unsplash.com/photo-1519085360753-af0119f7cbe7?w=300",
+    "title": "Young Vedic Scholar",
+    "bio": "A young and dynamic Vedic scholar who combines traditional knowledge with modern presentation. Trained at Banaras Hindu University, he makes rituals accessible and meaningful for the younger generation while maintaining complete authenticity.",
+    "languages": [
+      "Hindi",
+      "Sanskrit",
+      "English"
+    ],
+    "experience": 8,
+    "location": "Delhi NCR",
+    "serviceArea": [
+      "Delhi",
+      "Noida",
+      "Gurgaon",
+      "Ghaziabad"
+    ],
+    "specializations": [
+      "Satyanarayan Puja",
+      "Lakshmi Puja",
+      "Sundara Kanda",
+      "Maha Mrityunjaya"
+    ],
+    "sampradaya": "Smarta",
+    "tradition": "north-indian",
+    "pujaIds": [
+      1,
+      3,
+      4,
+      7,
+      8,
+      11,
+      15
+    ],
+    "hourlyRate": 800,
+    "rating": 4.6,
+    "reviewCount": 54,
+    "completedPujas": 280,
+    "verified": true,
+    "senior": false,
+    "availability": {
+      "monday": true,
+      "tuesday": true,
+      "wednesday": true,
+      "thursday": false,
+      "friday": true,
+      "saturday": true,
+      "sunday": true
+    },
+    "status": "active",
+    "joinedAt": "2025-01-01T00:00:00.000Z"
+  },
+  {
+    "id": 7,
+    "name": "Pandit Narasimha Rao",
+    "photo": "https://images.unsplash.com/photo-1504257432389-52343af06ae3?w=300",
+    "title": "Senior Telugu Purohit",
+    "bio": "A highly respected Telugu Brahmin priest with 30+ years of experience. Pandit Narasimha Rao has performed over 2000 pujas and is especially sought after for complex life-event ceremonies and elaborate Homams.",
+    "languages": [
+      "Telugu",
+      "Sanskrit",
+      "Hindi"
+    ],
+    "experience": 32,
+    "location": "Vijayawada",
+    "serviceArea": [
+      "Vijayawada",
+      "Guntur",
+      "Amaravati",
+      "Hyderabad"
+    ],
+    "specializations": [
+      "Griha Pravesh",
+      "Seemantham",
+      "Ayush Homam",
+      "Navagraha Shanti"
+    ],
+    "sampradaya": "Vaishnava",
+    "tradition": "telugu",
+    "pujaIds": [
+      1,
+      4,
+      5,
+      6,
+      12,
+      13,
+      14,
+      15
+    ],
+    "hourlyRate": 1500,
+    "rating": 5,
+    "reviewCount": 203,
+    "completedPujas": 2100,
+    "verified": true,
+    "senior": true,
+    "availability": {
+      "monday": true,
+      "tuesday": true,
+      "wednesday": true,
+      "thursday": true,
+      "friday": true,
+      "saturday": true,
+      "sunday": true
+    },
+    "status": "active",
+    "joinedAt": "2023-06-01T00:00:00.000Z"
+  },
+  {
+    "id": 8,
+    "name": "Vidushi Lakshmi Devi",
+    "photo": "https://images.unsplash.com/photo-1580489944761-15a19d654956?w=300",
+    "title": "Lady Vedic Scholar",
+    "bio": "One of the few women Vedic scholars performing pujas professionally. Vidushi Lakshmi Devi trained under Swami Dayananda Saraswati's lineage and brings a unique warmth and depth to ceremonies, especially those centered around women and children.",
+    "languages": [
+      "Tamil",
+      "Sanskrit",
+      "English",
+      "Telugu"
+    ],
+    "experience": 10,
+    "location": "Chennai",
+    "serviceArea": [
+      "Chennai",
+      "Bangalore",
+      "Hyderabad"
+    ],
+    "specializations": [
+      "Varalakshmi Vratam",
+      "Seemantham",
+      "Navratri",
+      "Lakshmi Puja"
+    ],
+    "sampradaya": "Smarta",
+    "tradition": "tamil",
+    "pujaIds": [
+      3,
+      6,
+      9,
+      10,
+      13
+    ],
+    "hourlyRate": 1200,
+    "rating": 4.9,
+    "reviewCount": 89,
+    "completedPujas": 420,
+    "verified": true,
+    "senior": false,
+    "availability": {
+      "monday": true,
+      "tuesday": true,
+      "wednesday": true,
+      "thursday": true,
+      "friday": true,
+      "saturday": true,
+      "sunday": false
+    },
+    "status": "active",
+    "joinedAt": "2024-09-01T00:00:00.000Z"
+  },
+  {
+    "id": 9,
+    "name": "Pandit Vishwanath Dikshitar",
+    "photo": "https://images.unsplash.com/photo-1463453091185-61582044d556?w=300",
+    "title": "Agama Specialist",
+    "bio": "A specialist in temple Agama procedures, Pandit Vishwanath brings authentic temple-quality rituals to home pujas. Trained at Sri Rangam temple, he is an expert in elaborate Abhishekam ceremonies and deity installation rituals.",
+    "languages": [
+      "Tamil",
+      "Sanskrit",
+      "Telugu"
+    ],
+    "experience": 22,
+    "location": "Tiruchirappalli",
+    "serviceArea": [
+      "Tiruchirappalli",
+      "Madurai",
+      "Thanjavur",
+      "Chennai"
+    ],
+    "specializations": [
+      "Rudrabhishekam",
+      "Maha Mrityunjaya",
+      "Griha Pravesh",
+      "Deity Installation"
+    ],
+    "sampradaya": "Vaishnava",
+    "tradition": "tamil",
+    "pujaIds": [
+      5,
+      7,
+      12,
+      15
+    ],
+    "hourlyRate": 1400,
+    "rating": 4.8,
+    "reviewCount": 67,
+    "completedPujas": 650,
+    "verified": true,
+    "senior": true,
+    "availability": {
+      "monday": true,
+      "tuesday": false,
+      "wednesday": true,
+      "thursday": true,
+      "friday": true,
+      "saturday": true,
+      "sunday": true
+    },
+    "status": "active",
+    "joinedAt": "2024-04-01T00:00:00.000Z"
+  },
+  {
+    "id": 10,
+    "name": "Pandit Ramakrishna Bhat",
+    "photo": "https://images.unsplash.com/photo-1492562080023-ab3db95bfbce?w=300",
+    "title": "Havana Karma Specialist",
+    "bio": "A Havana Karma (fire ritual) specialist from the Tulu tradition of Karnataka. Pandit Ramakrishna is known for conducting elaborate Homams with precise mantra recitation and traditional fire altar arrangements.",
+    "languages": [
+      "Kannada",
+      "Tulu",
+      "Sanskrit",
+      "Hindi"
+    ],
+    "experience": 16,
+    "location": "Mangalore",
+    "serviceArea": [
+      "Mangalore",
+      "Udupi",
+      "Bangalore"
+    ],
+    "specializations": [
+      "Ayush Homam",
+      "Maha Mrityunjaya Homam",
+      "Navagraha Shanti",
+      "Sudarshana Homam"
+    ],
+    "sampradaya": "Madhwa",
+    "tradition": "kannada",
+    "pujaIds": [
+      4,
+      7,
+      12,
+      15
+    ],
+    "hourlyRate": 1100,
+    "rating": 4.7,
+    "reviewCount": 58,
+    "completedPujas": 390,
+    "verified": true,
+    "senior": false,
+    "availability": {
+      "monday": true,
+      "tuesday": true,
+      "wednesday": true,
+      "thursday": true,
+      "friday": true,
+      "saturday": true,
+      "sunday": true
+    },
+    "status": "active",
+    "joinedAt": "2025-02-01T00:00:00.000Z"
+  }
+]

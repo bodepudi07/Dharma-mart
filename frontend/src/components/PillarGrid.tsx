@@ -1,4 +1,4 @@
-﻿import React from 'react';
+import React from 'react';
 import { motion } from 'framer-motion';
 import { Icon } from './Icon';
 import { useModal } from '../contexts/ModalContext';
@@ -63,7 +63,7 @@ export const PillarGrid = ({ t }: PillarGridProps) => {
             color: "from-emerald-500/20 to-emerald-600/20",
             span: "md:col-span-2",
             details: "Smart Puja Kits: Auto-suggested samagri for rituals. Pure Essentials: Lab-tested Kumkum, Camphor, and A2 Ghee.",
-            action: "aiShopper"
+            action: "store"
         },
         {
             id: 5,
@@ -216,8 +216,8 @@ export const PillarGrid = ({ t }: PillarGridProps) => {
             case 'poojas':
                 window.location.hash = '/poojas';
                 break;
-            case 'aiShopper':
-                openModal('aiShopper');
+            case 'mart':
+                window.location.hash = '/mart';
                 break;
             case 'temples':
                 window.location.hash = '/temples';

@@ -1,0 +1,120 @@
+[
+  {
+    "id": 1,
+    "pujaId": 1,
+    "pujaName": "Satyanarayan Vratam",
+    "tiers": {
+      "essential": {
+        "items": [
+          { "name": "Haldi (Turmeric) Powder", "quantity": "50g", "why": "Used for Ganapati puja at the start. Turmeric represents purity and is essential for making the Ganapati idol from turmeric paste." },
+          { "name": "Kumkum (Vermillion)", "quantity": "25g", "why": "Applied to the deity as a mark of auspiciousness. Represents Goddess Lakshmi's blessings." },
+          { "name": "Chandan (Sandalwood) Paste", "quantity": "20g", "why": "Applied to deity and devotees. Its cooling property symbolizes the calming presence of Lord Vishnu." },
+          { "name": "Akshata (Turmeric Rice)", "quantity": "200g", "why": "Unbroken turmeric-coated rice offered to the deity. Represents prosperity and completeness." },
+          { "name": "Coconut", "quantity": "2 pcs", "why": "Offered to Lord Vishnu. The three eyes of coconut represent the three eyes of Lord Shiva. Breaking it symbolizes breaking the ego." },
+          { "name": "Banana", "quantity": "1 dozen", "why": "Pure satvik fruit offered as naivedyam. Banana is considered the most sacred fruit in Hindu worship." },
+          { "name": "Betel Leaves (Tambulam)", "quantity": "10 pcs", "why": "Used in puja offerings and given as prasadam. Represents respect and is part of the 16 upacharas." },
+          { "name": "Betel Nuts (Supari)", "quantity": "10 pcs", "why": "Paired with betel leaves in offerings. Symbolizes the seed of creation." },
+          { "name": "Incense Sticks", "quantity": "1 pack", "why": "Dhoop offering purifies the atmosphere and represents the element of air (Vayu)." },
+          { "name": "Camphor", "quantity": "25g", "why": "For aarti. Camphor burns completely leaving no residue — symbolizing the dissolution of ego before God." },
+          { "name": "Cotton Wicks", "quantity": "1 pack", "why": "For lighting diyas. The flame represents knowledge dispelling darkness of ignorance." },
+          { "name": "Ghee", "quantity": "100ml", "why": "For diya and naivedyam. Pure cow ghee is the most satvik fuel for the sacred flame." },
+          { "name": "Puja Vidhi Booklet", "quantity": "1", "why": "Step-by-step puja instructions in your chosen regional language with Sanskrit mantras and their meaning." },
+          { "name": "Vrat Katha Book", "quantity": "1", "why": "The five sacred stories of Lord Satyanarayan that are read aloud during the puja. Reading the katha is an essential part of the vratam." }
+        ]
+      },
+      "complete": {
+        "additionalItems": [
+          { "name": "Yellow Thread (Mauli)", "quantity": "1 spool", "why": "Tied as protection thread after puja. Yellow is Lord Vishnu's color representing preservation." },
+          { "name": "Panchamrit Ingredients", "quantity": "Set", "why": "Milk, curd, honey, sugar, ghee — the five sacred nectars for deity abhishekam, representing the five elements." },
+          { "name": "Mango Leaves", "quantity": "5 pcs", "why": "Placed in the kalash (sacred pot). Mango leaves represent the wish-fulfilling tree and invite positive energy." },
+          { "name": "Yellow Cloth (Vastram)", "quantity": "1 pc", "why": "Deity clothing. Yellow represents knowledge and is Lord Vishnu's sacred color (Pitambara)." },
+          { "name": "5 Varieties of Fruits", "quantity": "1 basket", "why": "Offered as naivedyam. Five fruits represent the five elements and five senses being offered to God." },
+          { "name": "Sheera/Prasad Ingredients", "quantity": "Set", "why": "For preparing the traditional naivedyam (semolina halwa). This prasadam is distributed to all present after the katha." },
+          { "name": "Puja Kalash (Brass)", "quantity": "1 pc", "why": "The sacred pot filled with water, topped with coconut — represents the universe and is the seat of Lord Vishnu during the puja." },
+          { "name": "Rangoli/Muggulu Powder", "quantity": "1 pack", "why": "For decorating the puja area. Traditional floor art invites Goddess Lakshmi into the home." }
+        ]
+      },
+      "sampoorna": {
+        "additionalItems": [
+          { "name": "Premium Brass Puja Set", "quantity": "1 set", "why": "Complete brass puja items (thali, bell, diya, spoon) for an authentic traditional experience." },
+          { "name": "Silver Coin (Lakshmi-Narayan)", "quantity": "1 pc", "why": "Placed in the kalash. Silver represents the moon's energy and Lakshmi's blessings." },
+          { "name": "Fresh Flower Garlands", "quantity": "3 garlands", "why": "For deity decoration. Fresh flowers represent the devotee's pure heart offered to God." },
+          { "name": "Havan Samagri", "quantity": "500g", "why": "Sacred herbs for the fire ritual. The 21+ herbs purify the atmosphere and carry prayers to the heavens." },
+          { "name": "Premium Prasadam Box", "quantity": "10 pcs", "why": "For distributing blessed prasadam to neighbors and relatives — sharing divine blessings." }
+        ]
+      }
+    }
+  },
+  {
+    "id": 2,
+    "pujaId": 2,
+    "pujaName": "Ganesh Chaturthi Puja",
+    "tiers": {
+      "essential": {
+        "items": [
+          { "name": "Eco-Friendly Ganesh Murti", "quantity": "1 (8 inch)", "why": "Clay idol of Lord Ganesha. Eco-friendly ensures the idol dissolves naturally during visarjan without harming the environment." },
+          { "name": "Durva Grass", "quantity": "21 blades", "why": "Durva (Bermuda grass) is Lord Ganesha's most beloved offering. The 21 blades represent the 21 'offerings of the self.'" },
+          { "name": "21 Types of Patra (Leaves)", "quantity": "21 sets", "why": "Traditional offering of 21 different sacred leaves, each representing a different aspect of nature's bounty offered to Ganapati." },
+          { "name": "Modak Ingredients", "quantity": "1 set", "why": "Modak is Lord Ganesha's favorite sweet. Making modak at home is part of the devotional tradition." },
+          { "name": "Red Flowers", "quantity": "1 bundle", "why": "Red is Lord Ganesha's favorite color. Red hibiscus (japa pushpa) is especially dear to him." },
+          { "name": "Kumkum & Turmeric", "quantity": "50g each", "why": "Essential puja materials. Kumkum represents the third eye of wisdom, turmeric represents purity." },
+          { "name": "Coconut", "quantity": "2 pcs", "why": "Offered during puja and broken during visarjan as a symbol of surrendering the ego." },
+          { "name": "Incense & Camphor", "quantity": "1 set", "why": "For daily aarti during the festival. Morning and evening aarti is essential during Ganesh Chaturthi." }
+        ]
+      },
+      "complete": {
+        "additionalItems": [
+          { "name": "Premium Eco Murti (12 inch)", "quantity": "Upgrade", "why": "Larger, more detailed eco-friendly idol with traditional colors and ornaments." },
+          { "name": "Flower Decoration Set", "quantity": "1 set", "why": "Marigold and jasmine garlands for decorating the Ganesh mandap/altar." },
+          { "name": "Deity Vastram Set", "quantity": "1 set", "why": "Sacred cloth, shawl, and ornaments for dressing the Ganesh murti in the traditional style." },
+          { "name": "5 Fruit Varieties", "quantity": "1 basket", "why": "Pancha-phala (five fruits) offered to Ganapati representing the five elements." },
+          { "name": "Visarjan Kit", "quantity": "1 set", "why": "Includes portable immersion vessel for eco-friendly home visarjan with flower petals and turmeric water." }
+        ]
+      },
+      "sampoorna": {
+        "additionalItems": [
+          { "name": "Premium Painted Murti (18 inch)", "quantity": "Upgrade", "why": "Large, hand-painted eco-friendly idol with intricate traditional artwork." },
+          { "name": "Grand Mandap Decoration", "quantity": "1 set", "why": "Complete altar decoration with fabric, flowers, lights, and traditional banana leaf elements." },
+          { "name": "Daily Fresh Flowers (5/10 days)", "quantity": "5-10 sets", "why": "Fresh flower deliveries for each day of the festival to keep the altar beautiful and fragrant." },
+          { "name": "Multiple Modak Varieties", "quantity": "3 types", "why": "Traditional ukadiche modak, fried modak, and dry fruit modak — Lord Ganesha's favorite offerings." }
+        ]
+      }
+    }
+  },
+  {
+    "id": 3,
+    "pujaId": 5,
+    "pujaName": "Griha Pravesh Puja",
+    "tiers": {
+      "essential": {
+        "items": [
+          { "name": "Ganapati Puja Samagri", "quantity": "1 set", "why": "Every auspicious ceremony begins with Ganapati puja to remove obstacles from the new home." },
+          { "name": "Kalash Set", "quantity": "1", "why": "The sacred pot represents the universe. Placing it at the entrance invites positive cosmic energy." },
+          { "name": "Mango Leaves & Toran", "quantity": "1 set", "why": "Hung at the main entrance. Mango leaves purify the air entering the home and signify prosperity." },
+          { "name": "Milk", "quantity": "1 liter", "why": "The first thing to boil over in a new kitchen — symbolizing abundance overflowing in the new home." },
+          { "name": "Turmeric & Kumkum", "quantity": "100g", "why": "Applied at the entrance and throughout the home for purification and auspiciousness." },
+          { "name": "Coconut & Banana", "quantity": "2+1 dozen", "why": "Coconut is broken at the threshold. Bananas are offered for sweetness in the new beginning." },
+          { "name": "Rice & Coins", "quantity": "1kg + 5 coins", "why": "Rice represents food abundance, coins represent wealth — scattered at the entrance during pravesh." }
+        ]
+      },
+      "complete": {
+        "additionalItems": [
+          { "name": "Vastu Puja Samagri", "quantity": "1 set", "why": "Separate materials for Vastu Purusha worship — ensures the home's directional energies are balanced." },
+          { "name": "Navagraha Materials", "quantity": "1 set", "why": "9 grains and colored cloths for planetary peace — ensures celestial harmony in the new dwelling." },
+          { "name": "Havan Samagri", "quantity": "500g", "why": "Fire ritual purifies the new home of any residual negative energies from construction." },
+          { "name": "Lakshmi Puja Kit", "quantity": "1 set", "why": "Separate Lakshmi puja invites the Goddess of prosperity to permanently reside in the new home." },
+          { "name": "Entrance Flower Decoration", "quantity": "1 set", "why": "Marigold and mango leaf decoration at the main door — the first impression of divine welcome." },
+          { "name": "New Utensils Set", "quantity": "1 set (5 items)", "why": "New vessels used first for boiling milk — symbolizes that everything in the new home starts fresh and pure." }
+        ]
+      },
+      "sampoorna": {
+        "additionalItems": [
+          { "name": "Grand Rangoli Set", "quantity": "1", "why": "Large traditional floor art at entrance with sacred geometry patterns inviting Lakshmi." },
+          { "name": "Room Purification Kit", "quantity": "1", "why": "Sambrani, camphor, and herbs for smoking every room — an ancient Vedic air purification method." },
+          { "name": "Premium Brass Puja Set", "quantity": "1", "why": "New brass puja items for the home temple — starts the spiritual life in the new home with the best." },
+          { "name": "Premium Naivedyam & Sweets", "quantity": "For 20+ people", "why": "Enough blessed food and sweets for all guests attending the housewarming celebration." }
+        ]
+      }
+    }
+  }
+]

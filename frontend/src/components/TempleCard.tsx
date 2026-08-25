@@ -1,4 +1,3 @@
-﻿
 import React from 'react';
 import type { Temple, I18nContent } from '../types';
 import { CrowdLevelIndicator } from './CrowdLevelIndicator';
@@ -14,7 +13,6 @@ interface TempleCardProps {
     onVirtualDarshan: () => void;
     onViewImage: () => void;
     onAskGuru: () => void;
-    // FIX: Make Yatra plan props optional so TempleCard can be used in views without Yatra context.
     onToggleYatraPlan?: (temple: Temple) => void;
     isInYatraPlan?: boolean;
 }
@@ -43,9 +41,9 @@ export const TempleCard = ({ temple, t, onSelectTemple, onBookDarshan, onVirtual
             role="button"
             tabIndex={0}
             aria-label={`Explore details for ${temple.name}`}
-            className="card-spiritual group flex flex-col cursor-pointer h-full focus:outline-none focus-visible:ring-4 focus-visible:ring-primary/70 hover:shadow-[0_0_20px_rgba(234,88,12,0.4)] hover:-translate-y-1 transition-all duration-300 border border-transparent hover:border-primary/30"
+            className="teakwood-card flex flex-col cursor-pointer h-full focus:outline-none transition-all duration-300 rounded-[2rem] overflow-hidden group border border-[#C3A150]/20 hover:shadow-[0_12px_35px_rgba(184,120,52,0.08)]"
         >
-            <div className="relative overflow-hidden h-64 bg-stone-900">
+            <div className="relative overflow-hidden h-64 bg-stone-900 border-b border-[#C3A150]/20">
                 {status === 'loading' && (
                     <div className="absolute inset-0 flex items-center justify-center">
                         <Icon name="lotus" className="w-8 h-8 text-amber-600/40 animate-spin" />
@@ -57,39 +55,39 @@ export const TempleCard = ({ temple, t, onSelectTemple, onBookDarshan, onVirtual
                     onLoad={onLoad}
                     onError={onError}
                     onClick={(e) => handleActionClick(e, onViewImage)}
-                    className={`w-full h-full object-cover transform group-hover:scale-105 transition-all duration-700 ease-out cursor-pointer ${status === 'loading' ? 'opacity-0' : 'opacity-100'}`}
+                    className={`w-full h-full object-cover transform group-hover:scale-102 transition-all duration-700 ease-out cursor-pointer ${status === 'loading' ? 'opacity-0' : 'opacity-100'}`}
                     referrerPolicy="no-referrer"
                 />
                 <div className="absolute inset-0 pointer-events-none">
-                    <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent" />
-                    <div className="absolute top-4 right-4 pointer-events-auto">
-                        <CrowdLevelIndicator level={temple.crowdLevel} size="small" />
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent" />
+                  <div className="absolute top-4 right-4 pointer-events-auto">
+                    <CrowdLevelIndicator level={temple.crowdLevel} size="small" />
+                  </div>
+                  {temple.distance !== undefined && (
+                    <div className="absolute top-4 left-4 bg-[#FAF6EE]/90 backdrop-blur text-stone-700 text-[10px] font-bold tracking-widest uppercase px-3 py-1.5 rounded-xl border border-[#C3A150]/30 pointer-events-auto">
+                      {temple.distance.toFixed(1)} km
                     </div>
-                    {temple.distance !== undefined && (
-                        <div className="absolute top-4 left-4 bg-white/10 backdrop-blur-md text-white text-[10px] font-bold tracking-widest uppercase px-3 py-1.5 rounded-full border border-white/20 pointer-events-auto">
-                            {temple.distance.toFixed(1)} km
-                        </div>
-                    )}
-                    <div className="absolute bottom-4 left-4 right-4 text-white">
-                        <p className="text-[10px] uppercase tracking-widest font-bold opacity-70 mb-1">{temple.location}</p>
-                        <h3 className="text-xl font-serif font-bold leading-tight">{temple.name}</h3>
-                    </div>
+                  )}
+                  <div className="absolute bottom-4 left-4 right-4 text-white">
+                    <p className="text-[9px] uppercase tracking-widest font-mono font-bold opacity-75 mb-1">{temple.location}</p>
+                    <h3 className="text-xl font-serif font-bold leading-tight">{temple.name}</h3>
+                  </div>
                 </div>
             </div>
             <div className="p-6 flex flex-col flex-grow">
-                <p className="text-stone-500 text-sm mb-6 flex-grow line-clamp-2 leading-relaxed">{temple.history}</p>
+                <p className="text-stone-500 text-sm mb-6 flex-grow line-clamp-2 leading-relaxed font-serif italic font-light">{temple.history}</p>
 
-                <div className="space-y-4">
+                <div className="space-y-3">
                     <div className="grid grid-cols-2 gap-2">
                         <button
                             onClick={(e) => handleActionClick(e, onBookDarshan)}
-                            className="flex items-center justify-center gap-2 bg-stone-50 text-primary font-bold text-[10px] uppercase tracking-widest py-3 rounded-xl hover:bg-primary hover:text-white transition-all border border-primary/20"
+                            className="brass-inlay-btn flex items-center justify-center gap-2 font-serif font-bold text-xs py-2.5 rounded-xl transition-all"
                         >
                             Darshan
                         </button>
                         <button
                             onClick={(e) => handleActionClick(e, onVirtualDarshan)}
-                            className="flex items-center justify-center gap-2 bg-stone-50 text-primary font-bold text-[10px] uppercase tracking-widest py-3 rounded-xl hover:bg-primary hover:text-white transition-all border border-primary/20"
+                            className="bg-white text-stone-700 border border-[#C3A150]/35 hover:bg-stone-50 flex items-center justify-center gap-2 font-serif font-bold text-xs py-2.5 rounded-xl transition-all"
                         >
                             Virtual
                         </button>
@@ -97,19 +95,20 @@ export const TempleCard = ({ temple, t, onSelectTemple, onBookDarshan, onVirtual
 
                     <button
                         onClick={(e) => handleActionClick(e, onAskGuru)}
-                        className="w-full flex items-center justify-center gap-2 bg-primary/5 text-primary font-bold text-[10px] uppercase tracking-widest py-3 rounded-xl hover:bg-primary/10 transition-all border border-primary/10"
+                        className="w-full flex items-center justify-center gap-2 bg-amber-500/5 text-amber-800 font-serif font-bold text-xs py-2.5 rounded-xl hover:bg-amber-500/10 transition-all border border-[#C3A150]/20"
                     >
-                        <Icon name="cosmic-logo" className="w-3 h-3" />
-                        Ask Dharma Guru
+                        <Icon name="cosmic-logo" className="w-3.5 h-3.5" />
+                        <span>Ask Dharma Guru</span>
                     </button>
 
                     {onToggleYatraPlan && isInYatraPlan !== undefined && (
                         <button
                             onClick={(e) => handleActionClick(e, () => onToggleYatraPlan(temple))}
-                            className={`w-full py-3 rounded-xl font-bold text-[10px] uppercase tracking-widest transition-all shadow-sm ${isInYatraPlan
-                                ? 'bg-green-500 text-white flex items-center justify-center gap-2'
-                                : 'bg-primary text-white hover:brightness-110'
-                                }`}
+                            className={`w-full py-2.5 rounded-xl font-serif font-bold text-xs transition-all shadow-sm ${
+                              isInYatraPlan
+                                ? 'bg-emerald-600 text-white flex items-center justify-center gap-2'
+                                : 'brass-inlay-btn'
+                            }`}
                         >
                             {isInYatraPlan ? (
                                 <>
@@ -125,3 +124,4 @@ export const TempleCard = ({ temple, t, onSelectTemple, onBookDarshan, onVirtual
         </div>
     );
 };
+export default TempleCard;

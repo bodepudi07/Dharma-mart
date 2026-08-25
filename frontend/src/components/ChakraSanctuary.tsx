@@ -132,8 +132,12 @@ class ChakraAudioEngine {
                     this.gainNode.gain.linearRampToValueAtTime(0, this.ctx.currentTime + 1);
                 }
                 setTimeout(() => {
-                    try { this.oscillator?.stop(); } catch {}
-                    try { this.ctx?.close(); } catch {}
+                    try { this.oscillator?.stop(); } catch (e) {
+                        console.debug('Error stopping chakra oscillator:', e);
+                    }
+                    try { this.ctx?.close(); } catch (e) {
+                        console.debug('Error closing chakra audio context:', e);
+                    }
                     this.oscillator = null;
                     this.ctx = null;
                     this.gainNode = null;

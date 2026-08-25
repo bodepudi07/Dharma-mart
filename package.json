@@ -5,11 +5,13 @@
   "type": "module",
   "scripts": {
     "dev": "vite frontend",
+    "dev:admin": "vite admin-portal",
     "build": "vite build frontend",
+    "build:admin": "vite build admin-portal",
     "lint": "tsc -p frontend/tsconfig.json --noEmit",
     "preview": "vite preview frontend",
     "server": "node --env-file=.env backend/index.js",
-    "dev:fullstack": "concurrently \"npm run dev\" \"npm run server\"",
+    "dev:fullstack": "concurrently \"npm run dev\" \"npm run dev:admin\" \"npm run server\"",
     "preview:fullstack": "concurrently \"npm run preview\" \"npm run server\"",
     "start": "node --env-file=.env backend/index.js",
     "build:prod": "vite build frontend"

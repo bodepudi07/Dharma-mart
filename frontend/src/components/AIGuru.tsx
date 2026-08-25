@@ -1,4 +1,4 @@
-﻿import React, { useState, useRef, useEffect } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 // FIX: Import Language enum for typed API calls.
 import { I18nContent, Temple, Book, Pooja, ShoppingRecommendation, Language } from '../types';
 import { streamDevaGptResponse } from '../services/aiService';
@@ -18,6 +18,7 @@ interface AIGuruProps {
     // FIX: Add optional onBookPooja prop to handle booking from within a modal context.
     onBookPooja?: (pooja: Pooja) => void;
     onBuyItem?: () => void;
+    language?: Language;
 }
 
 interface Message {
@@ -27,7 +28,7 @@ interface Message {
 
 const CHAT_HISTORY_KEY = 'dharma-setu-chat-history';
 
-export const AIGuru = ({ t, temple, book, pooja, pillar, onBookPooja, onBuyItem }: AIGuruProps) => {
+export const AIGuru = ({ t, temple, book, pooja, pillar, onBookPooja, onBuyItem, language }: AIGuruProps) => {
     const { currentUser } = useAuth();
     const { addToast } = useToast();
     const { openModal } = useModal();
@@ -184,7 +185,7 @@ export const AIGuru = ({ t, temple, book, pooja, pillar, onBookPooja, onBuyItem 
             await streamDevaGptResponse(
                 queryString,
                 historyForApi,
-                { temple, book, pooja, pillar, user: currentUser, userBookings },
+                { temple, book, pooja, pillar, user: currentUser, userBookings, language },
                 onChunk,
                 onComplete
             );
@@ -230,7 +231,7 @@ export const AIGuru = ({ t, temple, book, pooja, pillar, onBookPooja, onBuyItem 
                                         className="absolute -right-2 -bottom-2 p-1.5 bg-white rounded-full shadow-md border border-orange-200 text-orange-500 opacity-0 group-hover:opacity-100 transition-opacity hover:scale-110 active:scale-95"
                                         title="Save this insight"
                                     >
-                                        <Icon name={bookmarks.some(b => b.text === msg.text) ? "heart-filled" : "heart"} className="w-4 h-4" />
+                                        <Icon name={(bookmarks || []).some(b => b.text === msg.text) ? "heart-filled" : "heart"} className="w-4 h-4" />
                                     </button>
                                 )}
                             </div>

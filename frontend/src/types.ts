@@ -336,7 +336,7 @@ export interface Task {
     categoryId?: number;
 }
 
-export type View = 'home' | 'dashboard' | 'templeDetail' | 'temples' | 'poojas' | 'yatras' | 'knowledge' | 'events' | 'eventDetail' | 'profile' | 'bookReader' | 'search' | 'chantingZone' | 'settings' | 'chakraSanctuary' | 'yatraPlanner' | 'satsang' | 'savedInsights' | 'stateSanctuary' | 'restorationSanctuary' | 'restorationSubmission' | 'divyaMarga' | 'meditationZone' | 'library' | 'sevaDIP';
+export type View = 'home' | 'dashboard' | 'templeDetail' | 'temples' | 'poojas' | 'yatras' | 'knowledge' | 'events' | 'eventDetail' | 'profile' | 'bookReader' | 'search' | 'chantingZone' | 'settings' | 'chakraSanctuary' | 'yatraPlanner' | 'satsang' | 'savedInsights' | 'stateSanctuary' | 'restorationSanctuary' | 'restorationSubmission' | 'divyaMarga' | 'meditationZone' | 'library' | 'sevaDIP' | 'mart';
 
 export interface RemoteSeva {
     id: number;
@@ -562,6 +562,7 @@ export interface I18nContent {
     navEvents: string;
     navDashboard: string;
     navSeva: string;
+    navMart: string;
     navSettings: string;
     bookingHistory: string;
     noBookings: string;

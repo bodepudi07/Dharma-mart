@@ -14,24 +14,24 @@ interface DeityTheme {
 }
 
 export const DEITY_THEMES: DeityTheme[] = [
-  { name: 'Venkateswara', devanagari: 'वेंकटेश्वर', emoji: '🏛️', imageUrl: 'https://upload.wikimedia.org/wikipedia/commons/thumb/8/87/Tirupati_Balaji.jpg/800px-Tirupati_Balaji.jpg', background: '#EDE0F5', accent: '#6B21A8', header: '#6B21A8', mandala: '#F4A0C0' },
-  { name: 'Ram', devanagari: 'राम', emoji: '🏹', imageUrl: 'https://upload.wikimedia.org/wikipedia/commons/thumb/8/8a/Rama_by_Raja_Ravi_Varma.jpg/800px-Rama_by_Raja_Ravi_Varma.jpg', background: '#FFF3E0', accent: '#B45309', header: '#92400E', mandala: '#F59E0B' },
-  { name: 'Krishna', devanagari: 'कृष्ण', emoji: '🪈', imageUrl: 'https://upload.wikimedia.org/wikipedia/commons/3/36/Krishna_with_flute_and_cow_%281890s%29.jpg', background: '#E8F4FD', accent: '#1D4ED8', header: '#1E40AF', mandala: '#FCD34D' },
-  { name: 'Shiva', devanagari: 'शिव', emoji: '🔱', imageUrl: 'https://upload.wikimedia.org/wikipedia/commons/thumb/7/77/Shiva_by_Raja_Ravi_Varma.jpg/800px-Shiva_by_Raja_Ravi_Varma.jpg', background: '#F0FDF4', accent: '#374151', header: '#1F2937', mandala: '#E5E7EB' },
-  { name: 'Durga', devanagari: 'दुर्गा', emoji: '🌺', imageUrl: 'https://upload.wikimedia.org/wikipedia/commons/thumb/3/30/Durga_mahisasuramardini.jpg/800px-Durga_mahisasuramardini.jpg', background: '#FFF1F2', accent: '#BE123C', header: '#9F1239', mandala: '#FB923C' },
-  { name: 'Ganesh', devanagari: 'गणेश', emoji: '🐘', imageUrl: 'https://upload.wikimedia.org/wikipedia/commons/thumb/1/1c/Ganesha_by_Raja_Ravi_Varma.jpg/800px-Ganesha_by_Raja_Ravi_Varma.jpg', background: '#FFFBEB', accent: '#D97706', header: '#92400E', mandala: '#EF4444' },
-  { name: 'Hanuman', devanagari: 'हनुमान', emoji: '🌅', imageUrl: 'https://upload.wikimedia.org/wikipedia/commons/thumb/2/23/Hanuman_carrying_Sanjeevani_mountain.jpg/800px-Hanuman_carrying_Sanjeevani_mountain.jpg', background: '#FFF7ED', accent: '#EA580C', header: '#C2410C', mandala: '#FB923C' },
-  { name: 'Lakshmi', devanagari: 'लक्ष्मी', emoji: '🪷', imageUrl: 'https://upload.wikimedia.org/wikipedia/commons/thumb/9/93/Lakshmi_by_Raja_Ravi_Varma.jpg/800px-Lakshmi_by_Raja_Ravi_Varma.jpg', background: '#FDFCE4', accent: '#A16207', header: '#854D0E', mandala: '#F472B6' },
-  { name: 'Saraswati', devanagari: 'सरस्वती', emoji: '🎵', imageUrl: 'https://upload.wikimedia.org/wikipedia/commons/thumb/a/aa/Saraswati_by_Raja_Ravi_Varma.jpg/800px-Saraswati_by_Raja_Ravi_Varma.jpg', background: '#EFF6FF', accent: '#1D4ED8', header: '#1E3A8A', mandala: '#F8FAFC' },
-  { name: 'Kali', devanagari: 'काली', emoji: '⚡', imageUrl: 'https://upload.wikimedia.org/wikipedia/commons/thumb/e/e0/Kali_by_Raja_Ravi_Varma.jpg/800px-Kali_by_Raja_Ravi_Varma.jpg', background: '#1C0A2E', accent: '#7C3AED', header: '#4C1D95', mandala: '#DC2626' },
-  { name: 'Murugan', devanagari: 'मुरुगन', emoji: '🌟', imageUrl: 'https://upload.wikimedia.org/wikipedia/commons/thumb/3/32/Kartikeya_by_Raja_Ravi_Varma.jpg/800px-Kartikeya_by_Raja_Ravi_Varma.jpg', background: '#FFF1F2', accent: '#BE185D', header: '#9D174D', mandala: '#F59E0B' },
-  { name: 'Ayyappa', devanagari: 'अय्यप्पा', emoji: '🌿', imageUrl: 'https://upload.wikimedia.org/wikipedia/commons/thumb/a/af/Ayyappan_painting.jpg/800px-Ayyappan_painting.jpg', background: '#F0FDF4', accent: '#065F46', header: '#064E3B', mandala: '#D97706' },
-  { name: 'Jagannath', devanagari: 'जगन्नाथ', emoji: '🌊', imageUrl: 'https://upload.wikimedia.org/wikipedia/commons/thumb/8/8d/Jagannath_Balabhadra_Subhadra.jpg/800px-Jagannath_Balabhadra_Subhadra.jpg', background: '#FEF9C3', accent: '#CA8A04', header: '#A16207', mandala: '#3B82F6' },
-  { name: 'Narsimha', devanagari: 'नृसिंह', emoji: '🦁', imageUrl: 'https://upload.wikimedia.org/wikipedia/commons/thumb/3/36/Narasimha_with_Lakshmi.jpg/800px-Narasimha_with_Lakshmi.jpg', background: '#FFF7ED', accent: '#C2410C', header: '#9A3412', mandala: '#F59E0B' },
-  { name: 'Radha', devanagari: 'राधा', emoji: '💛', imageUrl: 'https://upload.wikimedia.org/wikipedia/commons/thumb/f/f6/Radha_by_Raja_Ravi_Varma.jpg/800px-Radha_by_Raja_Ravi_Varma.jpg', background: '#FDF2F8', accent: '#DB2777', header: '#9D174D', mandala: '#FCD34D' },
-  { name: 'Dattatreya', devanagari: 'दत्तात्रेय', emoji: '🔯', imageUrl: 'https://upload.wikimedia.org/wikipedia/commons/thumb/5/5f/Dattatreya_by_Raja_Ravi_Varma.jpg/800px-Dattatreya_by_Raja_Ravi_Varma.jpg', background: '#F5F3FF', accent: '#7C3AED', header: '#4C1D95', mandala: '#F97316' },
-  { name: 'Subramanya', devanagari: 'सुब्रह्मण्य', emoji: '✨', imageUrl: 'https://upload.wikimedia.org/wikipedia/commons/thumb/3/32/Kartikeya_by_Raja_Ravi_Varma.jpg/800px-Kartikeya_by_Raja_Ravi_Varma.jpg', background: '#FFF1F2', accent: '#BE185D', header: '#881337', mandala: '#F59E0B' },
-  { name: 'Adi Shankaracharya', devanagari: 'आदि शंकराचार्य', emoji: '🕉️', imageUrl: 'https://upload.wikimedia.org/wikipedia/commons/thumb/0/00/Adi_Shankara_with_Disciples.jpg/800px-Adi_Shankara_with_Disciples.jpg', background: '#F5F3FF', accent: '#5B21B6', header: '#4C1D95', mandala: '#F97316' },
+  { name: 'Venkateswara', devanagari: 'वेंकटेश्वर', emoji: '🏛️', imageUrl: '/images/deities/deity_venkateswara.png', background: '#EDE0F5', accent: '#6B21A8', header: '#6B21A8', mandala: '#F4A0C0' },
+  { name: 'Ram', devanagari: 'राम', emoji: '🏹', imageUrl: '/images/deities/deity_ram.png', background: '#FFF3E0', accent: '#B45309', header: '#92400E', mandala: '#F59E0B' },
+  { name: 'Krishna', devanagari: 'कृष्ण', emoji: '🪈', imageUrl: '/images/deities/deity_krishna.png', background: '#E8F4FD', accent: '#1D4ED8', header: '#1E40AF', mandala: '#FCD34D' },
+  { name: 'Shiva', devanagari: 'शिव', emoji: '🔱', imageUrl: '/images/deities/deity_shiva.png', background: '#F0FDF4', accent: '#374151', header: '#1F2937', mandala: '#E5E7EB' },
+  { name: 'Durga', devanagari: 'दुर्गा', emoji: '🌺', imageUrl: '/images/deities/deity_durga.png', background: '#FFF1F2', accent: '#BE123C', header: '#9F1239', mandala: '#FB923C' },
+  { name: 'Ganesh', devanagari: 'गणेश', emoji: '🐘', imageUrl: '/images/deities/deity_ganesh.png', background: '#FFFBEB', accent: '#D97706', header: '#92400E', mandala: '#EF4444' },
+  { name: 'Hanuman', devanagari: 'हनुमान', emoji: '🌅', imageUrl: '/images/deities/deity_hanuman.png', background: '#FFF7ED', accent: '#EA580C', header: '#C2410C', mandala: '#FB923C' },
+  { name: 'Lakshmi', devanagari: 'लक्ष्मी', emoji: '🪷', imageUrl: '/images/deities/deity_lakshmi.png', background: '#FDFCE4', accent: '#A16207', header: '#854D0E', mandala: '#F472B6' },
+  { name: 'Saraswati', devanagari: 'सरस्वती', emoji: '🎵', imageUrl: '/images/deities/deity_saraswati.png', background: '#EFF6FF', accent: '#1D4ED8', header: '#1E3A8A', mandala: '#F8FAFC' },
+  { name: 'Kali', devanagari: 'काली', emoji: '⚡', imageUrl: '/images/deities/deity_kali.png', background: '#1C0A2E', accent: '#7C3AED', header: '#4C1D95', mandala: '#DC2626' },
+  { name: 'Murugan', devanagari: 'मुरुगन', emoji: '🌟', imageUrl: '/images/deities/deity_murugan.png', background: '#FFF1F2', accent: '#BE185D', header: '#9D174D', mandala: '#F59E0B' },
+  { name: 'Ayyappa', devanagari: 'अय्यप्पा', emoji: '🌿', imageUrl: '/images/deities/deity_ayyappa.png', background: '#F0FDF4', accent: '#065F46', header: '#064E3B', mandala: '#D97706' },
+  { name: 'Jagannath', devanagari: 'जगन्नाथ', emoji: '🌊', imageUrl: '/images/deities/deity_jagannath.png', background: '#FEF9C3', accent: '#CA8A04', header: '#A16207', mandala: '#3B82F6' },
+  { name: 'Narsimha', devanagari: 'नृसिंह', emoji: '🦁', imageUrl: '/images/deities/deity_narsimha.png', background: '#FFF7ED', accent: '#C2410C', header: '#9A3412', mandala: '#F59E0B' },
+  { name: 'Radha', devanagari: 'राधा', emoji: '💛', imageUrl: '/images/deities/deity_radha.png', background: '#FDF2F8', accent: '#DB2777', header: '#9D174D', mandala: '#FCD34D' },
+  { name: 'Dattatreya', devanagari: 'दत्तात्रेय', emoji: '🔯', imageUrl: '/images/deities/deity_dattatreya.png', background: '#F5F3FF', accent: '#7C3AED', header: '#4C1D95', mandala: '#F97316' },
+  { name: 'Subramanya', devanagari: 'सुब्रह्मण्य', emoji: '✨', imageUrl: '/images/deities/deity_murugan.png', background: '#FFF1F2', accent: '#BE185D', header: '#881337', mandala: '#F59E0B' },
+  { name: 'Adi Shankaracharya', devanagari: 'आदि शंकराचार्य', emoji: '🕉️', imageUrl: '/images/deities/deity_adi_shankaracharya.png', background: '#F5F3FF', accent: '#5B21B6', header: '#4C1D95', mandala: '#F97316' },
 ];
 
 export const DEITY_FACTS: Record<string, string[]> = {
@@ -106,17 +106,15 @@ export const SubscreenLoader = () => {
   const [factVisible, setFactVisible] = useState(true);
   const [isReady, setIsReady] = useState(false);
   
-  // Ensure we mount immediately but prevent hydration mismatch
   useEffect(() => {
     setIsReady(true);
   }, []);
 
-  // Fact rotation
   useEffect(() => {
     const factInterval = setInterval(() => {
       setFactVisible(false);
       setTimeout(() => {
-        setFactIdx(prev => (prev + 1) % 4); // Show up to 4 facts
+        setFactIdx(prev => (prev + 1) % 4);
         setFactVisible(true);
       }, 300);
     }, 4000);
@@ -126,11 +124,10 @@ export const SubscreenLoader = () => {
   if (!isReady) return <div className="min-h-[50vh] flex justify-center items-center">Loading...</div>;
 
   const savedIdx = localStorage.getItem(STORAGE_KEY);
-  const idx = savedIdx !== null ? parseInt(savedIdx, 10) : 0; // Default to 0 if not selected
+  const idx = savedIdx !== null ? parseInt(savedIdx, 10) : 0;
   const deity = DEITY_THEMES[isValidIdx(idx) ? idx : 0];
   const isKali = deity.name === 'Kali';
   const textColor = isKali ? '#E9D5FF' : '#1A1A1A';
-  const subtextColor = isKali ? '#C4B5FD' : '#4B5563';
   const facts = DEITY_FACTS[deity.name] || [];
 
   return (
@@ -141,22 +138,18 @@ export const SubscreenLoader = () => {
       position: 'relative', 
       overflow: 'hidden',
     }}>
-      {/* Floating Flowers */}
       <PlumeriaFlower size={60} color={deity.accent} style={{ top: 20, left: 10, transform: 'rotate(-20deg)' }} animDelay={0} />
       <PlumeriaFlower size={45} color={deity.accent} style={{ top: 30, right: 20, transform: 'rotate(15deg)' }} animDelay={0.5} />
       <PlumeriaFlower size={50} color={deity.accent} style={{ top: 340, left: 10, transform: 'rotate(-10deg)' }} animDelay={1} />
       <PlumeriaFlower size={70} color={deity.accent} style={{ top: 330, right: 10, transform: 'rotate(25deg)' }} animDelay={1.5} />
 
-      {/* Deity Image Area */}
       <div style={{ height: 260, position: 'relative', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-        {/* Mandala behind */}
         <div style={{
           position: 'absolute',
           animation: 'pulseMandala 4s ease-in-out infinite alternate',
         }}>
           <MandalaSVG color={deity.mandala} />
         </div>
-        {/* Deity SVG Icon or Image */}
         <div style={{
           position: 'relative', zIndex: 2, textAlign: 'center',
           animation: 'swayDeity 6s ease-in-out infinite',
@@ -165,7 +158,7 @@ export const SubscreenLoader = () => {
           <div style={{ 
             width: 140, height: 140, borderRadius: '50%', overflow: 'hidden', 
             border: `6px solid ${deity.accent}40`, boxShadow: `0 0 30px ${deity.accent}60`,
-            margin: '0 auto', background: '#fff'
+            margin: '0 auto', background: '#fff', flexShrink: 0, display: 'flex', alignItems: 'center', justifyContent: 'center'
           }}>
              <img src={deity.imageUrl} alt={deity.name} style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
           </div>
@@ -177,7 +170,6 @@ export const SubscreenLoader = () => {
         <p style={{ fontSize: 18, color: textColor, fontWeight: 'bold' }}>Embracing the Divine...</p>
       </div>
 
-      {/* Did You Know */}
       <div style={{
         background: 'rgba(255,255,255,0.60)', borderRadius: 16,
         padding: '16px 20px', margin: '0 20px', maxWidth: 400,
@@ -228,7 +220,9 @@ function isValidIdx(idx: number) {
     return !isNaN(idx) && idx >= 0 && idx < DEITY_THEMES.length;
 }
 
-// ─── ISHTA DEVATA SELECTION MODAL ─────────────────────────────────────────
+// ─── ISHTA DEVATA SELECTION MODAL (Aura glows & scaling) ────────────────────
+
+import { Icon } from './Icon';
 
 export const IshtaDevataModal = ({ onClose }: { onClose: () => void }) => {
   const [selectedIdx, setSelectedIdx] = useState<number | null>(null);
@@ -236,23 +230,31 @@ export const IshtaDevataModal = ({ onClose }: { onClose: () => void }) => {
   const selectDeity = useCallback((idx: number) => {
     setSelectedIdx(idx);
     localStorage.setItem(STORAGE_KEY, String(idx));
-    setTimeout(onClose, 500); // Close slightly after so they see confirmation
+    setTimeout(onClose, 500);
   }, [onClose]);
 
   return (
-    <div className="fixed inset-0 z-[300] flex items-center justify-center p-4 bg-black/60 backdrop-blur-sm animate-fade-in">
-      <div className="bg-[#FAF0E6] rounded-3xl w-full max-w-3xl max-h-[90vh] flex flex-col overflow-hidden shadow-2xl relative" style={{ fontFamily: 'Georgia, serif' }}>
+    <div className="fixed inset-0 z-[300] flex items-center justify-center p-4 bg-black/55 backdrop-blur-sm animate-fade-in">
+      
+      {/* Container with tactile paper textures */}
+      <div 
+        className="bg-[#FAF6EE] rounded-[2.5rem] border border-[#C3A150]/20 w-full max-w-4xl max-h-[90vh] flex flex-col overflow-hidden shadow-[0_25px_60px_rgba(27,24,18,0.25)] relative" 
+        style={{ fontFamily: 'Georgia, serif' }}
+      >
         
+        {/* Soft decorative background lines */}
+        <div className="absolute inset-0 bg-[url('https://www.transparenttextures.com/patterns/natural-paper.png')] opacity-[0.35] pointer-events-none z-0" />
+
         {/* Header */}
-        <div style={{ padding: '24px 20px 16px', textAlign: 'center', background: '#1C1208' }}>
-          <button onClick={onClose} className="absolute top-4 right-4 text-[#F0DFC0] text-2xl" aria-label="Skip">✕</button>
-          <h1 style={{ fontSize: 22, fontWeight: 'bold', color: '#F0DFC0', margin: '0 0 6px' }}>Choose Your Ishta Devata</h1>
-          <p style={{ fontSize: 13, color: '#A08060', margin: 0 }}>Select the deity for your divine loading experience</p>
+        <div className="relative z-10 px-8 py-6 text-center bg-[#1B1812] border-b border-[#C3A150]/20">
+          <button onClick={onClose} className="absolute top-5 right-6 text-[#F0DFC0]/80 hover:text-[#F0DFC0] text-2xl transition-colors" aria-label="Skip">✕</button>
+          <h1 className="text-2xl font-serif font-bold text-[#F0DFC0] mb-1.5">Choose Your Ishta Devata</h1>
+          <p className="text-xs text-[#A08060] font-light">Select your guiding deity to personalize your sanctuary dashboard theme, colors, and slokas</p>
         </div>
 
-        {/* Grid Area - scrollable */}
-        <div className="p-4 md:p-6 overflow-y-auto" style={{ flex: 1 }}>
-          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(130px, 1fr))', gap: 12 }}>
+        {/* Deity Grid */}
+        <div className="relative z-10 p-6 md:p-8 overflow-y-auto hide-scrollbar flex-1">
+          <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-4">
             {DEITY_THEMES.map((d, idx) => {
               const isSelected = selectedIdx === idx;
               const isShankaracharya = d.name === 'Adi Shankaracharya';
@@ -260,45 +262,57 @@ export const IshtaDevataModal = ({ onClose }: { onClose: () => void }) => {
                 <button
                   key={d.name}
                   onClick={() => selectDeity(idx)}
+                  className="group relative flex flex-col items-center justify-center p-4 rounded-2xl bg-white border border-stone-200 hover:border-transparent transition-all duration-300 transform active:scale-95 text-center gap-3 overflow-hidden"
                   style={{
-                    position: 'relative',
-                    aspectRatio: '1',
-                    background: d.background,
-                    borderRadius: 16,
-                    border: isSelected ? `2px solid ${d.accent}` : '2px solid transparent',
-                    boxShadow: isSelected ? `0 0 0 3px ${d.accent}33` : '0 2px 8px rgba(0,0,0,0.06)',
-                    transform: isSelected ? 'scale(1.05)' : 'scale(1)',
-                    transition: 'all 200ms ease',
-                    cursor: 'pointer',
-                    display: 'flex',
-                    flexDirection: 'column',
-                    alignItems: 'center',
-                    justifyContent: 'center',
-                    gap: 6,
-                    padding: 8,
+                    boxShadow: isSelected 
+                      ? `0 0 25px ${d.accent}33, inset 0 0 0 2.5px ${d.accent}`
+                      : '0 4px 12px rgba(27,24,18,0.02)',
+                    background: isSelected ? d.background : '#FFFFFF',
                   }}
                 >
+                  {/* Subtle dynamic glow ring on hover */}
+                  <div 
+                    className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none" 
+                    style={{
+                      background: `radial-gradient(circle at center, ${d.accent}08 0%, transparent 80%)`,
+                      border: `1.5px solid ${d.accent}33`,
+                      borderRadius: '1rem'
+                    }}
+                  />
+
                   {isShankaracharya && (
-                    <span style={{
-                      position: 'absolute', top: -6, right: -6, zIndex: 10,
-                      fontSize: 9, color: '#fff', fontWeight: 'bold',
-                      background: d.accent, padding: '2px 8px', borderRadius: 10,
-                      boxShadow: '0 2px 4px rgba(0,0,0,0.2)'
-                    }}>Jagadguru</span>
+                    <span 
+                      className="absolute top-2 right-2 text-[9px] text-white font-bold px-2 py-0.5 rounded-full shadow-sm z-10"
+                      style={{ background: d.accent }}
+                    >
+                      Jagadguru
+                    </span>
                   )}
-                  <div style={{ width: 64, height: 64, borderRadius: '50%', overflow: 'hidden', border: `3px solid ${isSelected ? d.accent : 'transparent'}` }}>
-                     <img src={d.imageUrl} alt={d.name} style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
+
+                  {/* Deity Circle Frame */}
+                  <div 
+                    className="w-16 h-16 rounded-full overflow-hidden transition-transform duration-500 group-hover:scale-105 shadow-inner bg-stone-50 flex items-center justify-center border border-stone-100"
+                    style={{
+                      boxShadow: isSelected ? `0 0 15px ${d.accent}40` : 'none'
+                    }}
+                  >
+                     <img src={d.imageUrl} alt={d.name} className="w-full h-full object-cover" />
                   </div>
-                  <span style={{ fontSize: 14, fontWeight: 'bold', color: '#2E1A0A', textAlign: 'center', lineHeight: 1.1 }}>{d.name}</span>
-                  <span style={{ fontSize: 12, color: '#8B6040', textAlign: 'center' }}>{d.devanagari}</span>
+
+                  <div className="space-y-1 z-10">
+                    <span className="block text-sm font-bold text-stone-800 tracking-wide font-serif">{d.name}</span>
+                    <span className="block text-[11px] text-stone-400 font-mono">{d.devanagari}</span>
+                  </div>
                 </button>
               );
             })}
           </div>
 
-          <div style={{ marginTop: 24, padding: '12px 16px', background: '#F5F3FF', borderRadius: 12, borderLeft: '3px solid #5B21B6' }}>
-            <p style={{ fontSize: 12, color: '#4C1D95', fontStyle: 'italic', margin: 0, lineHeight: 1.5 }}>
-              🕉️ This deity will appear to bless you while the Dharma Setu app is loading inside various sections.
+          {/* Guidelines */}
+          <div className="mt-8 p-4 bg-amber-500/5 rounded-2xl border-l-4 border-amber-500 flex items-start gap-3 shadow-inner">
+            <span className="text-amber-700 text-lg">🕉️</span>
+            <p className="text-stone-600 text-xs leading-relaxed italic font-serif">
+              Choosing your Ishta Devata aligns the visuals, animations, daily scriptures, and ambient frequencies of Dharmasethu to support your specific spiritual path.
             </p>
           </div>
         </div>

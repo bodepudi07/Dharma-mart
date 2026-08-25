@@ -1,25 +1,35 @@
-﻿@import "tailwindcss";
+@import "tailwindcss";
 
 @theme {
   --font-sans: "Inter", ui-sans-serif, system-ui, sans-serif;
-  --font-serif: "Playfair Display", serif;
-  --font-heading: "Playfair Display", serif;
-  --font-mono: "JetBrains Mono", ui-monospace, SFMono-Regular, monospace;
+  --font-serif: "Fraunces", "Playfair Display", serif;
+  --font-inscriptional: "Fraunces", "Cinzel", serif;
+  --font-cinzel: "Cinzel Decorative", "Cinzel", serif;
+  --font-manuscript: "Cormorant Garamond", "Eczar", serif;
+  --font-mono: "IBM Plex Mono", "JetBrains Mono", monospace;
+  --font-ticket: "IBM Plex Mono", monospace;
 
-  --color-primary: #B45309;
-  /* Burnt Orange / Saffron */
-  --color-secondary: #D97706;
-  /* Amber */
-  --color-accent: #059669;
-  /* Emerald */
-  --color-paper: #FDFCF6;
-  /* Warm Paper */
-  --color-main: #FDFCF6;
-  /* Same as paper */
-  --color-ink: #1C1917;
-  /* Stone-900 */
-  --color-text-muted: #78716C;
-  /* Stone-500 */
+  --color-primary: #B5651D;
+  /* Aged Copper */
+  --color-secondary: #A67C3D;
+  /* Weathered Brass */
+  --color-accent: #8B1E3F;
+  /* Sindoor Red */
+  --color-turmeric: #D4A017;
+  /* Turmeric Gold */
+  --color-parchment: #F0E6D2;
+  /* Aged Parchment */
+  --color-parchment-deep: #E2D4BB;
+  /* Deeper Parchment */
+  --color-basalt: #1C1A17;
+  /* Basalt Charcoal */
+  --color-basalt-light: #2D2924;
+  /* Basalt Scribe */
+  --color-paper: #F5EFEB;
+  /* Warm Temple Paper */
+  --color-main: #F5EFEB;
+  --color-ink: #1C1A17;
+  --color-text-muted: #6E675F;
 }
 
 @layer base {
@@ -790,7 +800,18 @@ nav {
 .theme-anahata,
 .theme-vishuddha,
 .theme-ajna,
-.theme-sahasrara {
+.theme-sahasrara,
+.theme-shiva,
+.theme-krishna,
+.theme-ram,
+.theme-vishnu,
+.theme-hanuman,
+.theme-lakshmi,
+.theme-durga,
+.theme-saraswati,
+.theme-ganesh,
+.theme-murugan,
+.theme-ayyappa {
   transition: all 0.8s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
@@ -817,4 +838,479 @@ nav {
 
 .hide-scrollbar::-webkit-scrollbar {
   display: none;
+}
+
+/* ==========================================
+   SACRED DIGITAL ORIGINAL DESIGN LANGUAGE
+   ========================================== */
+
+/* 1. Deity Variable Personalization */
+.theme-shiva {
+  --color-primary: #0284c7; /* Kailash Ice Blue */
+  --color-secondary: #0f172a; /* Slate Black */
+  --color-accent: #0d9488; /* Rudraksha Teal */
+  --color-paper: #f8fafc; /* Ash White */
+  --chakra-glow-color: rgba(2, 132, 199, 0.35);
+}
+
+.theme-krishna {
+  --color-primary: #1d4ed8; /* Peacock Blue */
+  --color-secondary: #b45309; /* Vrindavan Saffron/Gold */
+  --color-accent: #047857; /* Tulsi Green */
+  --color-paper: #f0fdfa; /* Yamuna Water Off-White */
+  --chakra-glow-color: rgba(29, 78, 216, 0.35);
+}
+
+.theme-ram {
+  --color-primary: #ea580c; /* Ayodhya Sunset Saffron */
+  --color-secondary: #ca8a04; /* Royal Brass Gold */
+  --color-accent: #b45309; /* Copper */
+  --color-paper: #fffbeb; /* Sacred Rice Ivory */
+  --chakra-glow-color: rgba(234, 88, 12, 0.35);
+}
+
+.theme-vishnu {
+  --color-primary: #ca8a04; /* Sudarshana Gold */
+  --color-secondary: #1d4ed8; /* Ksheerasagara Blue */
+  --color-accent: #0f766e; /* Sacred Tulsi */
+  --color-paper: #fafaf9; /* Shell White */
+  --chakra-glow-color: rgba(202, 138, 4, 0.35);
+}
+
+.theme-hanuman {
+  --color-primary: #c2410c; /* Vermilion (Sindoor) Red */
+  --color-secondary: #d97706; /* Gada Gold */
+  --color-accent: #15803d; /* Sanjeevani Green */
+  --color-paper: #fffaf0; /* Warm Earth Ivory */
+  --chakra-glow-color: rgba(194, 65, 12, 0.35);
+}
+
+.theme-lakshmi {
+  --color-primary: #db2777; /* Lotus Pink */
+  --color-secondary: #b45309; /* Coin Gold */
+  --color-accent: #059669; /* Prosperity Green */
+  --color-paper: #fff5f7; /* Rose Petal White */
+  --chakra-glow-color: rgba(219, 39, 119, 0.35);
+}
+
+.theme-durga {
+  --color-primary: #dc2626; /* Crimson Red */
+  --color-secondary: #d97706; /* Shakti Gold */
+  --color-accent: #7c2d12; /* Trishula Bronze */
+  --color-paper: #fff1f2; /* Vermilion Ivory */
+  --chakra-glow-color: rgba(220, 38, 38, 0.35);
+}
+
+.theme-saraswati {
+  --color-primary: #4f46e5; /* Veena Indigo */
+  --color-secondary: #0891b2; /* Crystal Water Blue */
+  --color-accent: #b45309; /* Palm Manuscript Ochre */
+  --color-paper: #f9fafb; /* Pure Swan White */
+  --chakra-glow-color: rgba(79, 70, 229, 0.35);
+}
+
+.theme-ganesh {
+  --color-primary: #d97706; /* Marigold Yellow */
+  --color-secondary: #9a3412; /* Modak Brown/Clay */
+  --color-accent: #b45309; /* Brass */
+  --color-paper: #fffdf5; /* Sweet Sandesh Cream */
+  --chakra-glow-color: rgba(217, 119, 6, 0.35);
+}
+
+.theme-murugan {
+  --color-primary: #be185d; /* Velvet Rose Red */
+  --color-secondary: #ca8a04; /* Vel Gold */
+  --color-accent: #0369a1; /* Peacock Feathers Blue */
+  --color-paper: #fff8f8; /* Sacred Ash Ivory */
+  --chakra-glow-color: rgba(190, 24, 93, 0.35);
+}
+
+.theme-ayyappa {
+  --color-primary: #15803d; /* Sabarimala Forest Green */
+  --color-secondary: #171717; /* Sacred Black Shawl */
+  --color-accent: #d97706; /* Neyyabhishekam Ghee Gold */
+  --color-paper: #f4fbf7; /* Tulsi Dew Off-white */
+  --chakra-glow-color: rgba(21, 128, 61, 0.35);
+}
+
+/* Apply Personalized variables to tailwind base utility variables */
+[class*="theme-"] {
+  --color-primary: var(--color-primary);
+  --color-secondary: var(--color-secondary);
+  --color-accent: var(--color-accent);
+  --color-paper: var(--color-paper);
+}
+
+/* 2. Sacred Digital Layout Aesthetics */
+.sacred-gate {
+  border-radius: 40px 40px 16px 16px;
+  border: 1.5px solid rgba(195, 161, 80, 0.25); /* Brass boundary */
+  background: linear-gradient(180deg, rgba(253, 252, 246, 0.92) 0%, rgba(253, 252, 246, 0.98) 100%);
+  box-shadow: 0 10px 40px -10px rgba(27, 24, 18, 0.05), inset 0 1px 1px rgba(255, 255, 255, 0.9);
+  position: relative;
+  overflow: hidden;
+}
+
+.sacred-gate::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 4px;
+  background: linear-gradient(90deg, transparent, #c3a150, transparent);
+}
+
+/* Manuscript Page Texture styling */
+.manuscript-card {
+  background-color: #fdfcf7;
+  background-image: 
+    linear-gradient(rgba(180, 83, 9, 0.03) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(180, 83, 9, 0.03) 1px, transparent 1px);
+  background-size: 24px 24px;
+  border: 2px solid #e7dfcc;
+  border-radius: 12px;
+  box-shadow: 
+    0 1px 2px rgba(0,0,0,0.02), 
+    0 8px 30px rgba(180, 83, 9, 0.03),
+    inset 0 0 40px rgba(180, 83, 9, 0.02);
+  position: relative;
+}
+
+.manuscript-card::after {
+  content: 'ॐ';
+  position: absolute;
+  top: 10px;
+  right: 12px;
+  font-family: serif;
+  font-size: 16px;
+  color: #c29b68;
+  opacity: 0.45;
+}
+
+/* Copper & Brass Metallic Effects */
+.text-copper {
+  background: linear-gradient(135deg, #b87333 0%, #d97706 50%, #9a3412 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.text-brass {
+  background: linear-gradient(135deg, #ca8a04 0%, #fef08a 50%, #854d0e 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  filter: drop-shadow(0 1px 1px rgba(0,0,0,0.05));
+}
+
+.border-brass {
+  border-color: #c3a150 !important;
+}
+
+.bg-brass-gradient {
+  background: linear-gradient(135deg, #ca8a04 0%, #eab308 60%, #a16207 100%);
+}
+
+.bg-copper-gradient {
+  background: linear-gradient(135deg, #b45309 0%, #ea580c 60%, #7c2d12 100%);
+}
+
+/* Warm Sacred Ambient Glows */
+.sacred-glow-gold {
+  box-shadow: 0 0 40px rgba(251, 191, 36, 0.15);
+}
+
+.sacred-glow-red {
+  box-shadow: 0 0 40px rgba(220, 38, 38, 0.15);
+}
+
+/* 3. TIME OF DAY ENGINE & OVERLAYS */
+/* The main application overlay shifts depending on time of day class */
+.atmosphere-dawn {
+  --background-image: linear-gradient(to bottom, #ffe4e1 0%, #fdf5e6 60%, #fff8dc 100%);
+  --background-opacity: 0.95;
+}
+.atmosphere-morning {
+  --background-image: linear-gradient(to bottom, #fff8e7 0%, #faf6ee 50%, #faf0dd 100%);
+  --background-opacity: 0.92;
+}
+.atmosphere-day {
+  --background-image: linear-gradient(to bottom, #FAF6EE 0%, #FDFCF6 100%);
+  --background-opacity: 0.88;
+}
+.atmosphere-sunset {
+  --background-image: linear-gradient(to bottom, #ffebe3 0%, #ffdcd0 40%, #ffc4af 100%);
+  --background-opacity: 0.94;
+}
+.atmosphere-night {
+  --background-image: linear-gradient(to bottom, #090b11 0%, #0c0f1a 100%);
+  --background-opacity: 0.98;
+}
+
+/* Color adaptation overlays for pages when night is active */
+.atmosphere-night main {
+  background-color: rgba(8, 9, 15, 0.88) !important;
+  color: #e2e8f0 !important;
+}
+
+.atmosphere-night .bg-paper {
+  background-color: #0b0c13 !important;
+}
+
+.atmosphere-night .text-ink {
+  color: #f1f5f9 !important;
+}
+
+.atmosphere-night .bg-white {
+  background-color: rgba(20, 22, 34, 0.85) !important;
+  border-color: rgba(255, 255, 255, 0.08) !important;
+}
+
+.atmosphere-night .text-stone-500,
+.atmosphere-night .text-stone-600 {
+  color: #94a3b8 !important;
+}
+
+.atmosphere-night .border-stone-200 {
+  border-color: rgba(255, 255, 255, 0.08) !important;
+}
+
+/* 4. FESTIVAL DECORATIONS & EFFECTS */
+
+/* Diwali Lights line */
+.diwali-diya-shelf {
+  position: relative;
+  display: flex;
+  justify-content: space-around;
+  padding: 8px 0;
+  width: 100%;
+  pointer-events: none;
+}
+
+.diwali-diya {
+  width: 20px;
+  height: 20px;
+  background: radial-gradient(circle, #f97316 20%, #7c2d12 80%);
+  border-radius: 50% 50% 50% 50% / 30% 30% 70% 70%;
+  position: relative;
+  box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+  transform: rotate(-45deg);
+}
+
+.diwali-diya::after {
+  content: '';
+  position: absolute;
+  width: 8px;
+  height: 14px;
+  background: linear-gradient(to top, #eab308, #ea580c, transparent);
+  border-radius: 50% 50% 50% 50% / 70% 70% 30% 30%;
+  top: -10px;
+  left: -4px;
+  transform: rotate(45deg);
+  animation: diyaFlameBreathe 1.5s ease-in-out infinite alternate;
+  box-shadow: 0 0 10px #f59e0b, 0 0 20px #ea580c;
+}
+
+@keyframes diyaFlameBreathe {
+  0% { transform: rotate(45deg) scale(0.9) skewX(-2deg); opacity: 0.8; }
+  100% { transform: rotate(45deg) scale(1.1) skewX(2deg); opacity: 1; }
+}
+
+/* Saffron Fluttering Flag animation */
+@keyframes flagFlutter {
+  0% { transform: skewY(0deg) rotateX(0deg); }
+  50% { transform: skewY(4deg) rotateX(15deg); }
+  100% { transform: skewY(0deg) rotateX(0deg); }
+}
+
+.fluttering-flag {
+  animation: flagFlutter 4s ease-in-out infinite;
+  transform-origin: left center;
+}
+
+/* INCENSE SMOKE DRIFT */
+@keyframes smokeDrift {
+  0% { transform: translateY(10px) translateX(0) scale(0.8); opacity: 0; }
+  10% { opacity: 0.3; }
+  50% { transform: translateY(-50px) translateX(15px) scale(1.2); opacity: 0.2; }
+  100% { transform: translateY(-120px) translateX(-10px) scale(1.8); opacity: 0; }
+}
+
+.incense-smoke {
+  animation: smokeDrift 6s ease-in-out infinite;
+}
+
+/* FLOWER PETALS FALLING */
+@keyframes petalFall {
+  0% { transform: translateY(-10px) rotate(0deg) translateX(0); opacity: 0; }
+  10% { opacity: 0.6; }
+  90% { opacity: 0.6; }
+  100% { transform: translateY(105vh) rotate(360deg) translateX(50px); opacity: 0; }
+}
+
+.falling-petal {
+  position: absolute;
+  pointer-events: none;
+  animation: petalFall 12s linear infinite;
+}
+
+/* WAVES RIPPLES FOR RIVER BACKGROUND */
+@keyframes waveFlow {
+  0% { background-position-x: 0; }
+  100% { background-position-x: 800px; }
+}
+
+.river-waves {
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 800 60' fill='none' stroke='%2338bdf8' stroke-width='0.5' stroke-opacity='0.25'%3E%3Cpath d='M0,30 C150,10 250,50 400,30 C550,10 650,50 800,30 L800,60 L0,60 Z'/%3E%3C/svg%3E");
+  background-size: 800px 60px;
+  animation: waveFlow 25s linear infinite;
+  background-repeat: repeat-x;
+}
+
+.river-waves-secondary {
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 800 60' fill='none' stroke='%237dd3fc' stroke-width='0.3' stroke-opacity='0.2'%3E%3Cpath d='M0,20 C100,40 300,10 400,20 C500,40 700,10 800,20 L800,60 L0,60 Z'/%3E%3C/svg%3E");
+  background-size: 800px 60px;
+  animation: waveFlow 18s linear infinite reverse;
+  background-repeat: repeat-x;
+  opacity: 0.7;
+}
+
+/* ─── SACRED DIGITAL LIVING TEMPLE DECORATIONS ─── */
+@keyframes bellShake {
+  0% { transform: rotate(0); }
+  15% { transform: rotate(10deg); }
+  30% { transform: rotate(-10deg); }
+  45% { transform: rotate(6deg); }
+  60% { transform: rotate(-6deg); }
+  75% { transform: rotate(3deg); }
+  90% { transform: rotate(-3deg); }
+  100% { transform: rotate(0); }
+}
+
+.animate-bell-shake {
+  animation: bellShake 2s ease-in-out infinite;
+  transform-origin: top center;
+}
+
+.teakwood-card {
+  background: linear-gradient(180deg, #F9F5EF 0%, #F3EAE0 100%);
+  border: 1.5px solid rgba(139, 90, 43, 0.25);
+  box-shadow: inset 0 0 10px rgba(139, 90, 43, 0.05), 0 6px 20px rgba(27,24,18,0.02);
+}
+
+.sandstone-tablet {
+  background: linear-gradient(135deg, #F2EDE4 0%, #E6DDD0 100%);
+  border: 2px solid rgba(139, 122, 92, 0.25);
+  box-shadow: inset 0 0 15px rgba(139, 122, 92, 0.08), 0 8px 30px rgba(27,24,18,0.05);
+}
+
+.brass-inlay-btn {
+  background: linear-gradient(180deg, #DDA35F 0%, #B87834 100%);
+  border: 1.5px solid #C3A150;
+  box-shadow: 0 4px 15px rgba(184, 120, 52, 0.2);
+  color: #FFFFFF;
+}
+
+.brass-inlay-btn:hover {
+  background: linear-gradient(180deg, #E6AF6E 0%, #C78640 100%);
+  box-shadow: 0 6px 20px rgba(184, 120, 52, 0.3);
+}
+
+/* ─── AUTHENTIC TEMPLE ARCHITECTURAL REDESIGN STYLES ─── */
+.font-inscriptional {
+  font-family: 'Fraunces', 'Cinzel', Georgia, serif;
+  font-feature-settings: "ss01" 1, "cv01" 1;
+}
+
+.font-cinzel {
+  font-family: 'Cinzel Decorative', 'Cinzel', serif;
+}
+
+.font-manuscript {
+  font-family: 'Cormorant Garamond', 'Eczar', Georgia, serif;
+}
+
+.font-ticket {
+  font-family: 'IBM Plex Mono', 'Courier New', monospace;
+  letter-spacing: -0.02em;
+}
+
+/* Vintage Paper & Noise Background Layer */
+.bg-vintage-paper {
+  background-color: #F4EEDD;
+  background-image: 
+    radial-gradient(circle at 50% 0%, rgba(212, 160, 23, 0.05) 0%, transparent 60%),
+    linear-gradient(180deg, #F5EFEB 0%, #ECE3D0 100%);
+}
+
+.vintage-noise {
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)' opacity='0.035'/%3E%3C/svg%3E");
+}
+
+.yantra-grid-subtle {
+  background-image: 
+    linear-gradient(to right, rgba(166, 124, 61, 0.04) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(166, 124, 61, 0.04) 1px, transparent 1px);
+  background-size: 32px 32px;
+}
+
+/* Etched Stone Border */
+.etched-stone-border {
+  border: 1.5px solid #8C7B65;
+  box-shadow: 
+    inset 0 1px 0 rgba(255, 255, 255, 0.6),
+    inset 0 -1px 0 rgba(0, 0, 0, 0.15),
+    0 4px 16px rgba(28, 26, 23, 0.06);
+}
+
+/* Weathered Brass Repoussé Frame */
+.brass-repousse-box {
+  background: linear-gradient(135deg, #FAF6EE 0%, #F0E6D2 100%);
+  border: 2px solid #A67C3D;
+  position: relative;
+  box-shadow: 
+    inset 0 0 0 1px rgba(255, 255, 255, 0.8),
+    inset 0 0 18px rgba(166, 124, 61, 0.08),
+    0 10px 30px rgba(28, 26, 23, 0.08);
+}
+
+.brass-repousse-dark {
+  background: linear-gradient(145deg, #221F1B 0%, #171513 100%);
+  border: 2px solid #A67C3D;
+  position: relative;
+  box-shadow: 
+    inset 0 0 0 1px rgba(166, 124, 61, 0.3),
+    inset 0 0 30px rgba(0, 0, 0, 0.8),
+    0 16px 40px rgba(0, 0, 0, 0.4);
+}
+
+/* Stamped Railway / Temple Ticket Look */
+.temple-ticket-stamp {
+  background: #ECE3D0;
+  border: 1px dashed #A67C3D;
+  box-shadow: inset 0 0 8px rgba(139, 90, 43, 0.08), 0 2px 8px rgba(28, 26, 23, 0.04);
+}
+
+/* Subtle Diya Flame & Bell Shiver */
+@keyframes diyaFlicker {
+  0%, 100% { opacity: 0.88; transform: scale(1); }
+  30% { opacity: 1; transform: scale(1.04) rotate(0.8deg); }
+  60% { opacity: 0.78; transform: scale(0.97) rotate(-0.8deg); }
+  80% { opacity: 0.95; transform: scale(1.02); }
+}
+
+.animate-diya-glow {
+  animation: diyaFlicker 3s ease-in-out infinite;
+}
+
+@keyframes gentleBell {
+  0%, 100% { transform: rotate(0deg); }
+  20% { transform: rotate(4deg); }
+  40% { transform: rotate(-3deg); }
+  60% { transform: rotate(2deg); }
+  80% { transform: rotate(-1deg); }
+}
+
+.animate-bell-gentle {
+  animation: gentleBell 4s ease-in-out infinite;
+  transform-origin: top center;
 }

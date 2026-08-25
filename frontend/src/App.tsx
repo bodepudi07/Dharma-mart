@@ -23,6 +23,8 @@ import { SplashScreen } from './components/SplashScreen';
 import { NetworkStatus } from './components/NetworkStatus';
 import { Home } from './components/Home';
 import { WelcomeFlow } from './components/WelcomeFlow';
+import { AmbientAudioPlayer } from './components/AmbientAudioPlayer';
+import { useSmoothScroll } from './hooks/useSmoothScroll';
 
 // Eagerly loaded modals (commonly opened)
 import { LoginModal } from './components/LoginModal';
@@ -50,6 +52,7 @@ const RestorationSanctuary = React.lazy(() => import('./components/RestorationSa
 const RestorationSubmission = React.lazy(() => import('./components/RestorationSubmission').then(m => ({ default: m.RestorationSubmission })));
 const DivyaMarga = React.lazy(() => import('./components/DivyaMarga').then(m => ({ default: m.DivyaMarga })));
 const MeditationZone = React.lazy(() => import('./components/MeditationZone').then(m => ({ default: m.MeditationZone })));
+const DharmaMart = React.lazy(() => import('./components/DharmaMart').then(m => ({ default: m.DharmaMart })));
 
 import { SubscreenLoader, IshtaDevataModal } from './components/SubscreenLoader';
 
@@ -95,6 +98,8 @@ interface PanditBookingDetails {
 }
 
 export const App = () => {
+  useSmoothScroll(true);
+
   const [language, setLanguage] = React.useState<Language>(Language.EN);
   const { currentUser, userLoading, logout } = useAuth();
   const { modalType, modalProps, openModal, closeModal } = useModal();
@@ -108,22 +113,8 @@ export const App = () => {
 
   const [showDevataModal, setShowDevataModal] = useState(false);
 
-  // 6-second forced transition state requested by user
-  const [isTransitioning, setIsTransitioning] = useState(false);
-  const prevViewRef = useRef(view);
-
-  useEffect(() => {
-    if (view !== prevViewRef.current && view !== 'home') {
-      // Only force loader on "sub pages" as requested, skip for home if desired, 
-      // but applying to all navigation away from current view is safest.
-      setIsTransitioning(true);
-      const timer = setTimeout(() => {
-        setIsTransitioning(false);
-      }, 6000);
-      prevViewRef.current = view;
-      return () => clearTimeout(timer);
-    }
-  }, [view]);
+  // Instant navigation without artificial delay
+  const isTransitioning = false;
 
   useEffect(() => {
     if (!showSplash && !showWelcome && localStorage.getItem('dharmasetu_ishta_devata') === null) {
@@ -221,19 +212,35 @@ export const App = () => {
 
   useEffect(() => {
     const interval = setInterval(() => {
-      const now = new Date().getTime();
-      const dueTasks = tasks.filter(r => new Date(r.dateTime).getTime() <= now);
-
-      if (dueTasks.length > 0 && notificationPermission === 'granted') {
-        dueTasks.forEach(task => {
-          new Notification(`Task Due: ${task.itemName}`, {
-            body: task.note || `It's time for your scheduled event.`,
-            icon: '/favicon.svg',
-            tag: String(task.id) // Use a tag to prevent duplicate notifications if checker runs fast
-          });
+      try {
+        const now = new Date().getTime();
+        const dueTasks = tasks.filter(r => {
+          try {
+            const taskTime = new Date(r.dateTime).getTime();
+            return !isNaN(taskTime) && taskTime <= now;
+          } catch {
+            return false;
+          }
         });
-        // Remove triggered tasks
-        setTasks(currentTasks => currentTasks.filter(r => !dueTasks.some(due => due.id === r.id)));
+
+        if (dueTasks.length > 0 && notificationPermission === 'granted') {
+          dueTasks.forEach(task => {
+            try {
+              const taskName = task.itemName || 'Scheduled Task';
+              new Notification(`Task Due: ${taskName}`, {
+                body: task.note || `It's time for your scheduled event.`,
+                icon: '/favicon.svg',
+                tag: String(task.id) // Use a tag to prevent duplicate notifications if checker runs fast
+              });
+            } catch (error) {
+              console.error('Failed to create notification:', error);
+            }
+          });
+          // Remove triggered tasks
+          setTasks(currentTasks => currentTasks.filter(r => !dueTasks.some(due => due.id === r.id)));
+        }
+      } catch (error) {
+        console.error('Error in task notification interval:', error);
       }
     }, 30000); // Check every 30 seconds
 
@@ -279,7 +286,8 @@ export const App = () => {
         priority: item.priority || 'Medium',
       }));
 
-    } catch {
+    } catch (error) {
+      console.error('Failed to load yatra plan from localStorage:', error);
       return [];
     }
   });
@@ -294,7 +302,9 @@ export const App = () => {
         }
         return parsed;
       }
-    } catch { }
+    } catch (error) {
+      console.error('Failed to load yatra settings from localStorage:', error);
+    }
     return {
       numberOfPersons: 1,
       familyMembers: [],
@@ -651,6 +661,8 @@ export const App = () => {
         return <DivyaMarga t={t} language={language} onNavigate={setView} openModal={openModal} />;
       case 'meditationZone':
         return <MeditationZone t={t} />;
+      case 'mart':
+        return <DharmaMart t={t} language={language} />;
       default:
         return <Home t={t} language={language} onDarshanClick={handleDarshanClick} {...yatraPlanProps} />;
     }
@@ -692,6 +704,8 @@ export const App = () => {
 
       <div className="relative z-1 flex-1 flex flex-col h-screen overflow-hidden">
         <Header
+          currentLang={language}
+          setLang={setLanguage}
           currentUser={currentUser}
           t={t}
           onMenuClick={() => setIsSidebarOpen(true)}
@@ -789,6 +803,7 @@ export const App = () => {
 
       {currentUser && <AmritCollector />}
       <FloatingDock />
+      <AmbientAudioPlayer />
 
       {/* Daily Panchang Floating Button */}
       {view !== 'satsang' && (
